@@ -167,13 +167,9 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
     <header class="detail-header">
       <div class="detail-meta-row">
         <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
-        ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
       </div>
       <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
       <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
-      <div class="domain-tags">
-        ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
-      </div>
     </header>
 
     ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
