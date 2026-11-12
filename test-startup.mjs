@@ -64,7 +64,8 @@ async function run(initial,native=false){
   await mod.evaluate();
 
   assert.ok(main.innerHTML.includes('class="entry-list"'));
-  assert.ok(main.innerHTML.includes('아스타로트'));
+  assert.ok(main.innerHTML.includes('아론 (Aaron)'));
+  assert.ok(main.innerHTML.includes('아바리스 (Abaris)'));
 
   const click=dataset=>{
     for(const fn of handlers.click||[]){
@@ -97,7 +98,7 @@ async function run(initial,native=false){
 
   click({action:'open-entry',id:'buer'});
   assert.ok(modal.open);
-  assert.ok(modal.innerHTML.includes('뷰에르'));
+  assert.ok(modal.innerHTML.includes('Buer'));
 }
 
 await run(null,false);

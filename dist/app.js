@@ -1,4 +1,4 @@
-import {CATEGORIES,ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=9ae08862b4fc';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=9b2b09340f09';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=30d69e69c3cf';
@@ -27,10 +27,14 @@ let state=loadUserState();
 let settings=loadSettings();
 applySettingsToDocument(settings);
 
+const PAGE_STEP=80;
 let activeTab='dictionary';
 let searchQuery='';
 let activeCategory='all';
-let activeSort='plate';
+let activeGalleryCategory='all';
+let activeLetter='ALL';
+let activeSort='page';
+let visibleLimit=PAGE_STEP;
 let activeEntryId=null;
 let randomOverrideId=null;
 let activeWakeLock=null;
@@ -80,18 +84,30 @@ const TAB_TITLES={
   settings:'설정'
 };
 
+function renderEntryThumb(entry){
+  if(entry.hasPlate&&entry.plate){
+    return `<div class="entry-thumb-wrap">
+      <img class="entry-thumb" src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 판화" loading="lazy">
+    </div>`;
+  }
+  return `<div class="entry-thumb-wrap entry-monogram-wrap" aria-hidden="true">
+    <span class="entry-monogram-letter">${escapeHtml(entry.letter||'A')}</span>
+    <span class="entry-monogram-page">p.${entry.page1863}</span>
+  </div>`;
+}
+
 function renderEntryCard(entry){
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
   const hasNote=Boolean(state.notes[entry.id]);
+  const metaText=entry.hasPlate?`판화 No. ${entry.plateNo} · p.${entry.page1863}`:`1863년판 ${entry.letter}부 · p.${entry.page1863}`;
   return `<article class="entry-card" data-action="open-entry" data-id="${escapeHtml(entry.id)}">
-    <div class="entry-thumb-wrap">
-      <img class="entry-thumb" src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 판화" loading="lazy">
-    </div>
+    ${renderEntryThumb(entry)}
     <div class="entry-card-body">
       <div class="entry-card-top">
-        <span class="entry-plate-no">No. ${entry.plateNo} · p.${entry.page1863}</span>
+        <span class="entry-plate-no">${escapeHtml(metaText)}</span>
         <div class="entry-badges">
+          ${entry.hasPlate?'<span class="mini-badge accent">삽화</span>':''}
           ${entry.legions?`<span class="mini-badge">${entry.legions}군단</span>`:''}
           ${isBookmarked?'<span class="mini-badge accent">즐겨찾기</span>':''}
           ${hasNote?'<span class="mini-badge">노트</span>':''}
@@ -99,7 +115,7 @@ function renderEntryCard(entry){
         </div>
       </div>
       <h2 class="entry-title-ko">${escapeHtml(entry.nameKo)}</h2>
-      <div class="entry-title-fr">${escapeHtml(entry.nameFr)}</div>
+      <div class="entry-title-fr">원어 표제어: ${escapeHtml(entry.nameFr)}</div>
       <div class="entry-rank-line">${escapeHtml(entry.rank)}</div>
       <p class="entry-summary">${escapeHtml(entry.summary)}</p>
     </div>
@@ -107,9 +123,16 @@ function renderEntryCard(entry){
 }
 
 function renderDictionaryTab(){
-  const list=filterEntries({query:searchQuery,category:activeCategory,sort:activeSort});
+  const list=filterEntries({query:searchQuery,category:activeCategory,letter:activeLetter,sort:activeSort});
+  const shown=list.slice(0,visibleLimit);
+  const remaining=Math.max(0,list.length-shown.length);
+
   const pillsHtml=CATEGORIES.map(cat=>
     `<button type="button" class="pill${activeCategory===cat.id?' active':''}" data-action="filter-category" data-category="${cat.id}">${escapeHtml(cat.label)}</button>`
+  ).join('');
+
+  const lettersHtml=LETTERS.map(letId=>
+    `<button type="button" class="letter-pill${activeLetter===letId?' active':''}" data-action="filter-letter" data-letter="${letId}">${letId==='ALL'?'A–Z 전체':letId}</button>`
   ).join('');
 
   return `<section class="dictionary-view">
@@ -117,31 +140,36 @@ function renderDictionaryTab(){
       <div class="search-row">
         <div class="search-box">
           ${icon('search')}
-          <input id="search-input" type="search" placeholder="악마 이름(한글·불어), 계급, 권능 검색..." value="${escapeHtml(searchQuery)}" aria-label="사전 검색">
+          <input id="search-input" type="search" placeholder="표제어(한글·영문/불어), 인물, 점술, 악마 검색..." value="${escapeHtml(searchQuery)}" aria-label="사전 검색">
         </div>
         <select id="sort-select" class="sort-select" aria-label="정렬 기준">
-          <option value="plate"${activeSort==='plate'?' selected':''}>원서 판화순</option>
-          <option value="ko"${activeSort==='ko'?' selected':''}>가나다순</option>
-          <option value="fr"${activeSort==='fr'?' selected':''}>불어 표제어순</option>
+          <option value="page"${activeSort==='page'?' selected':''}>1863 원서 페이지순 (A–Z)</option>
+          <option value="plate"${activeSort==='plate'?' selected':''}>판화 우선순</option>
+          <option value="ko"${activeSort==='ko'?' selected':''}>한글 가나다순</option>
+          <option value="fr"${activeSort==='fr'?' selected':''}>원문 알파벳순</option>
           <option value="legions"${activeSort==='legions'?' selected':''}>군단 규모순</option>
         </select>
       </div>
       <div class="category-pills" role="tablist" aria-label="분류 필터">${pillsHtml}</div>
+      <div class="letter-pills" role="tablist" aria-label="알파벳 색인">${lettersHtml}</div>
     </div>
     <div class="summary-bar">
-      <span>수록 항목 <strong>${list.length}</strong> / ${ENTRIES.length}편</span>
-      <span>열람 완료 <strong>${state.readIds.length}</strong>편</span>
+      <span>조건 일치 <strong>${list.length.toLocaleString()}</strong> / 전체 ${ENTRIES.length.toLocaleString()}편 (현재 ${shown.length.toLocaleString()}편 표시)</span>
+      <span>열람 완료 <strong>${state.readIds.length.toLocaleString()}</strong>편</span>
     </div>
-    ${list.length
-      ?`<div class="entry-list">${list.map(renderEntryCard).join('')}</div>`
+    ${shown.length
+      ?`<div class="entry-list">${shown.map(renderEntryCard).join('')}</div>
+        ${remaining>0?`<div class="load-more-wrap">
+          <button type="button" class="secondary load-more-btn" data-action="load-more">다음 항목 더 보기 (+${Math.min(PAGE_STEP,remaining)}편 / 남은 ${remaining.toLocaleString()}편)</button>
+        </div>`:''}`
       :`<div class="empty-state">검색 조건에 맞는 『지옥사전』 항목이 없습니다.</div>`}
   </section>`;
 }
 
 function renderGalleryTab(){
-  const list=filterEntries({category:activeCategory,sort:'plate'});
-  const pillsHtml=CATEGORIES.map(cat=>
-    `<button type="button" class="pill${activeCategory===cat.id?' active':''}" data-action="filter-category" data-category="${cat.id}">${escapeHtml(cat.label)}</button>`
+  const list=filterEntries({category:activeGalleryCategory,sort:'plate',onlyIllustrated:true});
+  const pillsHtml=GALLERY_CATEGORIES.map(cat=>
+    `<button type="button" class="pill${activeGalleryCategory===cat.id?' active':''}" data-action="filter-gallery-category" data-category="${cat.id}">${escapeHtml(cat.label)}</button>`
   ).join('');
 
   return `<section class="gallery-view">
@@ -149,7 +177,7 @@ function renderGalleryTab(){
       <div class="category-pills" role="tablist" aria-label="도감 분류 필터">${pillsHtml}</div>
     </div>
     <div class="summary-bar">
-      <span>루이 브르통(L. Breton) 1863년 목판화 <strong>${list.length}</strong>점</span>
+      <span>루이 브르통 (Louis Breton) 1863년 목판화 <strong>${list.length}</strong>점</span>
       <span>항목을 누르면 상세 해제를 봅니다</span>
     </div>
     <div class="plate-grid">
@@ -159,7 +187,7 @@ function renderGalleryTab(){
         </div>
         <div class="plate-caption">
           <strong>${escapeHtml(entry.nameKo)}</strong>
-          <span>No.${entry.plateNo} · ${escapeHtml(entry.nameFr.split(' ')[0])}</span>
+          <span>No.${entry.plateNo} · p.${entry.page1863}</span>
         </div>
       </article>`).join('')}
     </div>
@@ -184,12 +212,17 @@ function renderDailyTab(){
         </button>
       </div>
       <div class="daily-content">
-        <div class="daily-plate">
-          <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 판화">
-        </div>
+        ${entry.hasPlate&&entry.plate
+          ?`<div class="daily-plate">
+              <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 판화">
+            </div>`
+          :`<div class="daily-plate entry-monogram-wrap">
+              <span class="entry-monogram-letter" style="font-size:3rem">${escapeHtml(entry.letter||'A')}</span>
+              <span class="entry-monogram-page">1863년판 p.${entry.page1863}</span>
+            </div>`}
         <div class="daily-details">
-          <span class="entry-plate-no">판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863}</span>
-          <h2>${escapeHtml(entry.nameKo)} <small style="font-size:0.65em;color:var(--text-muted);font-weight:400">${escapeHtml(entry.nameFr)}</small></h2>
+          <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 p.${entry.page1863}</span>
+          <h2>${escapeHtml(entry.nameKo)}</h2>
           <div class="entry-rank-line">${escapeHtml(entry.rank)}${entry.legions?` · 휘하 ${entry.legions}개 군단`:''}</div>
           <div class="domain-tags">
             ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
@@ -216,7 +249,7 @@ function renderBookmarksTab(){
     <div class="panel">
       <h2>서재 열람 현황</h2>
       <p style="margin:0;color:var(--text-muted);font-size:0.88rem">
-        전체 ${ENTRIES.length}편 중 <strong>${readEntries.length}편</strong> 열람 완료 · 즐겨찾기 <strong>${bookmarkedEntries.length}편</strong> · 연구 노트 <strong>${notedEntries.length}건</strong>
+        전체 ${ENTRIES.length.toLocaleString()}편 중 <strong>${readEntries.length.toLocaleString()}편</strong> 열람 완료 · 즐겨찾기 <strong>${bookmarkedEntries.length.toLocaleString()}편</strong> · 연구 노트 <strong>${notedEntries.length.toLocaleString()}건</strong>
       </p>
     </div>
 
@@ -231,9 +264,9 @@ function renderBookmarksTab(){
       <h3>작성한 연구 노트 (${notedEntries.length})</h3>
       ${notedEntries.length
         ?`<div class="entry-list">${notedEntries.map(entry=>`<article class="entry-card" data-action="open-entry" data-id="${escapeHtml(entry.id)}">
-          <div class="entry-thumb-wrap"><img class="entry-thumb" src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)}"></div>
+          ${renderEntryThumb(entry)}
           <div class="entry-card-body">
-            <h4 class="entry-title-ko">${escapeHtml(entry.nameKo)} <span class="entry-title-fr">(${escapeHtml(entry.nameFr)})</span></h4>
+            <h4 class="entry-title-ko">${escapeHtml(entry.nameKo)}</h4>
             <p class="entry-summary">${escapeHtml(state.notes[entry.id])}</p>
           </div>
         </article>`).join('')}</div>`
@@ -271,8 +304,8 @@ function renderSettingsTab(){
 
       <div class="setting-row">
         <div class="setting-label">
-          <strong>1863년 프랑스어 원문 병기</strong>
-          <span>자크 콜랭 드 플랑시의 불어 원문 발췌문 표시</span>
+          <strong>1863년 프랑스어 원문 전문 병기</strong>
+          <span>자크 콜랭 드 플랑시 (Collin de Plancy)의 1863년 원문 표시</span>
         </div>
         <button type="button" class="${settings.showFrench?'primary':''}" data-action="toggle-french">
           ${settings.showFrench?'표시 중':'숨김'}
@@ -301,10 +334,10 @@ function renderSettingsTab(){
     <div class="panel">
       <h2>원전 및 판본 정보</h2>
       <p style="margin:0;font-size:0.84rem;color:var(--text-muted)">
-        • 원제: <em>Dictionnaire Infernal</em> (제6판, 1863년 파리 Henri Plon 간행)<br>
+        • 원제: <em>Dictionnaire Infernal</em> (제6판, 1863년 파리 Henri Plon 간행 · 전 3,810개 표제어 완역/수록)<br>
         • 저자: 자크 알뱅 시몽 콜랭 드 플랑시 (J.-A.-S. Collin de Plancy, 1794–1881)<br>
-        • 삽화: 루이 브르통 (Louis Breton) 원화 · 자로(Jarrault) 목판 조각<br>
-        • 라이선스: 퍼블릭 도메인 (Public Domain, Internet Archive &amp; BnF Gallica)
+        • 삽화: 루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각<br>
+        • 라이선스: 퍼블릭 도메인 (Public Domain, Internet Archive, BnF Gallica &amp; Wikisource)
       </p>
     </div>
   </section>`;
@@ -339,24 +372,24 @@ function openEntryModal(entryId){
   modalEl.innerHTML=`<div class="modal-inner">
     <div class="modal-top">
       <div>
-        <span class="entry-plate-no">판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863}</span>
-        <h2>${escapeHtml(entry.nameKo)} <small style="font-size:0.65em;color:var(--text-muted);font-weight:400">${escapeHtml(entry.nameFr)}</small></h2>
+        <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · p.${entry.page1863}</span>
+        <h2>${escapeHtml(entry.nameKo)}</h2>
         <div class="entry-rank-line">${escapeHtml(entry.rank)}${entry.legions?` · 휘하 ${entry.legions}개 군단`:''}</div>
       </div>
       <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
     </div>
 
     <div class="modal-detail-grid">
-      <div class="modal-plate-box">
+      ${entry.hasPlate&&entry.plate?`<div class="modal-plate-box">
         <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 판화">
-      </div>
+      </div>`:''}
       <div style="flex:1">
         <div class="domain-tags">
           ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
         </div>
-        <p style="margin:8px 0"><strong>외형 묘사:</strong> ${escapeHtml(entry.appearance)}</p>
+        ${entry.appearance?`<p style="margin:8px 0"><strong>외형 묘사:</strong> ${escapeHtml(entry.appearance)}</p>`:''}
         <p style="margin:8px 0">${escapeHtml(entry.description)}</p>
-        ${settings.showFrench?`<blockquote class="quote-box">“${escapeHtml(entry.quoteFr)}”<br><small>— J. Collin de Plancy, Dictionnaire Infernal (1863), p.${entry.page1863}</small></blockquote>`:''}
+        ${settings.showFrench?`<blockquote class="quote-box"><strong>1863년 원문 (${escapeHtml(entry.nameFr)}):</strong><br>“${escapeHtml(entry.quoteFr)}”<br><small>— J. Collin de Plancy, Dictionnaire Infernal (1863), p.${entry.page1863}</small></blockquote>`:''}
       </div>
     </div>
 
@@ -427,12 +460,12 @@ function openHelpModal(){
       <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
     </div>
     <p style="margin:0">
-      프랑스의 문필가 자크 콜랭 드 플랑시(1794–1881)가 저술하고 루이 브르통이 삽화를 그린 1863년 제6판 『지옥사전』을 웹과 안드로이드 앱에서 오프라인으로 탐색할 수 있도록 구성한 도감형 사전입니다.
+      프랑스의 문필가 자크 콜랭 드 플랑시 (Collin de Plancy, 1794–1881)가 저술하고 루이 브르통 (Louis Breton)이 삽화를 그린 1863년 제6판 『지옥사전 (Dictionnaire Infernal)』의 A–Z 전 항목(${ENTRIES.length.toLocaleString()}편)을 웹과 안드로이드 앱에서 오프라인으로 탐색할 수 있도록 구성한 백과사전입니다.
     </p>
     <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted)">
-      <li><strong>사전 탐색</strong>: 한글·프랑스어 이름, 계급, 군단 수, 권능 키워드로 즉시 검색합니다.</li>
-      <li><strong>삽화 도감</strong>: 1863년 초판본에서 추출한 루이 브르통의 오리지널 목판화를 감상합니다.</li>
-      <li><strong>오늘의 악마</strong>: 매일 날짜에 따라 선정된 항목을 읽거나 무작위로 새 항목을 소환합니다.</li>
+      <li><strong>A–Z 전 항목 수록</strong>: 악마뿐만 아니라 마법사, 점성술사, 연금술, 점술, 민간 미신, 전설, 마도서 등 A부터 Z까지 3,810개 표제어 전체를 수록했습니다.</li>
+      <li><strong>고유명사 영문/원문 병기</strong>: 모든 표제어와 주요 고유명사에 한글 표기와 영문/원어 표기(예: 아바리스 (Abaris))를 함께 표시합니다.</li>
+      <li><strong>삽화 도감</strong>: 1863년 초판본에서 추출한 루이 브르통의 오리지널 목판화 68점을 감상합니다.</li>
       <li><strong>서재 기록</strong>: 즐겨찾기·열람 완료 항목과 개인 연구 노트를 모아 보고 JSON으로 백업합니다.</li>
     </ul>
     <div class="modal-actions">
@@ -471,7 +504,7 @@ async function handleExportBackup(){
 document.addEventListener('click',event=>{
   const target=event?.target?.closest?.('[data-tab],[data-action]');
   if(!target)return;
-  const {tab,action,id,category,theme,fontsize}=target.dataset||{};
+  const {tab,action,id,category,letter,theme,fontsize}=target.dataset||{};
 
   if(tab){
     activeTab=tab;
@@ -493,7 +526,8 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='random'||action==='reroll-daily'){
-    const pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
+    const pool=action==='reroll-daily'?ILLUSTRATED_ENTRIES:ENTRIES;
+    const pick=pool[Math.floor(Math.random()*pool.length)];
     randomOverrideId=pick.id;
     if(action==='random')openEntryModal(pick.id);
     render();
@@ -507,6 +541,26 @@ document.addEventListener('click',event=>{
 
   if(action==='filter-category'&&category){
     activeCategory=category;
+    visibleLimit=PAGE_STEP;
+    render();
+    return;
+  }
+
+  if(action==='filter-gallery-category'&&category){
+    activeGalleryCategory=category;
+    render();
+    return;
+  }
+
+  if(action==='filter-letter'&&letter){
+    activeLetter=letter;
+    visibleLimit=PAGE_STEP;
+    render();
+    return;
+  }
+
+  if(action==='load-more'){
+    visibleLimit+=PAGE_STEP;
     render();
     return;
   }
@@ -596,6 +650,7 @@ document.addEventListener('click',event=>{
 document.addEventListener('input',event=>{
   if(event?.target?.id==='search-input'){
     searchQuery=event.target.value||'';
+    visibleLimit=PAGE_STEP;
     render();
     const input=document.querySelector?.('#search-input');
     input?.focus?.();
@@ -604,7 +659,8 @@ document.addEventListener('input',event=>{
 
 document.addEventListener('change',event=>{
   if(event?.target?.id==='sort-select'){
-    activeSort=event.target.value||'plate';
+    activeSort=event.target.value||'page';
+    visibleLimit=PAGE_STEP;
     render();
   }
 });

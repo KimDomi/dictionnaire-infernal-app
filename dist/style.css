@@ -741,3 +741,70 @@ dialog#modal::backdrop {
 #toast.show {
   opacity: 1;
 }
+
+/* A-Z Alphabet Index Bar & Monogram Badge */
+.letter-pills {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+}
+
+.letter-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.letter-pill {
+  min-width: 32px;
+  height: 30px;
+  padding: 0 9px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  white-space: nowrap;
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+}
+
+.letter-pill.active {
+  background: var(--gold);
+  color: #181411;
+  border-color: transparent;
+}
+
+.entry-monogram-wrap {
+  flex-direction: column;
+  background: linear-gradient(145deg, var(--bg-soft), var(--bg-elevated));
+  color: var(--gold);
+  gap: 2px;
+}
+
+.entry-monogram-letter {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.entry-monogram-page {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+}
+
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
+}
+
+.load-more-btn {
+  width: 100%;
+  max-width: 360px;
+  padding: 11px 18px;
+  font-weight: 600;
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
