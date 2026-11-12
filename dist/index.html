@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#151312">
+  <meta name="description" content="자크 콜랭 드 플랑시의 1863년 제6판 『지옥사전(Dictionnaire Infernal)』 루이 브르통 판화 도감 및 오컬트 백과사전">
+  <style>
+    :root{color-scheme:dark;background:#151312}
+    :root[data-theme=light]{color-scheme:light;background:#f4eee1}
+  </style>
+  <script>
+    (()=>{
+      let mode='dark';
+      try{
+        const saved=JSON.parse(localStorage.getItem('dictionnaire-infernal-settings-v1'));
+        if(['light','dark','system'].includes(saved?.theme))mode=saved.theme;
+        if(['normal','large'].includes(saved?.fontSize))document.documentElement.dataset.fontsize=saved.fontSize;
+      }catch{}
+      const dark=mode==='dark'||(mode==='system'&&typeof matchMedia==='function'&&matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.dataset.theme=dark?'dark':'light';
+      document.querySelector('meta[name="theme-color"]')?.setAttribute('content',dark?'#151312':'#f4eee1');
+    })();
+  </script>
+  <title>지옥사전 — Dictionnaire Infernal (1863)</title>
+  <link rel="stylesheet" href="style.css?v=3f7ad0b41090">
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="brand-heading">
+        <span class="edition-tag">PARIS · 1863 · 6e ÉDITION</span>
+        <h1>지옥사전</h1>
+      </div>
+      <div class="header-actions">
+        <button id="btn-random-entry" class="secondary header-random" data-action="random" aria-label="무작위 항목 열람">
+          <svg class="ui-icon" data-icon="shuffle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+          무작위 열람
+        </button>
+        <button id="btn-help" class="help" data-action="help" aria-label="해제 및 안내">?</button>
+      </div>
+    </header>
+
+    <main id="main"></main>
+
+    <nav aria-label="주 메뉴">
+      <button id="tab-dictionary" data-tab="dictionary" class="active">
+        <span aria-hidden="true"><svg class="ui-icon" data-icon="dictionary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19v16H6.5a2.5 2.5 0 0 0 0 5H20"/><path d="M9 7h6M9 11h4"/></svg></span>
+        사전 탐색
+      </button>
+      <button id="tab-gallery" data-tab="gallery">
+        <span aria-hidden="true"><svg class="ui-icon" data-icon="gallery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        삽화 도감
+      </button>
+      <button id="tab-daily" data-tab="daily">
+        <span aria-hidden="true"><svg class="ui-icon" data-icon="daily" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 2.5 14.4 8l5.6.5-4.3 3.7 1.3 5.5L12 14.8l-5 2.9 1.3-5.5L4 8.5 9.6 8 12 2.5Z"/></svg></span>
+        오늘의 악마
+      </button>
+      <button id="tab-bookmarks" data-tab="bookmarks">
+        <span aria-hidden="true"><svg class="ui-icon" data-icon="bookmarks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1Z"/></svg></span>
+        서재 기록
+      </button>
+      <button id="tab-settings" data-tab="settings">
+        <span aria-hidden="true"><svg class="ui-icon" data-icon="settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 3-.5 2-2 .9-1.9-.5-2 3.4 1.5 1.5v2.4L2.6 14l2 3.4 1.9-.5 2 .9L9 20h4l.5-2.2 2-.9 1.9.5 2-3.4-1.5-1.3v-2.4l1.5-1.5-2-3.4-1.9.5-2-.9L13 3Z" transform="translate(1 .5)"/><circle cx="12" cy="12" r="3"/></svg></span>
+        설정
+      </button>
+    </nav>
+  </div>
+
+  <dialog id="modal"></dialog>
+  <input type="file" id="backupfile" accept=".json,application/json" hidden>
+  <div id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="app.js?v=fc9fa8f03ce7"></script>
+</body>
+</html>

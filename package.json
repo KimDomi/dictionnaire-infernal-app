@@ -1,0 +1,25 @@
+{
+  "name": "dictionnaire-infernal-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node serve.mjs",
+    "test": "node --experimental-vm-modules test-startup.mjs && node test.mjs && node test-backup.mjs && node test-native.mjs",
+    "check": "node --check dist/app.js && npm test",
+    "plates": "node scripts-plates.mjs",
+    "version-assets": "node scripts-versions.mjs",
+    "deploy": "wrangler deploy",
+    "android:sync": "node scripts-versions.mjs && cap sync android",
+    "android:open": "cap open android",
+    "android:debug": "npm run android:sync && cd android && ./gradlew assembleDebug && node ../scripts-android-artifact.mjs"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "8.6.0",
+    "wrangler": "4.157.0"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/core": "8.6.0"
+  }
+}

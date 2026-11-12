@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">지옥사전</string>
+    <string name="title_activity_main">지옥사전</string>
+    <string name="package_name">com.kimdomi.dictionnaireinfernal</string>
+    <string name="custom_url_scheme">com.kimdomi.dictionnaireinfernal</string>
+</resources>

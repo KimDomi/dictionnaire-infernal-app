@@ -1,0 +1,8 @@
+{
+  "appId": "com.kimdomi.dictionnaireinfernal",
+  "appName": "지옥사전",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false
+  }
+}
