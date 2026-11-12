@@ -302,17 +302,18 @@ function renderEntryDetailPage(entry){
   return `<section class="entry-detail-page">
     <div class="detail-topbar">
       <button type="button" class="detail-back-btn" data-action="close-entry">
-        ${escapeHtml(backLabel)}
+        <span class="back-text-full">${escapeHtml(backLabel)}</span>
+        <span class="back-text-short">← 목록</span>
       </button>
       <div class="detail-top-actions">
         <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
-          ${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기'}
+          ${isBookmarked?'★ 즐겨찾기':'☆ 즐겨찾기'}
         </button>
         <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">
-          ${isRead?'✓ 열람 완료':'열람 표시'}
+          ${isRead?'✓ 열람 완료':'열람'}
         </button>
         <button type="button" class="secondary" data-action="toggle-french">
-          ${settings.showFrench?'불문 원문 숨김':'불문 원문 함께 보기'}
+          ${settings.showFrench?'FR 닫기':'FR 원문'}
         </button>
       </div>
     </div>
@@ -321,11 +322,24 @@ function renderEntryDetailPage(entry){
   </section>`;
 }
 
-function renderDictionaryTab(){
+function renderDictionaryResults(){
   const list=filterEntries({query:searchQuery,category:activeCategory,letter:activeLetter,sort:activeSort});
   const shown=list.slice(0,visibleLimit);
   const remaining=Math.max(0,list.length-shown.length);
 
+  return `<div class="summary-bar">
+    <span>조건 일치 <strong>${list.length.toLocaleString()}</strong> / 전체 ${ENTRIES.length.toLocaleString()}편 (현재 ${shown.length.toLocaleString()}편 표시)</span>
+    <span>열람 완료 <strong>${state.readIds.length.toLocaleString()}</strong>편</span>
+  </div>
+  ${shown.length
+    ?`<div class="entry-list">${shown.map(renderEntryCard).join('')}</div>
+      ${remaining>0?`<div class="load-more-wrap">
+        <button type="button" class="secondary load-more-btn" data-action="load-more">다음 항목 더 보기 (+${Math.min(PAGE_STEP,remaining)}편 / 남은 ${remaining.toLocaleString()}편)</button>
+      </div>`:''}`
+    :`<div class="empty-state">검색 조건에 맞는 『지옥사전』 항목이 없습니다.</div>`}`;
+}
+
+function renderDictionaryTab(){
   const pillsHtml=CATEGORIES.map(cat=>
     `<button type="button" class="pill${activeCategory===cat.id?' active':''}" data-action="filter-category" data-category="${cat.id}">${escapeHtml(cat.label)}</button>`
   ).join('');
@@ -352,16 +366,9 @@ function renderDictionaryTab(){
       <div class="category-pills" role="tablist" aria-label="분류 필터">${pillsHtml}</div>
       <div class="letter-pills" role="tablist" aria-label="알파벳 색인">${lettersHtml}</div>
     </div>
-    <div class="summary-bar">
-      <span>조건 일치 <strong>${list.length.toLocaleString()}</strong> / 전체 ${ENTRIES.length.toLocaleString()}편 (현재 ${shown.length.toLocaleString()}편 표시)</span>
-      <span>열람 완료 <strong>${state.readIds.length.toLocaleString()}</strong>편</span>
+    <div id="dict-results">
+      ${renderDictionaryResults()}
     </div>
-    ${shown.length
-      ?`<div class="entry-list">${shown.map(renderEntryCard).join('')}</div>
-        ${remaining>0?`<div class="load-more-wrap">
-          <button type="button" class="secondary load-more-btn" data-action="load-more">다음 항목 더 보기 (+${Math.min(PAGE_STEP,remaining)}편 / 남은 ${remaining.toLocaleString()}편)</button>
-        </div>`:''}`
-      :`<div class="empty-state">검색 조건에 맞는 『지옥사전』 항목이 없습니다.</div>`}
   </section>`;
 }
 
@@ -431,13 +438,13 @@ function renderDailyTab(){
     <div class="detail-topbar" style="justify-content:flex-end">
       <div class="detail-top-actions">
         <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
-          ${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기'}
+          ${isBookmarked?'★ 즐겨찾기':'☆ 즐겨찾기'}
         </button>
         <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">
-          ${isRead?'✓ 열람 완료됨':'열람 표시'}
+          ${isRead?'✓ 열람 완료됨':'열람'}
         </button>
         <button type="button" class="secondary" data-action="toggle-french">
-          ${settings.showFrench?'불문 원문 숨김':'불문 원문 함께 보기'}
+          ${settings.showFrench?'FR 닫기':'FR 원문'}
         </button>
       </div>
     </div>
@@ -554,7 +561,15 @@ function render(){
     syncWakeLock();
     return;
   }
-  if(activeTab==='dictionary')mainEl.innerHTML=renderDictionaryTab();
+  if(activeTab==='dictionary'){
+    const resultsEl=mainEl?.querySelector?.('#dict-results');
+    const inputEl=mainEl?.querySelector?.('#search-input');
+    if(resultsEl&&inputEl&&document.activeElement===inputEl){
+      resultsEl.innerHTML=renderDictionaryResults();
+    }else{
+      mainEl.innerHTML=renderDictionaryTab();
+    }
+  }
   else if(activeTab==='gallery')mainEl.innerHTML=renderGalleryTab();
   else if(activeTab==='daily')mainEl.innerHTML=renderDailyTab();
   else if(activeTab==='bookmarks')mainEl.innerHTML=renderBookmarksTab();
@@ -854,7 +869,7 @@ document.addEventListener('click',event=>{
 
   if(action==='load-more'){
     visibleLimit+=PAGE_STEP;
-    render();
+    updateDictionaryResults();
     return;
   }
 
@@ -1024,35 +1039,20 @@ document.addEventListener('keydown',event=>{
   }
 });
 
-let searchComposing=false;
-
-function applySearchInput(value){
-  searchQuery=value||'';
-  visibleLimit=PAGE_STEP;
-  render();
-  const input=document.querySelector?.('#search-input');
-  if(input){
-    input.focus?.();
-    const end=String(input.value||'').length;
-    try{input.setSelectionRange?.(end,end);}catch{}
+function updateDictionaryResults(){
+  const resultsEl=document.querySelector?.('#dict-results');
+  if(resultsEl&&resultsEl.tagName){
+    resultsEl.innerHTML=renderDictionaryResults();
+  }else{
+    render();
   }
 }
 
-document.addEventListener('compositionstart',event=>{
-  if(event?.target?.id==='search-input')searchComposing=true;
-});
-
-document.addEventListener('compositionend',event=>{
-  if(event?.target?.id==='search-input'){
-    searchComposing=false;
-    applySearchInput(event.target.value);
-  }
-});
-
 document.addEventListener('input',event=>{
   if(event?.target?.id==='search-input'){
-    if(searchComposing||event.isComposing)return;
-    applySearchInput(event.target.value);
+    searchQuery=event.target.value||'';
+    visibleLimit=PAGE_STEP;
+    updateDictionaryResults();
   }
 });
 
@@ -1060,7 +1060,7 @@ document.addEventListener('change',event=>{
   if(event?.target?.id==='sort-select'){
     activeSort=event.target.value||'page';
     visibleLimit=PAGE_STEP;
-    render();
+    updateDictionaryResults();
   }
 });
 

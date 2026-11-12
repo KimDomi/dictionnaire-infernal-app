@@ -67,6 +67,15 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.includes('아론 (Aaron)'));
   assert.ok(main.innerHTML.includes('아바리스 (Abaris)'));
 
+  // Test search input without destroying active input
+  for(const fn of handlers.input||[]){
+    fn({target:{id:'search-input',value:'Buer'}});
+  }
+  assert.ok(main.innerHTML.includes('뷰에르 (Buer)'));
+  for(const fn of handlers.input||[]){
+    fn({target:{id:'search-input',value:''}});
+  }
+
   const click=dataset=>{
     for(const fn of handlers.click||[]){
       fn({target:{closest:()=>({dataset})}});
