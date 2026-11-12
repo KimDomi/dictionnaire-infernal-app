@@ -931,3 +931,60 @@ installNativeNavigation(
 );
 
 render();
+
+// PC: drag-to-scroll and wheel-to-horizontal for pill rows (category / letter)
+(function setupPillRowDragScroll(){
+  let row=null;
+  let startX=0;
+  let startScroll=0;
+  let moved=false;
+  const findRow=target=>target?.closest?.('.category-pills, .letter-pills')||null;
+
+  document.addEventListener('mousedown',event=>{
+    if(event.button!==undefined&&event.button!==0)return;
+    row=findRow(event?.target);
+    if(!row)return;
+    startX=event.clientX;
+    startScroll=row.scrollLeft;
+    moved=false;
+  });
+
+  document.addEventListener('mousemove',event=>{
+    if(!row)return;
+    const dx=event.clientX-startX;
+    if(!moved&&Math.abs(dx)>5){
+      moved=true;
+      row.classList?.add('dragging');
+    }
+    if(moved){
+      row.scrollLeft=startScroll-dx;
+      event.preventDefault?.();
+    }
+  });
+
+  document.addEventListener('mouseup',()=>{
+    if(!row)return;
+    row.classList?.remove('dragging');
+    row=null;
+  });
+
+  // Swallow the click that ends a drag so a pill isn't selected accidentally
+  document.addEventListener('click',event=>{
+    if(moved){
+      moved=false;
+      if(findRow(event?.target)){
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    }
+  },true);
+
+  document.addEventListener('wheel',event=>{
+    const r=findRow(event?.target);
+    if(!r||r.scrollWidth<=r.clientWidth)return;
+    if(Math.abs(event.deltaY)>Math.abs(event.deltaX)){
+      r.scrollLeft+=event.deltaY;
+      event.preventDefault?.();
+    }
+  },{passive:false});
+})();

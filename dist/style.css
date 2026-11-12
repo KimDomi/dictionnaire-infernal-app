@@ -1100,3 +1100,20 @@ dialog#modal::backdrop {
   border-color: var(--gold);
   color: var(--gold);
 }
+
+.category-pills,
+.letter-pills {
+  cursor: grab;
+  scrollbar-width: none;
+}
+
+.category-pills::-webkit-scrollbar,
+.letter-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.category-pills.dragging,
+.letter-pills.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
