@@ -37,6 +37,38 @@ let activeSort='page';
 let visibleLimit=PAGE_STEP;
 let activeEntryId=null;
 let savedScrollY=0;
+
+const tabEntryIds={
+  dictionary:null,
+  gallery:null,
+  bookmarks:null
+};
+
+const tabScrollY={
+  dictionary:0,
+  gallery:0,
+  daily:0,
+  bookmarks:0,
+  settings:0
+};
+
+const savedPillScrolls={
+  category:0,
+  letter:0,
+  galleryCategory:0
+};
+
+function restorePillScrolls(){
+  if(!mainEl)return;
+  const catPills=mainEl.querySelector?.('.category-pills');
+  if(catPills){
+    catPills.scrollLeft=activeTab==='gallery'?savedPillScrolls.galleryCategory:savedPillScrolls.category;
+  }
+  const letPills=mainEl.querySelector?.('.letter-pills');
+  if(letPills){
+    letPills.scrollLeft=savedPillScrolls.letter;
+  }
+}
 let randomOverrideId=null;
 let activeWakeLock=null;
 let toastTimer=null;
@@ -396,8 +428,7 @@ function renderDailyTab(){
   const isRead=state.readIds.includes(entry.id);
 
   return `<section class="entry-detail-page daily-view" aria-label="무작위 지옥사전 표제어">
-    <div class="detail-topbar">
-      <span class="swipe-guide">← 좌우로 밀어서 다음 무작위 항목 넘기기 →</span>
+    <div class="detail-topbar" style="justify-content:flex-end">
       <div class="detail-top-actions">
         <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
           ${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기'}
@@ -412,6 +443,7 @@ function renderDailyTab(){
     </div>
 
     ${renderEntryArticleCard(entry)}
+    <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
   </section>`;
 }
 
@@ -502,22 +534,32 @@ function renderSettingsTab(){
 
 function render(){
   if(!mainEl)return;
+  const curCat=mainEl.querySelector?.('.category-pills');
+  if(curCat){
+    if(activeTab==='gallery')savedPillScrolls.galleryCategory=curCat.scrollLeft;
+    else savedPillScrolls.category=curCat.scrollLeft;
+  }
+  const curLet=mainEl.querySelector?.('.letter-pills');
+  if(curLet){
+    savedPillScrolls.letter=curLet.scrollLeft;
+  }
+
   for(const btn of document.querySelectorAll?.('nav button[data-tab]')||[]){
     btn.classList?.toggle?.('active',btn.dataset?.tab===activeTab);
   }
+  if(headerTitleEl)headerTitleEl.textContent=TAB_TITLES[activeTab]||'지옥사전';
   const activeEntry=activeEntryId?ENTRY_MAP.get(activeEntryId):null;
   if(activeEntry){
-    if(headerTitleEl)headerTitleEl.textContent=activeEntry.nameKo;
     mainEl.innerHTML=renderEntryDetailPage(activeEntry);
     syncWakeLock();
     return;
   }
-  if(headerTitleEl)headerTitleEl.textContent=TAB_TITLES[activeTab]||'지옥사전';
   if(activeTab==='dictionary')mainEl.innerHTML=renderDictionaryTab();
   else if(activeTab==='gallery')mainEl.innerHTML=renderGalleryTab();
   else if(activeTab==='daily')mainEl.innerHTML=renderDailyTab();
   else if(activeTab==='bookmarks')mainEl.innerHTML=renderBookmarksTab();
   else if(activeTab==='settings')mainEl.innerHTML=renderSettingsTab();
+  restorePillScrolls();
   syncWakeLock();
 }
 
@@ -525,16 +567,19 @@ function openEntryPage(entryId,pushHistory=true){
   const entry=ENTRY_MAP.get(entryId);
   if(!entry)return;
   if(!activeEntryId&&typeof window!=='undefined'){
-    savedScrollY=window.scrollY||0;
+    tabScrollY[activeTab]=window.scrollY||0;
   }
   activeEntryId=entry.id;
+  if(activeTab in tabEntryIds){
+    tabEntryIds[activeTab]=entry.id;
+  }
   if(!state.readIds.includes(entry.id)){
     state.readIds.push(entry.id);
     saveUserState();
   }
   if(pushHistory&&typeof window!=='undefined'&&window.history?.pushState){
     try{
-      window.history.pushState({entryId:entry.id},'',`#entry=${encodeURIComponent(entry.id)}`);
+      window.history.pushState({entryId:entry.id,tab:activeTab},'',`#entry=${encodeURIComponent(entry.id)}`);
     }catch{}
   }
   render();
@@ -546,6 +591,9 @@ function openEntryPage(entryId,pushHistory=true){
 function closeEntryPage(fromPopState=false){
   if(!activeEntryId)return;
   activeEntryId=null;
+  if(activeTab in tabEntryIds){
+    tabEntryIds[activeTab]=null;
+  }
   if(!fromPopState&&typeof window!=='undefined'&&window.location?.hash?.startsWith('#entry=')){
     try{
       window.history?.replaceState?.(null,'',window.location.pathname+window.location.search);
@@ -553,7 +601,7 @@ function closeEntryPage(fromPopState=false){
   }
   render();
   if(typeof window!=='undefined'){
-    window.scrollTo?.({top:savedScrollY,behavior:'instant'});
+    window.scrollTo?.({top:tabScrollY[activeTab]||0,behavior:'instant'});
   }
 }
 
@@ -608,20 +656,83 @@ function openBackupModal(){
   if(!modalEl.open)modalEl.showModal?.();
 }
 
-function openSettingsHelpModal(){
+function openHelpModal(){
   if(!modalEl)return;
+  let title='도움말';
+  let bodyHtml='';
+
+  if(activeEntryId){
+    title='상세 열람 안내';
+    bodyHtml=`<p style="margin:0">
+      선택한 표제어의 1863년 제6판 전문 번역과 상세 정보를 열람하는 화면입니다.
+    </p>
+    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>좌우 넘기기</strong>: 화면을 좌우로 스와이프하거나 마우스 드래그, 좌우 화살표 키로 이전·다음 항목으로 바로 이동할 수 있습니다.</li>
+      <li><strong>불문 원문 함께 보기</strong>: 상단의 버튼으로 자크 콜랭 드 플랑시의 1863년 프랑스어 오리지널 원문을 펼쳐 대조할 수 있습니다.</li>
+      <li><strong>즐겨찾기 및 열람 표시</strong>: 상단 버튼으로 서재에 저장하거나 읽음 상태를 관리합니다.</li>
+      <li><strong>목록 복귀</strong>: 상단 '← 목록으로 돌아가기' 버튼이나 브라우저 뒤로가기를 누르면 이전에 보던 목록 위치로 그대로 복귀합니다.</li>
+    </ul>`;
+  }else if(activeTab==='dictionary'){
+    title='사전 탐색 안내';
+    bodyHtml=`<p style="margin:0">
+      1863년 제6판 『지옥사전』 A–Z 전 항목(${ENTRIES.length.toLocaleString()}편)을 색인·검색할 수 있는 사전입니다.
+    </p>
+    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>검색</strong>: 한글 표제어뿐만 아니라 원문 표기(라틴어/불어/영어), 본문 속 인물·용어로 검색할 수 있습니다.</li>
+      <li><strong>분류 및 알파벳 색인</strong>: 상단 태그 줄과 A–Z 알파벳 줄을 좌우로 드래그(또는 마우스 휠)하여 원하는 분류로 빠르게 압축합니다.</li>
+      <li><strong>정렬</strong>: 원서 페이지순, 가나다순, 알파벳순, 군단 많은 순으로 목록을 정렬할 수 있습니다.</li>
+      <li><strong>항목 열람</strong>: 카드를 누르면 전문 상세 페이지가 열리며, 좌우 스와이프로 연속 열람이 가능합니다.</li>
+    </ul>`;
+  }else if(activeTab==='gallery'){
+    title='삽화 도감 안내';
+    bodyHtml=`<p style="margin:0">
+      1863년 초판본에서 추출한 화가 루이 브르통 (Louis Breton)의 오리지널 목판화 68점을 감상하는 도감입니다.
+    </p>
+    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>위계별 세분화</strong>: 상단 태그를 통해 지옥 군주, 대공·후작·총재, 하급 악마·괴이, 고대 신격·사바트로 나누어 감상할 수 있습니다.</li>
+      <li><strong>도상 및 묘사</strong>: 카드를 열면 각 악마의 형상 묘사와 루이 브르통의 세밀한 목판화를 크게 감상할 수 있습니다.</li>
+      <li><strong>연속 감상</strong>: 상세 페이지에서 좌우로 스와이프하면 도감 순서대로 다음 판화로 바로 넘어갑니다.</li>
+    </ul>`;
+  }else if(activeTab==='daily'){
+    title='무작위 열람 안내';
+    bodyHtml=`<p style="margin:0">
+      3,810편의 방대한 악마·미신·오컬트 표제어 중 하나를 무작위로 탐색하는 공간입니다.
+    </p>
+    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>스와이프 넘기기</strong>: 화면을 좌우로 밀거나 마우스 드래그, 좌우 화살표 키를 누르면 다음 무작위 항목으로 즉시 전환됩니다.</li>
+      <li><strong>자동 열람 완료</strong>: 페이지를 넘기며 읽은 항목은 자동으로 서재의 '열람 완료'에 기록됩니다.</li>
+      <li><strong>즐겨찾기 저장</strong>: 흥미로운 악마나 전승을 발견하면 상단 ★ 즐겨찾기를 눌러 서재에 보관하세요.</li>
+    </ul>`;
+  }else if(activeTab==='bookmarks'){
+    title='서재 기록 안내';
+    bodyHtml=`<p style="margin:0">
+      지금까지의 독서 진도와 마음에 드는 표제어를 모아 관리하는 개인 서재입니다.
+    </p>
+    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>열람 현황</strong>: 전체 3,810편 중 몇 편을 읽었는지 진도율을 확인할 수 있습니다.</li>
+      <li><strong>즐겨찾기 모아보기</strong>: 상세 페이지에서 ★를 누른 항목들이 여기에 보관됩니다.</li>
+      <li><strong>데이터 안전 보관</strong>: 설정 탭의 내보내기 기능을 이용하면 기기를 변경해도 서재 기록을 그대로 복원할 수 있습니다.</li>
+    </ul>`;
+  }else if(activeTab==='settings'){
+    title='설정 안내';
+    bodyHtml=`<p style="margin:0">
+      지옥사전의 화면 테마와 독서 환경, 서재 데이터를 관리합니다.
+    </p>
+    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>테마 모드</strong>: 어두운 흑요석(다크) 또는 고서 양피지(라이트) 모드를 지원합니다.</li>
+      <li><strong>글자 크기</strong>: 본문 및 번역문의 글씨 크기를 조절합니다.</li>
+      <li><strong>1863년 불문 원문</strong>: 자크 콜랭 드 플랑시의 1863년 프랑스어 전문을 함께 표시할지 선택합니다.</li>
+      <li><strong>화면 켜짐 유지</strong>: 독서 중 화면이 자동으로 꺼지지 않도록 방지합니다.</li>
+      <li><strong>서재 정보 관리</strong>: ${escapeHtml(storageNotice())}</li>
+    </ul>`;
+  }
+
   modalEl.innerHTML=`<div class="modal-inner">
     <div class="modal-top">
-      <h2>설정 도움말</h2>
+      <h2>${escapeHtml(title)}</h2>
       <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
     </div>
-    <ul style="margin:0;padding-left:18px;font-size:0.9rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
-      <li><strong>테마 모드</strong>: 어두운 흑요석 테마 또는 고서 양피지 테마</li>
-      <li><strong>글자 크기</strong>: 본문 및 해설 가독성 조절</li>
-      <li><strong>1863년 프랑스어 원문 전문 병기</strong>: 자크 콜랭 드 플랑시 (Collin de Plancy)의 1863년 원문 표시</li>
-      <li><strong>열람 중 화면 켜짐 유지</strong>: 상세 열람 및 무작위 열람 화면에서 꺼짐 방지</li>
-      <li><strong>서재 정보 관리</strong>: ${escapeHtml(storageNotice())}</li>
-    </ul>
+    ${bodyHtml}
     <div class="modal-actions">
       <button type="button" class="primary" data-action="close">확인</button>
     </div>
@@ -629,27 +740,8 @@ function openSettingsHelpModal(){
   if(!modalEl.open)modalEl.showModal?.();
 }
 
-function openHelpModal(){
-  if(!modalEl)return;
-  modalEl.innerHTML=`<div class="modal-inner">
-    <div class="modal-top">
-      <h2>『지옥사전 (Dictionnaire Infernal)』 안내</h2>
-      <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
-    </div>
-    <p style="margin:0">
-      프랑스의 문필가 자크 콜랭 드 플랑시 (Collin de Plancy, 1794–1881)가 저술하고 루이 브르통 (Louis Breton)이 삽화를 그린 1863년 제6판 『지옥사전 (Dictionnaire Infernal)』의 A–Z 전 항목(${ENTRIES.length.toLocaleString()}편)을 웹과 안드로이드 앱에서 오프라인으로 탐색할 수 있도록 구성한 백과사전입니다.
-    </p>
-    <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted)">
-      <li><strong>A–Z 전 항목 수록</strong>: 악마뿐만 아니라 마법사, 점성술사, 연금술, 점술, 민간 미신, 전설, 마도서 등 A부터 Z까지 3,810개 표제어 전체를 수록했습니다.</li>
-      <li><strong>고유명사 영문/원문 병기</strong>: 모든 표제어와 주요 고유명사에 한글 표기와 영문/원어 표기(예: 아바리스 (Abaris))를 함께 표시합니다.</li>
-      <li><strong>삽화 도감</strong>: 1863년 초판본에서 추출한 루이 브르통의 오리지널 목판화 68점을 감상합니다.</li>
-      <li><strong>서재 기록</strong>: 즐겨찾기·열람 완료 항목을 모아 보고 JSON으로 백업합니다.</li>
-    </ul>
-    <div class="modal-actions">
-      <button type="button" class="primary" data-action="close">확인</button>
-    </div>
-  </div>`;
-  if(!modalEl.open)modalEl.showModal?.();
+function openSettingsHelpModal(){
+  openHelpModal();
 }
 
 async function handleExportBackup(){
@@ -684,14 +776,22 @@ document.addEventListener('click',event=>{
   const {tab,action,id,category,letter,theme,fontsize}=target.dataset||{};
 
   if(tab){
-    activeEntryId=null;
-    if(tab==='daily'){
-      activeTab='daily';
-      advanceRandomEntry();
+    if(tab===activeTab){
+      if(tab==='daily'){
+        advanceRandomEntry();
+      }
       return;
     }
+    if(typeof window!=='undefined'){
+      tabScrollY[activeTab]=window.scrollY||0;
+    }
     activeTab=tab;
+    activeEntryId=tabEntryIds[tab]||null;
     render();
+    if(typeof window!=='undefined'){
+      const targetY=activeEntryId?0:(tabScrollY[tab]||0);
+      window.scrollTo?.({top:targetY,behavior:'instant'});
+    }
     return;
   }
 
@@ -1016,6 +1116,12 @@ render();
     }
     if(moved){
       row.scrollLeft=startScroll-dx;
+      if(row.classList.contains('category-pills')){
+        if(activeTab==='gallery')savedPillScrolls.galleryCategory=row.scrollLeft;
+        else savedPillScrolls.category=row.scrollLeft;
+      }else if(row.classList.contains('letter-pills')){
+        savedPillScrolls.letter=row.scrollLeft;
+      }
       event.preventDefault?.();
     }
   });
@@ -1042,7 +1148,24 @@ render();
     if(!r||r.scrollWidth<=r.clientWidth)return;
     if(Math.abs(event.deltaY)>Math.abs(event.deltaX)){
       r.scrollLeft+=event.deltaY;
+      if(r.classList.contains('category-pills')){
+        if(activeTab==='gallery')savedPillScrolls.galleryCategory=r.scrollLeft;
+        else savedPillScrolls.category=r.scrollLeft;
+      }else if(r.classList.contains('letter-pills')){
+        savedPillScrolls.letter=r.scrollLeft;
+      }
       event.preventDefault?.();
     }
   },{passive:false});
+
+  document.addEventListener('scroll',event=>{
+    const target=event?.target;
+    if(!target?.classList)return;
+    if(target.classList.contains('category-pills')){
+      if(activeTab==='gallery')savedPillScrolls.galleryCategory=target.scrollLeft;
+      else savedPillScrolls.category=target.scrollLeft;
+    }else if(target.classList.contains('letter-pills')){
+      savedPillScrolls.letter=target.scrollLeft;
+    }
+  },{capture:true,passive:true});
 })();

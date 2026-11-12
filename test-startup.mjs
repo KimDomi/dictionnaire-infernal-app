@@ -77,11 +77,20 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.includes('class="plate-grid"'));
   assert.equal(header.textContent,'삽화 도감');
 
+  click({action:'help'});
+  assert.ok(modal.innerHTML.includes('삽화 도감 안내'));
+  click({action:'close'});
+
   click({tab:'daily'});
   assert.ok(main.innerHTML.includes('무작위 지옥사전 표제어'));
+  assert.ok(main.innerHTML.includes('← 좌우로 밀어서 이전 / 다음 항목 넘기기 →'));
   assert.ok(!main.innerHTML.includes('전체 화면으로 상세 보기'));
   assert.ok(!main.innerHTML.includes('다른 항목 뽑기'));
   assert.equal(header.textContent,'무작위 열람');
+
+  click({action:'help'});
+  assert.ok(modal.innerHTML.includes('무작위 열람 안내'));
+  click({action:'close'});
 
   for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:240,clientY:200}]});
   for(const fn of handlers.touchend||[])fn({changedTouches:[{clientX:60,clientY:205}]});
@@ -94,6 +103,10 @@ async function run(initial,native=false){
   assert.equal(header.textContent,'설정');
   assert.ok(main.innerHTML.includes('data-action="backup"'));
 
+  click({action:'help'});
+  assert.ok(modal.innerHTML.includes('설정 안내'));
+  click({action:'close'});
+
   click({action:'backup'});
   assert.ok(modal.open);
   assert.ok(modal.innerHTML.includes('파일로 내보내기'));
@@ -102,12 +115,23 @@ async function run(initial,native=false){
   click({action:'close'});
   assert.ok(!modal.open);
 
+  click({tab:'gallery'});
+  assert.equal(header.textContent,'삽화 도감');
+
   click({action:'open-entry',id:'buer'});
   assert.ok(!modal.open);
+  assert.equal(header.textContent,'삽화 도감','Header must stay fixed as tab title');
   assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
   assert.ok(main.innerHTML.includes('Buer'));
   assert.ok(main.innerHTML.indexOf('detail-header')<main.innerHTML.indexOf('detail-plate-showcase'));
   assert.ok(main.innerHTML.indexOf('detail-plate-showcase')<main.innerHTML.indexOf('detail-body'));
+
+  // Tab switching retains open entry page in gallery
+  click({tab:'bookmarks'});
+  assert.ok(main.innerHTML.includes('서재 열람 현황'));
+  click({tab:'gallery'});
+  assert.ok(main.innerHTML.includes('class="entry-detail-page"'),'Returning to gallery should preserve open entry page');
+  assert.equal(header.textContent,'삽화 도감');
 
   // Swipe left to next entry in detail page
   for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:240,clientY:200}]});
@@ -121,7 +145,7 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
 
   click({action:'close-entry'});
-  assert.equal(header.textContent,'설정');
+  assert.equal(header.textContent,'삽화 도감');
 }
 
 await run(null,false);
