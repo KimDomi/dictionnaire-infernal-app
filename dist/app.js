@@ -181,6 +181,13 @@ function renderEntryDetailPage(entry){
     </div>
 
     <article class="detail-card">
+      ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
+        <div class="detail-plate-frame">
+          <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
+        </div>
+        <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
+      </figure>`:''}
+
       <header class="detail-header">
         <div class="detail-meta-row">
           <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
@@ -194,33 +201,24 @@ function renderEntryDetailPage(entry){
         </div>
       </header>
 
-      <div class="detail-main-grid${entry.hasPlate&&entry.plate?' has-plate':''}">
-        ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
-          <div class="detail-plate-frame">
-            <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
-          </div>
-          <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (1863년 제6판 p.${entry.page1863})</figcaption>
-        </figure>`:''}
+      <div class="detail-body">
+        ${entry.appearance?`<div class="detail-appearance-box">
+          <strong>외형 및 도상 묘사</strong>
+          <p>${escapeHtml(entry.appearance)}</p>
+        </div>`:''}
 
-        <div class="detail-body">
-          ${entry.appearance?`<div class="detail-appearance-box">
-            <strong>외형 및 도상 묘사</strong>
-            <p>${escapeHtml(entry.appearance)}</p>
-          </div>`:''}
-
-          <div class="detail-translation">
-            ${formatParagraphs(entry.description)}
-          </div>
-
-          ${settings.showFrench?`<blockquote class="detail-french-box">
-            <div class="detail-french-header">
-              <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
-              <span>p.${entry.page1863}</span>
-            </div>
-            <p>“${escapeHtml(entry.quoteFr)}”</p>
-            <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
-          </blockquote>`:''}
+        <div class="detail-translation">
+          ${formatParagraphs(entry.description)}
         </div>
+
+        ${settings.showFrench?`<blockquote class="detail-french-box">
+          <div class="detail-french-header">
+            <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
+            <span>p.${entry.page1863}</span>
+          </div>
+          <p>“${escapeHtml(entry.quoteFr)}”</p>
+          <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
+        </blockquote>`:''}
       </div>
 
       <div class="detail-note-box">
