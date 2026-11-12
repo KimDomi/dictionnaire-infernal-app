@@ -148,10 +148,66 @@ function formatParagraphs(text){
   return lines.map(line=>`<p class="detail-paragraph">${escapeHtml(line)}</p>`).join('');
 }
 
+function renderEntryArticleCard(entry,extraFooterHtml=''){
+  const noteText=state.notes[entry.id]||'';
+  return `<article class="detail-card">
+    ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
+      <div class="detail-plate-frame">
+        <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
+      </div>
+      <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
+    </figure>`:''}
+
+    <header class="detail-header">
+      <div class="detail-meta-row">
+        <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
+        ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
+      </div>
+      <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
+      <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
+      <div class="domain-tags">
+        ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
+      </div>
+    </header>
+
+    <div class="detail-body">
+      ${entry.appearance?`<div class="detail-appearance-box">
+        <strong>외형 및 도상 묘사</strong>
+        <p>${escapeHtml(entry.appearance)}</p>
+      </div>`:''}
+
+      <div class="detail-translation">
+        ${formatParagraphs(entry.description)}
+      </div>
+
+      ${settings.showFrench?`<blockquote class="detail-french-box">
+        <div class="detail-french-header">
+          <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
+          <span>p.${entry.page1863}</span>
+        </div>
+        <p>“${escapeHtml(entry.quoteFr)}”</p>
+        <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
+      </blockquote>`:''}
+    </div>
+
+    <div class="detail-note-box">
+      <div class="detail-note-header">
+        <label for="entry-note-input">개인 연구 노트</label>
+        <span>이 항목에 대한 메모나 참고 문헌을 자유롭게 기록하세요</span>
+      </div>
+      <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
+      <div class="detail-note-actions">
+        <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
+      </div>
+    </div>
+
+    ${extraFooterHtml}
+  </article>`;
+}
+
 function renderEntryDetailPage(entry){
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
-  const noteText=state.notes[entry.id]||'';
   const backLabel=TAB_BACK_LABELS[activeTab]||'← 목록으로 돌아가기';
 
   const contextList=getActiveContextList();
@@ -160,6 +216,21 @@ function renderEntryDetailPage(entry){
   if(idx<0)idx=navList.findIndex(item=>item.id===entry.id);
   const prevEntry=idx>0?navList[idx-1]:null;
   const nextEntry=idx>=0&&idx<navList.length-1?navList[idx+1]:null;
+
+  const prevNextHtml=`<nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
+    ${prevEntry
+      ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
+          <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
+          <strong>${escapeHtml(prevEntry.nameKo)}</strong>
+        </button>`
+      :`<div class="prev-next-spacer"></div>`}
+    ${nextEntry
+      ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
+          <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
+          <strong>${escapeHtml(nextEntry.nameKo)}</strong>
+        </button>`
+      :`<div class="prev-next-spacer"></div>`}
+  </nav>`;
 
   return `<section class="entry-detail-page">
     <div class="detail-topbar">
@@ -179,72 +250,7 @@ function renderEntryDetailPage(entry){
       </div>
     </div>
 
-    <article class="detail-card">
-      ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
-        <div class="detail-plate-frame">
-          <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
-        </div>
-        <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
-      </figure>`:''}
-
-      <header class="detail-header">
-        <div class="detail-meta-row">
-          <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
-          ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
-        </div>
-        <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
-        <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
-        <div class="domain-tags">
-          ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
-        </div>
-      </header>
-
-      <div class="detail-body">
-        ${entry.appearance?`<div class="detail-appearance-box">
-          <strong>외형 및 도상 묘사</strong>
-          <p>${escapeHtml(entry.appearance)}</p>
-        </div>`:''}
-
-        <div class="detail-translation">
-          ${formatParagraphs(entry.description)}
-        </div>
-
-        ${settings.showFrench?`<blockquote class="detail-french-box">
-          <div class="detail-french-header">
-            <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
-            <span>p.${entry.page1863}</span>
-          </div>
-          <p>“${escapeHtml(entry.quoteFr)}”</p>
-          <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
-        </blockquote>`:''}
-      </div>
-
-      <div class="detail-note-box">
-        <div class="detail-note-header">
-          <label for="entry-note-input">개인 연구 노트</label>
-          <span>이 항목에 대한 메모나 참고 문헌을 자유롭게 기록하세요</span>
-        </div>
-        <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
-        <div class="detail-note-actions">
-          <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
-        </div>
-      </div>
-
-      <nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
-        ${prevEntry
-          ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
-              <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
-              <strong>${escapeHtml(prevEntry.nameKo)}</strong>
-            </button>`
-          :`<div class="prev-next-spacer"></div>`}
-        ${nextEntry
-          ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
-              <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
-              <strong>${escapeHtml(nextEntry.nameKo)}</strong>
-            </button>`
-          :`<div class="prev-next-spacer"></div>`}
-      </nav>
-    </article>
+    ${renderEntryArticleCard(entry,prevNextHtml)}
   </section>`;
 }
 
@@ -353,74 +359,24 @@ function renderDailyTab(){
   markEntryAsRead(entry.id);
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
-  const noteText=state.notes[entry.id]||'';
 
-  return `<section class="daily-view" aria-label="무작위 열람 (좌우로 밀어서 다음 항목 보기)">
-    <article class="daily-hero">
-      <div class="daily-header">
-        <div>
-          <span class="edition-tag">GRIMOIRE CONSULTATION · 무작위 열람</span>
-          <div><strong>무작위 지옥사전 표제어</strong></div>
-        </div>
-        <span class="swipe-guide">← 좌우로 밀어서 다음 무작위 항목 넘기기 →</span>
+  return `<section class="entry-detail-page daily-view" aria-label="무작위 지옥사전 표제어">
+    <div class="detail-topbar">
+      <span class="swipe-guide">← 좌우로 밀어서 다음 무작위 항목 넘기기 →</span>
+      <div class="detail-top-actions">
+        <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
+          ${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기'}
+        </button>
+        <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">
+          ${isRead?'✓ 열람 완료됨':'열람 표시'}
+        </button>
+        <button type="button" class="secondary" data-action="toggle-french">
+          ${settings.showFrench?'불문 원문 숨김':'불문 원문 함께 보기'}
+        </button>
       </div>
-      <div class="daily-content">
-        ${entry.hasPlate&&entry.plate
-          ?`<figure class="detail-plate-showcase">
-              <div class="detail-plate-frame">
-                <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
-              </div>
-              <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
-            </figure>`
-          :''}
-        <div class="daily-details">
-          <div class="detail-meta-row">
-            <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
-            ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
-          </div>
-          <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
-          <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
-          <div class="domain-tags">
-            ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
-          </div>
+    </div>
 
-          ${entry.appearance?`<div class="detail-appearance-box">
-            <strong>외형 및 도상 묘사</strong>
-            <p>${escapeHtml(entry.appearance)}</p>
-          </div>`:''}
-
-          <div class="detail-translation">
-            ${formatParagraphs(entry.description)}
-          </div>
-
-          ${settings.showFrench?`<blockquote class="detail-french-box">
-            <div class="detail-french-header">
-              <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
-              <span>p.${entry.page1863}</span>
-            </div>
-            <p>“${escapeHtml(entry.quoteFr)}”</p>
-            <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
-          </blockquote>`:''}
-
-          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-            <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기 추가'}</button>
-            <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">${isRead?'✓ 열람 완료됨':'열람 완료 표시'}</button>
-            <button type="button" class="secondary" data-action="toggle-french">${settings.showFrench?'불문 원문 숨김':'불문 원문 함께 보기'}</button>
-          </div>
-
-          <div class="detail-note-box">
-            <div class="detail-note-header">
-              <label for="entry-note-input">개인 연구 노트</label>
-              <span>이 항목에 대한 메모나 참고 문헌을 자유롭게 기록하세요</span>
-            </div>
-            <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
-            <div class="detail-note-actions">
-              <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </article>
+    ${renderEntryArticleCard(entry)}
   </section>`;
 }
 
