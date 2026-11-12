@@ -151,13 +151,6 @@ function formatParagraphs(text){
 function renderEntryArticleCard(entry,extraFooterHtml=''){
   const noteText=state.notes[entry.id]||'';
   return `<article class="detail-card">
-    ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
-      <div class="detail-plate-frame">
-        <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
-      </div>
-      <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
-    </figure>`:''}
-
     <header class="detail-header">
       <div class="detail-meta-row">
         <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
@@ -169,6 +162,13 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
       </div>
     </header>
+
+    ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
+      <div class="detail-plate-frame">
+        <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
+      </div>
+      <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
+    </figure>`:''}
 
     <div class="detail-body">
       ${entry.appearance?`<div class="detail-appearance-box">
@@ -189,20 +189,19 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
       </blockquote>`:''}
     </div>
+  </article>
 
-    <div class="detail-note-box">
-      <div class="detail-note-header">
-        <label for="entry-note-input">개인 연구 노트</label>
-        <span>이 항목에 대한 메모나 참고 문헌을 자유롭게 기록하세요</span>
-      </div>
-      <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
-      <div class="detail-note-actions">
-        <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
-      </div>
+  <section class="detail-note-box" aria-label="개인 연구 노트">
+    <div class="detail-note-header">
+      <label for="entry-note-input">✎ 개인 연구 노트</label>
     </div>
+    <textarea id="entry-note-input" class="note-editor" placeholder="이 항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
+    <div class="detail-note-actions">
+      <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
+    </div>
+  </section>
 
-    ${extraFooterHtml}
-  </article>`;
+  ${extraFooterHtml}`;
 }
 
 function renderEntryDetailPage(entry){
@@ -418,11 +417,10 @@ function renderBookmarksTab(){
 function renderSettingsTab(){
   return `<section class="settings-view">
     <div class="panel">
-      <h2>화면 및 독서 환경</h2>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h2 style="margin:0">화면 및 독서 환경</h2><button type="button" class="help" data-action="settings-help" aria-label="설정 도움말">?</button></div>
       <div class="setting-row">
         <div class="setting-label">
           <strong>테마 모드</strong>
-          <span>어두운 흑요석 테마 또는 고서 양피지 테마</span>
         </div>
         <div class="segmented" role="group" aria-label="테마 선택">
           <button type="button" class="${settings.theme==='dark'?'active':''}" data-action="set-theme" data-theme="dark">다크</button>
@@ -434,7 +432,6 @@ function renderSettingsTab(){
       <div class="setting-row">
         <div class="setting-label">
           <strong>글자 크기</strong>
-          <span>본문 및 해설 가독성 조절</span>
         </div>
         <div class="segmented" role="group" aria-label="글자 크기">
           <button type="button" class="${settings.fontSize==='normal'?'active':''}" data-action="set-fontsize" data-fontsize="normal">기본</button>
@@ -445,7 +442,6 @@ function renderSettingsTab(){
       <div class="setting-row">
         <div class="setting-label">
           <strong>1863년 프랑스어 원문 전문 병기</strong>
-          <span>자크 콜랭 드 플랑시 (Collin de Plancy)의 1863년 원문 표시</span>
         </div>
         <button type="button" class="${settings.showFrench?'primary':''}" data-action="toggle-french">
           ${settings.showFrench?'표시 중':'숨김'}
@@ -455,7 +451,6 @@ function renderSettingsTab(){
       <div class="setting-row">
         <div class="setting-label">
           <strong>열람 중 화면 켜짐 유지</strong>
-          <span>상세 열람 및 무작위 열람 화면에서 꺼짐 방지</span>
         </div>
         <button type="button" class="${settings.keepAwake?'primary':''}" data-action="toggle-awake">
           ${settings.keepAwake?'켜짐':'꺼짐'}
@@ -465,7 +460,6 @@ function renderSettingsTab(){
 
     <div class="panel">
       <h2>서재 정보 관리</h2>
-      <p style="margin:0 0 12px;font-size:0.84rem;color:var(--text-muted)">${escapeHtml(storageNotice())}</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button type="button" class="primary" data-action="backup">내보내기 / 가져오기</button>
       </div>
@@ -591,6 +585,27 @@ function openBackupModal(){
   if(!modalEl.open)modalEl.showModal?.();
 }
 
+function openSettingsHelpModal(){
+  if(!modalEl)return;
+  modalEl.innerHTML=`<div class="modal-inner">
+    <div class="modal-top">
+      <h2>설정 도움말</h2>
+      <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
+    </div>
+    <ul style="margin:0;padding-left:18px;font-size:0.9rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
+      <li><strong>테마 모드</strong>: 어두운 흑요석 테마 또는 고서 양피지 테마</li>
+      <li><strong>글자 크기</strong>: 본문 및 해설 가독성 조절</li>
+      <li><strong>1863년 프랑스어 원문 전문 병기</strong>: 자크 콜랭 드 플랑시 (Collin de Plancy)의 1863년 원문 표시</li>
+      <li><strong>열람 중 화면 켜짐 유지</strong>: 상세 열람 및 무작위 열람 화면에서 꺼짐 방지</li>
+      <li><strong>서재 정보 관리</strong>: ${escapeHtml(storageNotice())}</li>
+    </ul>
+    <div class="modal-actions">
+      <button type="button" class="primary" data-action="close">확인</button>
+    </div>
+  </div>`;
+  if(!modalEl.open)modalEl.showModal?.();
+}
+
 function openHelpModal(){
   if(!modalEl)return;
   modalEl.innerHTML=`<div class="modal-inner">
@@ -688,6 +703,7 @@ document.addEventListener('click',event=>{
     return;
   }
 
+  if(action==='settings-help'){openSettingsHelpModal();return;}
   if(action==='help'){
     openHelpModal();
     return;

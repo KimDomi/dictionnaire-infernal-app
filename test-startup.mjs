@@ -106,7 +106,7 @@ async function run(initial,native=false){
   assert.ok(!modal.open);
   assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
   assert.ok(main.innerHTML.includes('Buer'));
-  assert.ok(main.innerHTML.indexOf('detail-plate-showcase')<main.innerHTML.indexOf('detail-header'));
+  assert.ok(main.innerHTML.indexOf('detail-header')<main.innerHTML.indexOf('detail-plate-showcase'));
   assert.ok(main.innerHTML.indexOf('detail-plate-showcase')<main.innerHTML.indexOf('detail-body'));
 
   click({action:'close-entry'});
