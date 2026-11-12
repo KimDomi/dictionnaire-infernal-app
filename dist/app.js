@@ -264,7 +264,7 @@ function renderDictionaryTab(){
   ).join('');
 
   const lettersHtml=LETTERS.map(letId=>
-    `<button type="button" class="letter-pill${activeLetter===letId?' active':''}" data-action="filter-letter" data-letter="${letId}">${letId==='ALL'?'A–Z 전체':letId}</button>`
+    `<button type="button" class="letter-pill${activeLetter===letId?' active':''}" data-action="filter-letter" data-letter="${letId}">${letId}</button>`
   ).join('');
 
   return `<section class="dictionary-view">

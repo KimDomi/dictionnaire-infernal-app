@@ -217,6 +217,7 @@ select.sort-select {
 }
 
 .pill {
+  flex-shrink: 0;
   padding: 6px 12px;
   border-radius: 999px;
   font-size: 0.82rem;
@@ -1045,9 +1046,10 @@ dialog#modal::backdrop {
 }
 
 .letter-pill {
-  min-width: 32px;
+  flex-shrink: 0;
+  min-width: 34px;
   height: 30px;
-  padding: 0 9px;
+  padding: 0 10px;
   border-radius: 8px;
   font-size: 0.78rem;
   font-family: var(--font-serif);
