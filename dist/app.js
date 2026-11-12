@@ -156,6 +156,18 @@ function navigateEntryRelative(delta){
   return false;
 }
 
+const TITLE_RANK_PATTERN=/대공|대총재|후작|지옥 군주/;
+
+function rankIsTitle(entry){
+  return Boolean(entry.hasPlate)||(entry.category==='demon'&&TITLE_RANK_PATTERN.test(entry.rank||''));
+}
+
+function detailRankLabel(entry){
+  if(rankIsTitle(entry))return entry.rank;
+  const cat=CATEGORIES.find(c=>c.id===entry.category);
+  return cat?cat.label.replace(/\s*\(\d[\d,]*\)$/,''):entry.rank;
+}
+
 function formatParagraphs(text){
   const lines=String(text??'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
   if(!lines.length)return '';
@@ -169,7 +181,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
       </div>
       <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
-      <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
+      <div class="detail-rank-line${rankIsTitle(entry)?'':' is-category'}">${escapeHtml(detailRankLabel(entry))}</div>
     </header>
 
     ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">

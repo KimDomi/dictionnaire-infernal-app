@@ -1117,3 +1117,9 @@ dialog#modal::backdrop {
   cursor: grabbing;
   user-select: none;
 }
+
+.detail-rank-line.is-category {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
