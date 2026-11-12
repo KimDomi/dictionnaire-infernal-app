@@ -140,6 +140,22 @@ function getActiveContextList(){
   return filtered.length?filtered:ENTRIES;
 }
 
+function navigateEntryRelative(delta){
+  if(!activeEntryId)return false;
+  const entry=ENTRY_MAP.get(activeEntryId);
+  if(!entry)return false;
+  const contextList=getActiveContextList();
+  let idx=contextList.findIndex(item=>item.id===entry.id);
+  const navList=idx>=0?contextList:ENTRIES;
+  if(idx<0)idx=navList.findIndex(item=>item.id===entry.id);
+  const targetIdx=idx+delta;
+  if(targetIdx>=0&&targetIdx<navList.length){
+    openEntryPage(navList[targetIdx].id);
+    return true;
+  }
+  return false;
+}
+
 function formatParagraphs(text){
   const lines=String(text??'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
   if(!lines.length)return '';
@@ -162,7 +178,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
 
     ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
       <div class="detail-plate-frame">
-        <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
+        <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화" draggable="false">
       </div>
       <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
     </figure>`:''}
@@ -216,7 +232,8 @@ function renderEntryDetailPage(entry){
           <strong>${escapeHtml(nextEntry.nameKo)}</strong>
         </button>`
       :`<div class="prev-next-spacer"></div>`}
-  </nav>`;
+  </nav>
+  <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>`;
 
   return `<section class="entry-detail-page">
     <div class="detail-topbar">
@@ -787,7 +804,8 @@ function isInteractiveInput(target){
 }
 
 document.addEventListener('touchstart',event=>{
-  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(modalEl?.open)return;
+  if(!activeEntryId&&activeTab!=='daily')return;
   if(isInteractiveInput(event?.target))return;
   const touch=event?.changedTouches?.[0]||event?.touches?.[0];
   if(!touch)return;
@@ -801,13 +819,22 @@ document.addEventListener('touchend',event=>{
   const startY=swipeStartY;
   swipeStartX=null;
   swipeStartY=null;
-  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(modalEl?.open)return;
+  if(!activeEntryId&&activeTab!=='daily')return;
   const touch=event?.changedTouches?.[0];
   if(!touch)return;
   const dx=touch.clientX-startX;
   const dy=touch.clientY-startY;
   if(Math.abs(dx)>=48&&Math.abs(dx)>Math.abs(dy)*1.25){
-    advanceRandomEntry();
+    if(activeEntryId){
+      if(dx<0){
+        if(!navigateEntryRelative(1))showToast('마지막 항목입니다.');
+      }else{
+        if(!navigateEntryRelative(-1))showToast('첫 번째 항목입니다.');
+      }
+    }else if(activeTab==='daily'){
+      advanceRandomEntry();
+    }
   }
 },{passive:true});
 
@@ -815,7 +842,8 @@ let mouseDownX=null;
 let mouseDownY=null;
 
 document.addEventListener('mousedown',event=>{
-  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(modalEl?.open)return;
+  if(!activeEntryId&&activeTab!=='daily')return;
   if(isInteractiveInput(event?.target))return;
   mouseDownX=event?.clientX??null;
   mouseDownY=event?.clientY??null;
@@ -827,19 +855,40 @@ document.addEventListener('mouseup',event=>{
   const startY=mouseDownY;
   mouseDownX=null;
   mouseDownY=null;
-  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(modalEl?.open)return;
+  if(!activeEntryId&&activeTab!=='daily')return;
+  if(typeof window!=='undefined'&&window.getSelection?.()?.toString()?.trim()?.length){
+    return;
+  }
   const dx=(event?.clientX??startX)-startX;
   const dy=(event?.clientY??startY)-startY;
   if(Math.abs(dx)>=60&&Math.abs(dx)>Math.abs(dy)*1.25){
-    advanceRandomEntry();
+    if(activeEntryId){
+      if(dx<0){
+        if(!navigateEntryRelative(1))showToast('마지막 항목입니다.');
+      }else{
+        if(!navigateEntryRelative(-1))showToast('첫 번째 항목입니다.');
+      }
+    }else if(activeTab==='daily'){
+      advanceRandomEntry();
+    }
   }
 });
 
 document.addEventListener('keydown',event=>{
-  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(modalEl?.open)return;
   if(isInteractiveInput(event?.target))return;
+  if(!activeEntryId&&activeTab!=='daily')return;
   if(event?.key==='ArrowLeft'||event?.key==='ArrowRight'){
-    advanceRandomEntry();
+    if(activeEntryId){
+      if(event.key==='ArrowRight'){
+        if(!navigateEntryRelative(1))showToast('마지막 항목입니다.');
+      }else{
+        if(!navigateEntryRelative(-1))showToast('첫 번째 항목입니다.');
+      }
+    }else if(activeTab==='daily'){
+      advanceRandomEntry();
+    }
   }
 });
 

@@ -109,6 +109,17 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.indexOf('detail-header')<main.innerHTML.indexOf('detail-plate-showcase'));
   assert.ok(main.innerHTML.indexOf('detail-plate-showcase')<main.innerHTML.indexOf('detail-body'));
 
+  // Swipe left to next entry in detail page
+  for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:240,clientY:200}]});
+  for(const fn of handlers.touchend||[])fn({changedTouches:[{clientX:60,clientY:205}]});
+  assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
+  assert.ok(!main.innerHTML.includes('<h2>부에르 (Buer)</h2>'));
+
+  // Swipe right back to previous entry
+  for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:60,clientY:200}]});
+  for(const fn of handlers.touchend||[])fn({changedTouches:[{clientX:240,clientY:205}]});
+  assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
+
   click({action:'close-entry'});
   assert.equal(header.textContent,'설정');
 }

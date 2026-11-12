@@ -848,6 +848,8 @@ dialog#modal::backdrop {
   height: 100%;
   object-fit: contain;
   mix-blend-mode: multiply;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 
 .detail-plate-showcase figcaption {
