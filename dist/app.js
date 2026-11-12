@@ -888,13 +888,35 @@ document.addEventListener('keydown',event=>{
   }
 });
 
+let searchComposing=false;
+
+function applySearchInput(value){
+  searchQuery=value||'';
+  visibleLimit=PAGE_STEP;
+  render();
+  const input=document.querySelector?.('#search-input');
+  if(input){
+    input.focus?.();
+    const end=String(input.value||'').length;
+    try{input.setSelectionRange?.(end,end);}catch{}
+  }
+}
+
+document.addEventListener('compositionstart',event=>{
+  if(event?.target?.id==='search-input')searchComposing=true;
+});
+
+document.addEventListener('compositionend',event=>{
+  if(event?.target?.id==='search-input'){
+    searchComposing=false;
+    applySearchInput(event.target.value);
+  }
+});
+
 document.addEventListener('input',event=>{
   if(event?.target?.id==='search-input'){
-    searchQuery=event.target.value||'';
-    visibleLimit=PAGE_STEP;
-    render();
-    const input=document.querySelector?.('#search-input');
-    input?.focus?.();
+    if(searchComposing||event.isComposing)return;
+    applySearchInput(event.target.value);
   }
 });
 
