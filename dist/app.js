@@ -108,7 +108,6 @@ function renderEntryThumb(entry){
 function renderEntryCard(entry){
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
-  const hasNote=Boolean(state.notes[entry.id]);
   const metaText=entry.hasPlate?`판화 No. ${entry.plateNo} · p.${entry.page1863}`:`1863년판 ${entry.letter}부 · p.${entry.page1863}`;
   return `<article class="entry-card" data-action="open-entry" data-id="${escapeHtml(entry.id)}">
     ${renderEntryThumb(entry)}
@@ -119,7 +118,6 @@ function renderEntryCard(entry){
           ${entry.hasPlate?'<span class="mini-badge accent">삽화</span>':''}
           ${entry.legions?`<span class="mini-badge">${entry.legions}군단</span>`:''}
           ${isBookmarked?'<span class="mini-badge accent">즐겨찾기</span>':''}
-          ${hasNote?'<span class="mini-badge">노트</span>':''}
           ${isRead?'<span class="mini-badge">열람</span>':''}
         </div>
       </div>
@@ -149,7 +147,6 @@ function formatParagraphs(text){
 }
 
 function renderEntryArticleCard(entry,extraFooterHtml=''){
-  const noteText=state.notes[entry.id]||'';
   return `<article class="detail-card">
     <header class="detail-header">
       <div class="detail-meta-row">
@@ -190,16 +187,6 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
       </blockquote>`:''}
     </div>
   </article>
-
-  <section class="detail-note-box" aria-label="개인 연구 노트">
-    <div class="detail-note-header">
-      <label for="entry-note-input">✎ 개인 연구 노트</label>
-    </div>
-    <textarea id="entry-note-input" class="note-editor" placeholder="이 항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
-    <div class="detail-note-actions">
-      <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
-    </div>
-  </section>
 
   ${extraFooterHtml}`;
 }
@@ -381,14 +368,13 @@ function renderDailyTab(){
 
 function renderBookmarksTab(){
   const bookmarkedEntries=state.bookmarks.map(id=>ENTRY_MAP.get(id)).filter(Boolean);
-  const notedEntries=Object.keys(state.notes).map(id=>ENTRY_MAP.get(id)).filter(Boolean);
   const readEntries=state.readIds.map(id=>ENTRY_MAP.get(id)).filter(Boolean);
 
   return `<section class="bookmarks-view">
     <div class="panel">
       <h2>서재 열람 현황</h2>
       <p style="margin:0;color:var(--text-muted);font-size:0.88rem">
-        전체 ${ENTRIES.length.toLocaleString()}편 중 <strong>${readEntries.length.toLocaleString()}편</strong> 열람 완료 · 즐겨찾기 <strong>${bookmarkedEntries.length.toLocaleString()}편</strong> · 연구 노트 <strong>${notedEntries.length.toLocaleString()}건</strong>
+        전체 ${ENTRIES.length.toLocaleString()}편 중 <strong>${readEntries.length.toLocaleString()}편</strong> 열람 완료 · 즐겨찾기 <strong>${bookmarkedEntries.length.toLocaleString()}편</strong>
       </p>
     </div>
 
@@ -399,18 +385,6 @@ function renderBookmarksTab(){
         :`<div class="empty-state">아직 즐겨찾기한 악마·표제어가 없습니다. 항목 상세 페이지에서 ★ 즐겨찾기를 눌러 추가해 보세요.</div>`}
     </div>
 
-    <div class="panel">
-      <h3>작성한 연구 노트 (${notedEntries.length})</h3>
-      ${notedEntries.length
-        ?`<div class="entry-list">${notedEntries.map(entry=>`<article class="entry-card" data-action="open-entry" data-id="${escapeHtml(entry.id)}">
-          ${renderEntryThumb(entry)}
-          <div class="entry-card-body">
-            <h4 class="entry-title-ko">${escapeHtml(entry.nameKo)}</h4>
-            <p class="entry-summary">${escapeHtml(state.notes[entry.id])}</p>
-          </div>
-        </article>`).join('')}</div>`
-        :`<div class="empty-state">기록한 연구 노트가 없습니다. 항목 상세 페이지에서 메모를 남길 수 있습니다.</div>`}
-    </div>
   </section>`;
 }
 
@@ -553,7 +527,7 @@ function openBackupModal(){
       <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
     </div>
     <p style="margin:0;font-size:0.88rem;color:var(--text-muted)">
-      즐겨찾기(${state.bookmarks.length}건), 열람 기록(${state.readIds.length}건), 연구 노트(${Object.keys(state.notes).length}건) 및 환경 설정을 JSON 파일로 백업하거나 복원합니다.
+      즐겨찾기(${state.bookmarks.length}건), 열람 기록(${state.readIds.length}건) 및 환경 설정을 JSON 파일로 백업하거나 복원합니다.
     </p>
     <div class="modal-actions">
       <button type="button" class="primary" data-action="export-backup">파일로 내보내기</button>
@@ -620,7 +594,7 @@ function openHelpModal(){
       <li><strong>A–Z 전 항목 수록</strong>: 악마뿐만 아니라 마법사, 점성술사, 연금술, 점술, 민간 미신, 전설, 마도서 등 A부터 Z까지 3,810개 표제어 전체를 수록했습니다.</li>
       <li><strong>고유명사 영문/원문 병기</strong>: 모든 표제어와 주요 고유명사에 한글 표기와 영문/원어 표기(예: 아바리스 (Abaris))를 함께 표시합니다.</li>
       <li><strong>삽화 도감</strong>: 1863년 초판본에서 추출한 루이 브르통의 오리지널 목판화 68점을 감상합니다.</li>
-      <li><strong>서재 기록</strong>: 즐겨찾기·열람 완료 항목과 개인 연구 노트를 모아 보고 JSON으로 백업합니다.</li>
+      <li><strong>서재 기록</strong>: 즐겨찾기·열람 완료 항목을 모아 보고 JSON으로 백업합니다.</li>
     </ul>
     <div class="modal-actions">
       <button type="button" class="primary" data-action="close">확인</button>
@@ -759,17 +733,6 @@ document.addEventListener('click',event=>{
       showToast('열람 완료로 기록했어요.');
     }
     saveUserState();
-    render();
-    return;
-  }
-
-  if(action==='save-note'&&id){
-    const noteEl=document.querySelector?.('#entry-note-input')||mainEl?.querySelector?.('#entry-note-input')||modalEl?.querySelector?.('#entry-note-input');
-    const text=String(noteEl?.value||'').trim();
-    if(text)state.notes[id]=text.slice(0,2000);
-    else delete state.notes[id];
-    saveUserState();
-    showToast('연구 노트를 저장했어요.');
     render();
     return;
   }
