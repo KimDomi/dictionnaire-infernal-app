@@ -430,22 +430,43 @@ select.sort-select {
 }
 
 /* Daily Grimoire Card */
+.daily-view {
+  touch-action: pan-y;
+}
+
 .daily-hero {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 18px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+}
+
+@media (min-width: 680px) {
+  .daily-hero {
+    padding: 30px 32px;
+  }
 }
 
 .daily-header {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
   border-bottom: 1px solid var(--border);
   padding-bottom: 12px;
+}
+
+.swipe-guide {
+  font-size: 0.78rem;
+  color: var(--gold);
+  background: var(--gold-soft);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
 }
 
 .daily-content {

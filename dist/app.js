@@ -320,45 +320,103 @@ function renderGalleryTab(){
   </section>`;
 }
 
-function renderDailyTab(){
+function markEntryAsRead(entryId){
+  if(!entryId||!ENTRY_MAP.has(entryId))return;
+  if(!state.readIds.includes(entryId)){
+    state.readIds.push(entryId);
+    saveUserState();
+  }
+}
+
+function getCurrentRandomEntry(){
   const todayStr=new Date().toISOString().slice(0,10);
-  const entry=randomOverrideId&&ENTRY_MAP.get(randomOverrideId)||getDailyEntry(todayStr);
+  return randomOverrideId&&ENTRY_MAP.get(randomOverrideId)||getDailyEntry(todayStr);
+}
+
+function advanceRandomEntry(){
+  const current=getCurrentRandomEntry();
+  if(current)markEntryAsRead(current.id);
+  let pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
+  if(ENTRIES.length>1&&current&&pick.id===current.id){
+    pick=ENTRIES[(ENTRIES.indexOf(pick)+1)%ENTRIES.length];
+  }
+  randomOverrideId=pick.id;
+  markEntryAsRead(pick.id);
+  render();
+  if(typeof window!=='undefined'){
+    window.scrollTo?.({top:0,behavior:'instant'});
+  }
+}
+
+function renderDailyTab(){
+  const entry=getCurrentRandomEntry();
+  markEntryAsRead(entry.id);
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
+  const noteText=state.notes[entry.id]||'';
 
-  return `<section class="daily-view">
+  return `<section class="daily-view" aria-label="무작위 열람 (좌우로 밀어서 다음 항목 보기)">
     <article class="daily-hero">
       <div class="daily-header">
         <div>
           <span class="edition-tag">GRIMOIRE CONSULTATION · 무작위 열람</span>
           <div><strong>무작위 지옥사전 표제어</strong></div>
         </div>
-        <button type="button" class="secondary" data-action="reroll-daily">
-          ${icon('shuffle')} 다른 항목 뽑기
-        </button>
+        <span class="swipe-guide">← 좌우로 밀어서 다음 무작위 항목 넘기기 →</span>
       </div>
       <div class="daily-content">
         ${entry.hasPlate&&entry.plate
-          ?`<div class="daily-plate">
-              <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 판화">
-            </div>`
-          :`<div class="daily-plate entry-monogram-wrap">
-              <span class="entry-monogram-letter" style="font-size:3rem">${escapeHtml(entry.letter||'A')}</span>
-              <span class="entry-monogram-page">1863년판 p.${entry.page1863}</span>
-            </div>`}
+          ?`<figure class="detail-plate-showcase">
+              <div class="detail-plate-frame">
+                <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
+              </div>
+              <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (판화 No. ${entry.plateNo} · 1863년 제6판 p.${entry.page1863})</figcaption>
+            </figure>`
+          :''}
         <div class="daily-details">
-          <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 p.${entry.page1863}</span>
-          <h2>${escapeHtml(entry.nameKo)}</h2>
-          <div class="entry-rank-line">${escapeHtml(entry.rank)}${entry.legions?` · 휘하 ${entry.legions}개 군단`:''}</div>
+          <div class="detail-meta-row">
+            <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
+            ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
+          </div>
+          <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
+          <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
           <div class="domain-tags">
             ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
           </div>
-          <p>${escapeHtml(entry.description)}</p>
-          ${settings.showFrench?`<blockquote class="quote-box">“${escapeHtml(entry.quoteFr)}”</blockquote>`:''}
+
+          ${entry.appearance?`<div class="detail-appearance-box">
+            <strong>외형 및 도상 묘사</strong>
+            <p>${escapeHtml(entry.appearance)}</p>
+          </div>`:''}
+
+          <div class="detail-translation">
+            ${formatParagraphs(entry.description)}
+          </div>
+
+          ${settings.showFrench?`<blockquote class="detail-french-box">
+            <div class="detail-french-header">
+              <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
+              <span>p.${entry.page1863}</span>
+            </div>
+            <p>“${escapeHtml(entry.quoteFr)}”</p>
+            <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
+          </blockquote>`:''}
+
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-            <button type="button" class="primary" data-action="open-entry" data-id="${escapeHtml(entry.id)}">전체 화면으로 상세 보기</button>
-            <button type="button" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">${isBookmarked?'★ 즐겨찾기 해제':'☆ 즐겨찾기 추가'}</button>
+            <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기 추가'}</button>
             <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">${isRead?'✓ 열람 완료됨':'열람 완료 표시'}</button>
+            <button type="button" class="secondary" data-action="toggle-french">${settings.showFrench?'불문 원문 숨김':'불문 원문 함께 보기'}</button>
+          </div>
+
+          <div class="detail-note-box">
+            <div class="detail-note-header">
+              <label for="entry-note-input">개인 연구 노트</label>
+              <span>이 항목에 대한 메모나 참고 문헌을 자유롭게 기록하세요</span>
+            </div>
+            <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
+            <div class="detail-note-actions">
+              <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
+            </div>
           </div>
         </div>
       </div>
@@ -633,11 +691,12 @@ document.addEventListener('click',event=>{
 
   if(tab){
     activeEntryId=null;
-    activeTab=tab;
     if(tab==='daily'){
-      const pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
-      randomOverrideId=pick.id;
+      activeTab='daily';
+      advanceRandomEntry();
+      return;
     }
+    activeTab=tab;
     render();
     return;
   }
@@ -663,13 +722,13 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='random'||action==='reroll-daily'){
-    const pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
-    randomOverrideId=pick.id;
     if(action==='random'){
+      const pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
+      randomOverrideId=pick.id;
       openEntryPage(pick.id);
       return;
     }
-    render();
+    advanceRandomEntry();
     return;
   }
 
@@ -781,6 +840,71 @@ document.addEventListener('click',event=>{
 
   if(action==='import-backup'){
     backupFileEl?.click?.();
+  }
+});
+
+let swipeStartX=null;
+let swipeStartY=null;
+
+function isInteractiveInput(target){
+  const tag=String(target?.tagName||'').toUpperCase();
+  return tag==='TEXTAREA'||tag==='INPUT'||tag==='SELECT'||tag==='BUTTON';
+}
+
+document.addEventListener('touchstart',event=>{
+  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(isInteractiveInput(event?.target))return;
+  const touch=event?.changedTouches?.[0]||event?.touches?.[0];
+  if(!touch)return;
+  swipeStartX=touch.clientX;
+  swipeStartY=touch.clientY;
+},{passive:true});
+
+document.addEventListener('touchend',event=>{
+  if(swipeStartX===null||swipeStartY===null)return;
+  const startX=swipeStartX;
+  const startY=swipeStartY;
+  swipeStartX=null;
+  swipeStartY=null;
+  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  const touch=event?.changedTouches?.[0];
+  if(!touch)return;
+  const dx=touch.clientX-startX;
+  const dy=touch.clientY-startY;
+  if(Math.abs(dx)>=48&&Math.abs(dx)>Math.abs(dy)*1.25){
+    advanceRandomEntry();
+  }
+},{passive:true});
+
+let mouseDownX=null;
+let mouseDownY=null;
+
+document.addEventListener('mousedown',event=>{
+  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(isInteractiveInput(event?.target))return;
+  mouseDownX=event?.clientX??null;
+  mouseDownY=event?.clientY??null;
+});
+
+document.addEventListener('mouseup',event=>{
+  if(mouseDownX===null||mouseDownY===null)return;
+  const startX=mouseDownX;
+  const startY=mouseDownY;
+  mouseDownX=null;
+  mouseDownY=null;
+  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  const dx=(event?.clientX??startX)-startX;
+  const dy=(event?.clientY??startY)-startY;
+  if(Math.abs(dx)>=60&&Math.abs(dx)>Math.abs(dy)*1.25){
+    advanceRandomEntry();
+  }
+});
+
+document.addEventListener('keydown',event=>{
+  if(activeTab!=='daily'||activeEntryId||modalEl?.open)return;
+  if(isInteractiveInput(event?.target))return;
+  if(event?.key==='ArrowLeft'||event?.key==='ArrowRight'){
+    advanceRandomEntry();
   }
 });
 

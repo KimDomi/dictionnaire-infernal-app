@@ -79,7 +79,13 @@ async function run(initial,native=false){
 
   click({tab:'daily'});
   assert.ok(main.innerHTML.includes('무작위 지옥사전 표제어'));
+  assert.ok(!main.innerHTML.includes('전체 화면으로 상세 보기'));
+  assert.ok(!main.innerHTML.includes('다른 항목 뽑기'));
   assert.equal(header.textContent,'무작위 열람');
+
+  for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:240,clientY:200}]});
+  for(const fn of handlers.touchend||[])fn({changedTouches:[{clientX:60,clientY:205}]});
+  assert.ok(main.innerHTML.includes('✓ 열람 완료됨'));
 
   click({tab:'bookmarks'});
   assert.ok(main.innerHTML.includes('서재 열람 현황'));
