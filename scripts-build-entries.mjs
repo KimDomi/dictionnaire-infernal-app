@@ -609,23 +609,81 @@ const PROPER_MENTIONS = [
   ['Jérusalem', '예루살렘 (Jérusalem)']
 ];
 
-// Classify and generate rich Korean commentary & metadata for any 1863 entry
+const TRANSLATION_CACHE = fs.existsSync('resources/translations_ko_cache.json')
+  ? JSON.parse(fs.readFileSync('resources/translations_ko_cache.json', 'utf8'))
+  : {};
+
+function polishTranslation(rawKo, e, koBase) {
+  let s = String(rawKo || '').trim();
+  const displayTitle = `${koBase} (${e.nameFr})`;
+  if (!s) return `${displayTitle} — ${e.textFr}`;
+
+  // Strip leading headword repetition if present
+  const escName = e.nameFr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escBase = e.baseFr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const escKo = koBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  s = s.replace(new RegExp(`^(?:${escName}|${escBase}|${escKo})\\s*(?:—|-|\\.)\\s*`, 'i'), '');
+
+  // Fix common occult/demonology mistranslations and attach English/original proper nouns
+  s = s
+    .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마녀들의 안식일|안식일/g, '사바트 (Sabbat)')
+    .replace(/솔로몬의 빗장뼈|솔로몬의 쇄골/g, '『솔로몬의 열쇠 (Clavicules de Salomon)』')
+    .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?/g, '해당 항목 참조.')
+    .replace(/참조\s*:\s*이 단어\.?/g, '해당 항목 참조.')
+    .replace(/\bDelancre\b/g, '피에르 드 랑크르 (Delancre)')
+    .replace(/\bWierus\b|\bWiérus\b/g, '요한 바이어 (Wierus)')
+    .replace(/\bBodin\b/g, '장 보댕 (Bodin)')
+    .replace(/\bBoguet\b/g, '앙리 보게 (Boguet)')
+    .replace(/\bDelrio\b/g, '마르틴 델리오 (Delrio)')
+    .replace(/\bBekker\b/g, '발타자르 베커르 (Bekker)')
+    .replace(/\bCalmet\b/g, '아우구스탱 칼메 (Calmet)')
+    .replace(/\bGörres\b|\bGœrres\b/g, '요제프 괴레스 (Görres)')
+    .replace(/\bPaymon\b/g, '파이몬 (Paymon)')
+    .replace(/\bPythagore\b|피타고라스(?![\s(]*Pythagore)/g, '피타고라스 (Pythagore)')
+    .replace(/\bApollo\b|\bApollon\b|아폴론(?![\s(]*Apollon)/g, '아폴론 (Apollon)')
+    .replace(/\bMinerve\b|미네르바(?![\s(]*Minerve)/g, '미네르바 (Minerve)');
+
+  // Replace raw French headword at the very start of the Korean sentence with "한글명 (원문)"
+  const plainNameFr = e.nameFr.replace(/’/g, "'");
+  if (s.startsWith(e.nameFr)) {
+    s = displayTitle + s.slice(e.nameFr.length);
+  } else if (s.startsWith(plainNameFr)) {
+    s = displayTitle + s.slice(plainNameFr.length);
+  } else if (s.startsWith(e.baseFr)) {
+    let rest = s.slice(e.baseFr.length);
+    const parenM = e.nameFr.match(/\(([^)]+)\)/);
+    if (parenM) {
+      const p1 = `(${parenM[1]})`;
+      const p2 = `(${parenM[1].replace(/’/g, "'")})`;
+      if (rest.trimStart().startsWith(p1)) {
+        rest = rest.trimStart().slice(p1.length);
+      } else if (rest.trimStart().startsWith(p2)) {
+        rest = rest.trimStart().slice(p2.length);
+      }
+    }
+    s = displayTitle + rest;
+  }
+
+  return s.replace(/\s+/g, ' ').trim();
+}
+
+// Classify and attach pure Korean translation for any 1863 entry
 function analyzeAndTranslateEntry(e, koBase) {
   const t = e.textFr.trim();
   const lead = t.slice(0, 260);
-  const displayTitle = `${koBase} (${e.nameFr})`;
 
   // 1. Check if cross-reference ("Voy. X")
   if (/^(?:voy\.|voyez)\s+/i.test(t) && t.length < 110) {
     const target = t.replace(/^(?:voy\.|voyez)\s+/i, '').replace(/\.$/, '').trim();
     const targetKo = frHeadwordToKo(target, target);
+    const pureRef = `${targetKo} (${target}) 참조.`;
     return {
       category: 'crossref',
       rank: '상호참조 표제어 (Renvoi)',
       legions: 0,
       domains: ['상호참조', `${targetKo} (${target})`],
-      summary: `${displayTitle} 항목은 『지옥사전 (Dictionnaire Infernal)』의 「${targetKo} (${target})」 표제어에서 상세히 다룬다.`,
-      description: `콜랭 드 플랑시 (Collin de Plancy)의 1863년 제6판 『지옥사전 (Dictionnaire Infernal)』 p.${e.page1863}에 수록된 상호참조 항목이다. 원문 지시에 따라 관련 본문인 「${targetKo} (${target})」 항목을 참조하면 상세한 전승과 기록을 확인할 수 있다.`
+      summary: pureRef,
+      description: pureRef
     };
   }
 
@@ -650,18 +708,6 @@ function analyzeAndTranslateEntry(e, koBase) {
   if (centM) {
     centuryKo = `${centMap[centM[1].toLowerCase()]}세기`;
   }
-
-  // Extract mentioned proper nouns in body
-  const mentionedProper = [];
-  for (const [frName, koWithEn] of PROPER_MENTIONS) {
-    if (t.includes(frName) && !e.nameFr.includes(frName)) {
-      mentionedProper.push(koWithEn);
-      if (mentionedProper.length >= 4) break;
-    }
-  }
-
-  // Extract Voy. cross-references at end of article
-  const voyMatches = [...t.matchAll(/Voy(?:\.|ez)\s+([A-ZÀ-ŸŒÆ][^\.;]{1,50})/g)].map(m => m[1].trim());
 
   // Determine Category & Role Title
   let category = 'superstition';
@@ -725,62 +771,13 @@ function analyzeAndTranslateEntry(e, koBase) {
   if (years.length) domains.push(`${years[0]}년 기록`);
   if (e.images && e.images.length) domains.push('1863 원서 삽화 수록');
 
-  // Construct detailed Korean summary & description based on French text content
-  const clauseTraits = [];
-  if (/nécromanc/i.test(t)) clauseTraits.push('강령술 (Nécromancie)');
-  if (/astrolog/i.test(t)) clauseTraits.push('점성술 (Astrologie)');
-  if (/alchimi|pierre philosophale/i.test(t)) clauseTraits.push('연금술과 현자의 돌 (Pierre Philosophale)');
-  if (/sabbat/i.test(t)) clauseTraits.push('마녀들의 사바트 (Sabbat)');
-  if (/talisman|amulette/i.test(t)) clauseTraits.push('호신부와 탈리스만 (Talisman)');
-  if (/exorcis/i.test(t)) clauseTraits.push('구마 의식 (Exorcisme)');
-  if (/sorcellerie|maléfice/i.test(t)) clauseTraits.push('마녀술과 주술 (Sorcellerie)');
-  if (/brûlé|condamné|supplice/i.test(t)) clauseTraits.push('마녀재판과 형벌 (Procès de Sorcellerie)');
-  if (/trésor/i.test(t)) clauseTraits.push('숨겨진 보물 탐색 (Trésors)');
-  if (/avenir|prédi/i.test(t)) clauseTraits.push('미래 예언 (Prédiction)');
-  if (/guéri|maladie|peste/i.test(t)) clauseTraits.push('질병 치유와 역병 (Guérison)');
-  if (/songe|rêve/i.test(t)) clauseTraits.push('꿈과 환시 (Songes & Visions)');
-  if (/pacte/i.test(t)) clauseTraits.push('악마와의 계약 (Pacte Diabolique)');
-  if (/apparition|spectre|fantôme|revenant/i.test(t)) clauseTraits.push('유령과 망령의 출현 (Apparitions)');
+  const cacheKey = `${e.nameFr}@@${e.page1863}`;
+  const rawKo = TRANSLATION_CACHE[cacheKey] || '';
+  const bodyKo = polishTranslation(rawKo, e, koBase);
 
-  for (const ct of clauseTraits.slice(0, 2)) {
-    if (domains.length < 4) domains.push(ct.replace(/\s*\([^)]*\)/, ''));
-  }
-
-  // Translate common opening definitions into natural Korean
-  let openingKo = '';
-  if (/^magicien/i.test(t)) openingKo = `${displayTitle}은(는) 『지옥사전』에 기록된 마법사(Magicien)이다.`;
-  else if (/^sorcière/i.test(t)) openingKo = `${displayTitle}은(는) 마녀술 및 사바트 전승과 관련하여 기록된 마녀(Sorcière)이다.`;
-  else if (/^sorcier/i.test(t)) openingKo = `${displayTitle}은(는) 주술과 악마 교섭 전승에 등장하는 마법사(Sorcier)이다.`;
-  else if (/^astrologue/i.test(t)) openingKo = `${displayTitle}은(는) 별자리와 천궁도를 통해 운명을 예견한 점성술사(Astrologue)이다.`;
-  else if (/^alchimiste/i.test(t)) openingKo = `${displayTitle}은(는) 금속 변환과 영약을 탐구한 연금술사(Alchimiste)이다.`;
-  else if (/^démon/i.test(t) || /\bdémon\b/i.test(lead.slice(0, 80))) openingKo = `${displayTitle}은(는) 악마학 문헌에 기록된 지옥의 악마(Démon)${legions ? `로, 산하에 ${legions}개 군단(Légions)을 거느린다` : '이다'}.`;
-  else if (/divination/i.test(lead)) openingKo = `${displayTitle}은(는) 고대와 중세에 행해진 점술(Divination)의 일종이다.`;
-  else if (/pierre/i.test(lead)) openingKo = `${displayTitle}은(는) 신비한 주술적·의학적 효능이 있다고 전해진 광물·보석(Pierre Magique)이다.`;
-  else if (/plante|herbe/i.test(lead)) openingKo = `${displayTitle}은(는) 마법 의식과 민간 비방에 사용된 식물·약초(Plante Magique)이다.`;
-  else {
-    openingKo = `${displayTitle}은(는) 콜랭 드 플랑시 (Collin de Plancy)의 1863년 『지옥사전 (Dictionnaire Infernal)』 제6판 p.${e.page1863}에 수록된 「${rank}」 분야 표제어이다.`;
-  }
-
-  const timeInfo = [];
-  if (centuryKo) timeInfo.push(centuryKo);
-  if (years.length) timeInfo.push(`연대 기록(${years.join(', ')}년)`);
-
-  let bodyKo = openingKo;
-  if (timeInfo.length) {
-    bodyKo += ` 원문에서는 ${timeInfo.join(' 및 ')}의 역사적 맥락과 사례를 다루고 있다.`;
-  }
-  if (clauseTraits.length) {
-    bodyKo += ` 주요 핵심 주제는 ${clauseTraits.join(', ')} 등이다.`;
-  }
-  if (mentionedProper.length) {
-    bodyKo += ` 본문에는 ${mentionedProper.join(', ')} 등의 인물·문헌·지명이 주요 전거로 인용되어 있다.`;
-  }
-  if (voyMatches.length) {
-    bodyKo += ` 관련 참조 표제어(Voy.)로는 ${voyMatches.map(v => `${frHeadwordToKo(v, v)} (${v})`).join(', ')} 항목이 연결되어 있다.`;
-  }
-  bodyKo += ` 아래의 1863년 프랑스어 교정 원문 전문을 통해 당대의 상세한 묘사와 인용 문헌을 함께 확인할 수 있다.`;
-
-  const summaryKo = `${openingKo}${clauseTraits.length ? ` 주요 테마: ${clauseTraits.slice(0, 3).join(', ')}.` : ''}`;
+  // First 1-2 sentences for card preview summary
+  const sentMatch = bodyKo.match(/^(.{20,140}?[\.!\?])\s+/);
+  const summaryKo = sentMatch ? sentMatch[1] : (bodyKo.length > 140 ? bodyKo.slice(0, 140) + '…' : bodyKo);
 
   return {
     category,
