@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "@capacitor/cli": "8.6.0",
-    "wrangler": "4.157.0"
+    "wrangler": "4.157.0",
+    "date-holidays": "3.38.0"
   },
   "dependencies": {
     "@capacitor/android": "8.6.0",
