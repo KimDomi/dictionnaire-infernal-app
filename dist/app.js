@@ -80,7 +80,7 @@ async function syncWakeLock(){
 const TAB_TITLES={
   dictionary:'지옥사전',
   gallery:'삽화 도감',
-  daily:'오늘의 악마',
+  daily:'무작위 열람',
   bookmarks:'서재 기록',
   settings:'설정'
 };
@@ -88,7 +88,7 @@ const TAB_TITLES={
 const TAB_BACK_LABELS={
   dictionary:'← 사전 탐색 목록으로',
   gallery:'← 삽화 도감으로',
-  daily:'← 오늘의 악마로',
+  daily:'← 무작위 열람으로',
   bookmarks:'← 서재 기록으로',
   settings:'← 설정으로'
 };
@@ -330,8 +330,8 @@ function renderDailyTab(){
     <article class="daily-hero">
       <div class="daily-header">
         <div>
-          <span class="edition-tag">${randomOverrideId?'GRIMOIRE CONSULTATION · 무작위 소환':`DAILY DEMON · ${todayStr}`}</span>
-          <div><strong>오늘의 지옥사전 표제어</strong></div>
+          <span class="edition-tag">GRIMOIRE CONSULTATION · 무작위 열람</span>
+          <div><strong>무작위 지옥사전 표제어</strong></div>
         </div>
         <button type="button" class="secondary" data-action="reroll-daily">
           ${icon('shuffle')} 다른 항목 뽑기
@@ -441,7 +441,7 @@ function renderSettingsTab(){
       <div class="setting-row">
         <div class="setting-label">
           <strong>열람 중 화면 켜짐 유지</strong>
-          <span>상세 열람 및 오늘의 악마 화면에서 꺼짐 방지</span>
+          <span>상세 열람 및 무작위 열람 화면에서 꺼짐 방지</span>
         </div>
         <button type="button" class="${settings.keepAwake?'primary':''}" data-action="toggle-awake">
           ${settings.keepAwake?'켜짐':'꺼짐'}
@@ -634,6 +634,10 @@ document.addEventListener('click',event=>{
   if(tab){
     activeEntryId=null;
     activeTab=tab;
+    if(tab==='daily'){
+      const pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
+      randomOverrideId=pick.id;
+    }
     render();
     return;
   }
@@ -659,8 +663,7 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='random'||action==='reroll-daily'){
-    const pool=action==='reroll-daily'?ILLUSTRATED_ENTRIES:ENTRIES;
-    const pick=pool[Math.floor(Math.random()*pool.length)];
+    const pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
     randomOverrideId=pick.id;
     if(action==='random'){
       openEntryPage(pick.id);

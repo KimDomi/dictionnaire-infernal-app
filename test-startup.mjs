@@ -78,8 +78,8 @@ async function run(initial,native=false){
   assert.equal(header.textContent,'삽화 도감');
 
   click({tab:'daily'});
-  assert.ok(main.innerHTML.includes('오늘의 지옥사전 표제어'));
-  assert.equal(header.textContent,'오늘의 악마');
+  assert.ok(main.innerHTML.includes('무작위 지옥사전 표제어'));
+  assert.equal(header.textContent,'무작위 열람');
 
   click({tab:'bookmarks'});
   assert.ok(main.innerHTML.includes('서재 열람 현황'));
