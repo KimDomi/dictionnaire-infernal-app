@@ -36,6 +36,7 @@ let activeLetter='ALL';
 let activeSort='page';
 let visibleLimit=PAGE_STEP;
 let activeEntryId=null;
+let savedScrollY=0;
 let randomOverrideId=null;
 let activeWakeLock=null;
 let toastTimer=null;
@@ -59,7 +60,7 @@ function showToast(message){
 }
 
 async function syncWakeLock(){
-  const shouldKeepAwake=settings.keepAwake&&(modalEl?.open||activeTab==='daily');
+  const shouldKeepAwake=settings.keepAwake&&(Boolean(activeEntryId)||modalEl?.open||activeTab==='daily');
   if(!shouldKeepAwake){
     if(activeWakeLock){
       try{await activeWakeLock.release?.();}catch{}
@@ -82,6 +83,14 @@ const TAB_TITLES={
   daily:'오늘의 악마',
   bookmarks:'서재 기록',
   settings:'설정'
+};
+
+const TAB_BACK_LABELS={
+  dictionary:'← 사전 탐색 목록으로',
+  gallery:'← 삽화 도감으로',
+  daily:'← 오늘의 악마로',
+  bookmarks:'← 서재 기록으로',
+  settings:'← 설정으로'
 };
 
 function renderEntryThumb(entry){
@@ -120,6 +129,127 @@ function renderEntryCard(entry){
       <p class="entry-summary">${escapeHtml(entry.summary)}</p>
     </div>
   </article>`;
+}
+
+function getActiveContextList(){
+  if(activeTab==='gallery'){
+    return filterEntries({category:activeGalleryCategory,sort:'plate',onlyIllustrated:true});
+  }
+  if(activeTab==='bookmarks'){
+    const bm=state.bookmarks.map(id=>ENTRY_MAP.get(id)).filter(Boolean);
+    return bm.length?bm:ENTRIES;
+  }
+  const filtered=filterEntries({query:searchQuery,category:activeCategory,letter:activeLetter,sort:activeSort});
+  return filtered.length?filtered:ENTRIES;
+}
+
+function formatParagraphs(text){
+  const lines=String(text??'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  if(!lines.length)return '';
+  return lines.map(line=>`<p class="detail-paragraph">${escapeHtml(line)}</p>`).join('');
+}
+
+function renderEntryDetailPage(entry){
+  const isBookmarked=state.bookmarks.includes(entry.id);
+  const isRead=state.readIds.includes(entry.id);
+  const noteText=state.notes[entry.id]||'';
+  const backLabel=TAB_BACK_LABELS[activeTab]||'← 목록으로 돌아가기';
+
+  const contextList=getActiveContextList();
+  let idx=contextList.findIndex(item=>item.id===entry.id);
+  const navList=idx>=0?contextList:ENTRIES;
+  if(idx<0)idx=navList.findIndex(item=>item.id===entry.id);
+  const prevEntry=idx>0?navList[idx-1]:null;
+  const nextEntry=idx>=0&&idx<navList.length-1?navList[idx+1]:null;
+
+  return `<section class="entry-detail-page">
+    <div class="detail-topbar">
+      <button type="button" class="detail-back-btn" data-action="close-entry">
+        ${escapeHtml(backLabel)}
+      </button>
+      <div class="detail-top-actions">
+        <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
+          ${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기'}
+        </button>
+        <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">
+          ${isRead?'✓ 열람 완료':'열람 표시'}
+        </button>
+        <button type="button" class="secondary" data-action="toggle-french">
+          ${settings.showFrench?'불문 원문 숨김':'불문 원문 함께 보기'}
+        </button>
+      </div>
+    </div>
+
+    <article class="detail-card">
+      <header class="detail-header">
+        <div class="detail-meta-row">
+          <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
+          ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
+        </div>
+        <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
+        <div class="detail-title-fr">1863년 원어 표제어: <strong>${escapeHtml(entry.nameFr)}</strong></div>
+        <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
+        <div class="domain-tags">
+          ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
+        </div>
+      </header>
+
+      <div class="detail-main-grid${entry.hasPlate&&entry.plate?' has-plate':''}">
+        ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
+          <div class="detail-plate-frame">
+            <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화">
+          </div>
+          <figcaption>루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (1863년 제6판 p.${entry.page1863})</figcaption>
+        </figure>`:''}
+
+        <div class="detail-body">
+          ${entry.appearance?`<div class="detail-appearance-box">
+            <strong>외형 및 도상 묘사</strong>
+            <p>${escapeHtml(entry.appearance)}</p>
+          </div>`:''}
+
+          <div class="detail-translation">
+            ${formatParagraphs(entry.description)}
+          </div>
+
+          ${settings.showFrench?`<blockquote class="detail-french-box">
+            <div class="detail-french-header">
+              <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
+              <span>p.${entry.page1863}</span>
+            </div>
+            <p>“${escapeHtml(entry.quoteFr)}”</p>
+            <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
+          </blockquote>`:''}
+        </div>
+      </div>
+
+      <div class="detail-note-box">
+        <div class="detail-note-header">
+          <label for="entry-note-input">개인 연구 노트</label>
+          <span>이 항목에 대한 메모나 참고 문헌을 자유롭게 기록하세요</span>
+        </div>
+        <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
+        <div class="detail-note-actions">
+          <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
+        </div>
+      </div>
+
+      <nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
+        ${prevEntry
+          ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
+              <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
+              <strong>${escapeHtml(prevEntry.nameKo)}</strong>
+            </button>`
+          :`<div class="prev-next-spacer"></div>`}
+        ${nextEntry
+          ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
+              <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
+              <strong>${escapeHtml(nextEntry.nameKo)}</strong>
+            </button>`
+          :`<div class="prev-next-spacer"></div>`}
+      </nav>
+    </article>
+  </section>`;
 }
 
 function renderDictionaryTab(){
@@ -178,7 +308,7 @@ function renderGalleryTab(){
     </div>
     <div class="summary-bar">
       <span>루이 브르통 (Louis Breton) 1863년 목판화 <strong>${list.length}</strong>점</span>
-      <span>항목을 누르면 상세 해제를 봅니다</span>
+      <span>항목을 누르면 상세 페이지로 이동합니다</span>
     </div>
     <div class="plate-grid">
       ${list.map(entry=>`<article class="plate-card" data-action="open-entry" data-id="${escapeHtml(entry.id)}">
@@ -230,7 +360,7 @@ function renderDailyTab(){
           <p>${escapeHtml(entry.description)}</p>
           ${settings.showFrench?`<blockquote class="quote-box">“${escapeHtml(entry.quoteFr)}”</blockquote>`:''}
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
-            <button type="button" class="primary" data-action="open-entry" data-id="${escapeHtml(entry.id)}">상세 노트 및 원문 보기</button>
+            <button type="button" class="primary" data-action="open-entry" data-id="${escapeHtml(entry.id)}">전체 화면으로 상세 보기</button>
             <button type="button" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">${isBookmarked?'★ 즐겨찾기 해제':'☆ 즐겨찾기 추가'}</button>
             <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">${isRead?'✓ 열람 완료됨':'열람 완료 표시'}</button>
           </div>
@@ -257,7 +387,7 @@ function renderBookmarksTab(){
       <h3>즐겨찾기한 항목 (${bookmarkedEntries.length})</h3>
       ${bookmarkedEntries.length
         ?`<div class="entry-list">${bookmarkedEntries.map(renderEntryCard).join('')}</div>`
-        :`<div class="empty-state">아직 즐겨찾기한 악마·표제어가 없습니다. 사전 상세 창에서 ★ 즐겨찾기를 눌러 추가해 보세요.</div>`}
+        :`<div class="empty-state">아직 즐겨찾기한 악마·표제어가 없습니다. 항목 상세 페이지에서 ★ 즐겨찾기를 눌러 추가해 보세요.</div>`}
     </div>
 
     <div class="panel">
@@ -270,7 +400,7 @@ function renderBookmarksTab(){
             <p class="entry-summary">${escapeHtml(state.notes[entry.id])}</p>
           </div>
         </article>`).join('')}</div>`
-        :`<div class="empty-state">기록한 연구 노트가 없습니다. 항목 상세 창에서 메모를 남길 수 있습니다.</div>`}
+        :`<div class="empty-state">기록한 연구 노트가 없습니다. 항목 상세 페이지에서 메모를 남길 수 있습니다.</div>`}
     </div>
   </section>`;
 }
@@ -345,10 +475,17 @@ function renderSettingsTab(){
 
 function render(){
   if(!mainEl)return;
-  if(headerTitleEl)headerTitleEl.textContent=TAB_TITLES[activeTab]||'지옥사전';
   for(const btn of document.querySelectorAll?.('nav button[data-tab]')||[]){
     btn.classList?.toggle?.('active',btn.dataset?.tab===activeTab);
   }
+  const activeEntry=activeEntryId?ENTRY_MAP.get(activeEntryId):null;
+  if(activeEntry){
+    if(headerTitleEl)headerTitleEl.textContent=activeEntry.nameKo;
+    mainEl.innerHTML=renderEntryDetailPage(activeEntry);
+    syncWakeLock();
+    return;
+  }
+  if(headerTitleEl)headerTitleEl.textContent=TAB_TITLES[activeTab]||'지옥사전';
   if(activeTab==='dictionary')mainEl.innerHTML=renderDictionaryTab();
   else if(activeTab==='gallery')mainEl.innerHTML=renderGalleryTab();
   else if(activeTab==='daily')mainEl.innerHTML=renderDailyTab();
@@ -357,62 +494,55 @@ function render(){
   syncWakeLock();
 }
 
-function openEntryModal(entryId){
+function openEntryPage(entryId,pushHistory=true){
   const entry=ENTRY_MAP.get(entryId);
-  if(!entry||!modalEl)return;
+  if(!entry)return;
+  if(!activeEntryId&&typeof window!=='undefined'){
+    savedScrollY=window.scrollY||0;
+  }
   activeEntryId=entry.id;
   if(!state.readIds.includes(entry.id)){
     state.readIds.push(entry.id);
     saveUserState();
   }
-  const isBookmarked=state.bookmarks.includes(entry.id);
-  const isRead=state.readIds.includes(entry.id);
-  const noteText=state.notes[entry.id]||'';
+  if(pushHistory&&typeof window!=='undefined'&&window.history?.pushState){
+    try{
+      window.history.pushState({entryId:entry.id},'',`#entry=${encodeURIComponent(entry.id)}`);
+    }catch{}
+  }
+  render();
+  if(typeof window!=='undefined'){
+    window.scrollTo?.({top:0,behavior:'instant'});
+  }
+}
 
-  modalEl.innerHTML=`<div class="modal-inner">
-    <div class="modal-top">
-      <div>
-        <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · p.${entry.page1863}</span>
-        <h2>${escapeHtml(entry.nameKo)}</h2>
-        <div class="entry-rank-line">${escapeHtml(entry.rank)}${entry.legions?` · 휘하 ${entry.legions}개 군단`:''}</div>
-      </div>
-      <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
-    </div>
+function closeEntryPage(fromPopState=false){
+  if(!activeEntryId)return;
+  activeEntryId=null;
+  if(!fromPopState&&typeof window!=='undefined'&&window.location?.hash?.startsWith('#entry=')){
+    try{
+      window.history?.replaceState?.(null,'',window.location.pathname+window.location.search);
+    }catch{}
+  }
+  render();
+  if(typeof window!=='undefined'){
+    window.scrollTo?.({top:savedScrollY,behavior:'instant'});
+  }
+}
 
-    <div class="modal-detail-grid">
-      ${entry.hasPlate&&entry.plate?`<div class="modal-plate-box">
-        <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 판화">
-      </div>`:''}
-      <div style="flex:1">
-        <div class="domain-tags">
-          ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
-        </div>
-        ${entry.appearance?`<p style="margin:8px 0"><strong>외형 묘사:</strong> ${escapeHtml(entry.appearance)}</p>`:''}
-        <p style="margin:8px 0">${escapeHtml(entry.description)}</p>
-        ${settings.showFrench?`<blockquote class="quote-box"><strong>1863년 원문 (${escapeHtml(entry.nameFr)}):</strong><br>“${escapeHtml(entry.quoteFr)}”<br><small>— J. Collin de Plancy, Dictionnaire Infernal (1863), p.${entry.page1863}</small></blockquote>`:''}
-      </div>
-    </div>
-
-    <div>
-      <label for="entry-note-input" style="display:block;font-size:0.84rem;font-weight:600;margin-bottom:6px">개인 연구 노트</label>
-      <textarea id="entry-note-input" class="note-editor" placeholder="이 악마·항목에 대한 메모나 번역 노트를 기록하세요...">${escapeHtml(noteText)}</textarea>
-    </div>
-
-    <div class="modal-actions">
-      <button type="button" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">${isBookmarked?'★ 즐겨찾기됨':'☆ 즐겨찾기'}</button>
-      <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">${isRead?'✓ 열람 완료':'열람 표시'}</button>
-      <button type="button" class="primary" data-action="save-note" data-id="${escapeHtml(entry.id)}">노트 저장</button>
-      <button type="button" data-action="close">닫기</button>
-    </div>
-  </div>`;
-
-  if(!modalEl.open)modalEl.showModal?.();
-  syncWakeLock();
+if(typeof window!=='undefined'&&window.addEventListener){
+  window.addEventListener('popstate',event=>{
+    const entryId=event?.state?.entryId;
+    if(entryId&&ENTRY_MAP.has(entryId)){
+      openEntryPage(entryId,false);
+    }else if(activeEntryId){
+      closeEntryPage(true);
+    }
+  });
 }
 
 function openBackupModal(){
   if(!modalEl)return;
-  activeEntryId=null;
   modalEl.innerHTML=`<div class="modal-inner">
     <div class="modal-top">
       <h2>서재 기록 내보내기 / 가져오기</h2>
@@ -453,7 +583,6 @@ function openBackupModal(){
 
 function openHelpModal(){
   if(!modalEl)return;
-  activeEntryId=null;
   modalEl.innerHTML=`<div class="modal-inner">
     <div class="modal-top">
       <h2>『지옥사전 (Dictionnaire Infernal)』 안내</h2>
@@ -507,21 +636,29 @@ document.addEventListener('click',event=>{
   const {tab,action,id,category,letter,theme,fontsize}=target.dataset||{};
 
   if(tab){
+    activeEntryId=null;
     activeTab=tab;
     render();
     return;
   }
 
   if(action==='open-entry'&&id){
-    openEntryModal(id);
-    render();
+    openEntryPage(id);
+    return;
+  }
+
+  if(action==='close-entry'){
+    closeEntryPage();
     return;
   }
 
   if(action==='close'){
-    modalEl?.close?.();
-    activeEntryId=null;
-    syncWakeLock();
+    if(modalEl?.open){
+      modalEl.close?.();
+      syncWakeLock();
+    }else if(activeEntryId){
+      closeEntryPage();
+    }
     return;
   }
 
@@ -529,7 +666,10 @@ document.addEventListener('click',event=>{
     const pool=action==='reroll-daily'?ILLUSTRATED_ENTRIES:ENTRIES;
     const pick=pool[Math.floor(Math.random()*pool.length)];
     randomOverrideId=pick.id;
-    if(action==='random')openEntryModal(pick.id);
+    if(action==='random'){
+      openEntryPage(pick.id);
+      return;
+    }
     render();
     return;
   }
@@ -575,7 +715,6 @@ document.addEventListener('click',event=>{
       showToast('즐겨찾기에 추가했어요.');
     }
     saveUserState();
-    if(modalEl?.open&&activeEntryId===id)openEntryModal(id);
     render();
     return;
   }
@@ -590,13 +729,12 @@ document.addEventListener('click',event=>{
       showToast('열람 완료로 기록했어요.');
     }
     saveUserState();
-    if(modalEl?.open&&activeEntryId===id)openEntryModal(id);
     render();
     return;
   }
 
   if(action==='save-note'&&id){
-    const noteEl=modalEl?.querySelector?.('#entry-note-input');
+    const noteEl=document.querySelector?.('#entry-note-input')||mainEl?.querySelector?.('#entry-note-input')||modalEl?.querySelector?.('#entry-note-input');
     const text=String(noteEl?.value||'').trim();
     if(text)state.notes[id]=text.slice(0,2000);
     else delete state.notes[id];
@@ -669,8 +807,11 @@ installNativeNavigation(
   ()=>{
     if(modalEl?.open){
       modalEl.close?.();
-      activeEntryId=null;
       syncWakeLock();
+      return true;
+    }
+    if(activeEntryId){
+      closeEntryPage();
       return true;
     }
     if(activeTab!=='dictionary'){

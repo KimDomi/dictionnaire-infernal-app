@@ -97,11 +97,15 @@ async function run(initial,native=false){
   assert.ok(!modal.open);
 
   click({action:'open-entry',id:'buer'});
-  assert.ok(modal.open);
-  assert.ok(modal.innerHTML.includes('Buer'));
+  assert.ok(!modal.open);
+  assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
+  assert.ok(main.innerHTML.includes('Buer'));
+
+  click({action:'close-entry'});
+  assert.equal(header.textContent,'설정');
 }
 
 await run(null,false);
 await run(null,true);
 await run({bookmarks:['astaroth','buer'],readIds:['astaroth'],notes:{astaroth:'지옥의 대재무관'}});
-console.log('PASS: entire module graph, dictionary startup, tabs, modal & backup dialog');
+console.log('PASS: entire module graph, dictionary startup, tabs, full-page entry view & backup dialog');

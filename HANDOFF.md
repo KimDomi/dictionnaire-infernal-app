@@ -132,14 +132,17 @@ node scripts-build-entries.mjs && node scripts-versions.mjs && npm run check
 2. **전체 항목 자동 교정 파이프라인 (`scripts-build-entries.mjs` 내 `polishTranslation`)**:
    - 나머지 항목들은 `resources/translations_ko_cache.json`의 초벌 번역을 읽어 들여 `polishTranslation()`에서 ① 문체 평서형 변환(`convertEnding`), ② 오컬트 용어 교정, ③ 고유명사 `한글 (Original)` 병기(`BODY_PROPER_REPLACEMENTS`), ④ 받침 유무에 따른 한국어 조사 자동 보정(`fixKoreanParticles`)을 거쳐 생성됩니다.
 
-### C. UI / UX 개편 작업 가이드
-사용자는 **"일단 3,810개 내용을 전부 채우고 번역을 다듬은 뒤, 나중에 UI/UX를 손보자"**고 계획한 상태입니다.
-UI/UX를 수정할 때 참고할 파일:
-- **[dist/index.html](./dist/index.html)**: 상단 헤더, 오늘의 악마 배너, 검색창, 카테고리 칩(`#category-chips`), 알파벳 바(`#letter-bar`), 카드 그리드(`#entries-grid`), 상세 모달(`#entry-modal`) 마크업
-- **[dist/style.css](./dist/style.css)**: CSS 변수 기반 3종 테마(`:root` 다크 그리무아르, `[data-theme="parchment"]` 양피지 고서, `[data-theme="light"]` 라이트), 반응형 레이아웃, 모달 및 카드 스타일
-- **[dist/app.js](./dist/app.js)**: 렌더링 로직(`renderDictionary`, `renderGallery`, `renderBookmarks`, `renderJournal`, `openEntryModal`), 80개 단위 페이지네이션(`PAGE_SIZE = 80`), 검색·필터 이벤트 바인딩
+### C. UI / UX 구조 및 개편 가이드
+- **항목 상세 보기 (전체 페이지 뷰 전환 완료)**:
+  - 기존의 좁은 모달 팝업 대신, 항목 카드를 클릭하면 `<main id="main">` 전체가 **전용 상세 페이지(`.entry-detail-page`, `renderEntryDetailPage()`)**로 전환되어 넓은 화면에서 판화와 전문 번역을 읽을 수 있습니다.
+  - 상세 페이지에서는 **목록 복귀 버튼(`← 사전 탐색 목록으로`, 기존 스크롤 위치 복원)**, **브라우저/안드로이드 뒤로가기(`popstate` 및 `installNativeNavigation`)**, **이전/다음 항목 바로 이동(`.detail-prev-next`)**, **불문 원문 토글**, **개인 연구 노트 저장**을 지원합니다.
+  - `<dialog id="modal">`은 백업 내보내기/가져오기(`openBackupModal`)와 도움말(`openHelpModal`) 다이얼로그 전용으로 사용됩니다.
+- UI/UX를 추가 수정할 때 참고할 파일:
+  - **[dist/index.html](./dist/index.html)**: 상단 헤더, 메인 영역(`#main`), 하단 탭 내비게이션(`nav[aria-label="주 메뉴"]`), 유틸리티 다이얼로그(`#modal`) 마크업
+  - **[dist/style.css](./dist/style.css)**: CSS 변수 기반 테마(`:root` 다크, `[data-theme="light"]` 양피지 고서), 최대 너비 `960px` 레이아웃, 상세 페이지(`.entry-detail-page`, `.detail-card`, `.detail-plate-showcase`) 스타일
+  - **[dist/app.js](./dist/app.js)**: 렌더링 로직(`renderDictionaryTab`, `renderGalleryTab`, `renderDailyTab`, `renderBookmarksTab`, `renderEntryDetailPage`, `openEntryPage`, `closeEntryPage`), 80개 단위 페이지네이션(`PAGE_STEP = 80`)
 
-> **UI/UX 수정 시 주의사항**: `test-startup.mjs`에서 초기 부팅 및 DOM ID(`#entries-grid`, `#letter-bar`, `#category-chips`, `#entry-modal`, `#search-input`, `#backup-modal` 등)를 검증하므로, 기존 핵심 DOM ID를 유지하거나 수정 시 `test-startup.mjs`도 함께 업데이트해야 `npm run check`가 통과합니다.
+> **UI/UX 수정 시 주의사항**: `test-startup.mjs`에서 초기 부팅, 탭 전환, 전체 페이지 상세 뷰(`.entry-detail-page`), 백업 모달 등을 검증하므로 UI 구조 변경 시 `test-startup.mjs`도 함께 업데이트해야 `npm run check`가 통과합니다.
 
 ---
 
