@@ -135,8 +135,10 @@ node scripts-build-entries.mjs && node scripts-versions.mjs && npm run check
 ### C. UI / UX 구조 및 개편 가이드
 - **항목 상세 보기 (전체 페이지 뷰 전환 완료)**:
   - 기존의 좁은 모달 팝업 대신, 항목 카드를 클릭하면 `<main id="main">` 전체가 **전용 상세 페이지(`.entry-detail-page`, `renderEntryDetailPage()`)**로 전환되어 넓은 화면에서 판화와 전문 번역을 읽을 수 있습니다.
-  - 상세 페이지에서는 **목록 복귀 버튼(`← 사전 탐색 목록으로`, 기존 스크롤 위치 복원)**, **브라우저/안드로이드 뒤로가기(`popstate` 및 `installNativeNavigation`)**, **이전/다음 항목 바로 이동(`.detail-prev-next`)**, **불문 원문 토글**, **개인 연구 노트 저장**을 지원합니다.
-  - `<dialog id="modal">`은 백업 내보내기/가져오기(`openBackupModal`)와 도움말(`openHelpModal`) 다이얼로그 전용으로 사용됩니다.
+  - 카드 내 배치는 **표제어(이름) → 삽화 판화(루이 브르통) → 본문(글)** 순서로 정렬되어 있습니다.
+  - **좌우 드래그/스와이프 이동**: 모바일 터치 스와이프 또는 마우스 좌우 드래그, 좌우 화살표 키로 이전 항목 / 다음 항목으로 책장 넘기듯 바로 이동할 수 있습니다 (`navigateEntryRelative()`).
+  - 상세 페이지에서는 **목록 복귀 버튼(`← 사전 탐색 목록으로`, 기존 스크롤 위치 복원)**, **브라우저/안드로이드 뒤로가기(`popstate` 및 `installNativeNavigation`)**, **이전/다음 항목 바로 이동(`.detail-prev-next`)**, **불문 원문 토글**을 지원합니다.
+  - `<dialog id="modal">`은 백업 내보내기/가져오기(`openBackupModal`), 앱 안내(`openHelpModal`), 설정 도움말(`openSettingsHelpModal`) 다이얼로그 전용으로 사용됩니다.
 - UI/UX를 추가 수정할 때 참고할 파일:
   - **[dist/index.html](./dist/index.html)**: 상단 헤더, 메인 영역(`#main`), 하단 탭 내비게이션(`nav[aria-label="주 메뉴"]`), 유틸리티 다이얼로그(`#modal`) 마크업
   - **[dist/style.css](./dist/style.css)**: CSS 변수 기반 테마(`:root` 다크, `[data-theme="light"]` 양피지 고서), 최대 너비 `960px` 레이아웃, 상세 페이지(`.entry-detail-page`, `.detail-card`, `.detail-plate-showcase`) 스타일
