@@ -1,4 +1,4 @@
-import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=fd6978158f5a';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=6158cd2e25e3';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=30d69e69c3cf';
@@ -105,10 +105,35 @@ function renderEntryThumb(entry){
   </div>`;
 }
 
+const SUB_CATEGORY_LABELS={
+  monarch:'악마 · 지옥 군주',
+  duke:'악마 · 대공·후작·총재',
+  spirit:'악마 · 하급 악마·괴이',
+  myth:'신화 · 고대 신격·사바트'
+};
+
+const CATEGORY_TAG_LABELS={
+  demon:'악마·정령',
+  myth:'신화·종교',
+  person:'마법사·인물',
+  divination:'점술·점성술',
+  superstition:'미신·민속',
+  grimoire:'마도서·문헌',
+  crossref:'상호참조'
+};
+
+function getEntryCategoryTag(entry){
+  if(entry.hasPlate&&entry.subCategory&&SUB_CATEGORY_LABELS[entry.subCategory]){
+    return SUB_CATEGORY_LABELS[entry.subCategory];
+  }
+  return CATEGORY_TAG_LABELS[entry.category]||'미신·민속';
+}
+
 function renderEntryCard(entry){
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
   const metaText=entry.hasPlate?`판화 No. ${entry.plateNo} · p.${entry.page1863}`:`1863년판 ${entry.letter}부 · p.${entry.page1863}`;
+  const tag=getEntryCategoryTag(entry);
   return `<article class="entry-card" data-action="open-entry" data-id="${escapeHtml(entry.id)}">
     ${renderEntryThumb(entry)}
     <div class="entry-card-body">
@@ -116,13 +141,15 @@ function renderEntryCard(entry){
         <span class="entry-plate-no">${escapeHtml(metaText)}</span>
         <div class="entry-badges">
           ${entry.hasPlate?'<span class="mini-badge accent">삽화</span>':''}
-          ${entry.legions?`<span class="mini-badge">${entry.legions}군단</span>`:''}
           ${isBookmarked?'<span class="mini-badge accent">즐겨찾기</span>':''}
           ${isRead?'<span class="mini-badge">열람</span>':''}
         </div>
       </div>
       <h2 class="entry-title-ko">${escapeHtml(entry.nameKo)}</h2>
-      <div class="entry-rank-line">${escapeHtml(entry.rank)}</div>
+      ${rankIsTitle(entry)?`<div class="entry-rank-line">${escapeHtml(entry.rank)}</div>`:''}
+      <div class="domain-tags">
+        <span class="domain-tag">${escapeHtml(tag)}</span>
+      </div>
       <p class="entry-summary">${escapeHtml(entry.summary)}</p>
     </div>
   </article>`;
@@ -162,12 +189,6 @@ function rankIsTitle(entry){
   return Boolean(entry.hasPlate)||(entry.category==='demon'&&TITLE_RANK_PATTERN.test(entry.rank||''));
 }
 
-function detailRankLabel(entry){
-  if(rankIsTitle(entry))return entry.rank;
-  const cat=CATEGORIES.find(c=>c.id===entry.category);
-  return cat?cat.label.replace(/\s*\(\d[\d,]*\)$/,''):entry.rank;
-}
-
 function formatParagraphs(text){
   const lines=String(text??'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
   if(!lines.length)return '';
@@ -181,7 +202,10 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
       </div>
       <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
-      <div class="detail-rank-line${rankIsTitle(entry)?'':' is-category'}">${escapeHtml(detailRankLabel(entry))}</div>
+      ${rankIsTitle(entry)?`<div class="detail-rank-line">${escapeHtml(entry.rank)}</div>`:''}
+      <div class="domain-tags">
+        <span class="domain-tag">${escapeHtml(getEntryCategoryTag(entry))}</span>
+      </div>
     </header>
 
     ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">

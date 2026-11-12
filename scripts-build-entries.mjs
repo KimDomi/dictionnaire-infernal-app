@@ -1130,21 +1130,21 @@ console.log('Illustrated plate entries:', fullEntries.filter(e => e.hasPlate).le
 const jsContent = `export const CATEGORIES=[
   {id:"all",label:"전체 (3,810)"},
   {id:"illustrated",label:"판화 수록 (68)"},
-  {id:"demon",label:"악마·정령·사바트"},
+  {id:"demon",label:"악마·정령"},
+  {id:"myth",label:"신화·종교"},
   {id:"person",label:"마법사·인물"},
   {id:"divination",label:"점술·점성술"},
-  {id:"superstition",label:"미신·민속·기담"},
-  {id:"myth",label:"신화·종교·타계"},
+  {id:"superstition",label:"미신·민속"},
   {id:"grimoire",label:"마도서·문헌"},
   {id:"crossref",label:"상호참조"}
 ];
 
 export const GALLERY_CATEGORIES=[
   {id:"all",label:"전체 (68)"},
-  {id:"monarch",label:"지옥 군주"},
-  {id:"duke",label:"대공·후작·총재"},
-  {id:"spirit",label:"하급 악마·괴이"},
-  {id:"myth",label:"고대 신화·사바트"}
+  {id:"monarch",label:"악마 · 지옥 군주 (16)"},
+  {id:"duke",label:"악마 · 대공·후작·총재 (26)"},
+  {id:"spirit",label:"악마 · 하급 악마·괴이 (13)"},
+  {id:"myth",label:"신화 · 고대 신격·사바트 (13)"}
 ];
 
 export const LETTERS=["ALL","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];

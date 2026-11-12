@@ -515,11 +515,15 @@ select.sort-select {
 }
 
 .domain-tag {
-  font-size: 0.76rem;
-  padding: 3px 9px;
+  font-size: 0.74rem;
+  padding: 2px 8px;
   border-radius: 999px;
   background: var(--bg-soft);
   border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-weight: 500;
+  display: inline-block;
+  white-space: nowrap;
 }
 
 .quote-box {
@@ -1118,8 +1122,4 @@ dialog#modal::backdrop {
   user-select: none;
 }
 
-.detail-rank-line.is-category {
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text-muted);
-}
+
