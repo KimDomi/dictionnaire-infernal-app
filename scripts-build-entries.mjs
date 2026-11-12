@@ -379,6 +379,10 @@ function wordToHangul(word) {
 
   w = w
     .replace(/^aa/, 'a')
+    .replace(/chr/g, 'kr')
+    .replace(/chl/g, 'kl')
+    .replace(/chn/g, 'kn')
+    .replace(/chm/g, 'km')
     .replace(/sch/g, 'S')
     .replace(/tch/g, 'C')
     .replace(/ch/g, 'S')
@@ -402,19 +406,20 @@ function wordToHangul(word) {
     .replace(/gy/g, 'ji')
     .replace(/ck/g, 'k')
     .replace(/x/g, 'ks')
-    .replace(/([bcdfghjklmnpqrstvwz])\1+/g, '$1')
-    .replace(/([bcdfghjklmnpqrstvwzSN])e$/, '$1');
+    .replace(/ll/g, 'L')
+    .replace(/([bcdfghjkmnprstvwz])\1+/g, '$1')
+    .replace(/([bcdfghjklmnpqrstvwzSNL])e$/, '$1');
 
   const C_CHO = {
     b:'ㅂ', c:'ㅋ', d:'ㄷ', f:'ㅍ', g:'ㄱ', h:'ㅎ', j:'ㅈ', k:'ㅋ',
-    l:'ㄹ', m:'ㅁ', n:'ㄴ', p:'ㅍ', q:'ㅋ', r:'ㄹ', s:'ㅅ', t:'ㅌ',
+    l:'ㄹ', L:'ㄹ', m:'ㅁ', n:'ㄴ', p:'ㅍ', q:'ㅋ', r:'ㄹ', s:'ㅅ', t:'ㅌ',
     v:'ㅂ', w:'ㅇ', z:'ㅈ', S:'ㅅ', C:'ㅊ', N:'ㄴ'
   };
   const V_JUNG = {
     a:'ㅏ', e:'ㅔ', i:'ㅣ', o:'ㅗ', u:'ㅜ', y:'ㅣ', W:'ㅘ', O:'ㅚ'
   };
   const BATCHIM_MAP = {
-    n: 'ㄴ', m: 'ㅁ', l: 'ㄹ', p: 'ㅂ', k: 'ㄱ', c: 'ㄱ'
+    n: 'ㄴ', m: 'ㅁ', l: 'ㄹ', L: 'ㄹ', p: 'ㅂ', k: 'ㄱ', c: 'ㄱ'
   };
 
   const syls = [];
@@ -426,6 +431,10 @@ function wordToHangul(word) {
       syls.push(composeHangul('ㅇ', V_JUNG[ch]));
       i += 1;
     } else if (C_CHO[ch]) {
+      if ((ch === 'L' || ch === 'l') && syls.length > 0 && V_JUNG[next]) {
+        const merged = addBatchim(syls[syls.length - 1], 'ㄹ');
+        if (merged) syls[syls.length - 1] = merged;
+      }
       if (V_JUNG[next]) {
         let jung = V_JUNG[next];
         if ((ch === 'S' || ch === 'N') && jung === 'ㅏ') jung = 'ㅑ';
@@ -435,7 +444,9 @@ function wordToHangul(word) {
         i += 2;
       } else {
         const b = BATCHIM_MAP[ch];
-        if (b && syls.length > 0) {
+        // Do not merge p, k, c as batchim when followed by r or l (e.g. pr, pl, cr, cl)
+        const skipBatchim = (ch === 'p' || ch === 'k' || ch === 'c') && (next === 'r' || next === 'l' || next === 'L');
+        if (b && !skipBatchim && syls.length > 0) {
           const merged = addBatchim(syls[syls.length - 1], b);
           if (merged) {
             syls[syls.length - 1] = merged;
@@ -443,7 +454,12 @@ function wordToHangul(word) {
             continue;
           }
         }
-        syls.push(composeHangul(C_CHO[ch], ch === 'S' || ch === 'j' || ch === 'C' ? 'ㅠ' : 'ㅡ'));
+        const emptySyl = composeHangul(C_CHO[ch], ch === 'S' || ch === 'j' || ch === 'C' ? 'ㅠ' : 'ㅡ');
+        if ((next === 'l' || next === 'L') && V_JUNG[w[i + 2] || '']) {
+          syls.push(addBatchim(emptySyl, 'ㄹ') || emptySyl);
+        } else {
+          syls.push(emptySyl);
+        }
         i += 1;
       }
     } else {
@@ -453,7 +469,41 @@ function wordToHangul(word) {
   return syls.join('') || word;
 }
 
-function frHeadwordToKo(nameFr, baseFr) {
+const TRANSLATION_CACHE = fs.existsSync('resources/translations_ko_cache.json')
+  ? JSON.parse(fs.readFileSync('resources/translations_ko_cache.json', 'utf8'))
+  : {};
+
+const CURATED_OVERRIDES = fs.existsSync('resources/curated_ko_overrides.json')
+  ? JSON.parse(fs.readFileSync('resources/curated_ko_overrides.json', 'utf8'))
+  : {};
+
+const BAD_CACHE_HEADWORDS = new Set([
+  '헛소리','바커','콘돔','방부제','캐릭터','표창','도당','마법의 책','그러나','하지만',
+  '따라서','그들은','우리는','이것은','그것은','그녀는','그는','모든','일부','많은',
+  '어떤','비록','아마도','오늘날','옛날','참조','보라'
+]);
+
+function extractKoHeadwordFromCache(rawKo, e) {
+  if (!rawKo || !e) return '';
+  const v = String(rawKo).trim();
+  let m = v.match(/^([가-힣][가-힣\s·]{0,18}?)(?:\s*\([^)]+\))?\s*(?:—|-)\s+/);
+  if (!m && e.textFr && (e.textFr.indexOf('.') < 0 || e.textFr.indexOf('.') > 25)) {
+    m = v.match(/^([가-힣][가-힣\s·]{0,16}?)(?:\s*\([^)]+\))?\.\s+/);
+  }
+  if (!m) {
+    m = v.match(/^([가-힣]{2,10})(?:\s*\([^)]+\))?[은는]\s+/);
+  }
+  if (!m) return '';
+  let cand = m[1].trim()
+    .replace(/마법사의 안식일|마녀들의 안식일|안식일/g, '사바트')
+    .replace(/솔로몬의 쇄골|솔로몬의 빗장뼈/g, '솔로몬의 열쇠');
+  if (cand.length < 1 || cand.length > 18) return '';
+  if (/[다요죠네까]$/.test(cand)) return '';
+  if (BAD_CACHE_HEADWORDS.has(cand)) return '';
+  return cand;
+}
+
+function frHeadwordToKo(nameFr, baseFr, rawEntry = null) {
   const fullLow = String(nameFr || '').toLowerCase().replace(/’/g, '’').trim();
   const baseLow = String(baseFr || '').toLowerCase().replace(/’/g, '’').trim();
   const fullLowPlain = fullLow.replace(/’/g, "'");
@@ -467,23 +517,32 @@ function frHeadwordToKo(nameFr, baseFr) {
   else if (WORD_DICT[baseLowPlain]) baseKo = WORD_DICT[baseLowPlain];
   else if (NAME_MAP[baseLow]) baseKo = NAME_MAP[baseLow];
   else {
-    const cleanTarget = baseFr || nameFr;
-    const tokens = cleanTarget.split(/(\s+|\-)/);
-    baseKo = tokens.map(tok => {
-      if (/^\s+$/.test(tok)) return ' ';
-      if (tok === '-') return '·';
-      const sub = tok.replace(/^(?:d’|d'|l’|l')/i, '');
-      const low = sub.toLowerCase();
-      if (low === 'de' || low === 'du' || low === 'des') return '드';
-      if (low === 'la') return '라';
-      if (low === 'le') return '르';
-      if (low === 'les') return '레';
-      if (low === 'et') return '와';
-      if (['ou','en','au','aux','sur','sous','dans','par','pour','avec','sans','chez','contre','dit','dite','m.'].includes(low)) return '';
-      if (WORD_DICT[low]) return WORD_DICT[low];
-      if (NAME_MAP[low]) return NAME_MAP[low];
-      return wordToHangul(sub);
-    }).filter(Boolean).join(' ').replace(/\s+/g, ' ').replace(/\s*·\s*/g, '·').trim();
+    // Check if TRANSLATION_CACHE already has a clean Korean headword for this entry
+    if (rawEntry) {
+      const cacheKey = `${rawEntry.nameFr}@@${rawEntry.page1863}`;
+      const fromCache = extractKoHeadwordFromCache(TRANSLATION_CACHE[cacheKey], rawEntry);
+      if (fromCache) baseKo = fromCache;
+    }
+    if (!baseKo) {
+      const cleanTarget = baseFr || nameFr;
+      const tokens = cleanTarget.split(/(\s+|\-)/);
+      const isMultiWord = tokens.filter(t => t.trim() && t !== '-').length > 1;
+      baseKo = tokens.map(tok => {
+        if (/^\s+$/.test(tok)) return ' ';
+        if (tok === '-') return '·';
+        const sub = tok.replace(/^(?:d’|d'|l’|l')/i, '');
+        const low = sub.toLowerCase();
+        if (low === 'de' || low === 'du' || low === 'des') return '드';
+        if (low === 'la') return '라';
+        if (low === 'le') return '르';
+        if (low === 'les') return '레';
+        if (low === 'et') return '와';
+        if (['ou','en','au','aux','sur','sous','dans','par','pour','avec','sans','chez','contre','dit','dite','m.'].includes(low)) return '';
+        if (NAME_MAP[low]) return NAME_MAP[low];
+        if (!isMultiWord && WORD_DICT[low]) return WORD_DICT[low];
+        return wordToHangul(sub);
+      }).filter(Boolean).join(' ').replace(/\s+/g, ' ').replace(/\s*·\s*/g, '·').trim();
+    }
   }
 
   // If nameFr has a parenthetical first name like "Abdeel (Abraham)" or "Abadie (Jeannette d’)", include its Korean transliteration too
@@ -494,10 +553,13 @@ function frHeadwordToKo(nameFr, baseFr) {
       const innerTokens = inner.split(/[\s\-]+/).map(t => {
         const tl = t.toLowerCase().replace(/^(?:d’|d'|l’|l')/i, '');
         if (!tl || ['m.','mm.','dit','dite','de','du','la','le'].includes(tl)) return '';
-        return NAME_MAP[tl] || WORD_DICT[tl] || wordToHangul(tl);
+        return NAME_MAP[tl] || wordToHangul(tl);
       }).filter(Boolean);
       if (innerTokens.length) {
-        return `${baseKo} (${innerTokens.join(' ')})`;
+        const innerStr = innerTokens.join(' ');
+        if (!baseKo.includes(innerStr)) {
+          return `${baseKo} (${innerStr})`;
+        }
       }
     }
   }
@@ -505,164 +567,328 @@ function frHeadwordToKo(nameFr, baseFr) {
   return baseKo || baseFr || nameFr;
 }
 
-// Proper nouns dictionary for body text extraction (ensuring Korean + (English/Latin) notation)
-const PROPER_MENTIONS = [
-  ['Salomon', '솔로몬 (Salomon)'],
-  ['Clavicules de Salomon', '『솔로몬의 열쇠 (Clavicules de Salomon)』'],
-  ['Petit Albert', '『소 알베르트 (Petit Albert)』'],
-  ['Grand Grimoire', '『그랑 그리무아르 (Grand Grimoire)』'],
-  ['Malleus Maleficarum', '『마녀들의 망치 (Malleus Maleficarum)』'],
-  ['Wierus', '요한 바이어 (Wierus)'],
-  ['Wiérus', '요한 바이어 (Wiérus)'],
-  ['Delancre', '피에르 드 랑크르 (Delancre)'],
-  ['Bodin', '장 보댕 (Bodin)'],
-  ['Boguet', '앙리 보게 (Boguet)'],
-  ['Delrio', '마르틴 델리오 (Delrio)'],
-  ['Leloyer', '피에르 르루아예 (Leloyer)'],
-  ['Bekker', '발타자르 베커르 (Bekker)'],
-  ['Calmet', '돔 아우구스탱 칼메 (Calmet)'],
-  ['Görres', '요제프 괴레스 (Görres)'],
-  ['Gœrres', '요제프 괴레스 (Gœrres)'],
-  ['Berbiguier', '베르비기에 (Berbiguier)'],
-  ['Torquemada', '토르케마다 (Torquemada)'],
-  ['Sprenger', '야코프 슈프렝거 (Sprenger)'],
-  ['Agrippa', '아그리파 (Agrippa)'],
-  ['Paracelse', '파라켈수스 (Paracelse)'],
-  ['Cardan', '지롤라모 카르다노 (Cardan)'],
-  ['Nostradamus', '노스트라다무스 (Nostradamus)'],
-  ['Albert le Grand', '알베르투스 마그누스 (Albert le Grand)'],
-  ['Pline', '플리니우스 (Pline)'],
-  ['Plutarque', '플루타르코스 (Plutarque)'],
-  ['Suétone', '수에토니우스 (Suétone)'],
-  ['Hérodote', '헤로도토스 (Hérodote)'],
-  ['Pythagore', '피타고라스 (Pythagore)'],
-  ['Platon', '플라톤 (Platon)'],
-  ['Aristote', '아리스토텔레스 (Aristote)'],
-  ['Socrate', '소크라테스 (Socrate)'],
-  ['Homère', '호메로스 (Homère)'],
-  ['Virgile', '베르길리우스 (Virgile)'],
-  ['Ovide', '오비디우스 (Ovide)'],
-  ['Apulée', '아풀레이우스 (Apulée)'],
-  ['Lucien', '루키아노스 (Lucien)'],
-  ['Origène', '오리게네스 (Origène)'],
-  ['Augustin', '아우구스티누스 (Augustin)'],
-  ['Thomas d’Aquin', '토마스 아퀴나스 (Thomas d’Aquin)'],
-  ['saint Bernard', '성 베르나르두스 (Saint Bernard)'],
-  ['Grégoire de Tours', '투르의 그레고리우스 (Grégoire de Tours)'],
-  ['Mahomet', '무함마드 (Mahomet)'],
-  ['Zoroastre', '조로아스터 (Zoroastre)'],
-  ['Hermès', '헤르메스 (Hermès)'],
-  ['Apollon', '아폴론 (Apollon)'],
-  ['Jupiter', '유피테르 (Jupiter)'],
-  ['Vénus', '베누스 (Vénus)'],
-  ['Minerve', '미네르바 (Minerve)'],
-  ['Diane', '디아나 (Diane)'],
-  ['Hécate', '헤카테 (Hécate)'],
-  ['Mercure', '메르쿠리우스 (Mercure)'],
-  ['Saturne', '사투르누스 (Saturne)'],
-  ['Lucifer', '루키페르 (Lucifer)'],
-  ['Satan', '사탄 (Satan)'],
-  ['Belzébuth', '벨제붑 (Belzébuth)'],
-  ['Astaroth', '아스타로트 (Astaroth)'],
-  ['Asmodée', '아스모데우스 (Asmodée)'],
-  ['Léviathan', '레비아탄 (Léviathan)'],
-  ['Béhémoth', '베헤모스 (Béhémoth)'],
-  ['Belphégor', '벨페고르 (Belphégor)'],
-  ['Baphomet', '바포메트 (Baphomet)'],
-  ['Méphistophélès', '메피스토펠레스 (Méphistophélès)'],
-  ['Faust', '파우스트 (Faust)'],
-  ['Merlin', '멀린 (Merlin)'],
-  ['Cagliostro', '칼리오스트로 (Cagliostro)'],
-  ['Mesmer', '메스머 (Mesmer)'],
-  ['Swedenborg', '스베덴보리 (Swedenborg)'],
-  ['Luther', '마르틴 루터 (Luther)'],
-  ['Calvin', '장 칼뱅 (Calvin)'],
-  ['Charlemagne', '샤를마뉴 (Charlemagne)'],
-  ['Napoléon', '나폴레옹 (Napoléon)'],
-  ['Louis XIV', '루이 14세 (Louis XIV)'],
-  ['Louis XIII', '루이 13세 (Louis XIII)'],
-  ['Henri IV', '앙리 4세 (Henri IV)'],
-  ['Henri III', '앙리 3세 (Henri III)'],
-  ['Catherine de Médicis', '카트린 드 메디시스 (Catherine de Médicis)'],
-  ['Urbain Grandier', '위르뱅 그랑디에 (Urbain Grandier)'],
-  ['Loudun', '루됭 (Loudun)'],
-  ['Louviers', '루비에 (Louviers)'],
-  ['Lorraine', '로렌 (Lorraine)'],
-  ['Bretagne', '브르타뉴 (Bretagne)'],
-  ['Normandie', '노르망디 (Normandie)'],
-  ['Gascogne', '가스코뉴 (Gascogne)'],
-  ['Écosse', '스코틀랜드 (Écosse)'],
-  ['Angleterre', '잉글랜드 (Angleterre)'],
-  ['Allemagne', '독일 (Allemagne)'],
-  ['Espagne', '스페인 (Espagne)'],
-  ['Italie', '이탈리아 (Italie)'],
-  ['Suède', '스웨덴 (Suède)'],
-  ['Égypte', '이집트 (Égypte)'],
-  ['Inde', '인도 (Inde)'],
-  ['Chine', '중국 (Chine)'],
-  ['Japon', '일본 (Japon)'],
-  ['Perse', '페르시아 (Perse)'],
-  ['Rome', '로마 (Rome)'],
-  ['Paris', '파리 (Paris)'],
-  ['Venise', '베네치아 (Venise)'],
-  ['Babylone', '바빌론 (Babylone)'],
-  ['Jérusalem', '예루살렘 (Jérusalem)']
+const ADJ_SET = new Set([
+  '가능합니다','간단합니다','강력합니다','강합니다','거룩합니다','거대합니다','건조합니다','격렬합니다',
+  '결백합니다','고귀합니다','공정합니다','공평하십니다','궁금합니다','기괴합니다','기묘합니다','기이합니다',
+  '능숙합니다','다양합니다','단단합니다','단순합니다','당연합니다','대담합니다','독특합니다','동일합니다',
+  '뚜렷합니다','마땅합니다','만합니다','명백합니다','명확합니다','모호합니다','무력합니다','무모합니다',
+  '무시무시합니다','무익합니다','무한합니다','미묘합니다','미세합니다','민감합니다','복잡합니다',
+  '부정확합니다','부족합니다','분명합니다','분분합니다','불가능합니다','불과합니다','불쌍합니다',
+  '불완전합니다','불투명합니다','불행합니다','비슷합니다','빈약합니다','사악합니다','상당합니다',
+  '생생합니다','성급합니다','순수합니다','습합니다','신비합니다','신성합니다','신속합니다','심각합니다',
+  '심오합니다','악합니다','안전합니다','약합니다','엄격합니다','엄청납니다','열등합니다','영원합니다',
+  '완고합니다','완만합니다','완벽합니다','왕성합니다','우아합니다','우울합니다','우월합니다','웅장합니다',
+  '위험합니다','유능합니다','유명합니다','유사합니다','유용합니다','유익합니다','유치합니다','익숙합니다',
+  '일정합니다','잔인합니다','적합합니다','정중합니다','정통합니다','정확합니다','죄송합니다','중요합니다',
+  '진지합니다','추악합니다','충분합니다','친절합니다','특유합니다','특이합니다','편안합니다','평행합니다',
+  '풍부합니다','필요합니다','행복합니다','현명합니다','확실합니다','훌륭합니다','흔합니다','희귀합니다',
+  '이상합니다','투명합니다','가득합니다','아름답습니다','놀랍습니다','두렵습니다','무섭습니다','즐겁습니다',
+  '슬픕니다','기쁩니다','가깝습니다','멉니다','길습니다','짧습니다','넓습니다','좁습니다','깊습니다',
+  '얕습니다','높습니다','낮습니다','많습니다','적습니다','작습니다','좋습니다','나쁩니다','같습니다',
+  '다릅니다','옳습니다','그릅니다','쉽습니다','어렵습니다','무겁습니다','가볍습니다','밝습니다',
+  '어둡습니다','뜨겁습니다','차갑습니다','따뜻합니다','시원합니다','부드럽습니다','빠릅니다','느립니다',
+  '새롭습니다','오래되었습니다','그렇습니다','싶습니다','어리석습니다','괜찮습니다','똑같습니다','걸맞습니다',
+  '알맞습니다','점잖습니다','시원찮습니다','만만찮습니다','하얗습니다','까맣습니다','노랗습니다','파랗습니다',
+  '빨갛습니다','뛰어납니다','큽니다','아름다우십니다'
+]);
+
+const ADJ_NEG_STEMS = new Set([
+  '강력하지','같지','그렇지','나쁘지','동일하지','드물지','많지','목마르지','부족하지','분명하지',
+  '뾰족하지','쉽지','싶지','어렵지','옳지','완전하지','우스꽝스럽지','유사하지','있지','정확하지',
+  '좋지','충분하지','필요하지','행복하지','현명하지','흔하지','비슷하지','가능하지','안전하지',
+  '중요하지','적합하지','익숙하지','완벽하지','강하지','약하지','선명하지','분명치','마땅치',
+  '만만치','흔치','못지','크지','작지','적지','길지','짧지','높지','낮지','깊지','넓지','좁지',
+  '멀지','가깝지','다르지','그르지','아름답지','두렵지','무섭지','놀랍지','새롭지','어리석지','빠르지'
+]);
+
+function convertEnding(word) {
+  if (word.endsWith('습니다')) {
+    const stem = word.slice(0, -3);
+    const last = stem[stem.length - 1];
+    const code = last ? last.charCodeAt(0) - 0xAC00 : -1;
+    const jong = code >= 0 && code <= 11171 ? code % 28 : -1;
+    if (jong === 20 || last === '겠') return stem + '다';
+    if (stem.endsWith('있') || stem.endsWith('없') || stem.endsWith('같') || stem.endsWith('싶') || stem.endsWith('렇') || stem.endsWith('찮') || stem.endsWith('잖')) return stem + '다';
+    if (ADJ_SET.has(word) || stem.endsWith('롭') || stem.endsWith('스럽') || stem.endsWith('답')) return stem + '다';
+    return stem + '는다';
+  }
+
+  if (word.endsWith('니다') && !['다니다','돌아다니다','아니다'].includes(word)) {
+    if (word === '아닙니다') return '아니다';
+    if (word === '겁니다') return '것이다';
+    if (word === '드뭅니다') return '드물다';
+    if (word.endsWith('이십니다')) return word.slice(0, -4) + '이다';
+    if (word.endsWith('입니다')) {
+      // Distinguish verbs whose stem ends in 이 + ㅂ니다 (보입니다, 놓입니다, 움직입니다...) from Noun + 입니다
+      if (/^(?:.*(?:덧붙|밀어붙|기울|움직|속삭|뒤섞)|보|놓|쓰|죽|줄|높|붙|모|섞|묶|속|숙|먹)입니다$/.test(word)) {
+        const stem = word.slice(0, -2);
+        const baseCode = stem.charCodeAt(stem.length - 1) - 0xAC00 - 17;
+        return stem.slice(0, -1) + String.fromCharCode(0xAC00 + baseCode + 4) + '다';
+      }
+      return word.slice(0, -3) + '이다';
+    }
+    const stem = word.slice(0, -2);
+    const last = stem[stem.length - 1];
+    const code = last ? last.charCodeAt(0) - 0xAC00 : -1;
+    if (code >= 0 && code <= 11171 && code % 28 === 17) {
+      const baseCode = code - 17;
+      if (ADJ_SET.has(word)) {
+        return stem.slice(0, -1) + String.fromCharCode(0xAC00 + baseCode) + '다';
+      }
+      return stem.slice(0, -1) + String.fromCharCode(0xAC00 + baseCode + 4) + '다';
+    }
+  }
+  return word;
+}
+
+const BODY_PROPER_REPLACEMENTS = [
+  [/\bDelancre\b/g, '피에르 드 랑크르 (Delancre)'],
+  [/\bWierus\b|\bWiérus\b/g, '요한 바이어 (Wierus)'],
+  [/\bBodin\b/g, '장 보댕 (Bodin)'],
+  [/\bBoguet\b/g, '앙리 보게 (Boguet)'],
+  [/\bDelrio\b/g, '마르틴 델리오 (Delrio)'],
+  [/\bLeloyer\b/g, '피에르 르루아예 (Leloyer)'],
+  [/\bBekker\b/g, '발타자르 베커르 (Bekker)'],
+  [/\bCalmet\b/g, '돔 칼메 (Calmet)'],
+  [/\bGörres\b|\bGœrres\b/g, '요제프 괴레스 (Görres)'],
+  [/\bPaymon\b/g, '파이몬 (Paymon)'],
+  [/\bCardan\b/g, '카르다노 (Cardan)'],
+  [/\bPliny\b|\bPline\b/g, '플리니우스 (Pliny)'],
+  [/\bPlutarch\b|\bPlutarque\b/g, '플루타르코스 (Plutarch)'],
+  [/\bSuetonius\b|\bSuétone\b/g, '수에토니우스 (Suetonius)'],
+  [/\bLucien\b/g, '루키아노스 (Lucien)'],
+  [/\bIamblichus\b/g, '이암블리코스 (Iamblichus)'],
+  [/\bApuleius\b|\bApulée\b/g, '아풀레이우스 (Apuleius)'],
+  [/\bPausanias\b/g, '파우사니아스 (Pausanias)'],
+  [/\bCicero\b|\bCicéron\b/g, '키케로 (Cicéron)'],
+  [/\bVirgil\b|\bVirgile\b/g, '베르길리우스 (Virgil)'],
+  [/\bTorquemada\b/g, '토르케마다 (Torquemada)'],
+  [/\bLavater\b/g, '라바터 (Lavater)'],
+  [/\bCagliostro\b/g, '칼리오스트로 (Cagliostro)'],
+  [/\bAgrippa\b/g, '아그리파 (Agrippa)'],
+  [/\bParacelse\b|\bParacelsus\b/g, '파라켈수스 (Paracelsus)'],
+  [/\bBeelzebub\b|\bBelzébuth\b/g, '벨제붑 (Belzébuth)'],
+  [/\bAstaroth\b/g, '아스타로트 (Astaroth)'],
+  [/\bJupiter\b/g, '유피테르 (Jupiter)'],
+  [/\bApollo\b|\bApollon\b/g, '아폴론 (Apollon)'],
+  [/\bMinerve\b|\bMinerva\b/g, '미네르바 (Minerve)'],
+  [/\bPythagore\b|\bPythagoras\b/g, '피타고라스 (Pythagore)'],
+  [/\bOdin\b/g, '오딘 (Odin)'],
+  [/\bLoudun\b/g, '루됭 (Loudun)'],
+  [/\bLouviers\b/g, '루비에 (Louviers)'],
+  [/\bFinistère\b/g, '피니스테르 (Finistère)'],
+  [/\bGascony\b|\bGascogne\b/g, '가스코뉴 (Gascogne)'],
+  [/\bHermes-Trismegistus\b|\bHermès-Trismégiste\b/g, '헤르메스 트리스메기스투스 (Hermès-Trismégiste)'],
+  [/\bAlchabitius\b/g, '알카비티우스 (Alchabitius)'],
+  [/\bJulius Africanus\b/g, '율리우스 아프리카누스 (Julius Africanus)'],
+  [/\bNicolas Remy\b/g, '니콜라 레미 (Nicolas Remy)'],
+  [/\bValère-Maxime\b/g, '발레리우스 막시무스 (Valère-Maxime)'],
+  [/\bCésaire d'Heisterbach\b|\bCésaire d’Heisterbach\b/g, '세자르 데스테르바흐 (Césaire d’Heisterbach)'],
+  [/\bApollonius\b/g, '아폴로니우스 (Apollonius)'],
+  [/\bFlamel\b/g, '니콜라 플라멜 (Flamel)'],
+  [/\bPeucer\b/g, '카스파르 포이케르 (Peucer)'],
+  [/\bLebrun\b/g, '피에르 르브룅 (Lebrun)'],
+  [/\bThiers\b/g, '장바티스트 티에르 (Thiers)'],
+  [/\bGrandier\b/g, '그랑디에 (Grandier)'],
+  [/\bMirville\b/g, '미르빌 (Mirville)'],
+  [/\bMousseaux\b/g, '구즈노 데 무소 (Mousseaux)']
 ];
 
-const TRANSLATION_CACHE = fs.existsSync('resources/translations_ko_cache.json')
-  ? JSON.parse(fs.readFileSync('resources/translations_ko_cache.json', 'utf8'))
-  : {};
+// Replace regex matches only when outside parentheses (...) so nested parentheses never occur
+function replaceOutsideParens(text, re, replacement) {
+  const parts = text.split(/(\([^)]*\))/g);
+  return parts.map(part => (part.startsWith('(') && part.endsWith(')')) ? part : part.replace(re, replacement)).join('');
+}
+
+// Harmonize Korean particles (은/는, 이/가, 을/를, 과/와, 으로/로) after Korean nouns or Korean + (Original)
+function fixKoreanParticles(text) {
+  // 1. After "한글 (Original)" + particle
+  let out = text.replace(/([가-힣])(\s*\([^)]+\))+(은|는|이|가|을|를|과|와|으로|로(?=[ \.,;!\?]|$)|이라고|라고|이라는|라는)/g, (m, korChar, parens, particle) => {
+    const code = korChar.charCodeAt(0) - 0xAC00;
+    if (code < 0 || code > 11171) return m;
+    const jong = code % 28;
+    const hasBatchim = jong !== 0;
+    let fixed = particle;
+    if (particle === '은' || particle === '는') fixed = hasBatchim ? '은' : '는';
+    else if (particle === '이' || particle === '가') fixed = hasBatchim ? '이' : '가';
+    else if (particle === '을' || particle === '를') fixed = hasBatchim ? '을' : '를';
+    else if (particle === '과' || particle === '와') fixed = hasBatchim ? '과' : '와';
+    else if (particle === '으로' || particle === '로') fixed = (hasBatchim && jong !== 8) ? '으로' : '로';
+    else if (particle === '이라고' || particle === '라고') fixed = hasBatchim ? '이라고' : '라고';
+    else if (particle === '이라는' || particle === '라는') fixed = hasBatchim ? '이라는' : '라는';
+    return `${korChar}${parens}${fixed}`;
+  });
+  // 2. Direct particle fixes on replaced words without parens
+  out = out
+    .replace(/사바트으로/g, '사바트로')
+    .replace(/사바트은/g, '사바트는')
+    .replace(/사바트이/g, '사바트가')
+    .replace(/사바트을/g, '사바트를')
+    .replace(/카발라으로/g, '카발라로')
+    .replace(/카발라은/g, '카발라는')
+    .replace(/카발라이/g, '카발라가')
+    .replace(/카발라을/g, '카발라를')
+    .replace(/호신부으로/g, '호신부로')
+    .replace(/호신부은/g, '호신부는')
+    .replace(/호신부을/g, '호신부를');
+  return out;
+}
 
 function polishTranslation(rawKo, e, koBase) {
+  const cacheKey = `${e.nameFr}@@${e.page1863}`;
+  if (CURATED_OVERRIDES[cacheKey]) {
+    return CURATED_OVERRIDES[cacheKey];
+  }
+
   let s = String(rawKo || '').trim();
   const displayTitle = `${koBase} (${e.nameFr})`;
   if (!s) return `${displayTitle} — ${e.textFr}`;
 
-  // Strip leading headword repetition if present
+  // Remove any leftover wiki table markup
+  s = s.replace(/\{\|[\s\S]*?\|\}/g, '');
+
+  // Strip leading headword repetition (French, English mistranslation, or Korean) followed by — or .
   const escName = e.nameFr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const escBase = e.baseFr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const escKo = koBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  s = s.replace(new RegExp(`^(?:${escName}|${escBase}|${escKo})\\s*(?:—|-|\\.)\\s*`, 'i'), '');
+  s = s.replace(new RegExp(`^(?:${escName}|${escBase}|${escKo})(?:\\s*\\([^)]+\\))?\\s*(?:—|-|\\.|:)\\s*`, 'i'), '');
+  s = s.replace(/^[^\.\n]{1,35}\s+—\s+/, '');
+  // Also strip short 1-3 word leading noun phrase + period if French text did not start with a short 1-3 word sentence
+  const firstDotIdx = s.indexOf('. ');
+  const frFirstDotIdx = e.textFr.indexOf('.');
+  if (firstDotIdx > 0 && firstDotIdx <= 18 && (frFirstDotIdx < 0 || frFirstDotIdx > 25)) {
+    const prefix = s.slice(0, firstDotIdx).trim();
+    if (!/[다까요]$/.test(prefix)) {
+      s = s.slice(firstDotIdx + 2).trim();
+    }
+  }
 
-  // Fix common occult/demonology mistranslations and attach English/original proper nouns
+  // Replace raw French headword at the very start of the sentence
+  const plainNameFr = e.nameFr.replace(/’/g, "'");
+  for (const prefix of [e.nameFr, plainNameFr, e.baseFr]) {
+    if (s.startsWith(prefix)) {
+      let rest = s.slice(prefix.length);
+      if ( e.nameFr.includes('(')) {
+        rest = rest.replace(/^\s*\([^)]+\)/, '');
+      }
+      s = displayTitle + rest;
+      break;
+    }
+  }
+
+  // Fix occult/historical mistranslations and literal French idioms across the 1863 corpus
   s = s
     .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마녀들의 안식일|안식일/g, '사바트 (Sabbat)')
     .replace(/솔로몬의 빗장뼈|솔로몬의 쇄골/g, '『솔로몬의 열쇠 (Clavicules de Salomon)』')
+    .replace(/유대인 도당/g, '유대 카발라 (Cabale)')
+    .replace(/위대한 도당으로/g, '대카발라 학자 (Cabaliste)로')
+    .replace(/마술사,\s*도당으로/g, '마법사이자 카발라 학자 (Cabaliste)로')
+    .replace(/도당적인 유대인들은/g, '카발라를 신봉하는 유대인들은')
+    .replace(/도당의 세 번째/g, '카발라 (Cabale)의 세 번째')
+    .replace(/도당들/g, '카발리스트 (Cabalistes)들')
+    .replace(/악마광/g, '악마학 (Démonomanie)')
+    .replace(/콘돔|방부제/g, '수호 부적(호신부)')
+    .replace(/친숙한 정신|친숙한 영|친숙한 악마|친숙한 요정/g, '사역마(패밀리어, Esprit familier)')
+    .replace(/바늘 묶는 사람/g, '매듭 주술사 (Noueur d’aiguillettes)')
+    .replace(/바늘을 묶는 기술/g, '매듭 주술(에귀예트, Aiguillette)을 거는 기술')
+    .replace(/바늘을 묶/g, '매듭 주술을 걸')
+    .replace(/바늘을 풀/g, '매듭 주술을 풀')
+    .replace(/물리적 합자\s*\(Physical Ligatures\)/g, '『물리적 결박 주술 (Ligatures physiques)』')
+    .replace(/참조\s*:\s*합자\.?/g, '참조: 결박 주술 (Ligatures).')
+    .replace(/\(참조\s*:\s*합자\)/g, '(참조: 결박 주술 (Ligatures))')
+    .replace(/사법 점성술|법한 점성술/g, '판단 점성술 (Astrologie judiciaire)')
+    .replace(/후기 제국의/g, '동로마(비잔티움) 제국의')
+    .replace(/산적이라는 선고를/g, '강도·흉악범으로 판결을')
+    .replace(/악마의 리더\.?/g, '악마들의 수장이다.')
+    .replace(/지옥의 왕자/g, '지옥의 군주')
+    .replace(/의 행렬에 있습니다|의 행렬에 있다/g, '의 수행단에 속한다')
+    .replace(/우리는 그에게\s+(.+?)\s*의무가 있습니다/g, '그의 주요 저서로 $1 등이 전해진다')
+    .replace(/우리는 그에게\s+(.+?)\s*빚지고 있습니다/g, '그는 $1 등을 남겼다')
+    .replace(/을 소개할 등이 전해진다/g, ' 입문서 등이 전해진다')
+    .replace(/전화를 걸어/g, '불러')
+    .replace(/전화를 걸었습니다|전화를 걸었다/g, '불렀다')
+    .replace(/전화를 겁니다|전화를 건다/g, '부른다')
+    .replace(/천사들과 거래/g, '천사들과 교류')
+    .replace(/악마들과 거래|악마와 거래/g, '악마와 교류(계약)')
+    .replace(/조약에 따라/g, '계약(Pacte)에 따라')
+    .replace(/미란돌라 그림/g, '피코 델라 미란돌라 (Pic de la Mirandole)')
+    .replace(/그러한 기사는/g, '이러한 표제어는')
+    .replace(/이 기사는/g, '이 항목은')
+    .replace(/표창은 정령을/g, '소환장(Citation)은 정령을')
+    .replace(/우표를 목에 걸는/g, '부적(호신부)을 목에 거는')
+    .replace(/마법의 인물을/g, '마법 도형(부적)을')
+    .replace(/과도한 도덕성 때문에/g, '방종한 품행 때문에')
+    .replace(/화살을주었습니다|화살을주었다/g, '화살을 주었다')
+    .replace(/피타고라스의 주인이었다/g, '피타고라스 (Pythagore)의 스승이었다')
+    .replace(/Brandenburg 행진에서/g, '브란덴부르크 변경백령 (Marche de Brandebourg)의')
+    .replace(/화가 나서 환상을 보고 있다고/g, '광기에 빠져 환시를 본다고')
+    .replace(/원칙이 되지 않았습니다|원칙이 되지 않았다/g, '정설로 받아들여지지는 않았다')
+    .replace(/비극적인 무질서로/g, '비극적인 사랑과 파란만장한 행적으로')
+    .replace(/무슬림 의사들은/g, '이슬람 학자들은')
+    .replace(/유대인 의사들은/g, '유대 학자들은')
+    .replace(/동정과 반감에 관한 논문/g, '교감(Sympathie)과 반감(Antipathie)에 관한 논문')
+    .replace(/동정의 가루/g, '교감의 가루(Poudre de sympathie)')
+    .replace(/\bin-4[°o]\b/gi, '4절판(in-4°)')
+    .replace(/\bin-8[°o]\b/gi, '8절판(in-8°)')
+    .replace(/\bin-12\b/gi, '12절판(in-12)')
+    .replace(/\bin-folio\b/gi, '전지판(in-folio)')
+    .replace(/\b1o\s+/g, '첫째, ')
+    .replace(/\b2o\s+/g, '둘째, ')
+    .replace(/\b3o\s+/g, '셋째, ')
+    .replace(/\b4o\s+/g, '넷째, ')
+    .replace(/그분은/g, '그는')
+    .replace(/그분을/g, '그를')
+    .replace(/그분의/g, '그의')
+    .replace(/그분에게/g, '그에게')
+    .replace(/말씀하십니다|말씀하신다/g, '말한다')
+    .replace(/나타나시므로/g, '나타나므로')
+    .replace(/사단이나/g, '사탄 (Satan)이나')
+    .replace(/희귀한\./g, '희귀본이다.')
     .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?/g, '해당 항목 참조.')
-    .replace(/참조\s*:\s*이 단어\.?/g, '해당 항목 참조.')
-    .replace(/\bDelancre\b/g, '피에르 드 랑크르 (Delancre)')
-    .replace(/\bWierus\b|\bWiérus\b/g, '요한 바이어 (Wierus)')
-    .replace(/\bBodin\b/g, '장 보댕 (Bodin)')
-    .replace(/\bBoguet\b/g, '앙리 보게 (Boguet)')
-    .replace(/\bDelrio\b/g, '마르틴 델리오 (Delrio)')
-    .replace(/\bBekker\b/g, '발타자르 베커르 (Bekker)')
-    .replace(/\bCalmet\b/g, '아우구스탱 칼메 (Calmet)')
-    .replace(/\bGörres\b|\bGœrres\b/g, '요제프 괴레스 (Görres)')
-    .replace(/\bPaymon\b/g, '파이몬 (Paymon)')
-    .replace(/\bPythagore\b|피타고라스(?![\s(]*Pythagore)/g, '피타고라스 (Pythagore)')
-    .replace(/\bApollo\b|\bApollon\b|아폴론(?![\s(]*Apollon)/g, '아폴론 (Apollon)')
-    .replace(/\bMinerve\b|미네르바(?![\s(]*Minerve)/g, '미네르바 (Minerve)');
+    .replace(/참조\s*:\s*이 단어\.?|참조\s*:\s*이 이름\.?/g, '해당 항목 참조.');
 
-  // Replace raw French headword at the very start of the Korean sentence with "한글명 (원문)"
-  const plainNameFr = e.nameFr.replace(/’/g, "'");
-  if (s.startsWith(e.nameFr)) {
-    s = displayTitle + s.slice(e.nameFr.length);
-  } else if (s.startsWith(plainNameFr)) {
-    s = displayTitle + s.slice(plainNameFr.length);
-  } else if (s.startsWith(e.baseFr)) {
-    let rest = s.slice(e.baseFr.length);
-    const parenM = e.nameFr.match(/\(([^)]+)\)/);
-    if (parenM) {
-      const p1 = `(${parenM[1]})`;
-      const p2 = `(${parenM[1].replace(/’/g, "'")})`;
-      if (rest.trimStart().startsWith(p1)) {
-        rest = rest.trimStart().slice(p1.length);
-      } else if (rest.trimStart().startsWith(p2)) {
-        rest = rest.trimStart().slice(p2.length);
-      }
-    }
-    s = displayTitle + rest;
+  // Replace un-annotated proper nouns outside parentheses
+  for (const [re, rep] of BODY_PROPER_REPLACEMENTS) {
+    s = replaceOutsideParens(s, re, rep);
   }
+  // Deduplicate any accidental double parenthetical
+  s = s.replace(/([가-힣A-Za-z·\s]+)\s*\(\1\s*\(([^)]+)\)\)/g, '$1 ($2)');
+
+  // Handle "~지 않습니다" before general convertEnding so adjective stems become "~지 않다"
+  s = s.replace(/([가-힣]+지)\s*않습니다/g, (_, jiWord) => {
+    if (ADJ_NEG_STEMS.has(jiWord) || /(?:스럽지|롭지|답지)$/.test(jiWord)) {
+      return `${jiWord} 않다`;
+    }
+    if (jiWord.endsWith('하지')) {
+      const asHamnida = jiWord.slice(0, -2) + '합니다';
+      if (ADJ_SET.has(asHamnida)) return `${jiWord} 않다`;
+    }
+    return `${jiWord} 않는다`;
+  });
+
+  // Convert all formal polite endings (~습니다 / ~ㅂ니다) to encyclopedia plain style (~다 / ~는다 / ~이다)
+  s = s.replace(/[가-힣]+(?:습니다|니다)/g, w => convertEnding(w));
+
+  // Convert remaining ~어요 / ~아요 / ~해요 / ~예요 / ~이에요 at sentence boundaries
+  s = s
+    .replace(/이에요(?=[.!?]|$)/g, '이다')
+    .replace(/예요(?=[.!?]|$)/g, '이다')
+    .replace(/해요(?=[.!?]|$)/g, '한다')
+    .replace(/어요(?=[.!?]|$)/g, '다')
+    .replace(/아요(?=[.!?]|$)/g, '다')
+    .replace(/정확하지 않는다/g, '정확하지 않다')
+    .replace(/아닙다/g, '아니다');
+
+  // Harmonize Korean particles after replacements and parentheticals
+  s = fixKoreanParticles(s);
+
+  // Translate trailing "참조: X" targets into "참조: 한글 (X)"
+  s = s.replace(/참조\s*:\s*([A-ZÀ-ŸŒÆ][^\.\n]{1,40})\.?$/g, (_, target) => {
+    const tClean = target.trim().replace(/\.$/, '');
+    if (/[가-힣]/.test(tClean)) return `참조: ${tClean}.`;
+    const tKo = frHeadwordToKo(tClean, tClean);
+    return `참조: ${tKo} (${tClean}).`;
+  });
 
   return s.replace(/\s+/g, ' ').trim();
 }
@@ -817,7 +1043,7 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
     }
   }
 
-  const koBase = matchedPlate ? matchedPlate.nameKo : frHeadwordToKo(raw.nameFr, raw.baseFr);
+  const koBase = matchedPlate ? matchedPlate.nameKo : frHeadwordToKo(raw.nameFr, raw.baseFr, raw);
   // Ensure nameKo ALWAYS includes English/Original notation alongside Korean proper noun!
   const nameKoWithOriginal = `${koBase} (${raw.nameFr})`;
 
