@@ -124,7 +124,6 @@ function renderEntryCard(entry){
         </div>
       </div>
       <h2 class="entry-title-ko">${escapeHtml(entry.nameKo)}</h2>
-      <div class="entry-title-fr">원어 표제어: ${escapeHtml(entry.nameFr)}</div>
       <div class="entry-rank-line">${escapeHtml(entry.rank)}</div>
       <p class="entry-summary">${escapeHtml(entry.summary)}</p>
     </div>
@@ -194,7 +193,6 @@ function renderEntryDetailPage(entry){
           ${entry.legions?`<span class="mini-badge accent">휘하 ${entry.legions}개 군단</span>`:''}
         </div>
         <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
-        <div class="detail-title-fr">1863년 원어 표제어: <strong>${escapeHtml(entry.nameFr)}</strong></div>
         <div class="detail-rank-line">${escapeHtml(entry.rank)}</div>
         <div class="domain-tags">
           ${(entry.domains||[]).map(d=>`<span class="domain-tag">${escapeHtml(d)}</span>`).join('')}
