@@ -968,14 +968,43 @@ function replaceOutsideParens(text, re, replacement) {
 
 // Remove original language annotations inside outer parenthetical explanations so no parenthesis is nested inside another
 function removeOriginalInsideParens(text) {
-  let prev = '';
-  let cur = text;
-  while (prev !== cur) {
-    prev = cur;
-    cur = cur.replace(/\(([^()]*?)([가-힣0-9]+)\s*\([A-Za-zÀ-ÿŒœÆæ0-9\s,.'’\-–—/°]+\)([^()]*?)\)/g, '($1$2$3)');
-    cur = cur.replace(/\(([^()]*?)\s*\([A-Za-zÀ-ÿŒœÆæ0-9\s,.'’\-–—/°]+\)([^()]*?)\)/g, '($1$2)');
+  if (!text || !text.includes('(')) return text;
+  let out = '';
+  let depth = 0;
+  let buffer = '';
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (ch === '(') {
+      depth++;
+      buffer += '(';
+    } else if (ch === ')') {
+      depth--;
+      buffer += ')';
+      if (depth === 0) {
+        if (buffer.slice(1, -1).includes('(')) {
+          let inner = buffer.slice(1, -1);
+          inner = inner.replace(/([가-힣0-9]+)\s*\([A-Za-zÀ-ÿŒœÆæ0-9\s,.'’\-–—/°]+\)/g, '$1');
+          inner = inner.replace(/\s*\([A-Za-zÀ-ÿŒœÆæ0-9\s,.'’\-–—/°]+\)/g, '');
+          buffer = '(' + inner + ')';
+        }
+        out += buffer;
+        buffer = '';
+      } else if (depth < 0) {
+        depth = 0;
+        out += buffer;
+        buffer = '';
+      }
+    } else {
+      if (depth === 0) {
+        out += ch;
+      } else {
+        buffer += ch;
+      }
+    }
   }
-  return cur;
+  if (buffer) out += buffer;
+  return out;
 }
 
 // Format body Korean (Original) notation without space in between: 한글(원문)
@@ -1274,11 +1303,16 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     .replace(/무슬림 의사들은/g, '이슬람 학자들은')
     .replace(/유대인 의사들은/g, '유대 학자들은')
     .replace(/동정과 반감에 관한 논문/g, '교감(Sympathie)과 반감(Antipathie)에 관한 논문')
-    .replace(/동정의 가루/g, '교감의 가루(Poudre de sympathie)')
-    .replace(/\bin-4[°o]\b/gi, '4절판(in-4°)')
-    .replace(/\bin-8[°o]\b/gi, '8절판(in-8°)')
-    .replace(/\bin-12\b/gi, '12절판(in-12)')
-    .replace(/\bin-folio\b/gi, '전지판(in-folio)')
+    .replace(/\bin-folio\b|\bin-fol\.(?!\w)|\bin-f°(?!\w)/gi, '전지판(in-folio)')
+    .replace(/\bin-4[°o]?(?!\w)/gi, '4절판(in-4°)')
+    .replace(/\bin-8[°o]?(?!\w)|\bin-a°(?!\w)/gi, '8절판(in-8°)')
+    .replace(/\bin-12[°o]?(?!\w)/gi, '12절판(in-12)')
+    .replace(/\bin-16[°o]?(?!\w)/gi, '16절판(in-16)')
+    .replace(/\bin-18[°o]?(?!\w)/gi, '18절판(in-18)')
+    .replace(/\bin-24[°o]?(?!\w)/gi, '24절판(in-24)')
+    .replace(/\bin-32[°o]?(?!\w)/gi, '32절판(in-32)')
+    .replace(/(\d+절판\([^)]+\))°+/g, '$1')
+    .replace(/(\d+절판)°+/g, '$1')
     .replace(/\b1o\s+/g, '첫째, ')
     .replace(/\b2o\s+/g, '둘째, ')
     .replace(/\b3o\s+/g, '셋째, ')
