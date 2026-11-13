@@ -504,6 +504,67 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// O section audit assertions (104 entries, 11 illustrated)
+const oEntries = ENTRIES.filter(e => e.letter === 'O');
+assert.equal(oEntries.length, 104, 'O section must contain exactly 104 entries (after N boundary fix)');
+
+const oIllustrated = oEntries.filter(e => e.hasPlate);
+assert.equal(oIllustrated.length, 11, 'O section must contain exactly 11 illustrated entries');
+
+const orobas = ENTRIES.find(e => e.id === 'orobas');
+assert.ok(orobas && orobas.hasPlate && orobas.plate === 'plates/orobas.jpg' && orobas.category === 'demon' && orobas.legions === 20 && orobas.nameKo.includes('오로바스'), 'Orobas 68 Goetic demon Prince with 20 legions');
+
+const oberon = ENTRIES.find(e => e.id === 'e2827-oberon');
+assert.ok(oberon && oberon.hasPlate && oberon.nameKo.includes('오베론'), 'Oberon King of Fairies illustrated');
+
+const ondins = ENTRIES.find(e => e.id === 'e2872-ondins');
+assert.ok(ondins && ondins.hasPlate && ondins.nameKo.includes('운디네') && !ondins.nameKo.includes('머포크'), 'Ondins Undines water elementals illustrated, not merfolk');
+
+const ogres = ENTRIES.find(e => e.id === 'e2852-ogres');
+assert.ok(ogres && ogres.hasPlate && ogres.nameKo.includes('오거'), 'Ogres man-eating monsters illustrated');
+
+const oldenbourg = ENTRIES.find(e => e.id === 'e2859-oldenbourg');
+assert.ok(oldenbourg && oldenbourg.hasPlate && oldenbourg.nameKo.includes('올덴부르크'), 'Oldenbourg fairy horn illustrated');
+
+const optimisme = ENTRIES.find(e => e.id === 'e2888-optimisme');
+assert.ok(optimisme && optimisme.hasPlate && optimisme.nameKo.includes('낙천주의'), 'Optimism Voltaire satire illustrated');
+
+const oracles = ENTRIES.find(e => e.id === 'e2889-oracles');
+assert.ok(oracles && oracles.hasPlate && oracles.nameKo.includes('신탁'), 'Oracles ancient pagan illustrated');
+
+const originesMonde = ENTRIES.find(e => e.id === 'e2901-originesdumonde');
+assert.ok(originesMonde && originesMonde.hasPlate && originesMonde.nameKo.includes('세계의 기원'), 'Origines du monde cosmogonies illustrated');
+
+const ours = ENTRIES.find(e => e.id === 'e2923-ours');
+assert.ok(ours && ours.hasPlate && ours.nameKo.includes('곰 숭배'), 'Ours bear cult illustrated');
+
+const oxyones = ENTRIES.find(e => e.id === 'e2925-oxyones');
+assert.ok(oxyones && oxyones.hasPlate && oxyones.nameKo.includes('옥시오네스'), 'Oxyones bird-headed tribe illustrated');
+
+const ophites = ENTRIES.find(e => e.id === 'e2885-ophites');
+assert.ok(ophites && ophites.category === 'superstition' && ophites.nameKo.includes('오피스파') && !ophites.nameKo.includes('아편족'), 'Ophites serpent-worshipping Gnostics, not opium tribe');
+
+const ophthalmius = ENTRIES.find(e => e.id === 'e2886-ophthalmius');
+assert.ok(ophthalmius && ophthalmius.category === 'superstition' && ophthalmius.nameKo.includes('오프탈미우스') && !ophthalmius.nameKo.includes('안과'), 'Ophthalmius invisibility stone, not ophthalmology clinic');
+
+const ophthalmoscopie = ENTRIES.find(e => e.id === 'e2887-ophthalmoscopie');
+assert.ok(ophthalmoscopie && ophthalmoscopie.category === 'divination' && ophthalmoscopie.nameKo.includes('안상술') && !ophthalmoscopie.nameKo.includes('검안경검사'), 'Ophthalmoscopie physiognomy of eyes, not medical ophthalmoscopy');
+
+const obsedes = ENTRIES.find(e => e.id === 'e2830-obsedes');
+assert.ok(obsedes && obsedes.category === 'superstition' && obsedes.nameKo.includes('강박 빙의자들') && !obsedes.nameKo.startsWith('집착 ['), 'Obsedes demonic obsession, not generic obsession');
+
+const oze = ENTRIES.find(e => e.id === 'e2926-oze');
+assert.ok(oze && oze.category === 'demon' && oze.legions === 3 && oze.nameKo.includes('오제'), 'Oze demon President with 3 legions');
+
+const oray = ENTRIES.find(e => e.id === 'e2892-oray');
+assert.ok(oray && oray.category === 'demon' && oray.legions === 30 && oray.nameKo.includes('오라이'), 'Oray Leraje Marquis with 30 legions');
+
+const otis = ENTRIES.find(e => e.id === 'e2916-otis');
+assert.ok(otis && otis.category === 'demon' && otis.legions === 60 && otis.nameKo.includes('오티스'), 'Otis Botis President with 60 legions');
+
+const orias = ENTRIES.find(e => e.id === 'e2899-orias');
+assert.ok(orias && orias.category === 'demon' && orias.legions === 30 && orias.nameKo.includes('오리아스'), 'Orias Marquis with 30 legions');
+
 // P section audit assertions (238 entries, 31 illustrated)
 const pEntries = ENTRIES.filter(e => e.letter === 'P');
 assert.equal(pEntries.length, 238, 'P section must contain exactly 238 entries');
