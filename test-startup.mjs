@@ -119,6 +119,14 @@ async function run(initial,native=false){
   assert.ok(modal.innerHTML.includes('설정 안내'));
   click({action:'close'});
 
+  click({action:'open-attribution-modal'});
+  assert.ok(modal.open);
+  assert.ok(modal.innerHTML.includes('원전 및 출처 표기 (Attribution & Sources)'));
+  assert.ok(modal.innerHTML.includes('루이 르 브르통'));
+  assert.ok(modal.innerHTML.includes('428점'));
+  click({action:'close'});
+  assert.ok(!modal.open);
+
   click({action:'backup'});
   assert.ok(modal.open);
   assert.ok(modal.innerHTML.includes('파일로 내보내기'));

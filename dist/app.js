@@ -566,13 +566,17 @@ function renderSettingsTab(){
     </div>
 
     <div class="panel">
-      <h2>원전 및 판본 정보</h2>
-      <p style="margin:0;font-size:0.84rem;color:var(--text-muted)">
+      <h2>원전 및 출처 표기 (Sources & Attributions)</h2>
+      <p style="margin:0 0 10px;font-size:0.84rem;color:var(--text-muted);line-height:1.6">
         • 원제: <em>Dictionnaire Infernal</em> (제6판, 1863년 파리 Henri Plon 간행 · 전 3,810개 표제어 완역/수록)<br>
         • 저자: 자크 알뱅 시몽 콜랭 드 플랑시 (J.-A.-S. Collin de Plancy, 1794–1881)<br>
-        • 삽화: 루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각<br>
-        • 라이선스: 퍼블릭 도메인 (Public Domain, Internet Archive, BnF Gallica &amp; Wikisource)
+        • 삽화: 루이 브르통 (Louis Breton) 원화 · 1863년 원본 목판화 총 428점 수록<br>
+        • 아카이브: 프랑스 국립도서관(BnF/Gallica), 위키미디어 공용(Wikimedia Commons), 인터넷 아카이브<br>
+        • 라이선스: 퍼블릭 도메인 (Public Domain)
       </p>
+      <button type="button" class="secondary" data-action="open-attribution-modal" style="width:100%;font-size:0.86rem;padding:8px 12px">
+        📜 원전·삽화·사료 출처 상세 보기
+      </button>
     </div>
   </section>`;
 }
@@ -842,7 +846,7 @@ function openHelpModal(){
   }else if(activeTab==='gallery'){
     title='삽화 도감 안내';
     bodyHtml=`<p style="margin:0">
-      1863년 초판본에서 추출한 화가 루이 브르통 (Louis Breton)의 오리지널 목판화 68점을 감상하는 도감입니다.
+      1863년 제6판 완본에 수록된 화가 루이 브르통 (Louis Breton)의 오리지널 목판화 428점을 감상하는 도감입니다.
     </p>
     <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
       <li><strong>위계별 세분화</strong>: 상단 태그를 통해 지옥 군주, 대공·후작·총재, 하급 악마·괴이, 고대 신격·사바트로 나누어 감상할 수 있습니다.</li>
@@ -884,12 +888,83 @@ function openHelpModal(){
     </ul>`;
   }
 
+  bodyHtml+=`<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+    <button type="button" class="secondary" data-action="open-attribution-modal" style="width:100%;font-size:0.86rem;padding:8px 10px;display:flex;align-items:center;justify-content:center;gap:6px">
+      📜 원전 및 출처 표기 (Attribution & Sources)
+    </button>
+  </div>`;
+
   modalEl.innerHTML=`<div class="modal-inner">
     <div class="modal-top">
       <h2>${escapeHtml(title)}</h2>
       <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
     </div>
     ${bodyHtml}
+    <div class="modal-actions">
+      <button type="button" class="primary" data-action="close">확인</button>
+    </div>
+  </div>`;
+  if(!modalEl.open)modalEl.showModal?.();
+}
+
+function openAttributionModal(){
+  if(!modalEl)return;
+  modalEl.innerHTML=`<div class="modal-inner">
+    <div class="modal-top">
+      <h2>원전 및 출처 표기 (Attribution & Sources)</h2>
+      <button type="button" data-action="close" aria-label="닫기">${icon('close')}</button>
+    </div>
+    <div style="font-size:0.86rem;line-height:1.65;color:var(--text-muted);display:flex;flex-direction:column;gap:14px">
+      <div style="background:var(--bg-soft);padding:12px 14px;border-radius:10px;border-left:3px solid var(--gold);color:var(--text)">
+        본 웹 애플리케이션은 자크 알뱅 시몽 콜랭 드 플랑시(J.-A.-S. Collin de Plancy)가 1863년 파리에서 간행한 『지옥사전』 제6판 완본(全 3,810개 표제어) 및 화가 루이 브르통(Louis Breton)의 1863년 오리지널 목판화 전수(428점)를 공공 디지털 아카이브로부터 집대성하여 학술·문화 보급을 위해 편찬한 국문 디지털 백과사전입니다.
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--text);font-size:0.95rem;font-family:var(--font-serif)">📖 1. 1863년 프랑스어 텍스트 원전 (Text Sources)</h3>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
+          <li><strong>원서명</strong>: <em>Dictionnaire Infernal, ou Répertoire universel des êtres, des personnages, des livres, des faits et des choses qui tiennent aux esprits, aux démons, aux sorciers, au commerce de l'enfer...</em> (제6판 완본, 1863년)</li>
+          <li><strong>저자</strong>: 자크 알뱅 시몽 콜랭 드 플랑시 (Jacques Albin Simon Collin de Plancy, 1794–1881)</li>
+          <li><strong>간행</strong>: 파리 앙리 플롱(Henri Plon) 출판사, 1863년 (총 723페이지, A–Z 전 3,810편 완역 및 대조 수록)</li>
+          <li><strong>프랑스 국립도서관(BnF Gallica)</strong>: 원서 무손실 스캔 마스터 코퍼스 (ark:/12148/bpt6k5724590n)</li>
+          <li><strong>인터넷 아카이브 (Internet Archive)</strong>: 1863 Dictionnaire Infernal Complete Master Archive</li>
+          <li><strong>위키문헌 (Wikisource Francophone)</strong>: <em>Dictionnaire infernal (6e éd., 1863)</em> 원문 전사본</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--text);font-size:0.95rem;font-family:var(--font-serif)">🖼️ 2. 목판화 삽화 428점 아카이브 (Illustrations & Plates)</h3>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
+          <li><strong>원화 작가</strong>: 루이 르 브르통 (Louis Le Breton, 1818–1866)</li>
+          <li><strong>목판 조각가</strong>: 조제프 알프레드 자로 (Joseph-Alfred Jarrault, S.A.J.) 외 19세기 판화 공방</li>
+          <li><strong>수록 규모</strong>: 총 428점 (원서 주요 68대 악마 판화 + 1863년 제6판 본문 목판화 360점 전수 수록)</li>
+          <li><strong>디지털 아카이브 출처</strong>: 위키미디어 공용 (Wikimedia Commons)
+            <br>• <code>Category:Illustrations from Dictionnaire Infernal, 6th edition</code>
+            <br>• <code>Category:Drawings of demons from Dictionnaire Infernal, 6th edition</code></li>
+          <li><strong>디지털 복원 규격</strong>: 프랑스 국립도서관(BnF) 고해상도 무손실 스캔본을 기반으로 최대 변 1,100px LANCZOS 보간 리사이즈, 그레이스케일 오토콘트라스트 보정, 고품질 JPEG 최적화를 적용하여 목판화 원형의 세밀한 해칭선 질감을 복원하였습니다.</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--text);font-size:0.95rem;font-family:var(--font-serif)">📜 3. 악마학 및 고문헌 사료 (Historical References)</h3>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
+          <li><strong>요한 바이어 (Johann Weyer / Wierus)</strong>: 《의사악마왕국(Pseudomonarchia Daemonum)》 (1577/1583)</li>
+          <li><strong>레메게톤 (Lemegeton)</strong>: 솔로몬의 작은 열쇠 (Clavicula Salomonis / Goetia 72 악마 체계)</li>
+          <li><strong>레지날드 스콧 (Reginald Scot)</strong>: 《마술의 발견(The Discoverie of Witchcraft)》 (1584)</li>
+          <li><strong>몽포콩 드 빌라르 (Abbé N. de Montfaucon de Villars)</strong>: 《가발리스 백작(Le Comte de Gabalis)》 (1670)</li>
+          <li><strong>마르틴 델리오 (Martin Delrio)</strong>: 《마법 논의(Disquisitionum Magicarum)》 (1599)</li>
+          <li><strong>피에르 드 랑크르 (Pierre de Lancre)</strong>: 《악령과 마법사의 무상함(Tableau de l'inconstance des mauvais anges)》 (1612)</li>
+          <li><strong>동방 및 아랍 사료</strong>: 쿠란(القرآن الكريم, 지옥의 마목 자쿰 전승) 및 이븐 할둔의 《역사서설(Muqaddimah, 자이라자 점술)》</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 style="margin:0 0 6px;color:var(--text);font-size:0.95rem;font-family:var(--font-serif)">⚖️ 4. 저작권 및 라이선스 고지 (License & Public Domain Notice)</h3>
+        <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
+          <li><strong>1863년 원작 텍스트 및 삽화</strong>: 원저자 및 화가 사후 100년 이상 경과하여 대한민국 저작권법 및 전 세계 베른 협약에 따라 저작재산권 보호 기간이 만료된 <strong>퍼블릭 도메인(Public Domain / 공유마당)</strong> 저작물입니다.</li>
+          <li><strong>디지털 복원본 및 한글 역주·데이터베이스</strong>: 학술·비영리 연구 및 문화 향유를 위해 <strong>크리에이티브 커먼즈 저작자표시-동일조건변경허락 4.0(CC BY-SA 4.0)</strong> 및 공공 데이터 가이드라인을 준수합니다.</li>
+        </ul>
+      </div>
+    </div>
     <div class="modal-actions">
       <button type="button" class="primary" data-action="close">확인</button>
     </div>
@@ -986,6 +1061,7 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='settings-help'){openSettingsHelpModal();return;}
+  if(action==='open-attribution-modal'){openAttributionModal();return;}
   if(action==='help'){
     openHelpModal();
     return;
