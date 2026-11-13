@@ -103,7 +103,7 @@ async function run(initial,native=false){
 
   for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:240,clientY:200}]});
   for(const fn of handlers.touchend||[])fn({changedTouches:[{clientX:60,clientY:205}]});
-  assert.ok(main.innerHTML.includes('✓ 열람 완료됨'));
+  assert.ok(main.innerHTML.includes('header-read-btn active'));
 
   click({tab:'bookmarks'});
   assert.ok(main.innerHTML.includes('서재 열람 현황'));

@@ -260,13 +260,9 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
   return `<article class="detail-card">
     <header class="detail-header">
       <div class="detail-header-top">
-        <button type="button" class="header-read-btn${isRead?' active':''}" data-action="toggle-read" data-id="${escapeHtml(entry.id)}" aria-label="${isRead?'열람 완료 해제':'열람 표시'}">
-          ${isRead?'✓ 열람 완료됨':'열람'}
-        </button>
+        <button type="button" class="header-read-btn${isRead?' active':''}" data-action="toggle-read" data-id="${escapeHtml(entry.id)}" aria-label="${isRead?'열람 완료 해제':'열람 완료 표시'}" title="${isRead?'열람 완료됨 (클릭 시 해제)':'열람 완료 표시'}">✓</button>
         <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
-        <button type="button" class="header-bookmark-btn${isBookmarked?' active':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}" aria-label="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}">
-          ${isBookmarked?'★':'☆'}
-        </button>
+        <button type="button" class="header-bookmark-btn${isBookmarked?' active':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}" aria-label="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}" title="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}">${isBookmarked?'★':'☆'}</button>
       </div>
       ${renderDetailTitle(entry)}
       ${rankIsTitle(entry)?`<div class="detail-rank-line">${escapeHtml(entry.rank)}</div>`:''}
