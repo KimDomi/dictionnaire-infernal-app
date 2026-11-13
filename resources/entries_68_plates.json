@@ -5,7 +5,7 @@
     "plateNo": 1,
     "nameKo": "아비고르 또는 엘리고르 [Abigor, Eligor]",
     "nameFr": "Abigor (Eligor)",
-    "rank": "지옥의 대공 (Grand-Duc)",
+    "rank": "지옥의 대공(Grand-Duc)",
     "legions": 60,
     "category": "duke",
     "domains": [
@@ -68,7 +68,7 @@
     "plateNo": 4,
     "nameKo": "아과레스 [Aguarès]",
     "nameFr": "Aguarès",
-    "rank": "지옥 동부의 대공 (Grand-Duc)",
+    "rank": "지옥 동부의 대공(Grand-Duc)",
     "legions": 31,
     "category": "duke",
     "domains": [
@@ -111,7 +111,7 @@
     "plateNo": 6,
     "nameKo": "알로케르 또는 알로세스 [Alocer, Alloces]",
     "nameFr": "Alocer (Alloces)",
-    "rank": "지옥의 대공 (Grand-Duc)",
+    "rank": "지옥의 대공(Grand-Duc)",
     "legions": 36,
     "category": "duke",
     "domains": [
@@ -132,7 +132,7 @@
     "plateNo": 7,
     "nameKo": "암두시아스 [Amduscias]",
     "nameFr": "Amduscias",
-    "rank": "지옥의 대공 (Grand-Duc)",
+    "rank": "지옥의 대공(Grand-Duc)",
     "legions": 29,
     "category": "duke",
     "domains": [
@@ -153,7 +153,7 @@
     "plateNo": 8,
     "nameKo": "아몬 또는 아아몬 [Amon, Aamon]",
     "nameFr": "Amon (Aamon)",
-    "rank": "지옥의 대후작 (Grand Marquis)",
+    "rank": "지옥의 대후작(Grand Marquis)",
     "legions": 40,
     "category": "duke",
     "domains": [
@@ -174,7 +174,7 @@
     "plateNo": 9,
     "nameKo": "안드라스 [Andras]",
     "nameFr": "Andras",
-    "rank": "지옥의 대후작 (Grand Marquis)",
+    "rank": "지옥의 대후작(Grand Marquis)",
     "legions": 30,
     "category": "duke",
     "domains": [
@@ -217,7 +217,7 @@
     "plateNo": 11,
     "nameKo": "아스타로트 [Astaroth]",
     "nameFr": "Astaroth",
-    "rank": "지옥의 대공·최고 재무관 (Grand Trésorier)",
+    "rank": "지옥의 대공·최고 재무관(Grand Trésorier)",
     "legions": 40,
     "category": "monarch",
     "domains": [
@@ -260,7 +260,7 @@
     "plateNo": 13,
     "nameKo": "바엘 [Baël / Bael]",
     "nameFr": "Baël",
-    "rank": "지옥 제국의 제1왕 (Premier Roi)",
+    "rank": "지옥 제국의 제1왕(Premier Roi)",
     "legions": 66,
     "category": "monarch",
     "domains": [
@@ -281,7 +281,7 @@
     "plateNo": 14,
     "nameKo": "발란 또는 발람 [Balan, Balam]",
     "nameFr": "Balan (Balam)",
-    "rank": "지옥의 대왕 (Grand Roi)",
+    "rank": "지옥의 대왕(Grand Roi)",
     "legions": 40,
     "category": "monarch",
     "domains": [
@@ -302,7 +302,7 @@
     "plateNo": 15,
     "nameKo": "바르바토스 [Barbatos]",
     "nameFr": "Barbatos",
-    "rank": "지옥의 공작·백작 (Duc et Comte)",
+    "rank": "지옥의 공작·백작(Duc et Comte)",
     "legions": 30,
     "category": "duke",
     "domains": [
@@ -323,7 +323,7 @@
     "plateNo": 16,
     "nameKo": "베헤모스 [Béhémoth / Behemoth]",
     "nameFr": "Béhémoth",
-    "rank": "지옥의 대술잔지기 (Grand Échanson)",
+    "rank": "지옥의 대술잔지기(Grand Échanson)",
     "legions": 0,
     "category": "monarch",
     "domains": [
@@ -386,7 +386,7 @@
     "plateNo": 19,
     "nameKo": "베리트 또는 베알 [Bérith, Beal, Bolfry]",
     "nameFr": "Bérith (Beal, Bolfry)",
-    "rank": "지옥의 대공 (Grand-Duc)",
+    "rank": "지옥의 대공(Grand-Duc)",
     "legions": 26,
     "category": "duke",
     "domains": [
@@ -407,7 +407,7 @@
     "plateNo": 20,
     "nameKo": "부에르 [Buer]",
     "nameFr": "Buer",
-    "rank": "지옥의 총재 (Président)",
+    "rank": "지옥의 총재(Président)",
     "legions": 50,
     "category": "duke",
     "domains": [
@@ -429,7 +429,7 @@
     "plateNo": 22,
     "nameKo": "카크리놀라스 또는 글라샤 라볼라스 [Caacrinolaas, Glasya-Labolas]",
     "nameFr": "Caacrinolaas (Caassimolar, Glasya-Labolas)",
-    "rank": "지옥의 대총재 (Grand Président)",
+    "rank": "지옥의 대총재(Grand Président)",
     "legions": 36,
     "category": "duke",
     "domains": [
@@ -472,7 +472,7 @@
     "plateNo": 24,
     "nameKo": "카임 [Caym, Caim]",
     "nameFr": "Caym (Caim)",
-    "rank": "지옥의 대총재 (Grand Président)",
+    "rank": "지옥의 대총재(Grand Président)",
     "legions": 30,
     "category": "duke",
     "domains": [
@@ -535,7 +535,7 @@
     "plateNo": 27,
     "nameKo": "사바트의 원무 [Danse du Sabbat / Sabbath Dance]",
     "nameFr": "Danse du Sabbat",
-    "rank": "마녀 집회 의식 (Sabbat)",
+    "rank": "마녀 집회 의식(Sabbat)",
     "legions": 0,
     "category": "myth",
     "domains": [
@@ -576,7 +576,7 @@
     "plateNo": 29,
     "nameKo": "에우리노모스 [Eurynome]",
     "nameFr": "Eurynome",
-    "rank": "죽음의 군주·시체 포식자 (Prince de la Mort)",
+    "rank": "죽음의 군주·시체 포식자(Prince de la Mort)",
     "legions": 0,
     "category": "spirit",
     "domains": [
@@ -618,7 +618,7 @@
     "plateNo": 31,
     "nameKo": "플라우로스 또는 하우레스 [Flauros, Haures]",
     "nameFr": "Flauros (Haures)",
-    "rank": "지옥의 대공 (Grand-Duc)",
+    "rank": "지옥의 대공(Grand-Duc)",
     "legions": 20,
     "category": "duke",
     "domains": [
@@ -639,7 +639,7 @@
     "plateNo": 32,
     "nameKo": "포르카스 또는 포라스 [Forcas, Forras]",
     "nameFr": "Forcas (Forras)",
-    "rank": "지옥의 대총재 (Grand Président)",
+    "rank": "지옥의 대총재(Grand Président)",
     "legions": 29,
     "category": "duke",
     "domains": [
@@ -661,7 +661,7 @@
     "plateNo": 33,
     "nameKo": "푸르푸르 [Furfur]",
     "nameFr": "Furfur",
-    "rank": "지옥의 대백작 (Grand Comte)",
+    "rank": "지옥의 대백작(Grand Comte)",
     "legions": 26,
     "category": "duke",
     "domains": [
@@ -724,7 +724,7 @@
     "plateNo": 36,
     "nameKo": "고모리 또는 그레모리 [Gomory, Gremory]",
     "nameFr": "Gomory (Gremory)",
-    "rank": "지옥의 강대한 공작 (Puissant Duc)",
+    "rank": "지옥의 강대한 공작(Puissant Duc)",
     "legions": 26,
     "category": "duke",
     "domains": [
@@ -745,7 +745,7 @@
     "plateNo": 37,
     "nameKo": "하보림 또는 아임 [Haborym, Aim]",
     "nameFr": "Haborym (Aim)",
-    "rank": "지옥의 대공·방화의 악마 (Grand-Duc)",
+    "rank": "지옥의 대공·방화의 악마(Grand-Duc)",
     "legions": 26,
     "category": "duke",
     "domains": [
@@ -766,7 +766,7 @@
     "plateNo": 38,
     "nameKo": "이페스 또는 이포스 [Ipès, Ipos, Ayperos]",
     "nameFr": "Ipès (Ipos, Ayperos)",
-    "rank": "지옥의 군주·백작 (Prince et Comte)",
+    "rank": "지옥의 군주·백작(Prince et Comte)",
     "legions": 36,
     "category": "duke",
     "domains": [
@@ -828,7 +828,7 @@
     "plateNo": 41,
     "nameKo": "레오나르 [Léonard (Maître Léonard)]",
     "nameFr": "Léonard (Maître Léonard)",
-    "rank": "사바트의 총감독관·대흑산양 (Grand-Maître des Sabbats)",
+    "rank": "사바트의 총감독관·대흑산양(Grand-Maître des Sabbats)",
     "legions": 0,
     "category": "monarch",
     "domains": [
@@ -849,7 +849,7 @@
     "plateNo": 42,
     "nameKo": "루시퍼 [Lucifer]",
     "nameFr": "Lucifer",
-    "rank": "지옥 제국의 황제·대법관 (Empereur)",
+    "rank": "지옥 제국의 황제·대법관(Empereur)",
     "legions": 0,
     "category": "monarch",
     "domains": [
@@ -870,7 +870,7 @@
     "plateNo": 43,
     "nameKo": "말파스 [Malphas]",
     "nameFr": "Malphas",
-    "rank": "지옥의 대총재 (Grand Président)",
+    "rank": "지옥의 대총재(Grand Président)",
     "legions": 40,
     "category": "duke",
     "domains": [
@@ -912,7 +912,7 @@
     "plateNo": 45,
     "nameKo": "마르코시아스 [Marchocias, Marchosias]",
     "nameFr": "Marchocias (Marchosias)",
-    "rank": "지옥의 대후작 (Grand Marquis)",
+    "rank": "지옥의 대후작(Grand Marquis)",
     "legions": 30,
     "category": "duke",
     "domains": [
@@ -933,7 +933,7 @@
     "plateNo": 46,
     "nameKo": "멜콤 [Melchom]",
     "nameFr": "Melchom",
-    "rank": "지옥 궁정의 급료 지불관 (Payeur des Domestiques)",
+    "rank": "지옥 궁정의 급료 지불관(Payeur des Domestiques)",
     "legions": 0,
     "category": "spirit",
     "domains": [
@@ -1038,7 +1038,7 @@
     "plateNo": 51,
     "nameKo": "오로바스 [Orobas]",
     "nameFr": "Orobas",
-    "rank": "지옥의 대군주 (Grand Prince)",
+    "rank": "지옥의 대군주(Grand Prince)",
     "legions": 20,
     "category": "monarch",
     "domains": [
@@ -1103,7 +1103,7 @@
     "plateNo": 54,
     "nameKo": "프루플라스 또는 부사스 [Pruflas, Busas]",
     "nameFr": "Pruflas (Busas)",
-    "rank": "지옥 제국의 대군주·대공 (Grand Prince et Duc)",
+    "rank": "지옥 제국의 대군주·대공(Grand Prince et Duc)",
     "legions": 26,
     "category": "duke",
     "domains": [
@@ -1165,7 +1165,7 @@
     "plateNo": 57,
     "nameKo": "론웨 또는 로노베 [Ronwe, Ronove]",
     "nameFr": "Ronwe (Ronove)",
-    "rank": "지옥의 후작·백작 (Marquis et Comte)",
+    "rank": "지옥의 후작·백작(Marquis et Comte)",
     "legions": 19,
     "category": "duke",
     "domains": [
@@ -1186,7 +1186,7 @@
     "plateNo": 58,
     "nameKo": "스콕스 또는 샥스 [Scox, Chax, Shax]",
     "nameFr": "Scox (Chax, Shax)",
-    "rank": "지옥의 공작·대후작 (Duc et Grand Marquis)",
+    "rank": "지옥의 공작·대후작(Duc et Grand Marquis)",
     "legions": 30,
     "category": "duke",
     "domains": [
@@ -1207,7 +1207,7 @@
     "plateNo": 59,
     "nameKo": "스톨라스 또는 스톨로스 [Stolas, Stolos]",
     "nameFr": "Stolas (Stolos)",
-    "rank": "지옥의 대군주 (Grand Prince)",
+    "rank": "지옥의 대군주(Grand Prince)",
     "legions": 26,
     "category": "monarch",
     "domains": [
@@ -1228,7 +1228,7 @@
     "plateNo": 60,
     "nameKo": "타프 또는 가프 [Tap, Gaap]",
     "nameFr": "Tap (Gaap)",
-    "rank": "지옥의 대총재·대군주 (Grand Président et Prince)",
+    "rank": "지옥의 대총재·대군주(Grand Président et Prince)",
     "legions": 60,
     "category": "monarch",
     "domains": [
@@ -1313,7 +1313,7 @@
     "plateNo": 64,
     "nameKo": "볼라크 또는 발락 [Volac, Valac]",
     "nameFr": "Volac (Valac)",
-    "rank": "지옥의 대총재 (Grand Président)",
+    "rank": "지옥의 대총재(Grand Président)",
     "legions": 30,
     "category": "duke",
     "domains": [
@@ -1355,7 +1355,7 @@
     "plateNo": 66,
     "nameKo": "발 또는 부알 [Wall, Vual, Uvall]",
     "nameFr": "Wall (Vual, Uvall)",
-    "rank": "지옥의 강대한 공작 (Grand et Puissant Duc)",
+    "rank": "지옥의 강대한 공작(Grand et Puissant Duc)",
     "legions": 37,
     "category": "duke",
     "domains": [
@@ -1419,7 +1419,7 @@
     "plateNo": 69,
     "nameKo": "자에보스 또는 살로스 [Zaebos, Sallos]",
     "nameFr": "Zaebos (Sallos)",
-    "rank": "지옥의 대백작 (Grand Comte)",
+    "rank": "지옥의 대백작(Grand Comte)",
     "legions": 30,
     "category": "duke",
     "domains": [

@@ -906,58 +906,58 @@ function convertEnding(word) {
 
 const BODY_PROPER_REPLACEMENTS = [
   // Rule 4: French persons and regions use French
-  [/\bDelancre\b/g, '피에르 드 랑크르 (Pierre de Lancre)'],
-  [/\bBodin\b/g, '장 보댕 (Jean Bodin)'],
-  [/\bBoguet\b/g, '앙리 보게 (Henri Boguet)'],
-  [/\bLeloyer\b/g, '피에르 르루아예 (Pierre Le Loyer)'],
-  [/\bCalmet\b/g, '돔 칼메 (Dom Calmet)'],
-  [/\bFlamel\b/g, '니콜라 플라멜 (Nicolas Flamel)'],
-  [/\bLebrun\b/g, '피에르 르브룅 (Pierre Lebrun)'],
-  [/\bThiers\b/g, '장바티스트 티에르 (Jean-Baptiste Thiers)'],
-  [/\bGrandier\b/g, '위르뱅 그랑디에 (Urbain Grandier)'],
-  [/\bMousseaux\b/g, '구즈노 데 무소 (Gougenot des Mousseaux)'],
-  [/\bLoudun\b/g, '루됭 (Loudun)'],
-  [/\bLouviers\b/g, '루비에 (Louviers)'],
-  [/\bFinistère\b/g, '피니스테르 (Finistère)'],
-  [/\bGascony\b|\bGascogne\b/g, '가스코뉴 (Gascogne)'],
-  [/\bNicolas Remy\b/g, '니콜라 레미 (Nicolas Remy)'],
+  [/\bDelancre\b/g, '피에르 드 랑크르(Pierre de Lancre)'],
+  [/\bBodin\b/g, '장 보댕(Jean Bodin)'],
+  [/\bBoguet\b/g, '앙리 보게(Henri Boguet)'],
+  [/\bLeloyer\b/g, '피에르 르루아예(Pierre Le Loyer)'],
+  [/\bCalmet\b/g, '돔 칼메(Dom Calmet)'],
+  [/\bFlamel\b/g, '니콜라 플라멜(Nicolas Flamel)'],
+  [/\bLebrun\b/g, '피에르 르브룅(Pierre Lebrun)'],
+  [/\bThiers\b/g, '장바티스트 티에르(Jean-Baptiste Thiers)'],
+  [/\bGrandier\b/g, '위르뱅 그랑디에(Urbain Grandier)'],
+  [/\bMousseaux\b/g, '구즈노 데 무소(Gougenot des Mousseaux)'],
+  [/\bLoudun\b/g, '루됭(Loudun)'],
+  [/\bLouviers\b/g, '루비에(Louviers)'],
+  [/\bFinistère\b/g, '피니스테르(Finistère)'],
+  [/\bGascony\b|\bGascogne\b/g, '가스코뉴(Gascogne)'],
+  [/\bNicolas Remy\b/g, '니콜라 레미(Nicolas Remy)'],
 
   // Rule 4: Non-French persons and regions use English
-  [/\bWierus\b|\bWiérus\b/g, '요한 바이어 (Johann Weyer)'],
-  [/\bDelrio\b/g, '마르틴 델리오 (Martin Delrio)'],
-  [/\bBekker\b/g, '발타자르 베커르 (Balthasar Bekker)'],
-  [/\bGörres\b|\bGœrres\b/g, '요제프 괴레스 (Joseph Görres)'],
-  [/\bCardan\b/g, '카르다노 (Gerolamo Cardano)'],
-  [/\bPliny\b|\bPline\b/g, '플리니우스 (Pliny the Elder)'],
-  [/\bPlutarch\b|\bPlutarque\b/g, '플루타르코스 (Plutarch)'],
-  [/\bSuetonius\b|\bSuétone\b/g, '수에토니우스 (Suetonius)'],
-  [/\bLucien\b/g, '루키아노스 (Lucian)'],
-  [/\bIamblichus\b/g, '이암블리코스 (Iamblichus)'],
-  [/\bApuleius\b|\bApulée\b/g, '아풀레이우스 (Apuleius)'],
-  [/\bPausanias\b/g, '파우사니아스 (Pausanias)'],
-  [/\bCicero\b|\bCicéron\b/g, '키케로 (Cicero)'],
-  [/\bVirgil\b|\bVirgile\b/g, '베르길리우스 (Virgil)'],
-  [/\bTorquemada\b/g, '토르케마다 (Tomás de Torquemada)'],
-  [/\bLavater\b/g, '라바터 (Johann Kaspar Lavater)'],
-  [/\bCagliostro\b/g, '칼리오스트로 (Alessandro Cagliostro)'],
-  [/\bAgrippa\b/g, '아그리파 (Heinrich Cornelius Agrippa)'],
-  [/\bParacelse\b|\bParacelsus\b/g, '파라켈수스 (Paracelsus)'],
-  [/\bPythagore\b|\bPythagoras\b/g, '피타고라스 (Pythagoras)'],
-  [/\bOdin\b/g, '오딘 (Odin)'],
-  [/\bHermes-Trismegistus\b|\bHermès-Trismégiste\b/g, '헤르메스 트리스메기스투스 (Hermes Trismegistus)'],
-  [/\bAlchabitius\b/g, '알카비티우스 (Alchabitius)'],
-  [/\bJulius Africanus\b/g, '율리우스 아프리카누스 (Sextus Julius Africanus)'],
-  [/\bValère-Maxime\b/g, '발레리우스 막시무스 (Valerius Maximus)'],
-  [/\bCésaire d'Heisterbach\b|\bCésaire d’Heisterbach\b/g, '세자르 데스테르바흐 (Caesarius of Heisterbach)'],
-  [/\bApollonius\b/g, '아폴로니우스 (Apollonius)'],
-  [/\bPeucer\b/g, '카스파르 포이케르 (Caspar Peucer)'],
-  [/\bMirville\b/g, '미르빌 (Jules de Mirville)'],
-  [/\bPaymon\b/g, '파이몬 (Paymon)'],
-  [/\bBeelzebub\b|\bBelzébuth\b/g, '벨제붑 (Belzébuth)'],
-  [/\bAstaroth\b/g, '아스타로트 (Astaroth)'],
-  [/\bJupiter\b/g, '유피테르 (Jupiter)'],
-  [/\bApollo\b|\bApollon\b/g, '아폴론 (Apollon)'],
-  [/\bMinerve\b|\bMinerva\b/g, '미네르바 (Minerva)']
+  [/\bWierus\b|\bWiérus\b/g, '요한 바이어(Johann Weyer)'],
+  [/\bDelrio\b/g, '마르틴 델리오(Martin Delrio)'],
+  [/\bBekker\b/g, '발타자르 베커르(Balthasar Bekker)'],
+  [/\bGörres\b|\bGœrres\b/g, '요제프 괴레스(Joseph Görres)'],
+  [/\bCardan\b/g, '카르다노(Gerolamo Cardano)'],
+  [/\bPliny\b|\bPline\b/g, '플리니우스(Pliny the Elder)'],
+  [/\bPlutarch\b|\bPlutarque\b/g, '플루타르코스(Plutarch)'],
+  [/\bSuetonius\b|\bSuétone\b/g, '수에토니우스(Suetonius)'],
+  [/\bLucien\b/g, '루키아노스(Lucian)'],
+  [/\bIamblichus\b/g, '이암블리코스(Iamblichus)'],
+  [/\bApuleius\b|\bApulée\b/g, '아풀레이우스(Apuleius)'],
+  [/\bPausanias\b/g, '파우사니아스(Pausanias)'],
+  [/\bCicero\b|\bCicéron\b/g, '키케로(Cicero)'],
+  [/\bVirgil\b|\bVirgile\b/g, '베르길리우스(Virgil)'],
+  [/\bTorquemada\b/g, '토르케마다(Tomás de Torquemada)'],
+  [/\bLavater\b/g, '라바터(Johann Kaspar Lavater)'],
+  [/\bCagliostro\b/g, '칼리오스트로(Alessandro Cagliostro)'],
+  [/\bAgrippa\b/g, '아그리파(Heinrich Cornelius Agrippa)'],
+  [/\bParacelse\b|\bParacelsus\b/g, '파라켈수스(Paracelsus)'],
+  [/\bPythagore\b|\bPythagoras\b/g, '피타고라스(Pythagoras)'],
+  [/\bOdin\b/g, '오딘(Odin)'],
+  [/\bHermes-Trismegistus\b|\bHermès-Trismégiste\b/g, '헤르메스 트리스메기스투스(Hermes Trismegistus)'],
+  [/\bAlchabitius\b/g, '알카비티우스(Alchabitius)'],
+  [/\bJulius Africanus\b/g, '율리우스 아프리카누스(Sextus Julius Africanus)'],
+  [/\bValère-Maxime\b/g, '발레리우스 막시무스(Valerius Maximus)'],
+  [/\bCésaire d'Heisterbach\b|\bCésaire d’Heisterbach\b/g, '세자르 데스테르바흐(Caesarius of Heisterbach)'],
+  [/\bApollonius\b/g, '아폴로니우스(Apollonius)'],
+  [/\bPeucer\b/g, '카스파르 포이케르(Caspar Peucer)'],
+  [/\bMirville\b/g, '미르빌(Jules de Mirville)'],
+  [/\bPaymon\b/g, '파이몬(Paymon)'],
+  [/\bBeelzebub\b|\bBelzébuth\b/g, '벨제붑(Belzébuth)'],
+  [/\bAstaroth\b/g, '아스타로트(Astaroth)'],
+  [/\bJupiter\b/g, '유피테르(Jupiter)'],
+  [/\bApollo\b|\bApollon\b/g, '아폴론(Apollon)'],
+  [/\bMinerve\b|\bMinerva\b/g, '미네르바(Minerva)']
 ];
 
 // Replace regex matches only when outside parentheses (...) so nested parentheses never occur
@@ -966,10 +966,28 @@ function replaceOutsideParens(text, re, replacement) {
   return parts.map(part => ((part.startsWith('(') && part.endsWith(')')) || (part.startsWith('[') && part.endsWith(']'))) ? part : part.replace(re, replacement)).join('');
 }
 
+// Remove original language annotations inside outer parenthetical explanations so no parenthesis is nested inside another
+function removeOriginalInsideParens(text) {
+  let prev = '';
+  let cur = text;
+  while (prev !== cur) {
+    prev = cur;
+    cur = cur.replace(/\(([^()]*?)([가-힣0-9]+)\s*\([A-Za-zÀ-ÿŒœÆæ0-9\s,.'’\-–—/°]+\)([^()]*?)\)/g, '($1$2$3)');
+    cur = cur.replace(/\(([^()]*?)\s*\([A-Za-zÀ-ÿŒœÆæ0-9\s,.'’\-–—/°]+\)([^()]*?)\)/g, '($1$2)');
+  }
+  return cur;
+}
+
+// Format body Korean (Original) notation without space in between: 한글(원문)
+function formatKoreanParen(text) {
+  if (!text) return text;
+  return text.replace(/([가-힣])\s+\(([A-Za-zÀ-ÿŒœÆæ0-9][^\(\)]*)\)/g, '$1($2)');
+}
+
 // Harmonize Korean particles (은/는, 이/가, 을/를, 과/와, 으로/로) after Korean nouns or Korean + (Original)
 function fixKoreanParticles(text) {
-  // 1. After "한글 (Original)" + particle
-  let out = text.replace(/([가-힣])(\s*(?:\[[^\]]+\]|\([^)]+\)))+(은|는|이|가|을|를|과|와|으로|로(?=[ \.,;!\?]|$)|이라고|라고|이라는|라는)/g, (m, korChar, parens, particle) => {
+  // 1. After "한글 (Original)" or "한글(Original)" + particle
+  let out = text.replace(/([가-힣])(\s*(?:\[[^\]]+\]|\([^)]+\)))+((?:은|는|이|가|을|를|과|와|으로|로)(?=[ \.,;!\?]|$)|이라고|라고|이라는|라는)/g, (m, korChar, parens, particle) => {
     const code = korChar.charCodeAt(0) - 0xAC00;
     if (code < 0 || code > 11171) return m;
     const jong = code % 28;
@@ -985,6 +1003,15 @@ function fixKoreanParticles(text) {
     return `${korChar}${parens}${fixed}`;
   });
   // 2. Direct particle fixes on replaced words without parens
+  out = out.replace(/([가-힣])(이라고|라고|이라는|라는)/g, (m, korChar, particle) => {
+    const code = korChar.charCodeAt(0) - 0xAC00;
+    if (code < 0 || code > 11171) return m;
+    const hasFinal = (code % 28) !== 0;
+    let correct = particle;
+    if (particle === '이라고' || particle === '라고') correct = hasFinal ? '이라고' : '라고';
+    else if (particle === '이라는' || particle === '라는') correct = hasFinal ? '이라는' : '라는';
+    return korChar + correct;
+  });
   out = out
     .replace(/사바트으로/g, '사바트로')
     .replace(/사바트은/g, '사바트는')
@@ -1154,7 +1181,10 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
       cur = cur.replace(re, rep);
     }
     cur = fixBareForeignOpenings(cur, e, koBase, headword);
-    return cur;
+    cur = removeOriginalInsideParens(cur);
+    cur = formatKoreanParen(cur);
+    cur = fixKoreanParticles(cur);
+    return cur.replace(/\s+/g, ' ').trim();
   }
 
   let s = String(rawKo || '').trim();
@@ -1195,25 +1225,25 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
 
   // Fix occult/historical mistranslations and literal French idioms across the 1863 corpus
   s = s
-    .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마녀들의 안식일|안식일/g, '사바트 (Sabbat)')
+    .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마녀들의 안식일|안식일/g, '사바트(Sabbat)')
     .replace(/솔로몬의 빗장뼈|솔로몬의 쇄골/g, '「솔로몬의 열쇠(Clavicules de Salomon)」')
-    .replace(/유대인 도당/g, '유대 카발라 (Cabale)')
-    .replace(/위대한 도당으로/g, '대카발라 학자 (Cabaliste)로')
-    .replace(/마술사,\s*도당으로/g, '마법사이자 카발라 학자 (Cabaliste)로')
+    .replace(/유대인 도당/g, '유대 카발라(Cabale)')
+    .replace(/위대한 도당으로/g, '대카발라 학자(Cabaliste)로')
+    .replace(/마술사,\s*도당으로/g, '마법사이자 카발라 학자(Cabaliste)로')
     .replace(/도당적인 유대인들은/g, '카발라를 신봉하는 유대인들은')
-    .replace(/도당의 세 번째/g, '카발라 (Cabale)의 세 번째')
-    .replace(/도당들/g, '카발리스트 (Cabalistes)들')
-    .replace(/악마광/g, '악마학 (Démonomanie)')
+    .replace(/도당의 세 번째/g, '카발라(Cabale)의 세 번째')
+    .replace(/도당들/g, '카발리스트(Cabalistes)들')
+    .replace(/악마광/g, '악마학(Démonomanie)')
     .replace(/콘돔|방부제/g, '수호 부적(호신부)')
     .replace(/친숙한 정신|친숙한 영|친숙한 악마|친숙한 요정/g, '사역마(패밀리어, Esprit familier)')
-    .replace(/바늘 묶는 사람/g, '매듭 주술사 (Noueur d’aiguillettes)')
+    .replace(/바늘 묶는 사람/g, '매듭 주술사(Noueur d’aiguillettes)')
     .replace(/바늘을 묶는 기술/g, '매듭 주술(에귀예트, Aiguillette)을 거는 기술')
     .replace(/바늘을 묶/g, '매듭 주술을 걸')
     .replace(/바늘을 풀/g, '매듭 주술을 풀')
     .replace(/물리적 합자\s*\(Physical Ligatures\)/g, '「물리적 결박 주술(Ligatures physiques)」')
     .replace(/참조\s*:\s*합자\.?/g, '참조: 결박 주술 [Ligatures].')
     .replace(/\(참조\s*:\s*합자\)/g, '(참조: 결박 주술 [Ligatures])')
-    .replace(/사법 점성술|법한 점성술/g, '판단 점성술 (Astrologie judiciaire)')
+    .replace(/사법 점성술|법한 점성술/g, '판단 점성술(Astrologie judiciaire)')
     .replace(/후기 제국의/g, '동로마(비잔티움) 제국의')
     .replace(/산적이라는 선고를/g, '강도·흉악범으로 판결을')
     .replace(/악마의 리더\.?/g, '악마들의 수장이다.')
@@ -1228,7 +1258,7 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     .replace(/천사들과 거래/g, '천사들과 교류')
     .replace(/악마들과 거래|악마와 거래/g, '악마와 교류(계약)')
     .replace(/조약에 따라/g, '계약(Pacte)에 따라')
-    .replace(/미란돌라 그림/g, '피코 델라 미란돌라 (Giovanni Pico della Mirandola)')
+    .replace(/미란돌라 그림/g, '피코 델라 미란돌라(Giovanni Pico della Mirandola)')
     .replace(/그러한 기사는/g, '이러한 표제어는')
     .replace(/이 기사는/g, '이 항목은')
     .replace(/표창은 정령을/g, '소환장(Citation)은 정령을')
@@ -1236,8 +1266,8 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     .replace(/마법의 인물을/g, '마법 도형(부적)을')
     .replace(/과도한 도덕성 때문에/g, '방종한 품행 때문에')
     .replace(/화살을주었습니다|화살을주었다/g, '화살을 주었다')
-    .replace(/피타고라스의 주인이었다/g, '피타고라스 (Pythagoras)의 스승이었다')
-    .replace(/Brandenburg 행진에서/g, '브란덴부르크 변경백령 (Margraviate of Brandenburg)의')
+    .replace(/피타고라스의 주인이었다/g, '피타고라스(Pythagoras)의 스승이었다')
+    .replace(/Brandenburg 행진에서/g, '브란덴부르크 변경백령(Margraviate of Brandenburg)의')
     .replace(/화가 나서 환상을 보고 있다고/g, '광기에 빠져 환시를 본다고')
     .replace(/원칙이 되지 않았습니다|원칙이 되지 않았다/g, '정설로 받아들여지지는 않았다')
     .replace(/비극적인 무질서로/g, '비극적인 사랑과 파란만장한 행적으로')
@@ -1259,7 +1289,7 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     .replace(/그분에게/g, '그에게')
     .replace(/말씀하십니다|말씀하신다/g, '말한다')
     .replace(/나타나시므로/g, '나타나므로')
-    .replace(/사단이나/g, '사탄 (Satan)이나')
+    .replace(/사단이나/g, '사탄(Satan)이나')
     .replace(/희귀한\./g, '희귀본이다.')
     .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?/g, '해당 항목 참조.')
     .replace(/참조\s*:\s*이 단어\.?|참조\s*:\s*이 이름\.?/g, '해당 항목 참조.')
@@ -1344,6 +1374,15 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
   // Fix bare foreign openings
   s = fixBareForeignOpenings(s, e, koBase, headword);
 
+  // Remove original language annotations inside outer parenthetical explanations (no nested parens)
+  s = removeOriginalInsideParens(s);
+
+  // Format Korean (Original) without space in the middle: 한글(원문)
+  s = formatKoreanParen(s);
+
+  // Final particle harmonization
+  s = fixKoreanParticles(s);
+
   return s.replace(/\s+/g, ' ').trim();
 }
 
@@ -1402,62 +1441,62 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
 
   if (isPersonName || isPersonText) {
     category = 'person';
-    if (/sorcière/i.test(lead)) { rank = '마녀·주술사 (Sorcière)'; domains.push('마녀 재판 전승', '민간 주술'); }
-    else if (/sorcier/i.test(lead)) { rank = '마법사·주술사 (Sorcier)'; domains.push('서양 마법사', '주술 전승'); }
-    else if (/magicien|magicienne|enchanteur/i.test(lead)) { rank = '마법사·비술사 (Magicien)'; domains.push('서양 마법사', '비전 마법'); }
-    else if (/astrologue/i.test(lead)) { rank = '점성술사 (Astrologue)'; domains.push('점성술 (Astrologie)', '천문 예언'); }
-    else if (/alchimiste|adepte/i.test(lead)) { rank = '연금술사 (Alchimiste)'; domains.push('연금술 (Alchimie)', '현자의 돌 전승'); }
-    else if (/démonographe|inquisiteur|démonologue/i.test(lead)) { rank = '악마학자·이단심문관 (Démonographe & Inquisiteur)'; domains.push('이단심문·악마학 연구', '중세 교회재판'); }
-    else if (/empereur|roi|reine|prince/i.test(lead)) { rank = '역사 속 군주·귀족 (Souverain & Personnage)'; domains.push('유럽 군주·귀족', '역사 인물'); }
-    else if (/pape|évêque|prêtre|abbé|moine|religieuse|saint|cardinal/i.test(lead)) { rank = '성직자·종교 인물 (Ecclésiastique & Saint)'; domains.push('교회 인물·성직자', '가톨릭 역사'); }
-    else if (/philosophe|médecin|savant|auteur|écrivain/i.test(lead)) { rank = '학자·의사·저술가 (Savant & Auteur)'; domains.push('학자·저술가', '중세·르네상스 학술'); }
-    else { rank = '오컬트·역사 인물 (Personnage Historique)'; domains.push('오컬트 역사', '역사 인물'); }
-    domains.unshift('인물·역사 (Personnage)');
+    if (/sorcière/i.test(lead)) { rank = '마녀·주술사(Sorcière)'; domains.push('마녀 재판 전승', '민간 주술'); }
+    else if (/sorcier/i.test(lead)) { rank = '마법사·주술사(Sorcier)'; domains.push('서양 마법사', '주술 전승'); }
+    else if (/magicien|magicienne|enchanteur/i.test(lead)) { rank = '마법사·비술사(Magicien)'; domains.push('서양 마법사', '비전 마법'); }
+    else if (/astrologue/i.test(lead)) { rank = '점성술사(Astrologue)'; domains.push('점성술(Astrologie)', '천문 예언'); }
+    else if (/alchimiste|adepte/i.test(lead)) { rank = '연금술사(Alchimiste)'; domains.push('연금술(Alchimie)', '현자의 돌 전승'); }
+    else if (/démonographe|inquisiteur|démonologue/i.test(lead)) { rank = '악마학자·이단심문관(Démonographe & Inquisiteur)'; domains.push('이단심문·악마학 연구', '중세 교회재판'); }
+    else if (/empereur|roi|reine|prince/i.test(lead)) { rank = '역사 속 군주·귀족(Souverain & Personnage)'; domains.push('유럽 군주·귀족', '역사 인물'); }
+    else if (/pape|évêque|prêtre|abbé|moine|religieuse|saint|cardinal/i.test(lead)) { rank = '성직자·종교 인물(Ecclésiastique & Saint)'; domains.push('교회 인물·성직자', '가톨릭 역사'); }
+    else if (/philosophe|médecin|savant|auteur|écrivain/i.test(lead)) { rank = '학자·의사·저술가(Savant & Auteur)'; domains.push('학자·저술가', '중세·르네상스 학술'); }
+    else { rank = '오컬트·역사 인물(Personnage Historique)'; domains.push('오컬트 역사', '역사 인물'); }
+    domains.unshift('인물·역사(Personnage)');
   } else if (/mancie\b|scopie\b|\bdivination\b|\bprésage|\baugure|\boracle|\bsonge|\bastrolog|\bchiroman|\bhoroscope/i.test(e.nameFr + ' ' + lead.slice(0, 120))) {
     category = 'divination';
-    if (/mancie\b|divination/i.test(e.nameFr + ' ' + lead)) rank = '고대·중세 점술 (Art Divinatoire)';
-    else if (/astrolog|horoscope|planète|constellation/i.test(e.nameFr + ' ' + lead)) rank = '점성술·천문 예언 (Astrologie)';
-    else if (/songe|oniroman|rêve/i.test(e.nameFr + ' ' + lead)) rank = '해몽·몽점 (Oniromancie)';
-    else rank = '징조·신탁·예언술 (Présage & Oracle)';
-    domains.push('점술·예언 (Divination)', '고대·중세 점복술');
+    if (/mancie\b|divination/i.test(e.nameFr + ' ' + lead)) rank = '고대·중세 점술(Art Divinatoire)';
+    else if (/astrolog|horoscope|planète|constellation/i.test(e.nameFr + ' ' + lead)) rank = '점성술·천문 예언(Astrologie)';
+    else if (/songe|oniroman|rêve/i.test(e.nameFr + ' ' + lead)) rank = '해몽·몽점(Oniromancie)';
+    else rank = '징조·신탁·예언술(Présage & Oracle)';
+    domains.push('점술·예언(Divination)', '고대·중세 점복술');
   } else if (/\b(?:livre|ouvrage|traité|grimoire|clavicule|manuscrit|recueil|rituel|encyclopédie|dissertation|bible du diable)\b/i.test(lead.slice(0, 120))) {
     category = 'grimoire';
-    rank = '마도서·오컬트 문헌 (Grimoire & Traité)';
-    domains.push('마도서·문헌 (Grimoire)', '오컬트 비전서');
+    rank = '마도서·오컬트 문헌(Grimoire & Traité)';
+    domains.push('마도서·문헌(Grimoire)', '오컬트 비전서');
   } else if (/\b(?:plante|herbe|arbre|racine|fleur|graine|feuille|fruit|pierre|minéral|métal|animal|oiseau|serpent|poisson|insecte|abeille|chat|chien|beurre|bouillon|bâillement|pain|sel|eau|charme|amulette|talisman|remède)\b/i.test(lead.slice(0, 120))) {
     category = 'superstition';
-    if (/pierre|minéral|métal/i.test(lead)) { rank = '신비 광물·보석 비방 (Pierre Magique)'; domains.push('신비 광물·보석', '민간요법'); }
-    else if (/plante|herbe|arbre|racine/i.test(lead)) { rank = '마법 약초·수목 전승 (Plante Magique)'; domains.push('마법 약초·수목 비방', '민간요법'); }
-    else if (/animal|oiseau|serpent|poisson|chat|chien/i.test(lead)) { rank = '동물 관련 미신·상징 (Superstition Animale)'; domains.push('신비 동물·상징', '민간 전승'); }
-    else if (/talisman|amulette|charme|remède/i.test(lead)) { rank = '부적·치유 주술 (Talisman & Charme)'; domains.push('호신 부적·탈리스만', '액막이 주술'); }
-    else { rank = '민간 미신·기담 (Superstition & Coutume)'; domains.push('민간 미신·주술', '유럽 민간 풍습'); }
-    domains.unshift('미신·민속 (Superstition)');
+    if (/pierre|minéral|métal/i.test(lead)) { rank = '신비 광물·보석 비방(Pierre Magique)'; domains.push('신비 광물·보석', '민간요법'); }
+    else if (/plante|herbe|arbre|racine/i.test(lead)) { rank = '마법 약초·수목 전승(Plante Magique)'; domains.push('마법 약초·수목 비방', '민간요법'); }
+    else if (/animal|oiseau|serpent|poisson|chat|chien/i.test(lead)) { rank = '동물 관련 미신·상징(Superstition Animale)'; domains.push('신비 동물·상징', '민간 전승'); }
+    else if (/talisman|amulette|charme|remède/i.test(lead)) { rank = '부적·치유 주술(Talisman & Charme)'; domains.push('호신 부적·탈리스만', '액막이 주술'); }
+    else { rank = '민간 미신·기담(Superstition & Coutume)'; domains.push('민간 미신·주술', '유럽 민간 풍습'); }
+    domains.unshift('미신·민속(Superstition)');
   } else if (/\b(?:dieu|déesse|idole|mythologie|fée|nymphe|géant|monstre|enfer des|purgatoire des|ange|prophète|peuple|habitants de|chez les anciens|légende)\b/i.test(lead)) {
     category = 'myth';
-    if (/dieu|déesse|idole/i.test(lead)) rank = '고대 신격·우상 (Divinité & Idole)';
-    else if (/fée|nymphe|géant|monstre/i.test(lead)) rank = '신화·전설의 존재 (Créature Mythologique)';
-    else if (/enfer|purgatoire|paradis/i.test(lead)) rank = '내세관·타계 전승 (Mythologie de l’Au-delà)';
-    else rank = '세계 신화·종교 전승 (Mythologie & Légende)';
-    domains.push('신화·종교 (Mythologie)', '고대 신화·전설');
+    if (/dieu|déesse|idole/i.test(lead)) rank = '고대 신격·우상(Divinité & Idole)';
+    else if (/fée|nymphe|géant|monstre/i.test(lead)) rank = '신화·전설의 존재(Créature Mythologique)';
+    else if (/enfer|purgatoire|paradis/i.test(lead)) rank = '내세관·타계 전승(Mythologie de l’Au-delà)';
+    else rank = '세계 신화·종교 전승(Mythologie & Légende)';
+    domains.push('신화·종교(Mythologie)', '고대 신화·전설');
   } else if (/\b(?:grand-duc|grand président|marquis de l’enfer|prince de l’enfer|prince des démons|chef des démons|démon|diable|succube|incube|lutin|farfadet|gobelin|vampire|loup-garou|sabbat|possédé|possession|exorcis|esprit infernal)/i.test(lead)) {
     category = 'demon';
-    if (/grand-duc/i.test(lead)) { rank = '지옥의 대공 (Grand-Duc Infernal)'; domains.push('지옥의 계급 체계', '고위 악마'); }
-    else if (/grand président/i.test(lead)) { rank = '지옥의 대총재 (Grand Président)'; domains.push('지옥의 계급 체계', '고위 악마'); }
-    else if (/marquis/i.test(lead)) { rank = '지옥의 후작 (Marquis de l’Enfer)'; domains.push('지옥의 계급 체계', '고위 악마'); }
-    else if (/prince|chef|roi de l’enfer/i.test(lead)) { rank = '지옥 군주·고위 악마 (Prince des Démons)'; domains.push('지옥 군주', '솔로몬 72 악마'); }
-    else if (/loup-garou|lycanthrop/i.test(lead)) { rank = '늑대인간 전승 (Loup-Garou)'; domains.push('늑대인간 (Lycanthropie)', '변신 전승'); }
-    else if (/vampire/i.test(lead)) { rank = '흡혈귀 전승 (Vampire)'; domains.push('흡혈귀 전승', '동유럽 민속'); }
-    else if (/lutin|farfadet|gobelin/i.test(lead)) { rank = '가정 요정·소정령 (Lutin & Farfadet)'; domains.push('유럽 요정 전승', '가정 정령'); }
-    else if (/succube|incube/i.test(lead)) { rank = '몽마·음마 (Incube & Succube)'; domains.push('몽마 전승', '악령 유혹'); }
+    if (/grand-duc/i.test(lead)) { rank = '지옥의 대공(Grand-Duc Infernal)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    else if (/grand président/i.test(lead)) { rank = '지옥의 대총재(Grand Président)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    else if (/marquis/i.test(lead)) { rank = '지옥의 후작(Marquis de l’Enfer)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    else if (/prince|chef|roi de l’enfer/i.test(lead)) { rank = '지옥 군주·고위 악마(Prince des Démons)'; domains.push('지옥 군주', '솔로몬 72 악마'); }
+    else if (/loup-garou|lycanthrop/i.test(lead)) { rank = '늑대인간 전승(Loup-Garou)'; domains.push('늑대인간(Lycanthropie)', '변신 전승'); }
+    else if (/vampire/i.test(lead)) { rank = '흡혈귀 전승(Vampire)'; domains.push('흡혈귀 전승', '동유럽 민속'); }
+    else if (/lutin|farfadet|gobelin/i.test(lead)) { rank = '가정 요정·소정령(Lutin & Farfadet)'; domains.push('유럽 요정 전승', '가정 정령'); }
+    else if (/succube|incube/i.test(lead)) { rank = '몽마·음마(Incube & Succube)'; domains.push('몽마 전승', '악령 유혹'); }
     else if (/esprit familier/i.test(lead)) { rank = '사역마(패밀리어, Esprit familier)'; domains.push('사역마 전승', '마술 도우미'); }
-    else if (/possédé|possession|énergumène/i.test(lead)) { rank = '악령 빙의 사건 (Possession Démoniaque)'; domains.push('악령 빙의 사건', '엑소시즘 (Exorcisme)'); }
-    else if (/sabbat/i.test(lead + ' ' + e.nameFr)) { rank = '사바트 의식·주술 (Rituel du Sabbat)'; domains.push('사바트 의식', '마녀 집회'); }
-    else { rank = '고위 악마·지옥 정령 (Démon Supérieur)'; domains.push('지옥 정령', '악마 전승'); }
-    domains.unshift('악마학 (Démonologie)');
+    else if (/possédé|possession|énergumène/i.test(lead)) { rank = '악령 빙의 사건(Possession Démoniaque)'; domains.push('악령 빙의 사건', '엑소시즘(Exorcisme)'); }
+    else if (/sabbat/i.test(lead + ' ' + e.nameFr)) { rank = '사바트 의식·주술(Rituel du Sabbat)'; domains.push('사바트 의식', '마녀 집회'); }
+    else { rank = '고위 악마·지옥 정령(Démon Supérieur)'; domains.push('지옥 정령', '악마 전승'); }
+    domains.unshift('악마학(Démonologie)');
   } else {
     category = 'superstition';
-    rank = '민간 미신·기담 (Superstition & Coutume)';
-    domains.push('미신·민속 (Superstition)', '유럽 민간 풍습');
+    rank = '민간 미신·기담(Superstition & Coutume)';
+    domains.push('미신·민속(Superstition)', '유럽 민간 풍습');
   }
 
   if (centuryKo) domains.push(centuryKo);
@@ -1469,8 +1508,18 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
   const bodyKo = polishTranslation(rawKo, e, koBase, headword);
 
   // First 1-2 sentences for card preview summary
-  const sentMatch = bodyKo.match(/^(.{20,140}?[\.!\?])\s+/);
-  const summaryKo = sentMatch ? sentMatch[1] : (bodyKo.length > 140 ? bodyKo.slice(0, 140) + '…' : bodyKo);
+  const sentMatch = bodyKo.match(/^(.{20,160}?[\.!\?])\s+/);
+  let summaryKo = sentMatch ? sentMatch[1] : (bodyKo.length > 150 ? bodyKo.slice(0, 150) + '…' : bodyKo);
+  const openCount = (summaryKo.match(/\(/g) || []).length;
+  const closeCount = (summaryKo.match(/\)/g) || []).length;
+  if (openCount > closeCount) {
+    const lastOpen = summaryKo.lastIndexOf('(');
+    if (lastOpen > 40) {
+      summaryKo = summaryKo.slice(0, lastOpen).trim() + '…';
+    } else {
+      summaryKo += ')';
+    }
+  }
 
   return {
     category,
