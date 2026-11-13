@@ -502,7 +502,7 @@ function renderBookmarksTab(){
 function renderSettingsTab(){
   return `<section class="settings-view">
     <div class="panel">
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:8px"><h2 style="margin:0">화면 및 독서 환경</h2><button type="button" class="help" data-action="settings-help" aria-label="설정 도움말">?</button></div>
+      <h2>화면 및 독서 환경</h2>
       <div class="setting-row">
         <div class="setting-label">
           <strong>테마 모드</strong>
