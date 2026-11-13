@@ -300,26 +300,26 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         ${formatParagraphs(entry.description)}
       </div>
 
-      ${entry.quoteFr?`<section class="detail-french-card${settings.showFrench?' expanded':''}">
+      ${entry.quoteFr?`<blockquote class="detail-french-card${settings.showFrench?' expanded':''}">
         <button type="button" class="french-card-trigger" data-action="toggle-french" aria-expanded="${settings.showFrench?'true':'false'}">
           <div class="french-trigger-left">
-            <span class="french-badge">1863 FR</span>
-            <strong class="french-trigger-title">불문 원문</strong>
-            <span class="french-page-no">p.${entry.page1863}</span>
+            <strong class="french-trigger-title">불문 원문 <span class="french-entry-name">(${escapeHtml(entry.nameFr)})</span></strong>
           </div>
-          <span class="french-trigger-action">
-            <span class="french-trigger-label">${settings.showFrench?'접기':'펼치기'}</span>
-            <span class="french-trigger-arrow" aria-hidden="true">${settings.showFrench?'▴':'▾'}</span>
-          </span>
+          <div class="french-trigger-right">
+            <span class="french-page-no">p.${entry.page1863}</span>
+            <span class="french-trigger-action">
+              <span class="french-trigger-label">${settings.showFrench?'접기':'펼치기'}</span>
+              <span class="french-trigger-arrow" aria-hidden="true">${settings.showFrench?'▴':'▾'}</span>
+            </span>
+          </div>
         </button>
         <div class="french-card-collapse">
           <div class="french-card-inner">
-            <div class="french-original-name">원문 표제어: <em>${escapeHtml(entry.nameFr)}</em></div>
             <p class="french-quote-text">“${escapeHtml(entry.quoteFr)}”</p>
-            <footer class="french-quote-footer">— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863 · p.${entry.page1863})</footer>
+            <footer class="french-quote-footer">— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
           </div>
         </div>
-      </section>`:''}
+      </blockquote>`:''}
     </div>
   </article>
 
