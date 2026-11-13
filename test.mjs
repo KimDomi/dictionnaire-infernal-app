@@ -30,6 +30,39 @@ assert.ok(abadie && abadie.nameKo === '자네뜨 다바디 [Abadie (Jeannette d�
 const abraxas = ENTRIES.find(e => e.id === 'abraxas');
 assert.ok(abraxas && abraxas.nameKo === '아브라카스 또는 아브락사스 [Abracax, Abraxas]', 'Rule 3: 아브라카스 또는 아브락사스 [Abracax, Abraxas]');
 
+// Verify the 4 Jean entries disambiguation on page 373
+const jeanMagician = ENTRIES.find(e => e.id === 'e2167-jean');
+assert.ok(jeanMagician && jeanMagician.nameKo === '마법사 장 [Jean (Magicien) / John the Magician]', 'Jean 1: 마법사 장');
+assert.ok(jeanMagician.description.includes('아폴로니우스'), 'Jean 1 description contains Apollonius');
+
+const jeanPatriarch = ENTRIES.find(e => e.id === 'e2168-jean');
+assert.ok(jeanPatriarch && jeanPatriarch.nameKo === '총대주교 장 [Jean (Patriarche de Constantinople)]', 'Jean 2: 총대주교 장');
+assert.ok(jeanPatriarch.description.includes('콘스탄티노폴리스'), 'Jean 2 description contains Constantinople');
+
+const jeanXXII = ENTRIES.find(e => e.id === 'e2169-jeanxxii');
+assert.ok(jeanXXII && jeanXXII.nameKo === '요한 22세 [Jean XXII / Pope John XXII]', 'Jean XXII: 요한 22세');
+assert.ok(jeanXXII.description.includes('교황'), 'Jean XXII description contains pope');
+
+const jeanIvan = ENTRIES.find(e => e.id === 'e2170-jean');
+assert.ok(jeanIvan && jeanIvan.nameKo === '이반 뇌제 또는 장 [Jean, Iwan Basilowitz / Ivan the Terrible]', 'Jean 3: 이반 뇌제 또는 장');
+assert.ok(jeanIvan.description.includes('이반 바실리예비치'), 'Jean 3 description contains Ivan Vasilyevich');
+
+// Verify descriptions are unique
+const jeanDescs = new Set([jeanMagician.description, jeanPatriarch.description, jeanXXII.description, jeanIvan.description]);
+assert.equal(jeanDescs.size, 4, 'All four Jean entries must have distinct descriptions');
+
+// Verify Phénix demon vs sacred bird disambiguation
+const phenixDemon = ENTRIES.find(e => e.id === 'e3011-phenix');
+const phenixBird = ENTRIES.find(e => e.id === 'e3012-phenix');
+assert.ok(phenixDemon && phenixDemon.nameKo === '페닉스 [Phénix / Phenex]' && phenixDemon.category === 'demon', 'Phenix demon');
+assert.ok(phenixBird && phenixBird.nameKo === '불사조 [Phénix / Phoenix]' && phenixBird.category === 'superstition', 'Phenix bird');
+
+// Verify Retz Gilles de Rais vs Cardinal de Retz disambiguation
+const retzGilles = ENTRIES.find(e => e.id === 'e3211-retz');
+const retzCardinal = ENTRIES.find(e => e.id === 'e3212-retz');
+assert.ok(retzGilles && retzGilles.nameKo.includes('질 드 레'), 'Gilles de Rais');
+assert.ok(retzCardinal && retzCardinal.nameKo.includes('레츠 추기경'), 'Cardinal de Retz');
+
 const monarchs=filterEntries({category:'monarch',onlyIllustrated:true});
 assert.ok(monarchs.some(e=>e.id==='belzebuth'));
 assert.ok(monarchs.some(e=>e.id==='astaroth'));

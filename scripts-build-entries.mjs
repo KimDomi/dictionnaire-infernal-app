@@ -485,15 +485,23 @@ const BAD_CACHE_HEADWORDS = new Set([
   '어떤','비록','아마도','오늘날','옛날','참조','보라','이웃'
 ]);
 
+const ROMAN_NUMERALS_MAP = {
+  'i': '1세', 'ii': '2세', 'iii': '3세', 'iv': '4세', 'v': '5세',
+  'vi': '6세', 'vii': '7세', 'viii': '8세', 'ix': '9세', 'x': '10세',
+  'xi': '11세', 'xii': '12세', 'xiii': '13세', 'xiv': '14세', 'xv': '15세',
+  'xvi': '16세', 'xvii': '17세', 'xviii': '18세', 'xix': '19세', 'xx': '20세',
+  'xxi': '21세', 'xxii': '22세', 'xxiii': '23세', 'xxiv': '24세'
+};
+
 function extractKoHeadwordFromCache(rawKo, e) {
   if (!rawKo || !e) return '';
   const v = String(rawKo).trim();
-  let m = v.match(/^([가-힣][가-힣\s·]{0,18}?)(?:\s*\([^)]+\))?\s*(?:—|-)\s+/);
+  let m = v.match(/^([0-9가-힣][0-9가-힣\s·]{0,18}?)(?:\s*\([^)]+\))?\s*(?:—|-)\s+/);
   if (!m && e.textFr && (e.textFr.indexOf('.') < 0 || e.textFr.indexOf('.') > 25)) {
-    m = v.match(/^([가-힣][가-힣\s·]{0,16}?)(?:\s*\([^)]+\))?\.\s+/);
+    m = v.match(/^([0-9가-힣][0-9가-힣\s·]{0,16}?)(?:\s*\([^)]+\))?\.\s+/);
   }
   if (!m) {
-    m = v.match(/^([가-힣]{2,10})(?:\s*\([^)]+\))?[은는]\s+/);
+    m = v.match(/^([0-9가-힣]{2,10})(?:\s*\([^)]+\))?[은는]\s+/);
   }
   if (!m) return '';
   let cand = m[1].trim()
@@ -505,7 +513,8 @@ function extractKoHeadwordFromCache(rawKo, e) {
   return cand;
 }
 
-function frHeadwordToKo(nameFr, baseFr, rawEntry = null) {
+function frHeadwordToKo(nameFr, baseFr, rawEntry = null, id = null) {
+  if (id && CURATED_HEADWORD_RULES[id]) return CURATED_HEADWORD_RULES[id].nameKoShort;
   const fullLow = String(nameFr || '').toLowerCase().replace(/’/g, '’').trim();
   const baseLow = String(baseFr || '').toLowerCase().replace(/’/g, '’').trim();
   const fullLowPlain = fullLow.replace(/’/g, "'");
@@ -522,7 +531,8 @@ function frHeadwordToKo(nameFr, baseFr, rawEntry = null) {
     // Check if TRANSLATION_CACHE already has a clean Korean headword for this entry
     if (rawEntry) {
       const cacheKey = `${rawEntry.nameFr}@@${rawEntry.page1863}`;
-      const fromCache = extractKoHeadwordFromCache(TRANSLATION_CACHE[cacheKey], rawEntry);
+      const fromCache = (id && TRANSLATION_CACHE[id] && extractKoHeadwordFromCache(TRANSLATION_CACHE[id], rawEntry)) ||
+                        extractKoHeadwordFromCache(TRANSLATION_CACHE[cacheKey], rawEntry);
       if (fromCache) baseKo = fromCache;
     }
     if (!baseKo) {
@@ -540,6 +550,7 @@ function frHeadwordToKo(nameFr, baseFr, rawEntry = null) {
         if (low === 'les') return '레';
         if (low === 'et') return '와';
         if (['ou','en','au','aux','sur','sous','dans','par','pour','avec','sans','chez','contre','dit','dite','m.'].includes(low)) return '';
+        if (ROMAN_NUMERALS_MAP[low]) return ROMAN_NUMERALS_MAP[low];
         if (NAME_MAP[low]) return NAME_MAP[low];
         if (!isMultiWord && WORD_DICT[low]) return WORD_DICT[low];
         return wordToHangul(sub);
@@ -610,7 +621,63 @@ const CURATED_HEADWORD_RULES = {
   'adelung (jean-christophe)@@7': { nameKo: '요한 크리스토프 아델룽 [Adelung (Jean-Christophe)]', nameKoShort: '요한 크리스토프 아델룽' },
   'ævoli (césar)@@9': { nameKo: '체사레 아에볼리 [Ævoli (César)]', nameKoShort: '체사레 아에볼리' },
   'agrippa (henri-corneille)@@10': { nameKo: '하인리히 코르넬리우스 아그리파 [Agrippa (Henri-Corneille)]', nameKoShort: '하인리히 코르넬리우스 아그리파' },
-  'aguerre (pierre d’)@@10': { nameKo: '피에르 다게르 [Aguerre (Pierre d’)]', nameKoShort: '피에르 다게르' }
+  'aguerre (pierre d’)@@10': { nameKo: '피에르 다게르 [Aguerre (Pierre d’)]', nameKoShort: '피에르 다게르' },
+
+  // Disambiguated Jean entries (p.373)
+  'e2167-jean': { nameKo: '마법사 장 [Jean (Magicien) / John the Magician]', nameKoShort: '마법사 장', nameFr: 'Jean (Magicien)', nameEn: 'John the Magician' },
+  'e2168-jean': { nameKo: '총대주교 장 [Jean (Patriarche de Constantinople)]', nameKoShort: '총대주교 장', nameFr: 'Jean (Patriarche de Constantinople)', nameEn: '' },
+  'e2169-jeanxxii': { nameKo: '요한 22세 [Jean XXII / Pope John XXII]', nameKoShort: '요한 22세', nameFr: 'Jean XXII', nameEn: 'Pope John XXII' },
+  'e2170-jean': { nameKo: '이반 뇌제 또는 장 [Jean, Iwan Basilowitz / Ivan the Terrible]', nameKoShort: '이반 뇌제 또는 장', nameFr: 'Jean, Iwan Basilowitz', nameEn: 'Ivan the Terrible' },
+
+  // Disambiguated Phénix entries (p.525)
+  'e3011-phenix': { nameKo: '페닉스 [Phénix / Phenex]', nameKoShort: '페닉스', nameFr: 'Phénix', nameEn: 'Phenex' },
+  'e3012-phenix': { nameKo: '불사조 [Phénix / Phoenix]', nameKoShort: '불사조', nameFr: 'Phénix', nameEn: 'Phoenix' },
+
+  // Disambiguated Retz entries (p.576)
+  'e3211-retz': { nameKo: '질 드 레 또는 레츠 [Retz, Gilles de Laval de / Gilles de Rais]', nameKoShort: '질 드 레 또는 레츠', nameFr: 'Retz (Gilles de Laval de)', nameEn: 'Gilles de Rais' },
+  'e3212-retz': { nameKo: '레츠 추기경 [Retz (Le Cardinal de)]', nameKoShort: '레츠 추기경', nameFr: 'Retz (Le Cardinal de)', nameEn: '' },
+
+  // Disambiguated Robert entries (p.583)
+  'e3231-robert': { nameKo: '악마 로베르 [Robert (Démon)]', nameKoShort: '악마 로베르', nameFr: 'Robert (Démon)', nameEn: '' },
+  'e3233-robert': { nameKo: '아르투아의 로베르 [Robert (Sorcier d’Artois) / Robert of Artois]', nameKoShort: '아르투아의 로베르', nameFr: 'Robert (Sorcier d’Artois)', nameEn: 'Robert of Artois' },
+  'e3234-robert': { nameKo: '로베르 2세 [Robert II (Roi de France) / Robert II of France]', nameKoShort: '로베르 2세', nameFr: 'Robert II (Roi de France)', nameEn: 'Robert II of France' },
+
+  // Disambiguated David entries (p.199)
+  'e1248-david': { nameKo: '다윗 [David / King David]', nameKoShort: '다윗', nameFr: 'David', nameEn: 'King David' },
+  'e1249-david': { nameKo: '사제 다비드 [David (Prêtre) / Father David]', nameKoShort: '사제 다비드', nameFr: 'David (Prêtre)', nameEn: 'Father David' },
+
+  // Disambiguated Henri III entries (p.331)
+  'e1989-henriiii': { nameKo: '앙리 3세 [Henri III (Roi de France) / Henry III of France]', nameKoShort: '앙리 3세', nameFr: 'Henri III (Roi de France)', nameEn: 'Henry III of France' },
+  'e1990-henriiii': { nameKo: '하인리히 3세 [Henri III (Empereur d’Allemagne) / Henry III]', nameKoShort: '하인리히 3세', nameFr: 'Henri III (Empereur d’Allemagne)', nameEn: 'Henry III' },
+
+  // Disambiguated Henri IV entries (p.331)
+  'e1991-henriiv': { nameKo: '하인리히 4세 [Henri IV (Empereur d’Allemagne) / Henry IV]', nameKoShort: '하인리히 4세', nameFr: 'Henri IV (Empereur d’Allemagne)', nameEn: 'Henry IV' },
+  'e1992-henriiv': { nameKo: '헨리 4세 [Henri IV (Roi d’Angleterre) / Henry IV of England]', nameKoShort: '헨리 4세', nameFr: 'Henri IV (Roi d’Angleterre)', nameEn: 'Henry IV of England' },
+  'e1994-henriiv': { nameKo: '앙리 4세 [Henri IV (Roi de France) / Henry IV of France]', nameKoShort: '앙리 4세', nameFr: 'Henri IV (Roi de France)', nameEn: 'Henry IV of France' },
+
+  // Disambiguated Hélène entries (p.329)
+  'e1976-helene': { nameKo: '헬레나 또는 올레인 [Hélène, Oléine / Helena of Adiabene]', nameKoShort: '헬레나 또는 올레인', nameFr: 'Hélène, Oléine', nameEn: 'Helena of Adiabene' },
+  'e1977-helene': { nameKo: '헬레나 또는 셀레네 [Hélène, Sélène / Helena]', nameKoShort: '헬레나 또는 셀레네', nameFr: 'Hélène, Sélène', nameEn: 'Helena' },
+
+  // Disambiguated Godwin entries (p.306)
+  'e1846-godwin': { nameKo: '고드윈 백작 [Godwin (Comte de Kent)]', nameKoShort: '고드윈 백작', nameFr: 'Godwin (Comte de Kent)', nameEn: '' },
+  'e1847-godwin': { nameKo: '윌리엄 고드윈 [Godwin (William)]', nameKoShort: '윌리엄 고드윈', nameFr: 'Godwin (William)', nameEn: '' },
+
+  // Disambiguated Marguerite entries (p.445)
+  'e2542-marguerite': { nameKo: '마르그리트 [Marguerite (De Hollande)]', nameKoShort: '마르그리트', nameFr: 'Marguerite (De Hollande)', nameEn: '' },
+  'e2543-marguerite': { nameKo: '마르그리트 [Marguerite (De Milan)]', nameKoShort: '마르그리트', nameFr: 'Marguerite (De Milan)', nameEn: '' },
+
+  // Disambiguated Charles II entries (p.158)
+  'e950-charlesii': { nameKo: '샤를 2세 [Charles II (Duc de Lorraine)]', nameKoShort: '샤를 2세', nameFr: 'Charles II (Duc de Lorraine)', nameEn: '' },
+  'e952-charlesii': { nameKo: '찰스 2세 [Charles II (Roi d’Angleterre) / Charles II of England]', nameKoShort: '찰스 2세', nameFr: 'Charles II (Roi d’Angleterre)', nameEn: 'Charles II of England' },
+
+  // Disambiguated Desfontaines entries (p.206)
+  'e1294-desfontaines': { nameKo: '데퐁텐 유령 기담 1부 [Desfontaines (Apparition I)]', nameKoShort: '데퐁텐 유령 기담 1부', nameFr: 'Desfontaines (Apparition I)', nameEn: '' },
+  'e1296-desfontaines': { nameKo: '데퐁텐 유령 기담 2부 [Desfontaines (Apparition II)]', nameKoShort: '데퐁텐 유령 기담 2부', nameFr: 'Desfontaines (Apparition II)', nameEn: '' },
+
+  // Disambiguated Année climatérique entries (p.39)
+  'e225-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (1) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
+  'e227-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (2) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' }
 };
 
 const ENGLISH_HEADWORD_MAP = {
@@ -742,7 +809,7 @@ const ENGLISH_HEADWORD_MAP = {
   'voyages des sorciers': 'Journey of the Witches'
 };
 
-function buildEntryHeadword(raw, koBase, matchedPlate = null) {
+function buildEntryHeadword(raw, koBase, matchedPlate = null, id = null) {
   if (matchedPlate) {
     return {
       nameKo: matchedPlate.nameKo,
@@ -753,13 +820,13 @@ function buildEntryHeadword(raw, koBase, matchedPlate = null) {
   }
 
   const rawKey = `${raw.nameFr.toLowerCase()}@@${raw.page1863}`;
-  if (CURATED_HEADWORD_RULES[rawKey]) {
-    const c = CURATED_HEADWORD_RULES[rawKey];
+  const c = (id && CURATED_HEADWORD_RULES[id]) || CURATED_HEADWORD_RULES[rawKey];
+  if (c) {
     return {
       nameKo: c.nameKo,
-      nameKoShort: c.nameKoShort,
-      nameFr: raw.nameFr,
-      nameEn: ''
+      nameKoShort: c.nameKoShort || c.nameKo.replace(/\s*\[.*\]$/, ''),
+      nameFr: c.nameFr || raw.nameFr,
+      nameEn: c.nameEn || ''
     };
   }
 
@@ -1153,10 +1220,11 @@ function fixBareForeignOpenings(s, e, koBase, headword) {
   return s;
 }
 
-function polishTranslation(rawKo, e, koBase, headword = null) {
+function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
   const cacheKey = `${e.nameFr}@@${e.page1863}`;
-  if (CURATED_OVERRIDES[cacheKey]) {
-    let cur = CURATED_OVERRIDES[cacheKey];
+  const override = (id && CURATED_OVERRIDES[id]) || CURATED_OVERRIDES[cacheKey];
+  if (override) {
+    let cur = override;
     for (const [re, rep] of RAW_ENGLISH_REPLACEMENTS) {
       cur = cur.replace(re, rep);
     }
@@ -1377,8 +1445,41 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
   return s.replace(/\s+/g, ' ').trim();
 }
 
+const CURATED_META = {
+  'e2167-jean': { category: 'person', rank: '마법사·비술사(Magicien)', domains: ['인물·역사(Personnage)', '서양 마법사', '비전 마법'] },
+  'e2168-jean': { category: 'person', rank: '총대주교·비술사(Patriarche & Enchanteur)', domains: ['인물·역사(Personnage)', '교회 인물·성직자', '비잔티움 역사'] },
+  'e2169-jeanxxii': { category: 'person', rank: '교황·역사 인물(Pape & Personnage)', domains: ['인물·역사(Personnage)', '교회 인물·성직자', '가톨릭 역사'] },
+  'e2170-jean': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '러시아 역사'] },
+  'e3011-phenix': { category: 'demon', rank: '지옥의 후작(Marquis de l’Enfer)', legions: 20, domains: ['악마학(Démonologie)', '지옥의 계급 체계', '고위 악마'] },
+  'e3012-phenix': { category: 'superstition', rank: '신비 동물·상징(Superstition Animale)', domains: ['미신·민속(Superstition)', '신비 동물·상징', '고대 신화'] },
+  'e3211-retz': { category: 'person', rank: '오컬트·역사 인물(Personnage Historique)', domains: ['인물·역사(Personnage)', '프랑스 역사', '푸른 수염 전설'] },
+  'e3212-retz': { category: 'person', rank: '성직자·종교 인물(Ecclésiastique & Saint)', domains: ['인물·역사(Personnage)', '교회 인물·성직자', '프랑스 역사'] },
+  'e3231-robert': { category: 'demon', rank: '사바트의 악마(Démon du Sabbat)', domains: ['악마학(Démonologie)', '사바트 전승', '악마'] },
+  'e3233-robert': { category: 'person', rank: '마법사·주술사(Sorcier)', domains: ['인물·역사(Personnage)', '서양 마법사', '중세 마법 재판'] },
+  'e3234-robert': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '프랑스 국왕'] },
+  'e1248-david': { category: 'person', rank: '성경·역사 인물(Personnage Biblique)', domains: ['인물·역사(Personnage)', '성경 인물', '고대 이스라엘'] },
+  'e1249-david': { category: 'person', rank: '성직자·종교 인물(Ecclésiastique & Saint)', domains: ['인물·역사(Personnage)', '마녀 재판 전승', '루비에 빙의 사건'] },
+  'e1989-henriiii': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '프랑스 국왕'] },
+  'e1990-henriiii': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '신성 로마 황제'] },
+  'e1991-henriiv': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '신성 로마 황제'] },
+  'e1992-henriiv': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '잉글랜드 국왕'] },
+  'e1994-henriiv': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '프랑스 국왕'] },
+  'e1976-helene': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '고대 역사', '역사 인물'] },
+  'e1977-helene': { category: 'person', rank: '신비 인물·동반자(Personnage Mystique)', domains: ['인물·역사(Personnage)', '영지주의 전승', '신비 인물'] },
+  'e1846-godwin': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '고드윈 백작'] },
+  'e1847-godwin': { category: 'person', rank: '학자·저술가(Savant & Auteur)', domains: ['인물·역사(Personnage)', '학자·저술가', '영국 저술가'] },
+  'e2542-marguerite': { category: 'person', rank: '민간 전승·기담 (Tradition & Superstition)', domains: ['인물·역사(Personnage)', '네덜란드 민담', '기담'] },
+  'e2543-marguerite': { category: 'person', rank: '영매·주술사(Sorcier & Médium)', domains: ['인물·역사(Personnage)', '이탈리아 영매', '사역마 전승'] },
+  'e950-charlesii': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '샤를 2세'] },
+  'e952-charlesii': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '잉글랜드 국왕'] },
+  'e1294-desfontaines': { category: 'superstition', rank: '유령·환영 기담(Spectre & Fantôme)', domains: ['미신·민속(Superstition)', '유령·환영', '프랑스 기담'] },
+  'e1296-desfontaines': { category: 'superstition', rank: '유령·환영 기담(Spectre & Fantôme)', domains: ['미신·민속(Superstition)', '유령·환영', '프랑스 기담'] },
+  'e225-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '점성술·수비학', '위기의 해'] },
+  'e227-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '신체 변화 주기', '수비학'] }
+};
+
 // Classify and attach pure Korean translation for any 1863 entry
-function analyzeAndTranslateEntry(e, koBase, headword = null) {
+function analyzeAndTranslateEntry(e, koBase, headword = null, id = null) {
   const t = e.textFr.trim();
   const lead = t.slice(0, 260);
 
@@ -1406,7 +1507,7 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
     legions = Number(legM[1]) || wMap[legM[1].toLowerCase()] || 0;
   }
 
-  // Extract years / centuries
+  // Extract year / century if present
   const years = [...new Set((t.match(/\b1[0-8]\d{2}\b/g) || []).slice(0, 3))];
   const centMap = {
     'premier': '1', 'deuxième': '2', 'second': '2', 'troisième': '3', 'quatrième': '4',
@@ -1425,7 +1526,7 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
   let rank = '민간 전승·기담 (Tradition & Superstition)';
   const domains = [];
 
-  const PERSON_KEYWORDS = /\b(?:magicien|magicienne|sorcier|sorcière|astrologue|alchimiste|devin|devineresse|cabaliste|inquisiteur|démonographe|démonologue|philosophe|médecin|savant|savante|écrivain|auteur|empereur|roi|reine|pape|évêque|prêtre|moine|abbé|religieuse|saint|sainte|hérétique|imposteur|prédicateur|avocat|jurisconsulte|chanoine|cardinal|patriarche|dominicain|franciscain|jésuite|bénédictin)\b/i;
+  const PERSON_KEYWORDS = /\b(?:magicien|magicienne|sorcier|sorcière|astrologue|alchimiste|devin|devineresse|cabaliste|inquisiteur|démonographe|démonologue|philosophe|médecin|savant|savante|écrivain|auteur|empereur|roi|reine|pape|évêque|prêtre|moine|abbé|religieuse|saint|sainte|hérétique|imposteur|prédicateur|avocat|jurisconsulte|chanoine|cardinal|patriarche|dominicain|franciscain|jésuite|bénédictin|grand-duc|duc|comte|marquis|baron|prince|tsar|czar|tyran)\b/i;
   const BIO_PATTERNS = /\b(?:né\s+à|née\s+à|mort\s+en|mourut\s+en|vivait\s+au|homme\s+qui|femme\s+qui|homme\s+de|femme\s+de|homme\s+très|femme\s+très)\b/i;
   const isPersonName = /\([a-zA-ZÀ-Ÿ]/.test(e.nameFr) && !/divination|possession|mal\s+des|songe/i.test(e.nameFr);
   const isPersonText = PERSON_KEYWORDS.test(lead.slice(0, 320)) || BIO_PATTERNS.test(lead.slice(0, 320));
@@ -1438,8 +1539,8 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
     else if (/astrologue/i.test(lead)) { rank = '점성술사(Astrologue)'; domains.push('점성술(Astrologie)', '천문 예언'); }
     else if (/alchimiste|adepte/i.test(lead)) { rank = '연금술사(Alchimiste)'; domains.push('연금술(Alchimie)', '현자의 돌 전승'); }
     else if (/démonographe|inquisiteur|démonologue/i.test(lead)) { rank = '악마학자·이단심문관(Démonographe & Inquisiteur)'; domains.push('이단심문·악마학 연구', '중세 교회재판'); }
-    else if (/empereur|roi|reine|prince/i.test(lead)) { rank = '역사 속 군주·귀족(Souverain & Personnage)'; domains.push('유럽 군주·귀족', '역사 인물'); }
-    else if (/pape|évêque|prêtre|abbé|moine|religieuse|saint|cardinal/i.test(lead)) { rank = '성직자·종교 인물(Ecclésiastique & Saint)'; domains.push('교회 인물·성직자', '가톨릭 역사'); }
+    else if (/empereur|roi|reine|prince|grand-duc|duc|comte|marquis|tsar/i.test(lead)) { rank = '역사 속 군주·귀족(Souverain & Personnage)'; domains.push('유럽 군주·귀족', '역사 인물'); }
+    else if (/pape|évêque|prêtre|abbé|moine|religieuse|saint|cardinal|patriarche/i.test(lead)) { rank = '성직자·종교 인물(Ecclésiastique & Saint)'; domains.push('교회 인물·성직자', '가톨릭 역사'); }
     else if (/philosophe|médecin|savant|auteur|écrivain/i.test(lead)) { rank = '학자·의사·저술가(Savant & Auteur)'; domains.push('학자·저술가', '중세·르네상스 학술'); }
     else { rank = '오컬트·역사 인물(Personnage Historique)'; domains.push('오컬트 역사', '역사 인물'); }
     domains.unshift('인물·역사(Personnage)');
@@ -1469,9 +1570,9 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
     else if (/enfer|purgatoire|paradis/i.test(lead)) rank = '내세관·타계 전승(Mythologie de l’Au-delà)';
     else rank = '세계 신화·종교 전승(Mythologie & Légende)';
     domains.push('신화·종교(Mythologie)', '고대 신화·전설');
-  } else if (/\b(?:grand-duc|grand président|marquis de l’enfer|prince de l’enfer|prince des démons|chef des démons|démon|diable|succube|incube|lutin|farfadet|gobelin|vampire|loup-garou|sabbat|possédé|possession|exorcis|esprit infernal)/i.test(lead)) {
+  } else if (/\b(?:grand-duc des enfers|grand-duc infernal|grand président|marquis de l’enfer|prince de l’enfer|prince des démons|chef des démons|démon|diable|succube|incube|lutin|farfadet|gobelin|vampire|loup-garou|sabbat|possédé|possession|exorcis|esprit infernal)/i.test(lead)) {
     category = 'demon';
-    if (/grand-duc/i.test(lead)) { rank = '지옥의 대공(Grand-Duc Infernal)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    if (/grand-duc des enfers|grand-duc infernal/i.test(lead)) { rank = '지옥의 대공(Grand-Duc Infernal)'; domains.push('지옥의 계급 체계', '고위 악마'); }
     else if (/grand président/i.test(lead)) { rank = '지옥의 대총재(Grand Président)'; domains.push('지옥의 계급 체계', '고위 악마'); }
     else if (/marquis/i.test(lead)) { rank = '지옥의 후작(Marquis de l’Enfer)'; domains.push('지옥의 계급 체계', '고위 악마'); }
     else if (/prince|chef|roi de l’enfer/i.test(lead)) { rank = '지옥 군주·고위 악마(Prince des Démons)'; domains.push('지옥 군주', '솔로몬 72 악마'); }
@@ -1490,13 +1591,22 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
     domains.push('미신·민속(Superstition)', '유럽 민간 풍습');
   }
 
+  // Apply curated metadata if configured
+  const meta = (id && CURATED_META[id]) || null;
+  if (meta) {
+    if (meta.category) category = meta.category;
+    if (meta.rank) rank = meta.rank;
+    if (meta.legions !== undefined) legions = meta.legions;
+    if (meta.domains) domains.push(...meta.domains);
+  }
+
   if (centuryKo) domains.push(centuryKo);
   if (years.length) domains.push(`${years[0]}년 기록`);
   if (e.images && e.images.length) domains.push('1863 원서 삽화 수록');
 
   const cacheKey = `${e.nameFr}@@${e.page1863}`;
-  const rawKo = TRANSLATION_CACHE[cacheKey] || '';
-  const bodyKo = polishTranslation(rawKo, e, koBase, headword);
+  const rawKo = (id && TRANSLATION_CACHE[id]) || TRANSLATION_CACHE[cacheKey] || '';
+  const bodyKo = polishTranslation(rawKo, e, koBase, headword, id);
 
   // First 1-2 sentences for card preview summary
   const sentMatch = bodyKo.match(/^(.{20,160}?[\.!\?])\s+/);
@@ -1550,8 +1660,11 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
     }
   }
 
-  const koBase = matchedPlate ? (matchedPlate.nameKoShort || matchedPlate.nameKo) : frHeadwordToKo(raw.nameFr, raw.baseFr, raw);
-  const headword = buildEntryHeadword(raw, koBase, matchedPlate);
+  const slugBase = norm(raw.nameFr).slice(0, 28) || `entry${idx + 1}`;
+  const uncuratedId = `e${idx + 1}-${slugBase}`;
+  const id = matchedPlate ? matchedPlate.id : uncuratedId;
+  const koBase = matchedPlate ? (matchedPlate.nameKoShort || matchedPlate.nameKo) : frHeadwordToKo(raw.nameFr, raw.baseFr, raw, id);
+  const headword = buildEntryHeadword(raw, koBase, matchedPlate, id);
 
   if (matchedPlate) {
     usedPlateIds.add(matchedPlate.id);
@@ -1577,9 +1690,7 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
       page1863: raw.page1863 || matchedPlate.page1863
     });
   } else {
-    const slugBase = norm(raw.nameFr).slice(0, 28) || `entry${idx + 1}`;
-    const id = `e${idx + 1}-${slugBase}`;
-    const info = analyzeAndTranslateEntry(raw, koBase, headword);
+    const info = analyzeAndTranslateEntry(raw, koBase, headword, id);
     fullEntries.push({
       id,
       letter: raw.letter,
@@ -1588,7 +1699,7 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
       hasPlate: false,
       nameKo: headword.nameKo,
       nameKoShort: headword.nameKoShort,
-      nameFr: raw.nameFr,
+      nameFr: headword.nameFr || raw.nameFr,
       nameEn: headword.nameEn || '',
       rank: info.rank,
       legions: info.legions,
