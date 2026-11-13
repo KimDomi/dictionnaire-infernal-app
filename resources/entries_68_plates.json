@@ -3,7 +3,7 @@
     "id": "abigor",
     "plate": "plates/abigor.jpg",
     "plateNo": 1,
-    "nameKo": "아비고르",
+    "nameKo": "아비고르 또는 엘리고르 [Abigor, Eligor]",
     "nameFr": "Abigor (Eligor)",
     "rank": "지옥의 대공 (Grand-Duc)",
     "legions": 60,
@@ -15,15 +15,16 @@
     ],
     "appearance": "날개와 뱀 꼬리를 가진 준마를 타고 창이나 군기, 혹은 홀(笏)을 쥔 건장한 기사의 형상",
     "summary": "지옥 제국의 상급 악마이자 대공으로, 전쟁의 비밀과 미래를 알려주며 병사들의 신망을 얻는 법을 가르친다.",
-    "description": "요한 바이어의 『악마의 위계(Pseudomonarchia Daemonum)』에 기록된 상급 악마로, 엘리고르(Eligor)라고도 불린다. 60개 지옥 군단을 거느리는 대공이며, 창이나 깃발·홀을 든 기품 있는 기사의 모습으로 현현한다. 전쟁의 승패와 군사 기밀에 대한 질문에 막힘없이 답하며, 앞으로 일어날 일을 예견하고 지휘관이 부하 병사들에게 사랑과 충성을 얻는 방법을 전수한다.",
+    "description": "요한 바이어의 「악마의 거짓 군주국(Pseudomonarchia Daemonum)」에 기록된 상급 악마로, 엘리고르(Eligor)라고도 불린다. 60개 지옥 군단을 거느리는 대공이며, 창이나 깃발·홀을 든 기품 있는 기사의 모습으로 현현한다. 전쟁의 승패와 군사 기밀에 대한 질문에 막힘없이 답하며, 앞으로 일어날 일을 예견하고 지휘관이 부하 병사들에게 사랑과 충성을 얻는 방법을 전수한다.",
     "quoteFr": "Abigor, démon d’un ordre supérieur, grand-duc dans la monarchie infernale. Soixante légions marchent sous ses ordres.",
-    "page1863": 4
+    "page1863": 4,
+    "nameKoShort": "아비고르 또는 엘리고르"
   },
   {
     "id": "abraxas",
     "plate": "plates/abraxas.jpg",
     "plateNo": 2,
-    "nameKo": "아브락사스",
+    "nameKo": "아브라카스 또는 아브락사스 [Abracax, Abraxas]",
     "nameFr": "Abraxas (Abracax)",
     "rank": "영지주의 최고신·고대 부적신",
     "legions": 365,
@@ -37,13 +38,14 @@
     "summary": "그리스 문자 합이 365가 되는 영지주의 바실리데스파의 최고신이자 마법 주문 아브라카다브라의 기원.",
     "description": "고대 아시아 신통기와 2세기 영지주의 바실리데스(Basilides) 학파에서 숭배된 존재로, 유명한 치료 주문 「아브라카다브라(Abracadabra)」가 이 이름에서 유래했다. 그리스어 철자 일곱 글자(ΑΒΡΑΞΑΣ)의 수비학적 합이 1년의 날수인 365가 되기 때문에, 365개의 하늘과 365가지 효능을 다스리는 정령들의 수장으로 여겨졌다. 중세 악마학자들은 그를 뱀의 다리와 채찍을 지닌 악마로 분류했다.",
     "quoteFr": "Abracax ou Abraxas, le premier des dieux de quelques théogonies asiatiques, dont le nom a tiré le phylactère abracadabra.",
-    "page1863": 5
+    "page1863": 5,
+    "nameKoShort": "아브라카스 또는 아브락사스"
   },
   {
     "id": "adramelech",
     "plate": "plates/adramelech.jpg",
     "plateNo": 3,
-    "nameKo": "아드라멜레크",
+    "nameKo": "아드라멜레크 [Adramelech]",
     "nameFr": "Adramelech",
     "rank": "지옥의 대법관·최고평의회 의장",
     "legions": 0,
@@ -57,13 +59,14 @@
     "summary": "지옥의 대법관(Grand Chancelier)이자 지옥 군주의 의상실 총감독관, 악마 최고평의회 의장.",
     "description": "고대 아시리아의 도시 스발와임(Sepharvaim)에서 숭배받던 태양신에서 유래한 고위 악마로, 당시 신도들은 그의 제단에서 어린아이를 불살라 바쳤다고 전해진다. 랍비들의 전승에 따르면 그는 노새의 모습이나 화려한 공작새의 모습으로 나타나며, 지옥 제국에서는 군주의 의복을 관리하는 시종장이자 대법관, 최고평의회 의장직을 겸임한다.",
     "quoteFr": "Adramelech, grand chancelier des enfers, intendant de la garde-robe du souverain des démons, président du haut conseil des diables.",
-    "page1863": 11
+    "page1863": 11,
+    "nameKoShort": "아드라멜레크"
   },
   {
     "id": "aguares",
     "plate": "plates/aguares.jpg",
     "plateNo": 4,
-    "nameKo": "아과레스",
+    "nameKo": "아과레스 [Aguarès]",
     "nameFr": "Aguarès",
     "rank": "지옥 동부의 대공 (Grand-Duc)",
     "legions": 31,
@@ -78,13 +81,14 @@
     "summary": "지옥 동부를 다스리는 대공으로, 도망친 병사를 되돌리고 모든 언어를 가르치며 지상의 권세를 무너뜨린다.",
     "description": "지옥 동부 지역을 관할하는 대공으로, 타락하기 전에는 역천사(Virtues) 계급에 속했다. 악어를 타고 손목에 매를 앉힌 기품 있는 영주의 모습으로 나타나며, 자신이 비호하는 진영의 탈주병들에게 용기를 불어넣어 전장으로 복귀시키고 적군을 패주하게 만든다. 세상의 모든 언어를 단숨에 가르쳐 주며, 성직자나 세속의 고위 직책을 박탈하고 대지의 정령들을 춤추게 한다. 산하에 31개 군단을 거느린다.",
     "quoteFr": "Aguarès, grand-duc de la partie orientale des enfers. Il se montre sous les traits d’un seigneur à cheval sur un crocodile, l’épervier au poing.",
-    "page1863": 15
+    "page1863": 15,
+    "nameKoShort": "아과레스"
   },
   {
     "id": "alastor",
     "plate": "plates/alastor.jpg",
     "plateNo": 5,
-    "nameKo": "알라스토르",
+    "nameKo": "알라스토르 [Alastor]",
     "nameFr": "Alastor",
     "rank": "지옥 군주국의 최고 형집행관",
     "legions": 0,
@@ -98,13 +102,14 @@
     "summary": "지옥 군주가 내린 판결을 집행하는 냉혹한 최고 사형집행관이자 복수의 화신.",
     "description": "지옥 군주국의 모든 형벌 선고를 실제로 집행하는 가혹한 악마로, 그 직무가 복수의 여신 네메시스(Nemesis)와 닮아 있다. 조로아스터는 그를 「처형자(Le Bourreau)」라 불렀으며, 오리게네스는 그를 파멸의 천사 혹은 아자젤과 동일시했다. 고대 그리스·로마에서는 인간에게 재앙과 원한을 남기는 악령들을 통틀어 알라스토르라 불렀다.",
     "quoteFr": "Alastor, démon sévère, suprême exécuteur des sentences du monarque infernal. Il fait les fonctions de Némésis.",
-    "page1863": 19
+    "page1863": 19,
+    "nameKoShort": "알라스토르"
   },
   {
     "id": "alocer",
     "plate": "plates/alocer.jpg",
     "plateNo": 6,
-    "nameKo": "알로케르",
+    "nameKo": "알로케르 또는 알로세스 [Alocer, Alloces]",
     "nameFr": "Alocer (Alloces)",
     "rank": "지옥의 대공 (Grand-Duc)",
     "legions": 36,
@@ -118,13 +123,14 @@
     "summary": "불타는 사자의 얼굴을 한 지옥의 대공으로, 천문학과 교양 학문의 비의를 전수한다.",
     "description": "36개 지옥 군단을 지휘하는 강력한 대공이다. 거대한 군마를 탄 기사의 모습으로 나타나는데, 얼굴은 시뻘겋게 타오르는 사자의 형상이며 이글거리는 눈을 마주친 자는 시력을 잃을 만큼 위압적이다. 쉰 듯하면서도 웅장한 목소리로 말하며, 천문학의 원리와 교양 학문(자유 7과)의 비밀을 정확히 가르쳐 주고 마법사에게 훌륭한 사역마를 내려준다.",
     "quoteFr": "Alocer, puissant démon, grand-duc aux enfers; il se montre vêtu en chevalier, monté sur un cheval énorme; sa figure rappelle les traits du lion.",
-    "page1863": 22
+    "page1863": 22,
+    "nameKoShort": "알로케르 또는 알로세스"
   },
   {
     "id": "amduscias",
     "plate": "plates/amduscias.jpg",
     "plateNo": 7,
-    "nameKo": "암두시아스",
+    "nameKo": "암두시아스 [Amduscias]",
     "nameFr": "Amduscias",
     "rank": "지옥의 대공 (Grand-Duc)",
     "legions": 29,
@@ -138,13 +144,14 @@
     "summary": "유니콘의 모습을 한 음악의 대공으로, 소환되면 보이지 않는 악기들의 장엄한 교향악을 들려준다.",
     "description": "29개 지옥 군단을 지휘하는 대공이다. 처음에는 유니콘의 형상으로 나타나지만 소환자의 명령에 따라 독수리 발톱을 가진 인간의 모습으로 변신한다. 그가 강림할 때면 눈에는 보이지 않는 나팔과 온갖 악기 소리가 울려 퍼지는 기이한 음악회가 열리며, 목소리 한마디로 숲의 나무들을 휘어지게 하거나 쓰러뜨릴 수 있다.",
     "quoteFr": "Amduscias, grand-duc aux enfers; il a la forme d’une licorne; mais lorsqu’il est évoqué, il se montre sous une figure humaine et donne des concerts.",
-    "page1863": 25
+    "page1863": 25,
+    "nameKoShort": "암두시아스"
   },
   {
     "id": "amon",
     "plate": "plates/amon.jpg",
     "plateNo": 8,
-    "nameKo": "아몬",
+    "nameKo": "아몬 또는 아아몬 [Amon, Aamon]",
     "nameFr": "Amon (Aamon)",
     "rank": "지옥의 대후작 (Grand Marquis)",
     "legions": 40,
@@ -158,13 +165,14 @@
     "summary": "올빼미 머리와 늑대 몸통을 지닌 대후작으로, 과거와 미래를 꿰뚫어 보고 갈라선 친구들을 화해시킨다.",
     "description": "지옥에서 매우 강대한 권세를 지닌 대후작으로 40개 군단을 통솔한다. 불길을 토해내는 늑대의 몸에 뱀의 꼬리를 달고 있으며, 인간의 형상을 취할 때는 날카로운 개 이빨이 드러난 올빼미(혹은 큰까마귀) 머리를 한 모습으로 나타난다. 과거와 미래의 모든 사건을 꿰뚫어 보며, 반목하는 친구나 연인 사이의 다툼을 중재해 화해시키는 능력을 지녔다.",
     "quoteFr": "Amon ou Aamon, grand et puissant marquis de l’empire infernal. Il a la figure d’un loup, avec une queue de serpent; il vomit des flammes.",
-    "page1863": 27
+    "page1863": 27,
+    "nameKoShort": "아몬 또는 아아몬"
   },
   {
     "id": "andras",
     "plate": "plates/andras.jpg",
     "plateNo": 9,
-    "nameKo": "안드라스",
+    "nameKo": "안드라스 [Andras]",
     "nameFr": "Andras",
     "rank": "지옥의 대후작 (Grand Marquis)",
     "legions": 30,
@@ -178,13 +186,14 @@
     "summary": "검은 늑대를 탄 올빼미 머리의 대후작으로, 반목과 살육을 부추기는 위험한 악마.",
     "description": "30개 군단을 지휘하는 지옥의 대후작이다. 천사의 육체에 올빼미의 머리를 지니고 있으며, 검은 늑대에 올라타 손에는 예리하게 벼린 기병도(세이버)를 들고 나타난다. 불화와 다툼을 키우는 데 능하며, 자신이 총애하는 자에게 적이나 주인·하인을 죽이는 법을 일러주지만 소환자가 조금이라도 방심하면 소환자 일행을 몰살시키려 드는 극도로 위험한 존재다.",
     "quoteFr": "Andras, grand marquis aux enfers. On le voit avec le corps d’un ange, la tête d’un chat-huant, à cheval sur un loup noir.",
-    "page1863": 32
+    "page1863": 32,
+    "nameKoShort": "안드라스"
   },
   {
     "id": "asmodee",
     "plate": "plates/asmodee.jpg",
     "plateNo": 10,
-    "nameKo": "아스모데우스",
+    "nameKo": "아스모데우스 [Asmodée / Asmodeus]",
     "nameFr": "Asmodée (Asmodeus)",
     "rank": "지옥의 강력한 왕·도박장의 총감독",
     "legions": 72,
@@ -197,15 +206,16 @@
     ],
     "appearance": "황소·인간·숫양의 세 머리와 거위의 발, 뱀의 꼬리를 지니고 지옥룡 위에 앉아 군기를 쥔 형상",
     "summary": "파괴와 욕망의 군주이자 72개 군단을 거느리는 대왕으로, 기하학·천문학과 숨겨진 보물을 알려준다.",
-    "description": "구약 외경 『토빗기』에서 사라의 일곱 남편을 죽인 악마로 유명하며, 지옥에서는 모든 도박장과 유흥을 관장하는 총감독관이자 72개 군단을 다스리는 강대한 왕이다. 황소·인간·숫양의 세 머리와 뱀의 꼬리, 거위의 물갈퀴 발을 지니고 불길을 뿜으며 드래곤을 타고 나타난다. 천문학·기하학·산술·기계 공예를 가르쳐 주며, 별자리의 기운이 깃든 반지와 투명해지는 비법, 땅속 보물의 위치를 알려준다.",
+    "description": "구약 외경 「토빗기」에서 사라의 일곱 남편을 죽인 악마로 유명하며, 지옥에서는 모든 도박장과 유흥을 관장하는 총감독관이자 72개 군단을 다스리는 강대한 왕이다. 황소·인간·숫양의 세 머리와 뱀의 꼬리, 거위의 물갈퀴 발을 지니고 불길을 뿜으며 드래곤을 타고 나타난다. 천문학·기하학·산술·기계 공예를 가르쳐 주며, 별자리의 기운이 깃든 반지와 투명해지는 비법, 땅속 보물의 위치를 알려준다.",
     "quoteFr": "Asmodée, démon destructeur, le même que Samaël, selon quelques rabbins. Il est aux enfers un roi fort et puissant, qui a trois têtes.",
-    "page1863": 54
+    "page1863": 54,
+    "nameKoShort": "아스모데우스"
   },
   {
     "id": "astaroth",
     "plate": "plates/astaroth.jpg",
     "plateNo": 11,
-    "nameKo": "아스타로트",
+    "nameKo": "아스타로트 [Astaroth]",
     "nameFr": "Astaroth",
     "rank": "지옥의 대공·최고 재무관 (Grand Trésorier)",
     "legions": 40,
@@ -220,13 +230,14 @@
     "summary": "지옥 제국의 최고 재무관이자 동방을 다스리는 대공으로, 천사들의 타락 비사와 모든 학문을 알고 있다.",
     "description": "지옥의 최고 재무관(Grand Trésorier)이자 40개 군단을 통솔하는 막강한 대공이다. 지옥의 용을 타고 왼손에 독사를 쥔 천사의 모습으로 나타나며, 지독한 악취를 풍기므로 소환자는 코밑에 마법의 은반지를 대어 악취를 막아야 한다. 과거와 미래의 비밀은 물론 천지창조와 천사들의 타락에 얽힌 내막을 소상히 이야기해 주는데, 정작 자신은 억울하게 벌을 받았다고 주장한다.",
     "quoteFr": "Astaroth, grand-duc très-puissant aux enfers. Il a la figure d’un ange fort laid, et se montre chevauchant sur un dragon infernal; il tient à la main gauche une vipère.",
-    "page1863": 57
+    "page1863": 57,
+    "nameKoShort": "아스타로트"
   },
   {
     "id": "azazel",
     "plate": "plates/azazel.jpg",
     "plateNo": 12,
-    "nameKo": "아자젤",
+    "nameKo": "아자젤 [Azazel]",
     "nameFr": "Azazel",
     "rank": "지옥군의 수석 기수(旗手)·속죄양의 수호자",
     "legions": 0,
@@ -237,16 +248,17 @@
       "금속 세공과 화장술"
     ],
     "appearance": "두 마리 숫염소를 거느리고 지옥의 군기를 휘날리는 뿔 달린 악마의 형상",
-    "summary": "대속죄일에 광야로 보내지는 속죄양(Scapegoat)과 연결된 악마이자 밀턴 『실낙원』의 지옥군 수석 기수.",
-    "description": "고대 유대교의 대속죄일(욤 키푸르) 의식에서 백성의 죄를 짊어지고 광야로 추방되던 「속죄양(Scapegoat)」의 이름에서 유래한 존재다. 존 밀턴의 『실낙원』에서는 루시퍼 휘하 지옥 군대의 거대한 군기를 높이 치켜드는 수석 기수(Premier Porte-Étendard)로 묘사되며, 에녹서 전승에서는 인간에게 무기와 장신구 제작법을 가르친 감시자 천사로 전해진다.",
+    "summary": "대속죄일에 광야로 보내지는 속죄양(Scapegoat)과 연결된 악마이자 밀턴 「실낙원(Paradise Lost)」의 지옥군 수석 기수.",
+    "description": "고대 유대교의 대속죄일(욤 키푸르) 의식에서 백성의 죄를 짊어지고 광야로 추방되던 「속죄양(Scapegoat)」의 이름에서 유래한 존재다. 존 밀턴의 「실낙원(Paradise Lost)」에서는 루시퍼 휘하 지옥 군대의 거대한 군기를 높이 치켜드는 수석 기수(Premier Porte-Étendard)로 묘사되며, 에녹서 전승에서는 인간에게 무기와 장신구 제작법을 가르친 감시자 천사로 전해진다.",
     "quoteFr": "Azazel, démon du second ordre, gardien du bouc. Selon Milton, Azazel est le premier porte-étendard des armées infernales.",
-    "page1863": 69
+    "page1863": 69,
+    "nameKoShort": "아자젤"
   },
   {
     "id": "bael",
     "plate": "plates/bael.jpg",
     "plateNo": 13,
-    "nameKo": "바엘",
+    "nameKo": "바엘 [Baël / Bael]",
     "nameFr": "Baël",
     "rank": "지옥 제국의 제1왕 (Premier Roi)",
     "legions": 66,
@@ -257,16 +269,17 @@
       "지옥 동부 통치"
     ],
     "appearance": "두꺼비·인간(왕관)·고양이의 세 머리와 거미 다리를 지닌 기괴한 형상",
-    "summary": "요한 바이어와 『대마도서』가 지옥의 첫 번째 왕으로 꼽는 동방의 군주로, 66개 군단을 다스린다.",
-    "description": "『대마도서(Grand Grimoire)』와 요한 바이어의 악마 목록에서 가장 첫머리에 등장하는 지옥 제국의 제1왕이다. 동방에 영지를 두고 66개 군단을 통치하며, 왕관을 쓴 인간의 얼굴 양옆에 고양이와 두꺼비의 머리가 달리고 거미의 다리로 지탱하는 기괴한 모습으로 묘사된다. 갈라진 쉰 목소리로 말하며, 소환자에게 위기에서 모습을 감추는 투명화 능력과 뛰어난 지략·처세술을 내려준다.",
+    "summary": "요한 바이어와 「대마도서(Grand Grimoire)」가 지옥의 첫 번째 왕으로 꼽는 동방의 군주로, 66개 군단을 다스린다.",
+    "description": "「대마도서(Grand Grimoire)」와 요한 바이어의 악마 목록에서 가장 첫머리에 등장하는 지옥 제국의 제1왕이다. 동방에 영지를 두고 66개 군단을 통치하며, 왕관을 쓴 인간의 얼굴 양옆에 고양이와 두꺼비의 머리가 달리고 거미의 다리로 지탱하는 기괴한 모습으로 묘사된다. 갈라진 쉰 목소리로 말하며, 소환자에게 위기에서 모습을 감추는 투명화 능력과 뛰어난 지략·처세술을 내려준다.",
     "quoteFr": "Baël, démon cité dans le Grand Grimoire en tête de toutes les puissances infernales. Wierus débute aussi par lui dans l’inventaire de sa fameuse Pseudomonarchia.",
-    "page1863": 72
+    "page1863": 72,
+    "nameKoShort": "바엘"
   },
   {
     "id": "balan",
     "plate": "plates/balan.jpg",
     "plateNo": 14,
-    "nameKo": "발란",
+    "nameKo": "발란 또는 발람 [Balan, Balam]",
     "nameFr": "Balan (Balam)",
     "rank": "지옥의 대왕 (Grand Roi)",
     "legions": 40,
@@ -280,13 +293,14 @@
     "summary": "40개 군단을 지휘하는 지옥의 왕으로, 곰을 타고 매를 쥔 채 과거·현재·미래의 질문에 답한다.",
     "description": "지옥에서 크고 두려운 왕으로 꼽히며, 타락하기 전에는 주천사(Dominions) 계급에 속했다. 황소·인간·숫양의 세 머리에 불을 뿜는 눈과 뱀 꼬리를 지닌 모습으로 나타나기도 하나, 흔히 뿔 달린 나신으로 곰 위에 올라타 손목에 새매를 얹은 모습으로 그려진다. 과거·현재·미래의 일을 정확히 알려주며, 남의 눈에 띄지 않고 모든 것을 볼 수 있는 능력과 기민한 재치를 부여한다.",
     "quoteFr": "Balan, grand et terrible roi dans les enfers. Plus communément on le représente nu et cornu à cheval sur un ours et portant un épervier au poing.",
-    "page1863": 76
+    "page1863": 76,
+    "nameKoShort": "발란 또는 발람"
   },
   {
     "id": "barbatos",
     "plate": "plates/barbatos.jpg",
     "plateNo": 15,
-    "nameKo": "바르바토스",
+    "nameKo": "바르바토스 [Barbatos]",
     "nameFr": "Barbatos",
     "rank": "지옥의 공작·백작 (Duc et Comte)",
     "legions": 30,
@@ -300,13 +314,14 @@
     "summary": "숲의 사냥꾼 모습으로 현현하는 공작으로, 새의 노래와 짐승의 울음소리로 점치는 법을 가르친다.",
     "description": "태양이 사수자리에 머물 때 네 명의 왕이 앞에서 뿔피리를 불며 호위하는 가운데 숲속 사냥꾼의 모습으로 나타나는 대악마다. 새의 지저귐, 소의 울음소리, 개의 짖는 소리 등 모든 동물의 언어를 알아듣고 이를 통해 길흉을 점치는 법을 가르쳐 준다. 마법사들이 마법으로 봉인해 땅속에 묻어 둔 보물을 찾아내며, 서먹해진 벗들과 권력자들 사이의 우의를 회복시킨다.",
     "quoteFr": "Barbatos, grand et puissant démon, comte-duc aux enfers; il se montre sous la figure d’un archer ou d’un chasseur; on le rencontre dans les forêts.",
-    "page1863": 79
+    "page1863": 79,
+    "nameKoShort": "바르바토스"
   },
   {
     "id": "behemoth",
     "plate": "plates/behemoth.jpg",
     "plateNo": 16,
-    "nameKo": "베헤모스",
+    "nameKo": "베헤모스 [Béhémoth / Behemoth]",
     "nameFr": "Béhémoth",
     "rank": "지옥의 대술잔지기 (Grand Échanson)",
     "legions": 0,
@@ -317,16 +332,17 @@
       "괴력의 변신"
     ],
     "appearance": "두 뒷다리로 서서 둥근 배를 내민 거대한 코끼리 형상의 괴물",
-    "summary": "구약 『욥기』에 등장하는 거대한 땅의 괴수이자 지옥의 연회를 총괄하는 식탐과 향락의 악마.",
-    "description": "『욥기』 40장에 바다의 괴수 레비아탄과 나란히 등장하는 거대한 육지 괴수로, 악마학에서는 둔중하지만 막강한 완력을 허리와 배에 지닌 폭식과 쾌락의 악마로 묘사된다. 지옥의 궁정에서는 연회의 술과 음식을 총괄하는 대술잔지기(Grand Échanson) 직책을 맡고 있으며, 코끼리뿐만 아니라 여우·늑대·개 등 온갖 짐승으로 교묘히 둔갑할 수 있다.",
+    "summary": "구약 「욥기」에 등장하는 거대한 땅의 괴수이자 지옥의 연회를 총괄하는 식탐과 향락의 악마.",
+    "description": "「욥기」 40장에 바다의 괴수 레비아탄과 나란히 등장하는 거대한 육지 괴수로, 악마학에서는 둔중하지만 막강한 완력을 허리와 배에 지닌 폭식과 쾌락의 악마로 묘사된다. 지옥의 궁정에서는 연회의 술과 음식을 총괄하는 대술잔지기(Grand Échanson) 직책을 맡고 있으며, 코끼리뿐만 아니라 여우·늑대·개 등 온갖 짐승으로 교묘히 둔갑할 수 있다.",
     "quoteFr": "Béhémoth, démon lourd et stupide, malgré ses dignités. Sa force est dans ses reins; ses domaines sont la gourmandise et les plaisirs du ventre.",
-    "page1863": 86
+    "page1863": 86,
+    "nameKoShort": "베헤모스"
   },
   {
     "id": "belphegor",
     "plate": "plates/belphegor.jpg",
     "plateNo": 17,
-    "nameKo": "벨페고르",
+    "nameKo": "벨페고르 [Belphégor / Belphegor]",
     "nameFr": "Belphégor",
     "rank": "발견과 발명·나태의 악마, 파리 주재 지옥 대사",
     "legions": 0,
@@ -340,13 +356,14 @@
     "summary": "기발한 발견과 발명의 악마로, 사람들에게 손쉽게 부자가 되는 묘안을 속삭인다.",
     "description": "고대 모압인들이 브올(Peor) 산에서 숭배하던 바알 브올에서 유래한 악마다. 언제나 입을 벌린 채 변기 모양의 의자에 앉아 골똘히 생각에 잠긴 모습으로 그려지며, 기발한 발명품과 새로운 발견을 관장한다. 젊은 미녀의 모습으로 나타나기도 하며, 인간에게 큰 노력 없이 손쉽게 막대한 부를 얻는 비결을 미끼로 유혹해 나태와 불신에 빠뜨린다. 플랑시는 그를 프랑스 파리 주재 지옥 대사로 꼽았다.",
     "quoteFr": "Belphégor, démon des découvertes et des inventions ingénieuses. Il prend souvent un corps de jeune femme. Il donne des richesses.",
-    "page1863": 89
+    "page1863": 89,
+    "nameKoShort": "벨페고르"
   },
   {
     "id": "belzebuth",
     "plate": "plates/belzebuth.jpg",
     "plateNo": 18,
-    "nameKo": "벨제붑",
+    "nameKo": "벨제붑 [Belzébuth / Beelzebub]",
     "nameFr": "Belzébuth (Beelzebub)",
     "rank": "지옥 제국의 최고 군주·파리떼의 군주",
     "legions": 66,
@@ -360,13 +377,14 @@
     "summary": "사탄 바로 아래 또는 지옥 제국의 최고 통치자로 군림하는 「파리들의 군주(Seigneur des Mouches)」.",
     "description": "가나안 도시 에그론(Ekron)에서 질병과 파리를 쫓는 신 「바알 세붑」으로 숭배받던 존재로, 신약성경과 중세 악마학에서는 악령들의 우두머리(Prince des Démons)로 자리 잡았다. 1863년판 삽화에서는 날개에 해골과 칼 무늬가 박힌 거대한 파리의 모습으로 그려져 있으며, 지옥에서 최고 훈장인 「파리 기사단(Ordre de la Mouche)」의 단장으로 군림한다.",
     "quoteFr": "Belzébuth, chef des démons, selon les Écritures; le premier en pouvoir et en crime après Satan, selon Milton. Son nom signifie le seigneur des mouches.",
-    "page1863": 90
+    "page1863": 90,
+    "nameKoShort": "벨제붑"
   },
   {
     "id": "berith",
     "plate": "plates/berith.jpg",
     "plateNo": 19,
-    "nameKo": "베리트",
+    "nameKo": "베리트 또는 베알 [Bérith, Beal, Bolfry]",
     "nameFr": "Bérith (Beal, Bolfry)",
     "rank": "지옥의 대공 (Grand-Duc)",
     "legions": 26,
@@ -380,13 +398,14 @@
     "summary": "온통 붉은 옷과 붉은 말을 탄 연금술의 대공으로, 모든 금속을 금과 은으로 바꾸는 비법을 지녔다.",
     "description": "26개 군단을 지휘하는 지옥의 대공으로, 베알(Beal) 또는 볼프리(Bolfry)라고도 불린다. 붉은 군마를 타고 머리에는 황금 왕관을 쓴 채 온통 붉은 복장을 한 병사의 모습으로 나타난다. 모든 비금속을 순수한 금과 은으로 변환시키는 연금술사들의 악마이며, 맑고 또렷한 목소리로 과거와 미래를 일러주지만 입만 열면 거짓말을 섞으므로 마법의 반지로 구속해야만 진실을 말한다.",
     "quoteFr": "Bérith, grand et terrible duc aux enfers. Il est connu sous trois noms: quelques-uns l’appellent Béal; les juifs, Bérith; les nécromanciens, Bolfry.",
-    "page1863": 95
+    "page1863": 95,
+    "nameKoShort": "베리트 또는 베알"
   },
   {
     "id": "buer",
     "plate": "plates/buer.jpg",
     "plateNo": 20,
-    "nameKo": "뷰에르",
+    "nameKo": "부에르 [Buer]",
     "nameFr": "Buer",
     "rank": "지옥의 총재 (Président)",
     "legions": 50,
@@ -401,13 +420,14 @@
     "summary": "다섯 개의 다리가 달린 별 모양 바퀴처럼 굴러 이동하며 철학과 약초학, 치유술을 가르치는 총재.",
     "description": "50개 지옥 군단을 지휘하는 2계급 악마이자 지옥의 총재(Président)다. 태양이 사수자리에 있을 때 가장 뚜렷하게 현현하며, 루이 브르통의 삽화 중에서도 가장 독창적인 형상인 「사자 얼굴을 중심으로 다섯 개의 염소 다리가 별이나 수레바퀴처럼 사방으로 뻗어 스스로 회전하며 전진하는 모습」으로 유명하다. 도덕철학과 자연철학, 논리학은 물론 모든 약초의 효능을 상세히 가르쳐 주며 환자의 병을 고쳐준다.",
     "quoteFr": "Buer, démon de seconde classe, président aux enfers; il a la forme d’une étoile ou d’une roue à cinq branches, et s’avance en roulant sur lui-même.",
-    "page1863": 123
+    "page1863": 123,
+    "nameKoShort": "부에르"
   },
   {
     "id": "caacrinolaas",
     "plate": "plates/caacrinolaas.jpg",
     "plateNo": 22,
-    "nameKo": "카크리놀라스",
+    "nameKo": "카크리놀라스 또는 글라샤 라볼라스 [Caacrinolaas, Glasya-Labolas]",
     "nameFr": "Caacrinolaas (Caassimolar, Glasya-Labolas)",
     "rank": "지옥의 대총재 (Grand Président)",
     "legions": 36,
@@ -422,13 +442,14 @@
     "summary": "그리핀의 날개를 단 개 모습의 대총재로, 모든 교양 학문과 투명화 비술을 가르친다.",
     "description": "글라시아 라볼라스(Glasya-Labolas) 또는 카시몰라르라고도 불리는 지옥의 대총재로, 36개 군단을 통솔한다. 그리핀의 날개를 단 사나운 개의 모습으로 나타나며, 살인과 유혈 참극을 부추기는 성향이 있으나 소환자에게는 모든 자유학예(교양 학문)의 지식을 단숨에 깨우쳐 주고 과거와 미래의 일을 알려주며 사람의 눈을 피하는 투명화 능력을 부여한다.",
     "quoteFr": "Caacrinolaas ou Caassimolar, grand président aux enfers; il se montre sous la forme d’un chien avec des ailes de griffon.",
-    "page1863": 127
+    "page1863": 127,
+    "nameKoShort": "카크리놀라스 또는 글라샤 라볼라스"
   },
   {
     "id": "cali",
     "plate": "plates/cali.jpg",
     "plateNo": 23,
-    "nameKo": "칼리",
+    "nameKo": "칼리 [Cali, Kali]",
     "nameFr": "Cali (Kali)",
     "rank": "인도 신화의 파괴·어둠의 여신",
     "legions": 0,
@@ -439,16 +460,17 @@
       "운명"
     ],
     "appearance": "검푸른 피부에 해골 목걸이를 걸고 긴 혀를 내민 여신의 흉상",
-    "summary": "플랑시가 『지옥사전』에서 인도의 어둠과 파괴의 여신으로 소개한 칼리.",
+    "summary": "플랑시가 「지옥사전(Dictionnaire Infernal)」에서 인도의 어둠과 파괴의 여신으로 소개한 칼리.",
     "description": "19세기 유럽 오컬트 사전의 시각에서 인도 신화의 여신 칼리(Kali)를 수록한 항목이다. 플랑시는 그녀를 어둠처럼 검푸른 피부에 해골로 엮은 목걸이를 걸고 네 개의 팔을 지닌 두려운 존재로 묘사하며, 고대 인도의 제의와 미신적 공포를 설명하는 사례로 다루었다.",
     "quoteFr": "Cali, reine des démons et sultane de l’enfer chez les Indiens. On la représente tout à fait noire, avec un collier de crânes d’hommes.",
-    "page1863": 132
+    "page1863": 132,
+    "nameKoShort": "칼리"
   },
   {
     "id": "caym",
     "plate": "plates/caym.jpg",
     "plateNo": 24,
-    "nameKo": "카임",
+    "nameKo": "카임 [Caym, Caim]",
     "nameFr": "Caym (Caim)",
     "rank": "지옥의 대총재 (Grand Président)",
     "legions": 30,
@@ -462,13 +484,14 @@
     "summary": "검을 찬 검은 새의 모습으로 나타나 새와 짐승, 타오르는 불꽃과 물소리의 의미를 통역해 주는 대총재.",
     "description": "30개 지옥 군단을 지휘하는 대총재로, 원래는 천사(Angels) 계급에 속했다. 처음에는 개똥지빠귀(검은 새)의 모습으로 나타나지만, 곧 날카로운 검을 들고 불타는 재 속에서 대답하는 인간의 형상을 취한다. 모든 새의 지저귐과 소·개 등 짐승의 울음소리뿐 아니라 파도치는 물소리의 뜻까지 알아들을 수 있게 해주며, 가장 교묘한 궤변가로서 미래에 일어날 일을 정확히 일러준다.",
     "quoteFr": "Caym, grand président aux enfers; il se montre sous la figure d’un merle; lorsqu’il parait en forme humaine, il répond du milieu d’un brasier ardent.",
-    "page1863": 146
+    "page1863": 146,
+    "nameKoShort": "카임"
   },
   {
     "id": "cerbere",
     "plate": "plates/cerbere.jpg",
     "plateNo": 25,
-    "nameKo": "케르베로스",
+    "nameKo": "케르베로스 또는 나베리우스 [Cerbère / Cerberus, Naberius]",
     "nameFr": "Cerbère (Naberius)",
     "rank": "지옥의 용맹한 후작·명계의 파수꾼",
     "legions": 19,
@@ -482,13 +505,14 @@
     "summary": "그리스 신화의 명계 파수견이자 요한 바이어가 나베리우스(Naberius)와 동일시한 지옥의 후작.",
     "description": "고대 신화의 명계 문지기 케르베로스이자, 악마학에서는 나베리우스(Naberius)라는 이름으로 불리는 용맹한 지옥의 후작이다. 19개 군단을 거느리며 까마귀나 세 개의 개 머리를 가진 귀족의 모습으로 나타난다. 쉰 목소리를 지녔으나 당대 최고의 웅변가이자 수사학의 달인으로, 예술과 학문을 가르쳐 주고 잃어버린 명예와 고위 관직을 되찾도록 돕는다.",
     "quoteFr": "Cerbère, que Wierus place au nombre des démons sous le nom de Nabérius, est aux enfers un marquis fort et puissant.",
-    "page1863": 149
+    "page1863": 149,
+    "nameKoShort": "케르베로스 또는 나베리우스"
   },
   {
     "id": "crapaud",
     "plate": "plates/crapaud.jpg",
     "plateNo": 26,
-    "nameKo": "사바트의 두꺼비",
+    "nameKo": "사바트의 두꺼비 [Crapaud / Sabbat Toad]",
     "nameFr": "Crapaud",
     "rank": "마법사와 마녀의 단골 사역마",
     "legions": 0,
@@ -502,13 +526,14 @@
     "summary": "마녀들의 사바트에서 세례를 받고 벨벳 옷을 입은 채 사역마로 길러지던 마법의 두꺼비.",
     "description": "유럽 마녀재판 기록에서 고양이 못지않게 빈번히 등장하는 마녀들의 동반자이자 사역마다. 자크 콜랭 드 플랑시에 따르면 마녀들은 사바트 집회에서 두꺼비에게 검은 벨벳이나 붉은 천으로 만든 옷을 입히고 목과 발에 작은 방울을 달아 정성껏 길렀으며, 이 두꺼비들은 춤을 추거나 마법 물약·독약의 핵심 재료로 쓰였다고 전해진다.",
     "quoteFr": "Crapaud. Cet animal immonde jouait un grand rôle dans les mystères de la sorcellerie; chaque sorcière avait son crapaud familier, habillé de velours.",
-    "page1863": 188
+    "page1863": 188,
+    "nameKoShort": "사바트의 두꺼비"
   },
   {
     "id": "sabbath",
     "plate": "plates/sabbath.jpg",
     "plateNo": 27,
-    "nameKo": "사바트의 원무",
+    "nameKo": "사바트의 원무 [Danse du Sabbat / Sabbath Dance]",
     "nameFr": "Danse du Sabbat",
     "rank": "마녀 집회 의식 (Sabbat)",
     "legions": 0,
@@ -522,13 +547,14 @@
     "summary": "마녀들과 악마들이 한밤중 황야에 모여 서로 얼굴을 보지 않도록 등을 맞대고 추던 사바트의 춤.",
     "description": "중세와 근세 마녀재판 기록에 묘사된 사바트(Sabbat) 집회의 핵심 의식이다. 참가자들은 악마의 지휘 아래 원형을 이루어 춤을 추되, 일반적인 무도와 정반대로 서로 등을 맞대고 바깥쪽을 바라보며 왼쪽에서 오른쪽으로 돌았다. 이는 참가자들이 서로의 정체를 알아보지 못하게 하고 모든 정상적인 질서를 거꾸로 뒤집는 사바트의 상징적 전통이었다.",
     "quoteFr": "Les rondes du sabbat se dansaient le dos tourné vers le centre du cercle, chacun ayant le visage en dehors.",
-    "page1863": 197
+    "page1863": 197,
+    "nameKoShort": "사바트의 원무"
   },
   {
     "id": "deumus",
     "plate": "plates/deumus.jpg",
     "plateNo": 28,
-    "nameKo": "데우무스",
+    "nameKo": "데우무스 [Deumus, Deumo]",
     "nameFr": "Deumus (Deumo)",
     "rank": "캘리컷의 악마 신상",
     "legions": 0,
@@ -541,13 +567,14 @@
     "summary": "대항해시대 유럽 여행가들이 인도 캘리컷 왕국의 신전에서 목격했다고 기록한 뿔 달린 신상.",
     "description": "대항해시대 포르투갈과 이탈리아 항해가들이 인도 남부 캘리컷(Calicut) 통치자의 예배당에서 보았다고 유럽에 전한 신상이다. 머리에는 네 개의 뿔이 달린 왕관을 쓰고 입에는 네 개의 거대한 엄니가 솟아 있으며, 손에는 갈고리 같은 발톱을 지닌 채 수탉 모양의 다리로 서 있는 모습으로 묘사되어 유럽 악마학 문헌에 수록되었다.",
     "quoteFr": "Deumus, démon que révèrent les habitants de Calicut. Il a une couronne sur la tête, avec quatre cornes, et quatre grandes dents dans la bouche.",
-    "page1863": 216
+    "page1863": 216,
+    "nameKoShort": "데우무스"
   },
   {
     "id": "eurynome",
     "plate": "plates/eurynome.jpg",
     "plateNo": 29,
-    "nameKo": "에우리노모스",
+    "nameKo": "에우리노모스 [Eurynome]",
     "nameFr": "Eurynome",
     "rank": "죽음의 군주·시체 포식자 (Prince de la Mort)",
     "legions": 0,
@@ -561,13 +588,14 @@
     "summary": "고대 델포이 신전 벽화에 그려졌던 죽음의 악마이자 지옥 파리 기사단의 대십자장.",
     "description": "고대 그리스 지리학자 파우사니아스가 델포이 신전의 그림에서 보았다고 기록한 지하세계의 식인 악령이다. 죽은 시체의 살점만을 뜯어 먹고 뼈만 남기며, 거대한 검푸른 파리의 빛깔을 띤 몸에 종기가 가득하고 여우 가죽을 걸친 채 날카로운 이빨을 드러내고 있다. 지옥 제국에서는 「죽음의 군주」이자 벨제붑이 창설한 파리 기사단의 대십자장(Grand-Croix)으로 꼽힌다.",
     "quoteFr": "Eurynome, prince de la mort, grand-croix de l’ordre de la Mouche. Il a de longues dents très-pointues, un corps hideux tout couvert de plaies.",
-    "page1863": 263
+    "page1863": 263,
+    "nameKoShort": "에우리노모스"
   },
   {
     "id": "flaga",
     "plate": "plates/flaga.jpg",
     "plateNo": 30,
-    "nameKo": "플라가",
+    "nameKo": "플라가 [Flaga]",
     "nameFr": "Flaga",
     "rank": "스칸디나비아 전승의 폭풍 요정",
     "legions": 0,
@@ -581,13 +609,14 @@
     "summary": "독수리를 타고 하늘을 날며 폭풍과 재앙을 일으키는 스칸디나비아 민담의 마술적 존재.",
     "description": "스칸디나비아 반도와 북방 민담에 전해지는 사악한 요정 혹은 마녀다. 거대한 독수리에 올라타 창공을 가르며 순식간에 이동하고, 자신이 지나가는 자리에 갑작스러운 돌풍과 우박, 재앙을 불러일으킨다고 전해진다.",
     "quoteFr": "Flaga, mauvaise fée des Scandinaves. Quelques-uns disent que c’était une magicienne qui voyageait montée sur un aigle.",
-    "page1863": 282
+    "page1863": 282,
+    "nameKoShort": "플라가"
   },
   {
     "id": "flauros",
     "plate": "plates/flauros.jpg",
     "plateNo": 31,
-    "nameKo": "플라우로스",
+    "nameKo": "플라우로스 또는 하우레스 [Flauros, Haures]",
     "nameFr": "Flauros (Haures)",
     "rank": "지옥의 대공 (Grand-Duc)",
     "legions": 20,
@@ -601,13 +630,14 @@
     "summary": "무서운 표범의 모습으로 나타나는 대공으로, 마법 삼각형 안에 가두면 과거와 미래의 진실을 말하고 적을 불사른다.",
     "description": "하우레스(Haures)라고도 불리며 20개(또는 36개) 군단을 거느리는 지옥의 대공이다. 처음에는 강인하고 사나운 표범의 모습으로 나타나며, 인간의 형상을 취할 때는 이글거리는 불꽃 같은 눈과 무시무시한 얼굴을 드러낸다. 마법의 삼각형 밖에 있을 때는 온갖 거짓말로 소환자를 속이지만, 삼각형 안에 구속하면 천지창조와 신성, 과거·현재·미래에 대해 진실만을 답하며 소환자의 적들을 불살라 파멸시킨다.",
     "quoteFr": "Flauros, grand-duc aux enfers; il se fait voir sous la figure d’un léopard terrible. Lorsqu’il prend la forme humaine, il a le visage affreux et les yeux flamboyants.",
-    "page1863": 284
+    "page1863": 284,
+    "nameKoShort": "플라우로스 또는 하우레스"
   },
   {
     "id": "forcas",
     "plate": "plates/forcas.jpg",
     "plateNo": 32,
-    "nameKo": "포르카스",
+    "nameKo": "포르카스 또는 포라스 [Forcas, Forras]",
     "nameFr": "Forcas (Forras)",
     "rank": "지옥의 대총재 (Grand Président)",
     "legions": 29,
@@ -622,13 +652,14 @@
     "summary": "말을 탄 백발 노인의 모습으로 나타나 논리학·윤리학과 보석·약초의 비밀을 가르치는 학구적 대총재.",
     "description": "포라스(Forras)라고도 불리는 지옥의 대총재로 29개 군단을 지휘한다. 건장한 말을 타고 긴 수염을 기른 노인의 모습으로 나타나며, 약초와 귀석(보석)이 지닌 신비한 효능을 꿰뚫어 알고 있다. 소환자에게 논리학과 윤리학, 수사학을 명쾌하게 가르쳐 주며, 사람을 투명하게 만들거나 잃어버린 물건과 숨겨진 보물을 찾아주고 지혜와 장수를 누리게 한다.",
     "quoteFr": "Forcas ou Forras, grand président aux enfers; il parait sous la forme d’un homme vigoureux, avec une longue barbe et les cheveux blancs, monté sur un cheval.",
-    "page1863": 290
+    "page1863": 290,
+    "nameKoShort": "포르카스 또는 포라스"
   },
   {
     "id": "furfur",
     "plate": "plates/furfur.jpg",
     "plateNo": 33,
-    "nameKo": "푸르푸르",
+    "nameKo": "푸르푸르 [Furfur]",
     "nameFr": "Furfur",
     "rank": "지옥의 대백작 (Grand Comte)",
     "legions": 26,
@@ -642,13 +673,14 @@
     "summary": "불타는 꼬리와 날개를 달고 천둥·번개를 부리며 남녀의 사랑을 이어주는 지옥의 백작.",
     "description": "26개 군단을 통솔하는 지옥의 백작이다. 불타는 꼬리와 날개를 가진 수사슴의 형상으로 나타나며, 마법의 삼각형 안에 가두어 천사의 모습으로 변할 때까지는 결코 진실을 말하지 않고 거친 목소리로 거짓말을 일삼는다. 삼각형 안에서 명령받으면 거대한 뇌성과 번개·폭풍우를 일으키고, 남녀 간의 사랑을 싹트게 하며 부부 사이의 화합을 지켜준다.",
     "quoteFr": "Furfur, grand comte aux enfers; il se fait voir sous la forme d’un cerf avec une queue flamboyante. Il fait naître l’amour entre l’homme et la femme.",
-    "page1863": 295
+    "page1863": 295,
+    "nameKoShort": "푸르푸르"
   },
   {
     "id": "ganga-gramma",
     "plate": "plates/ganga-gramma.jpg",
     "plateNo": 34,
-    "nameKo": "강가 그람마",
+    "nameKo": "강가 그람마 [Ganga-Gramma]",
     "nameFr": "Ganga-Gramma",
     "rank": "인도 민간신앙의 역병·두창 여신",
     "legions": 0,
@@ -662,13 +694,14 @@
     "summary": "플랑시가 인도 민속의 두창·역병을 다스리는 정령으로 소개한 네 팔의 존재.",
     "description": "인도 남부 민간 전승의 마리암만(그람마 데바타) 신앙이 19세기 프랑스 문헌에 「강가 그람마」라는 이름으로 전해진 항목이다. 오른손에는 피를 담은 잔을, 왼손에는 작은 삼지창(포크)을 든 네 팔의 모습으로 그려져 있으며, 질병과 재앙을 달래기 위한 축제가 열렸다고 소개된다.",
     "quoteFr": "Ganga-Gramma, démon féminin que les Indiens adorent par crainte. On lui donne quatre bras.",
-    "page1863": 299
+    "page1863": 299,
+    "nameKoShort": "강가 그람마"
   },
   {
     "id": "garuda",
     "plate": "plates/garuda.jpg",
     "plateNo": 35,
-    "nameKo": "가루다",
+    "nameKo": "가루다 [Garuda]",
     "nameFr": "Garuda",
     "rank": "인도 신화의 신조(神鳥) 왕",
     "legions": 0,
@@ -682,13 +715,14 @@
     "summary": "비슈누 신을 태우고 하늘을 나는 인도 신화의 반인반조(半人半鳥) 영물.",
     "description": "인도 신화에서 비슈누 신의 탈것(바하나)으로 숭앙받는 새들의 왕 가루다를 다룬 항목이다. 루이 브르통의 판화에서는 단정한 인간의 얼굴과 목에 거대한 독수리의 몸통과 날개를 지닌 당당한 모습으로 묘사되어 있다.",
     "quoteFr": "Garuda, oiseau fabuleux à visage humain, monture du dieu Vichnou dans la mythologie indienne.",
-    "page1863": 303
+    "page1863": 303,
+    "nameKoShort": "가루다"
   },
   {
     "id": "gomory",
     "plate": "plates/gomory.jpg",
     "plateNo": 36,
-    "nameKo": "고모리",
+    "nameKo": "고모리 또는 그레모리 [Gomory, Gremory]",
     "nameFr": "Gomory (Gremory)",
     "rank": "지옥의 강대한 공작 (Puissant Duc)",
     "legions": 26,
@@ -702,13 +736,14 @@
     "summary": "공작관을 쓰고 낙타를 탄 여인의 모습으로 나타나 보물의 위치와 사랑을 이루어 주는 공작.",
     "description": "그레모리(Gremory)라고도 불리며 26개 군단을 거느리는 지옥의 공작이다. 허리춤에 공작의 금관을 두르거나 머리에 쓴 귀부인의 모습으로 큰 낙타를 타고 나타난다. 과거와 현재, 미래에 일어날 모든 일을 소상히 일러주며, 땅속 깊이 숨겨진 보물을 찾아내고 특히 젊은 여인과 나이 든 여인 모두의 사랑과 호감을 얻게 해준다.",
     "quoteFr": "Gomory, puissant duc aux enfers; il parait sous la forme d’une femme, avec une couronne de duchesse sur la tête, montée sur un chameau.",
-    "page1863": 315
+    "page1863": 315,
+    "nameKoShort": "고모리 또는 그레모리"
   },
   {
     "id": "haborym",
     "plate": "plates/haborym.jpg",
     "plateNo": 37,
-    "nameKo": "하보림",
+    "nameKo": "하보림 또는 아임 [Haborym, Aim]",
     "nameFr": "Haborym (Aim)",
     "rank": "지옥의 대공·방화의 악마 (Grand-Duc)",
     "legions": 26,
@@ -722,13 +757,14 @@
     "summary": "불타는 횃불을 들고 성채와 도시를 잿더미로 만드는 방화의 대공 아임(Aim).",
     "description": "아임(Aim)으로도 널리 알려진 26개 군단의 지옥 대공이다. 뱀·인간(이마에 두 개의 별이 빛남)·고양이의 세 머리를 지니고 독사 위에 올라타 손에는 타오르는 횃불을 들고 나타난다. 이 횃불로 대도시와 성채, 영주의 저택에 불을 질러 순식간에 잿더미로 만들며, 모든 일에 날카로운 기지와 재치를 부여하고 감춰진 사안에 대해 거침없이 대답한다.",
     "quoteFr": "Haborym, démon des incendies, duc aux enfers; il se fait voir avec trois têtes, l’une de serpent, l’autre d’homme et la troisième de chat, monté sur une vipère.",
-    "page1863": 329
+    "page1863": 329,
+    "nameKoShort": "하보림 또는 아임"
   },
   {
     "id": "ipes",
     "plate": "plates/ipes.jpg",
     "plateNo": 38,
-    "nameKo": "이페스",
+    "nameKo": "이페스 또는 이포스 [Ipès, Ipos, Ayperos]",
     "nameFr": "Ipès (Ipos, Ayperos)",
     "rank": "지옥의 군주·백작 (Prince et Comte)",
     "legions": 36,
@@ -741,13 +777,14 @@
     "summary": "36개 군단을 다스리는 지옥의 군주이자 백작으로, 인간에게 기지와 흔들리지 않는 담력을 불어넣는다.",
     "description": "이포스(Ipos) 또는 아이페로스(Ayperos)로 불리는 지옥의 군주 겸 백작이다. 천사의 모습이나 사자의 몸통에 거위의 발, 토끼의 꼬리를 달고 앞발을 번쩍 치켜든 사나운 짐승의 형상으로 나타난다. 과거와 미래의 일을 정확히 알고 있으며, 소환자에게 뛰어난 유머 감각과 기지, 그리고 어떤 위협 앞에서도 굴하지 않는 대담한 용기를 내려준다.",
     "quoteFr": "Ipès ou Ayperos, prince et comte aux enfers; il se montre sous la figure d’un ange, ou sous celle d’un lion ayant la tête et les pattes d’une oie et une queue de lièvre.",
-    "page1863": 363
+    "page1863": 363,
+    "nameKoShort": "이페스 또는 이포스"
   },
   {
     "id": "lamia",
     "plate": "plates/lamia.jpg",
     "plateNo": 39,
-    "nameKo": "라미아",
+    "nameKo": "라미아 [Lamia, Lamies]",
     "nameFr": "Lamia (Lamies)",
     "rank": "고대 전승의 야간 흡혈 요마",
     "legions": 0,
@@ -761,13 +798,14 @@
     "summary": "고대 그리스·로마 신화와 중세 전승에서 밤마다 여행자와 어린아이의 피를 노리는 흡혈 요마.",
     "description": "고대 리비아의 여왕이었다가 헤라의 질투로 자식들을 잃고 흉측한 괴물로 변했다는 그리스 신화의 라미아에서 유래했다. 중세와 근세 악마학에서는 뱀의 하반신이나 당나귀 발을 감춘 아름다운 여인으로 변신해 젊은 여행자를 유혹하거나 밤에 요람의 아이를 해치는 몽마·흡혈귀의 일종으로 다루어졌다.",
     "quoteFr": "Lamies, espèces de spectres ou de vampires qui, sous la figure de femmes séduisantes, attiraient les jeunes voyageurs dans les déserts pour les dévorer.",
-    "page1863": 396
+    "page1863": 396,
+    "nameKoShort": "라미아"
   },
   {
     "id": "lechies",
     "plate": "plates/lechies.jpg",
     "plateNo": 40,
-    "nameKo": "레시",
+    "nameKo": "레시 [Lechies, Leshy]",
     "nameFr": "Lechies (Leshy)",
     "rank": "슬라브 신화의 숲 정령",
     "legions": 0,
@@ -781,13 +819,14 @@
     "summary": "러시아와 슬라브 숲에 살며 나무만큼 거대해지거나 풀잎만큼 작아지는 숲의 주인.",
     "description": "러시아를 비롯한 슬라브 민담에서 깊은 삼림을 다스리는 숲의 정령(Leshy)이다. 고대 그리스의 사티로스나 판(Pan)처럼 머리에는 큰 염소 뿔이 나 있고 온몸이 초록빛 털로 덮여 있으며 염소의 발굽을 지녔다. 깊은 숲에서는 거목보다 거대한 모습으로 솟아오르다가도 들판에 나오면 풀잎만큼 작아지며, 여러 목소리를 흉내 내어 숲에 들어온 나그네의 길을 잃게 만든다.",
     "quoteFr": "Lechies, démons des bois chez les Russes, assez semblables aux satyres des anciens. Ils ont le corps velu et des pieds de bouc.",
-    "page1863": 403
+    "page1863": 403,
+    "nameKoShort": "레시"
   },
   {
     "id": "leonard",
     "plate": "plates/leonard.jpg",
     "plateNo": 41,
-    "nameKo": "레오나르",
+    "nameKo": "레오나르 [Léonard (Maître Léonard)]",
     "nameFr": "Léonard (Maître Léonard)",
     "rank": "사바트의 총감독관·대흑산양 (Grand-Maître des Sabbats)",
     "legions": 0,
@@ -801,13 +840,14 @@
     "summary": "마녀들의 심야 사바트 집회를 주재하는 「마스터 레오나르」이자 세 뿔 달린 대흑산양.",
     "description": "1계급 대악마이자 마녀들의 심야 집회(사바트)를 총괄하는 대스승(Grand-Maître des Sabbats), 흑마술과 마법사들의 총감독관이다. 흔히 「마스터 레오나르(Maître Léonard)」라 불리며, 머리에 세 개의 뿔이 솟은 거대한 검은 숫염소나 여우·사냥개의 머리를 한 귀족의 모습으로 사바트 왕좌에 앉아 마녀들의 경배를 받는다.",
     "quoteFr": "Léonard, démon du premier ordre, grand-maître des sabbats, chef des démons subalternes, inspecteur général de la sorcellerie, de la magie noire et des sorciers.",
-    "page1863": 404
+    "page1863": 404,
+    "nameKoShort": "레오나르"
   },
   {
     "id": "lucifer",
     "plate": "plates/lucifer.jpg",
     "plateNo": 42,
-    "nameKo": "루시퍼",
+    "nameKo": "루시퍼 [Lucifer]",
     "nameFr": "Lucifer",
     "rank": "지옥 제국의 황제·대법관 (Empereur)",
     "legions": 0,
@@ -819,15 +859,16 @@
     ],
     "appearance": "박쥐 날개가 돋아난 채 팔짱을 끼고 서 있는 우수에 찬 아름다운 소년의 형상",
     "summary": "「빛을 나르는 자(샛별)」라는 이름을 지닌 타락천사의 수장이자 교만을 관장하는 지옥의 황제.",
-    "description": "라틴어로 「빛을 가져오는 자(샛별)」를 뜻하며, 반역 이전 가장 찬란했던 천사장이었으나 교만으로 타락한 악마들의 군주다. 『대마도서』에서는 그를 지옥의 황제이자 대법관으로 꼽으며, 루이 브르통의 1863년 판화에서는 괴기한 다른 악마들과 달리 등 뒤에 작은 날개를 달고 팔짱을 낀 채 분노와 우수를 머금은 소년의 모습으로 묘사되었다.",
+    "description": "라틴어로 「빛을 가져오는 자(샛별)」를 뜻하며, 반역 이전 가장 찬란했던 천사장이었으나 교만으로 타락한 악마들의 군주다. 「대마도서(Grand Grimoire)」에서는 그를 지옥의 황제이자 대법관으로 꼽으며, 루이 브르통의 1863년 판화에서는 괴기한 다른 악마들과 달리 등 뒤에 작은 날개를 달고 팔짱을 낀 채 분노와 우수를 머금은 소년의 모습으로 묘사되었다.",
     "quoteFr": "Lucifer, nom de l’esprit qui préside à l’Orient. Lucifer est, selon les magiciens, empereur et grand justicier des enfers.",
-    "page1863": 422
+    "page1863": 422,
+    "nameKoShort": "루시퍼"
   },
   {
     "id": "malphas",
     "plate": "plates/malphas.jpg",
     "plateNo": 43,
-    "nameKo": "말파스",
+    "nameKo": "말파스 [Malphas]",
     "nameFr": "Malphas",
     "rank": "지옥의 대총재 (Grand Président)",
     "legions": 40,
@@ -841,13 +882,14 @@
     "summary": "40개 군단을 거느리는 건축과 공성의 대총재로, 높은 탑과 성채를 순식간에 짓거나 무너뜨린다.",
     "description": "40개 지옥 군단을 지휘하는 대총재다. 처음에는 큰까마귀의 모습으로 나타나며, 소환자의 요청에 따라 인간의 형상을 취할 때는 굵고 쉰 목소리로 말한다. 전 세계에서 돌과 목재를 순식간에 날라와 난공불락의 성채와 높은 탑을 세우는 데 능하며, 반대로 적의 요새를 무너뜨리고 적이 품은 은밀한 계략을 낱낱이 알려준다.",
     "quoteFr": "Malphas, grand président aux enfers; il se montre sous la figure d’un corbeau; lorsqu’il parait en figure humaine, il a la voix très-rauque. Il bâtit des citadelles.",
-    "page1863": 436
+    "page1863": 436,
+    "nameKoShort": "말파스"
   },
   {
     "id": "mammon",
     "plate": "plates/mammon.jpg",
     "plateNo": 44,
-    "nameKo": "맘몬",
+    "nameKo": "맘몬 [Mammon]",
     "nameFr": "Mammon",
     "rank": "탐욕과 재물의 군주·영국 주재 지옥 대사",
     "legions": 0,
@@ -859,15 +901,16 @@
     ],
     "appearance": "금화 자루가 든 상자 위에 걸터앉아 두 팔로 돈주머니를 꼭 끌어안은 탐욕스러운 악마",
     "summary": "인간이 최초로 땅을 파헤쳐 광맥을 찾게 만든 재물과 탐욕의 군주.",
-    "description": "시리아어로 「부(富)·재물」을 뜻하며, 신약성경과 중세 7대 죄악론에서 탐욕(Avarice)을 다스리는 군주로 꼽힌다. 존 밀턴의 『실낙원』에서는 천국에 있을 때조차 고개를 숙여 황금으로 포장된 바닥만 바라보던 천사로 묘사되며, 지상에 떨어진 뒤 인간에게 대지의 배를 갈라 금과 보석을 캐내는 법을 처음 가르쳤다. 플랑시는 그를 영국 주재 지옥 대사로 배정했다.",
+    "description": "시리아어로 「부(富)·재물」을 뜻하며, 신약성경과 중세 7대 죄악론에서 탐욕(Avarice)을 다스리는 군주로 꼽힌다. 존 밀턴의 「실낙원(Paradise Lost)」에서는 천국에 있을 때조차 고개를 숙여 황금으로 포장된 바닥만 바라보던 천사로 묘사되며, 지상에 떨어진 뒤 인간에게 대지의 배를 갈라 금과 보석을 캐내는 법을 처음 가르쳤다. 플랑시는 그를 영국 주재 지옥 대사로 배정했다.",
     "quoteFr": "Mammon, démon de l’avarice. C’est lui, dit Milton, qui le premier enseigna aux hommes à déchirer le sein de la terre pour en arracher les trésors.",
-    "page1863": 437
+    "page1863": 437,
+    "nameKoShort": "맘몬"
   },
   {
     "id": "marchocias",
     "plate": "plates/marchocias.jpg",
     "plateNo": 45,
-    "nameKo": "마르코시아스",
+    "nameKo": "마르코시아스 [Marchocias, Marchosias]",
     "nameFr": "Marchocias (Marchosias)",
     "rank": "지옥의 대후작 (Grand Marquis)",
     "legions": 30,
@@ -881,13 +924,14 @@
     "summary": "불을 뿜는 날개 달린 늑대 모습의 용맹한 대후작으로, 모든 전투에서 승리를 안겨주는 충직한 무인.",
     "description": "타락하기 전에는 주천사(Dominions) 계급에 속했던 30개 군단의 지옥 대후작이다. 그리핀의 날개와 뱀의 꼬리를 달고 입에서 시뻘건 불길을 토해내는 암늑대의 모습으로 나타나며, 인간의 형상을 취할 때는 당당한 전사의 모습을 보인다. 모든 싸움과 전장에서 백전백승의 무용을 발휘하며, 소환자의 모든 명령에 거짓 없이 충실히 따른다.",
     "quoteFr": "Marchocias, grand et puissant marquis de l’empire infernal; il se montre sous la figure d’une louve féroce, avec des ailes de griffon, une queue de serpent.",
-    "page1863": 441
+    "page1863": 441,
+    "nameKoShort": "마르코시아스"
   },
   {
     "id": "melchom",
     "plate": "plates/melchom.jpg",
     "plateNo": 46,
-    "nameKo": "멜콤",
+    "nameKo": "멜콤 [Melchom]",
     "nameFr": "Melchom",
     "rank": "지옥 궁정의 급료 지불관 (Payeur des Domestiques)",
     "legions": 0,
@@ -899,15 +943,16 @@
     ],
     "appearance": "저울과 금고가 놓인 책상 앞에서 지갑을 차고 장부를 기록하는 뿔 달린 회계관 악마",
     "summary": "늘 허리에 돈주머니를 차고 다니며 지옥의 하급 관리들에게 급료를 지급하는 지옥의 출납관.",
-    "description": "언제나 불룩한 돈주머니를 지니고 다니며 지옥 궁정의 하인과 관리들에게 급료를 나누어 주는 출납관(Payeur)이다. 루이 브르통의 판화에서는 『MELCHOM』이라 적힌 금고와 천칭 저울 앞에서 깃펜을 물고 장부를 정리하는 모습으로 위트 있게 그려져 있다.",
+    "description": "언제나 불룩한 돈주머니를 지니고 다니며 지옥 궁정의 하인과 관리들에게 급료를 나누어 주는 출납관(Payeur)이다. 루이 브르통의 판화에서는 「멜콤(Melchom)」이라 적힌 금고와 천칭 저울 앞에서 깃펜을 물고 장부를 정리하는 모습으로 위트 있게 그려져 있다.",
     "quoteFr": "Melchom, démon qui porte la bourse; il est aux enfers le payeur des employés subalternes.",
-    "page1863": 454
+    "page1863": 454,
+    "nameKoShort": "멜콤"
   },
   {
     "id": "moloch",
     "plate": "plates/moloch.jpg",
     "plateNo": 47,
-    "nameKo": "몰로크",
+    "nameKo": "몰로크 [Moloch]",
     "nameFr": "Moloch",
     "rank": "눈물의 나라의 군주·지옥 주권 평의회 위원",
     "legions": 0,
@@ -921,13 +966,14 @@
     "summary": "고대 암몬인들의 불타는 황소 머리 우상에서 유래한 「어머니들의 눈물의 군주」.",
     "description": "고대 암몬과 페니키아에서 숭배받던 신으로, 왕관을 쓴 송아지의 머리에 두 팔을 앞으로 뻗은 거대한 청동 신상으로 만들어졌다. 신상 내부에 불을 지펴 시뻘겋게 달군 뒤 그 팔 위에 제물을 바쳤으며, 제물의 울음소리가 들리지 않도록 주변에서 북과 나팔을 요란하게 울렸다고 전해진다. 밀턴과 플랑시는 그를 어머니들의 눈물로 얼룩진 지옥의 가장 참혹한 군주로 꼽았다.",
     "quoteFr": "Moloch, prince du pays des larmes, membre du conseil souverain de l’enfer. Sa statue était d’airain, avec la tête d’un veau surmontée d’une couronne royale.",
-    "page1863": 466
+    "page1863": 466,
+    "nameKoShort": "몰로크"
   },
   {
     "id": "mycale",
     "plate": "plates/mycale.jpg",
     "plateNo": 48,
-    "nameKo": "미칼레",
+    "nameKo": "미칼레 [Mycale]",
     "nameFr": "Mycale",
     "rank": "고대 테살리아의 달을 끌어내리는 마녀",
     "legions": 0,
@@ -939,15 +985,16 @@
     ],
     "appearance": "원뿔형 고깔모자와 망토를 두르고 마법 지팡이로 밤하늘의 보름달을 가리키는 마녀",
     "summary": "주문으로 밤하늘의 달을 지상으로 끌어내렸다고 오비디우스가 기록한 고대 테살리아의 대마녀.",
-    "description": "로마 시인 오비디우스의 『변신 이야기』와 고대 문헌에 등장하는 테살리아 지방의 전설적인 마녀다. 켄타우로스 오리온의 어머니로 알려져 있으며, 밤하늘에 뜬 보름달에 주문을 걸어 지상으로 끌어내릴 만큼 강력한 주술을 부렸다고 전해진다.",
+    "description": "로마 시인 오비디우스의 「변신 이야기(Metamorphoses)」와 고대 문헌에 등장하는 테살리아 지방의 전설적인 마녀다. 켄타우로스 오리온의 어머니로 알려져 있으며, 밤하늘에 뜬 보름달에 주문을 걸어 지상으로 끌어내릴 만큼 강력한 주술을 부렸다고 전해진다.",
     "quoteFr": "Mycale, fameuse magicienne de Thessalie, qui, par la puissance de ses enchantements, faisait descendre la lune du ciel.",
-    "page1863": 477
+    "page1863": 477,
+    "nameKoShort": "미칼레"
   },
   {
     "id": "nickar",
     "plate": "plates/nickar.jpg",
     "plateNo": 49,
-    "nameKo": "니카르",
+    "nameKo": "니카르 [Nickar, Neck, Nix]",
     "nameFr": "Nickar (Neck, Nix)",
     "rank": "북유럽 물가의 수중 정령",
     "legions": 0,
@@ -961,13 +1008,14 @@
     "summary": "스칸디나비아의 강과 바다에서 하프를 연주하거나 폭풍을 일으켜 선원과 아이들을 물속으로 끌어들이는 정령.",
     "description": "북유럽 스칸디나비아 전승의 물의 정령(Neck/Nix)으로, 영어권에서 악마를 일컫는 별칭 「올드 닉(Old Nick)」의 어원이기도 하다. 고요한 호수나 강가에서 황금 하프를 연주해 지나는 이들을 홀리거나, 거친 물살과 폭풍 속에서 모습을 드러내어 배를 뒤집고 익사 사고를 일으킨다고 전해진다.",
     "quoteFr": "Nickar ou Nicken, démon des eaux chez les Scandinaves. Il habite les fleuves, les lacs et la mer, et cause les naufrages.",
-    "page1863": 486
+    "page1863": 486,
+    "nameKoShort": "니카르"
   },
   {
     "id": "nybbas",
     "plate": "plates/nybbas.jpg",
     "plateNo": 50,
-    "nameKo": "니바스",
+    "nameKo": "니바스 [Nybbas]",
     "nameFr": "Nybbas",
     "rank": "지옥의 대광대·환영과 꿈의 관리관",
     "legions": 0,
@@ -981,13 +1029,14 @@
     "summary": "인간의 꿈과 환각을 연출하고 지옥 궁정에서 광대극을 총괄하는 익살과 기만의 악마.",
     "description": "지옥에서는 하급 서열로 취급받지만, 지옥 궁정의 모든 광대극과 소극(Farce)을 총괄하는 대흥행사(Grand-Parodiste)이자 사기꾼들의 수호 악마다. 인간이 잠든 사이 기괴하거나 허황된 꿈과 환영을 보여주는 일을 맡고 있으며, 허풍쟁이와 돌팔이 마술사들을 비호한다.",
     "quoteFr": "Nybbas, démon d’un ordre inférieur, grand-parodiste de la cour infernale, intendant des visions, des songes et des rêves.",
-    "page1863": 493
+    "page1863": 493,
+    "nameKoShort": "니바스"
   },
   {
     "id": "orobas",
     "plate": "plates/orobas.jpg",
     "plateNo": 51,
-    "nameKo": "오로바스",
+    "nameKo": "오로바스 [Orobas]",
     "nameFr": "Orobas",
     "rank": "지옥의 대군주 (Grand Prince)",
     "legions": 20,
@@ -1002,13 +1051,14 @@
     "summary": "결코 소환자를 속이거나 해치지 않으며 다른 악령의 유혹으로부터 지켜주는 가장 신실한 지옥의 대군주.",
     "description": "20개 군단을 거느리는 지옥의 대군주(Grand Prince)다. 처음에는 말의 모습으로 나타나며, 소환자의 명을 받으면 두 발로 선 인간의 형태를 취한다. 악마들 가운데 드물게 소환자에게 절대 거짓을 말하지 않고 어떤 해코지도 허용하지 않으며, 오히려 다른 악마들의 현혹으로부터 소환자를 보호해 준다. 과거·현재·미래와 신성(神性), 창조의 비밀을 진실하게 답해주며 높은 지위와 적들의 호의를 얻게 해준다.",
     "quoteFr": "Orobas, grand prince du sombre empire; il se montre sous la figure d’un cheval; lorsqu’il prend la forme d’un homme, il parle de la vertu divine.",
-    "page1863": 506
+    "page1863": 506,
+    "nameKoShort": "오로바스"
   },
   {
     "id": "paymon",
     "plate": "plates/paymon.jpg",
     "plateNo": 52,
-    "nameKo": "파이몬",
+    "nameKo": "파이몬 [Paymon, Paimon]",
     "nameFr": "Paymon (Paimon)",
     "rank": "지옥 서부의 대왕·루시퍼의 가장 충직한 왕",
     "legions": 200,
@@ -1023,13 +1073,14 @@
     "summary": "200개 군단(천사 100·능천사 100)을 거느리며 보석 왕관을 쓰고 낙타를 탄 지옥의 대왕.",
     "description": "루시퍼에게 가장 충성하는 지옥 서북방의 대왕으로, 절반은 천사 계급이고 절반은 능천사(Powers) 계급인 무려 200개 군단을 통솔한다. 눈부신 보석이 박힌 왕관을 쓰고 단봉낙타에 올라탄 채 여인처럼 고운 얼굴로 나타나며, 그가 행차할 때면 수많은 악령들이 나팔과 심벌즈 등 온갖 악기를 울리며 앞장선다. 세상의 모든 예술과 과학, 대지와 바다·바람의 비밀을 남김없이 깨우쳐 준다.",
     "quoteFr": "Paymon, un des rois de l’enfer; lorsqu’il se montre aux exorcistes, c’est sous la figure d’un homme monté sur un dromadaire, couronné d’un diadème.",
-    "page1863": 523
+    "page1863": 523,
+    "nameKoShort": "파이몬"
   },
   {
     "id": "picollus",
     "plate": "plates/picollus.jpg",
     "plateNo": 53,
-    "nameKo": "피콜루스",
+    "nameKo": "피콜루스 [Picollus, Peckols]",
     "nameFr": "Picollus (Peckols)",
     "rank": "고대 프로이센 신화의 명계·죽음의 신",
     "legions": 0,
@@ -1043,13 +1094,14 @@
     "summary": "고대 프로이센인들이 죽은 자의 해골과 수지를 바쳐 달랬던 죽음과 명계의 악령.",
     "description": "기독교 전래 이전 고대 프로이센과 발트 지역 주민들이 두려워하며 섬기던 지하세계의 신(Patollos/Picollus)이다. 귀족이나 거물이 임종할 무렵 모습을 드러냈으며, 그를 달래지 못하면 세 번까지 나타나 결국 피의 제물을 바쳐야만 물러갔다고 전해진다. 제물이 마음에 들면 그의 신전 안에서 기분 좋게 웃는 소리가 들렸다고 한다.",
     "quoteFr": "Picollus, démon révéré par les anciens habitants de la Prusse, qui lui consacraient la tête d’un homme mort et brûlaient du suif en son honneur.",
-    "page1863": 534
+    "page1863": 534,
+    "nameKoShort": "피콜루스"
   },
   {
     "id": "pruflas",
     "plate": "plates/pruflas.jpg",
     "plateNo": 54,
-    "nameKo": "프루플라스",
+    "nameKo": "프루플라스 또는 부사스 [Pruflas, Busas]",
     "nameFr": "Pruflas (Busas)",
     "rank": "지옥 제국의 대군주·대공 (Grand Prince et Duc)",
     "legions": 26,
@@ -1063,13 +1115,14 @@
     "summary": "바빌론의 탑 주변에 머물며 나팔을 불어 전쟁과 분쟁의 불길을 지피는 올빼미 머리의 대공.",
     "description": "부사스(Busas)라고도 불리며 26개 군단을 거느리는 지옥의 대군주 겸 대공이다(솔로몬의 72악마 목록에는 빠졌으나 바이어의 목록에 수록됨). 바빌론의 탑 주위에 거처하며 불꽃에 휩싸인 올빼미 머리의 모습으로 곰을 타고 나팔을 불며 나타난다. 사람들 사이에 불화와 다툼, 전쟁을 일으켜 부유한 이들을 빈곤에 빠뜨리지만, 소환자가 묻는 모든 질문에는 아낌없이 상세하게 대답해 준다.",
     "quoteFr": "Pruflas ou Busas, grand prince et grand-duc de l’empire infernal. Il réside autour de la tour de Babylone, et là il a une tête de hibou.",
-    "page1863": 558
+    "page1863": 558,
+    "nameKoShort": "프루플라스 또는 부사스"
   },
   {
     "id": "rahouart",
     "plate": "plates/rahouart.jpg",
     "plateNo": 55,
-    "nameKo": "라우아르",
+    "nameKo": "라우아르 [Rahouart]",
     "nameFr": "Rahouart",
     "rank": "중세 프랑스 도덕극의 인색한 부자 수거 악마",
     "legions": 0,
@@ -1080,15 +1133,16 @@
     ],
     "appearance": "등에 영혼들을 담은 망태기(바구니)를 짊어지고 지팡이를 짚은 채 걸어가는 노악마",
     "summary": "15세기 프랑스 도덕극에서 사악하고 인색한 부자가 죽으면 망태기에 담아 지옥으로 데려가는 악마.",
-    "description": "15세기 말 프랑스 루앙(Rouen)에서 상연되던 중세 도덕극 『나쁜 부자(Le Mauvais Riche)』에 등장하는 민속 악마다. 동료 악마 사타나스(Satanas)와 함께 다니며, 생전에 자선을 베풀지 않고 재물만 움켜쥐던 인색한 부자가 숨을 거두면 등에 멘 커다란 버들고리 망태기에 그 영혼을 쓸어 담아 지옥 가마솥으로 운반한다.",
+    "description": "15세기 말 프랑스 루앙(Rouen)에서 상연되던 중세 도덕극 「나쁜 부자(Le Mauvais Riche)」에 등장하는 민속 악마다. 동료 악마 사타나스(Satanas)와 함께 다니며, 생전에 자선을 베풀지 않고 재물만 움켜쥐던 인색한 부자가 숨을 거두면 등에 멘 커다란 버들고리 망태기에 그 영혼을 쓸어 담아 지옥 가마솥으로 운반한다.",
     "quoteFr": "Rahouart, démon que nous ne connaissons que par une moralité sur le mauvais riche. C’est dans sa hotte que Rahouart emporte l’âme de l’avare.",
-    "page1863": 566
+    "page1863": 566,
+    "nameKoShort": "라우아르"
   },
   {
     "id": "ribesal",
     "plate": "plates/ribesal.jpg",
     "plateNo": 56,
-    "nameKo": "리베살",
+    "nameKo": "리베살 또는 뤼베찰 [Ribesal, Rübezahl]",
     "nameFr": "Ribesal (Rübezahl)",
     "rank": "리젠게비르게 산맥의 산령·폭풍의 주인",
     "legions": 0,
@@ -1102,13 +1156,14 @@
     "summary": "독일·보헤미아 국경 리젠게비르게 산 정상에 살며 순식간에 먹구름과 폭풍우를 부르는 산령.",
     "description": "실레지아와 보헤미아 국경의 자이언트 산맥(Riesengebirge) 정상에 거처한다는 유명한 산령 「뤼베찰(Rübezahl)」이다. 변덕스러운 성미를 지녀 자신을 조롱하는 자에게는 맑은 하늘에 순식간에 검은 구름과 폭풍우, 우박을 퍼붓지만, 정직하고 가난한 나그네에게는 길을 안내하거나 금화로 변하는 나뭇잎을 선물하기도 한다.",
     "quoteFr": "Ribesal, spectre que le peuple de Silésie place en résidence au sommet du Risemberg. C’est lui qui couvre subitement cette montagne de nuages.",
-    "page1863": 573
+    "page1863": 573,
+    "nameKoShort": "리베살 또는 뤼베찰"
   },
   {
     "id": "ronwe",
     "plate": "plates/ronwe.jpg",
     "plateNo": 57,
-    "nameKo": "론웨",
+    "nameKo": "론웨 또는 로노베 [Ronwe, Ronove]",
     "nameFr": "Ronwe (Ronove)",
     "rank": "지옥의 후작·백작 (Marquis et Comte)",
     "legions": 19,
@@ -1122,13 +1177,14 @@
     "summary": "19개 군단을 거느리며 단숨에 외국어와 수사학을 깨우쳐 주는 언어의 후작.",
     "description": "로노베(Ronove)라고도 불리는 지옥의 후작 겸 백작으로 19개 군단을 통솔한다. 지팡이를 든 괴물의 모습으로 나타나며, 늙어서 버려진 인간과 동물의 영혼을 거두어들인다. 소환자에게 세상의 모든 언어와 수사학적 화술을 완벽하게 가르쳐 주며, 충직한 사역마와 온 세상의 호의를 얻게 해준다.",
     "quoteFr": "Ronwe, marquis et comte d’enfer; il parait sous la forme d’un monstre; il donne à ses adeptes la connaissance des langues et la bienveillance de tout le monde.",
-    "page1863": 579
+    "page1863": 579,
+    "nameKoShort": "론웨 또는 로노베"
   },
   {
     "id": "scox",
     "plate": "plates/scox.jpg",
     "plateNo": 58,
-    "nameKo": "스콕스",
+    "nameKo": "스콕스 또는 샥스 [Scox, Chax, Shax]",
     "nameFr": "Scox (Chax, Shax)",
     "rank": "지옥의 공작·대후작 (Duc et Grand Marquis)",
     "legions": 30,
@@ -1142,13 +1198,14 @@
     "summary": "황새의 모습으로 나타나 적의 눈과 귀를 멀게 하고 숨겨진 보물을 알려주는 대후작 샥스(Shax).",
     "description": "샥스(Shax) 또는 칵스(Chax)로 알려진 30개 군단의 지옥 공작 겸 대후작이다. 거칠고 가는 목소리를 지닌 황새의 모습으로 나타나며, 명령에 따라 적의 시력과 청력, 이해력을 빼앗거나 왕들의 마구간에서 명마와 금전을 훔쳐내어 1,200년 뒤에 되돌려 놓는다. 마법의 삼각형 밖에 있으면 소환자를 속이지만, 삼각형 안에 가두면 초자연적 이치와 악령이 지키지 않는 숨겨진 보물의 위치를 정직하게 알려준다.",
     "quoteFr": "Scox ou Chax, duc et grand marquis aux enfers; il a la voix rauque, l’esprit porté au mensonge; il se présente sous la forme d’une cigogne.",
-    "page1863": 602
+    "page1863": 602,
+    "nameKoShort": "스콕스 또는 샥스"
   },
   {
     "id": "stolas",
     "plate": "plates/stolas.jpg",
     "plateNo": 59,
-    "nameKo": "스톨라스",
+    "nameKo": "스톨라스 또는 스톨로스 [Stolas, Stolos]",
     "nameFr": "Stolas (Stolos)",
     "rank": "지옥의 대군주 (Grand Prince)",
     "legions": 26,
@@ -1160,15 +1217,16 @@
     ],
     "appearance": "작은 왕관을 쓰고 긴 다리로 곧게 서 있는 기품 있는 올빼미의 형상",
     "summary": "왕관을 쓴 긴 다리의 올빼미로 현현하여 천문학과 약초, 보석의 가치를 가르치는 학자의 군주.",
-    "description": "『지옥사전』에서 가장 사랑받는 삽화 중 하나로 꼽히는 26개 군단의 지옥 대군주다. 처음에는 왕관을 쓴 긴 다리의 올빼미(또는 수리부엉이) 모습으로 나타나며, 소환자의 앞에 설 때는 인간의 형상을 취해 별자리와 행성의 운행(천문학), 모든 약초와 식물의 성질, 그리고 귀한 보석들의 진가와 효능을 차분하게 가르쳐 준다.",
+    "description": "「지옥사전(Dictionnaire Infernal)」에서 가장 사랑받는 삽화 중 하나로 꼽히는 26개 군단의 지옥 대군주다. 처음에는 왕관을 쓴 긴 다리의 올빼미(또는 수리부엉이) 모습으로 나타나며, 소환자의 앞에 설 때는 인간의 형상을 취해 별자리와 행성의 운행(천문학), 모든 약초와 식물의 성질, 그리고 귀한 보석들의 진가와 효능을 차분하게 가르쳐 준다.",
     "quoteFr": "Stolas, grand prince aux enfers; il parait sous la forme d’un hibou; lorsqu’il prend la figure d’un homme, il enseigne l’astronomie, la propriété des plantes et le prix des pierres précieuses.",
-    "page1863": 637
+    "page1863": 637,
+    "nameKoShort": "스톨라스 또는 스톨로스"
   },
   {
     "id": "tap",
     "plate": "plates/tap.jpg",
     "plateNo": 60,
-    "nameKo": "타프",
+    "nameKo": "타프 또는 가프 [Tap, Gaap]",
     "nameFr": "Tap (Gaap)",
     "rank": "지옥의 대총재·대군주 (Grand Président et Prince)",
     "legions": 60,
@@ -1183,13 +1241,14 @@
     "summary": "60개 군단과 네 명의 왕을 인도하며 인간을 다른 나라로 순식간에 공간 이동시키는 대총재 가프(Gaap).",
     "description": "가프(Gaap)라고도 불리는 60개 군단의 대총재 겸 대군주로, 태양이 남쪽 별자리에 위치할 때 인간의 형상을 취해 정오에 나타난다. 지옥의 주요 왕 네 명을 앞장서 인도할 만큼 벨제붑에 버금가는 권세를 지녔다. 철학과 모든 교양 학문을 가르치고 사람의 감정을 무감각하게 만들거나 사랑과 증오를 불러일으키며, 심연을 건너고자 하는 자를 순식간에 다른 나라로 공간 이동시킨다.",
     "quoteFr": "Tap ou Gaap, grand président et grand prince aux enfers. Il transporte très-promptement les hommes en différentes contrées.",
-    "page1863": 647
+    "page1863": 647,
+    "nameKoShort": "타프 또는 가프"
   },
   {
     "id": "torngarsuk",
     "plate": "plates/torngarsuk.jpg",
     "plateNo": 61,
-    "nameKo": "토른가르수크",
+    "nameKo": "토른가르수크 [Torngarsuk, Tornarsuk]",
     "nameFr": "Torngarsuk (Tornarsuk)",
     "rank": "그린란드 이누이트 신화의 대정령",
     "legions": 0,
@@ -1203,13 +1262,14 @@
     "summary": "그린란드 어부들과 샤먼(앙가코크)이 질병과 풍어를 위해 조언을 구하던 바다와 북극의 대정령.",
     "description": "그린란드 이누이트 신화에서 초자연적 정령들의 우두머리로 여겨지던 토르나르수크(Tornarsuk)를 다룬 항목이다. 때로는 거대한 북극곰으로, 때로는 외팔이 거인이나 손가락만 한 작은 사람으로 묘사되며, 오직 샤먼인 「앙가코크(Angakok)」만이 볼 수 있어 병자가 생기거나 어업에 나설 때 그에게 신탁을 구했다고 소개된다.",
     "quoteFr": "Torngarsuk. Le chef et le plus puissant des êtres surnaturels chez les Groenlandais est Torngarsuk, qu’invoquent surtout les pêcheurs.",
-    "page1863": 666
+    "page1863": 666,
+    "nameKoShort": "토른가르수크"
   },
   {
     "id": "transport-sorcerers",
     "plate": "plates/transport-sorcerers.jpg",
     "plateNo": 62,
-    "nameKo": "마법사의 비행 수송",
+    "nameKo": "마법사의 비행 수송 [Transport des Sorciers / Flight of the Sorcerers]",
     "nameFr": "Transport des Sorciers",
     "rank": "사바트 야간 비행 전승",
     "legions": 0,
@@ -1223,13 +1283,14 @@
     "summary": "강력한 마녀들이 사바트에 갈 때 하늘을 새처럼 나는 검은 숫염소를 타고 이동하던 전승.",
     "description": "마녀들이 한밤중 멀리 떨어진 사바트 집회 장소로 어떻게 순식간에 이동했는가를 설명하는 항목이다. 어떤 마법사들은 탈것 없이 허공을 날아갔으나, 특히 프랑스 전승에서는 마녀가 어린아이를 데리고 사바트에 참석할 때 허공을 새처럼 가르는 거대한 숫염소가 그들을 태워 날아갔다가 새벽 닭이 울기 전 집으로 데려다주었다고 전해진다.",
     "quoteFr": "Transport des sorciers. En France surtout, les sorcières puissantes étaient transportées au sabbat par un bouc qui fendait le vide comme un oiseau.",
-    "page1863": 670
+    "page1863": 670,
+    "nameKoShort": "마법사의 비행 수송"
   },
   {
     "id": "ukobach",
     "plate": "plates/ukobach.jpg",
     "plateNo": 63,
-    "nameKo": "우코바크",
+    "nameKo": "우코바크 [Ukobach]",
     "nameFr": "Ukobach",
     "rank": "지옥 가마솥의 기름 관리자·불꽃놀이와 튀김의 발명가",
     "legions": 0,
@@ -1243,13 +1304,14 @@
     "summary": "벨제붑의 명을 받아 지옥 가마솥에 끓는 기름을 붓는 악마이자 튀김 요리와 불꽃놀이의 발명가.",
     "description": "언제나 온몸이 시뻘겋게 달아오른 모습으로 나타나는 하급 악마다. 벨제붑으로부터 지옥의 거대한 가마솥들에 끓는 기름과 석탄을 끊임없이 보충하라는 임무를 부여받았으며, 플랑시는 그가 인류에게 「튀김 요리(Fritures)」와 「불꽃놀이(Feux d’artifice)」를 처음으로 발명해 전해준 장본인이라고 기록해 큰 인기를 끌었다.",
     "quoteFr": "Ukobach, démon d’un ordre inférieur. Il se montre toujours avec un corps enflammé; on le dit inventeur des fritures et des feux d’artifice.",
-    "page1863": 677
+    "page1863": 677,
+    "nameKoShort": "우코바크"
   },
   {
     "id": "volac",
     "plate": "plates/volac.jpg",
     "plateNo": 64,
-    "nameKo": "볼라크",
+    "nameKo": "볼라크 또는 발락 [Volac, Valac]",
     "nameFr": "Volac (Valac)",
     "rank": "지옥의 대총재 (Grand Président)",
     "legions": 30,
@@ -1263,13 +1325,14 @@
     "summary": "두 머리 용을 탄 날개 달린 소년의 모습으로 나타나 보물과 뱀들이 숨은 곳을 알려주는 대총재 발라크.",
     "description": "발라크(Valac)라고도 불리며 30개 군단을 지휘하는 지옥의 대총재다. 천사의 날개를 단 순진한 어린아이의 모습으로 머리 둘 달린 드래곤을 타고 나타난다. 하늘의 행성들이 위치한 자리와 땅속 보물이 묻힌 곳, 그리고 독사들이 숨어 있는 은신처를 정확히 알려주며 사나운 뱀들을 마법사의 손에 온순하게 넘겨준다.",
     "quoteFr": "Volac, grand président aux enfers; il parait sous la figure d’un enfant avec des ailes d’ange, monté sur un dragon à deux têtes.",
-    "page1863": 700
+    "page1863": 700,
+    "nameKoShort": "볼라크 또는 발락"
   },
   {
     "id": "voyages-sorcerers",
     "plate": "plates/voyages-sorcerers.jpg",
     "plateNo": 65,
-    "nameKo": "빗자루를 탄 마녀의 여행",
+    "nameKo": "빗자루를 탄 마녀의 여행 [Voyages des Sorciers / Journey of the Witches]",
     "nameFr": "Voyages des Sorciers",
     "rank": "마녀 비행 전승",
     "legions": 0,
@@ -1283,13 +1346,14 @@
     "summary": "사바트 외의 일상적인 야간 출타에서 마녀들이 빗자루에 마법 연고를 바르고 하늘을 날던 전승.",
     "description": "마녀들이 공식 사바트 집회에 갈 때는 숫염소나 검은 양을 타기도 했으나, 평소 밤나들이나 짧은 마법 여행을 떠날 때는 흔히 빗자루(Balai)에 마법의 연고를 발라 가랑이 사이에 끼고 굴뚝을 빠져나와 하늘을 날았다는 전승을 다룬 항목이다.",
     "quoteFr": "Voyages des sorciers. Dans leurs autres excursions, ils ne voyagent généralement qu’à cheval sur un balai.",
-    "page1863": 703
+    "page1863": 703,
+    "nameKoShort": "빗자루를 탄 마녀의 여행"
   },
   {
     "id": "wall",
     "plate": "plates/wall.jpg",
     "plateNo": 66,
-    "nameKo": "발",
+    "nameKo": "발 또는 부알 [Wall, Vual, Uvall]",
     "nameFr": "Wall (Vual, Uvall)",
     "rank": "지옥의 강대한 공작 (Grand et Puissant Duc)",
     "legions": 37,
@@ -1304,13 +1368,14 @@
     "summary": "거대한 단봉낙타의 모습으로 나타나 이집트어로 말하며 과거·미래를 예언하고 우정을 맺어주는 공작 부알.",
     "description": "부알(Vual) 또는 우발(Uvall)로 불리는 37개 군단의 지옥 대공작으로, 타락하기 전에는 능천사(Powers) 계급에 속했다. 처음에는 거대하고 두려운 단봉낙타의 형상으로 나타나며, 소환자의 명으로 인간의 모습을 취할 때는 완벽한 이집트어는 아니나 이집트 말로 이야기한다. 과거·현재·미래의 일을 모두 알고 있으며 여인의 사랑을 얻게 해주고 적과 친구 사이의 우정을 두텁게 한다.",
     "quoteFr": "Wall, grand et puissant duc du sombre empire; il a la figure d’un dromadaire haut et terrible; lorsqu’il prend la forme humaine, il parle égyptien.",
-    "page1863": 704
+    "page1863": 704,
+    "nameKoShort": "발 또는 부알"
   },
   {
     "id": "xaphan",
     "plate": "plates/xaphan.jpg",
     "plateNo": 67,
-    "nameKo": "자판",
+    "nameKo": "자판 [Xaphan]",
     "nameFr": "Xaphan",
     "rank": "지옥 화덕의 풀무꾼·발명가 악마",
     "legions": 0,
@@ -1324,13 +1389,14 @@
     "summary": "루시퍼의 반란 때 하늘에 불을 지르자고 제안했다가 추락해 지옥 용광로의 풀무질을 맡게 된 악마.",
     "description": "2계급 악마로, 루시퍼와 반역 천사들이 신에게 반기를 들었을 때 특유의 기발한 창의력으로 「천국에 불을 질러 버리자」고 제안해 반란군 사이에서 큰 환영을 받았다. 그러나 반란이 진압되어 심연 밑바닥으로 내던져진 뒤로는, 자신의 상징물인 풀무(Soufflet)를 들고 입과 두 손으로 지옥 화덕의 불씨가 꺼지지 않도록 영원히 부채질하는 임무를 맡고 있다.",
     "quoteFr": "Xaphan, démon du second ordre. Il proposa aux rebelles de mettre le feu au ciel; il a un soufflet pour emblème.",
-    "page1863": 708
+    "page1863": 708,
+    "nameKoShort": "자판"
   },
   {
     "id": "yan-gant-y-tan",
     "plate": "plates/yan-gant-y-tan.jpg",
     "plateNo": 68,
-    "nameKo": "얀 강 이 탄",
+    "nameKo": "얀 강 이 탄 [Yan-gant-y-tan]",
     "nameFr": "Yan-gant-y-tan",
     "rank": "브르타뉴 피니스테르의 밤길 촛불 악령",
     "legions": 0,
@@ -1344,13 +1410,14 @@
     "summary": "프랑스 브르타뉴의 밤길에서 다섯 손가락 끝에 불을 밝히고 물레처럼 돌리며 걸어 다니는 악령.",
     "description": "프랑스 서부 브르타뉴(피니스테르 지방) 전승의 야간 요괴로, 브르타뉴어로 「밤 속의 방랑자(Jean et son feu)」를 뜻한다. 한밤중 교차로나 황야를 배회하며 오른손 다섯 손가락 끝에 다섯 개의 촛불을 켜 들고 물레바퀴처럼 빠르게 돌리는데, 밤길에 불을 잃은 나그네에게 불씨를 빌려주기도 하나 그와 마주치는 것은 브르타뉴 사람들 사이에서 불길한 징조로 여겨졌다.",
     "quoteFr": "Yan-gant-y-tan, espèce de démon qui erre la nuit dans le Finistère. Il porte cinq chandelles sur ses cinq doigts, et les tourne avec la rapidité d’un dévidoir.",
-    "page1863": 710
+    "page1863": 710,
+    "nameKoShort": "얀 강 이 탄"
   },
   {
     "id": "zaebos",
     "plate": "plates/zaebos.jpg",
     "plateNo": 69,
-    "nameKo": "자에보스",
+    "nameKo": "자에보스 또는 살로스 [Zaebos, Sallos]",
     "nameFr": "Zaebos (Sallos)",
     "rank": "지옥의 대백작 (Grand Comte)",
     "legions": 30,
@@ -1364,6 +1431,7 @@
     "summary": "공작관을 쓰고 악어를 탄 용맹한 전사의 모습으로 나타나지만 성품이 온화한 지옥의 대백작.",
     "description": "살로스(Sallos)와 연결되는 지옥의 대백작(Grand Comte)이다. 머리에 공작의 관을 쓰고 거대한 악어 등에 올라탄 늠름한 병사의 모습으로 나타나지만, 무장한 외모와 달리 성품이 매우 온화하고 평화적이어서 남녀 사이의 사랑을 이어주는 일을 즐긴다.",
     "quoteFr": "Zaebos, grand comte des enfers; il a la figure d’un beau soldat monté sur un crocodile; sa tête est ornée d’une couronne ducale. Il a le caractère doux.",
-    "page1863": 713
+    "page1863": 713,
+    "nameKoShort": "자에보스 또는 살로스"
   }
 ]

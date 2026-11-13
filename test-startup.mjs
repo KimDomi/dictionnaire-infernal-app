@@ -64,14 +64,14 @@ async function run(initial,native=false){
   await mod.evaluate();
 
   assert.ok(main.innerHTML.includes('class="entry-list"'));
-  assert.ok(main.innerHTML.includes('아론 (Aaron)'));
-  assert.ok(main.innerHTML.includes('아바리스 (Abaris)'));
+  assert.ok(main.innerHTML.includes('아론 [Aaron]'));
+  assert.ok(main.innerHTML.includes('아바리스 [Abaris]'));
 
   // Test search input without destroying active input
   for(const fn of handlers.input||[]){
     fn({target:{id:'search-input',value:'Buer'}});
   }
-  assert.ok(main.innerHTML.includes('뷰에르 (Buer)'));
+  assert.ok(main.innerHTML.includes('부에르 [Buer]'));
   for(const fn of handlers.input||[]){
     fn({target:{id:'search-input',value:''}});
   }
@@ -149,7 +149,7 @@ async function run(initial,native=false){
   for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:240,clientY:200}]});
   for(const fn of handlers.touchend||[])fn({changedTouches:[{clientX:60,clientY:205}]});
   assert.ok(main.innerHTML.includes('entry-detail-page'));
-  assert.ok(!main.innerHTML.includes('<h2>부에르 (Buer)</h2>'));
+  assert.ok(!main.innerHTML.includes('<h2>부에르 [Buer]</h2>'));
 
   // Swipe right back to previous entry
   for(const fn of handlers.touchstart||[])fn({changedTouches:[{clientX:60,clientY:200}]});

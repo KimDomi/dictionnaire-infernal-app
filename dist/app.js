@@ -1,4 +1,4 @@
-import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=6158cd2e25e3';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=da7bb2a63bdf';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=8d4afa2f8c16';
@@ -229,18 +229,28 @@ function formatParagraphs(text){
 }
 
 function splitEntryName(nameKo){
-  if(!nameKo) return { ko: '', orig: '', isLong: false };
+  if(!nameKo) return { ko: '', orig: '', isBracket: true, isLong: false };
+  const bracketIdx = nameKo.indexOf('[');
+  if(bracketIdx !== -1) {
+    const ko = nameKo.slice(0, bracketIdx).trim();
+    let orig = nameKo.slice(bracketIdx).trim();
+    if(orig.startsWith('[') && orig.endsWith(']')){
+      orig = orig.slice(1, -1).trim();
+    }
+    const isLong = nameKo.length >= 18 || ko.length >= 9 || orig.length >= 14;
+    return { ko, orig, isBracket: true, isLong };
+  }
   const lastHangulIdx = nameKo.search(/[가-힣][^가-힣]*$/);
-  if(lastHangulIdx === -1) return { ko: nameKo, orig: '', isLong: nameKo.length >= 18 };
+  if(lastHangulIdx === -1) return { ko: nameKo, orig: '', isBracket: false, isLong: nameKo.length >= 18 };
   const parenIdx = nameKo.indexOf('(', lastHangulIdx);
-  if(parenIdx === -1) return { ko: nameKo, orig: '', isLong: nameKo.length >= 18 };
+  if(parenIdx === -1) return { ko: nameKo, orig: '', isBracket: false, isLong: nameKo.length >= 18 };
   const ko = nameKo.slice(0, parenIdx).trim();
   let orig = nameKo.slice(parenIdx).trim();
   if(orig.startsWith('(') && orig.endsWith(')')){
     orig = orig.slice(1, -1).trim();
   }
   const isLong = nameKo.length >= 18 || ko.length >= 9 || orig.length >= 12;
-  return { ko, orig, isLong };
+  return { ko, orig, isBracket: false, isLong };
 }
 
 function renderDetailTitle(entry){
@@ -248,9 +258,10 @@ function renderDetailTitle(entry){
   if(!split.orig){
     return `<h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>`;
   }
+  const formattedOrig = split.isBracket ? `[${escapeHtml(split.orig)}]` : `(${escapeHtml(split.orig)})`;
   return `<h2 class="detail-title-ko${split.isLong ? ' is-long-title' : ''}">
     <span class="title-name-ko">${escapeHtml(split.ko)}</span>
-    <span class="title-name-en">(${escapeHtml(split.orig)})</span>
+    <span class="title-name-en">${formattedOrig}</span>
   </h2>`;
 }
 

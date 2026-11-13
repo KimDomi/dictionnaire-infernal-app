@@ -8,11 +8,27 @@ assert.equal(VALID_ENTRY_IDS.size,3810,'All entry IDs must be unique');
 
 for(const entry of ENTRIES){
   assert.ok(entry.id&&entry.nameKo&&entry.nameFr,`Missing name fields for ${entry.id}`);
-  assert.ok(entry.nameKo.includes('(')&&entry.nameKo.includes(')'),`Proper noun English/original notation missing in nameKo: ${entry.nameKo}`);
+  assert.ok(entry.nameKo.includes('[')&&entry.nameKo.includes(']'),`Proper noun bracket notation missing in nameKo: ${entry.nameKo}`);
   if(entry.hasPlate){
     assert.ok(fs.existsSync(new URL('./dist/'+entry.plate,import.meta.url)),`Missing plate file dist/${entry.plate}`);
   }
 }
+
+// Verify the user's 9 rules examples in entries
+const aigle = ENTRIES.find(e => e.nameFr === 'Aigle');
+assert.ok(aigle && aigle.nameKo === '독수리 [Aigle / Eagle]', 'Rule 1: 독수리 [Aigle / Eagle]');
+
+const accouchements = ENTRIES.find(e => e.nameFr === 'Accouchements prodigieux');
+assert.ok(accouchements && accouchements.nameKo === '불가사의한 출산 [Accouchements Prodigieux / Prodigious Births]', 'Rule 1: 불가사의한 출산 [Accouchements Prodigieux / Prodigious Births]');
+
+const adamAbbe = ENTRIES.find(e => e.nameFr === 'Adam (l’abbé)');
+assert.ok(adamAbbe && adamAbbe.nameKo === '수도원장 아담 [Adam (L’Abbé)]', 'Rule 2: 수도원장 아담 [Adam (L’Abbé)]');
+
+const abadie = ENTRIES.find(e => e.nameFr === 'Abadie (Jeannette d’)');
+assert.ok(abadie && abadie.nameKo === '자네뜨 다바디 [Abadie (Jeannette d’)]', 'Rule 2: 자네뜨 다바디 [Abadie (Jeannette d’)]');
+
+const abraxas = ENTRIES.find(e => e.id === 'abraxas');
+assert.ok(abraxas && abraxas.nameKo === '아브라카스 또는 아브락사스 [Abracax, Abraxas]', 'Rule 3: 아브라카스 또는 아브락사스 [Abracax, Abraxas]');
 
 const monarchs=filterEntries({category:'monarch',onlyIllustrated:true});
 assert.ok(monarchs.some(e=>e.id==='belzebuth'));
@@ -23,7 +39,7 @@ assert.ok(letterZ.length>=15,'Expected letter Z entries');
 assert.ok(letterZ.some(e=>e.id==='zaebos'));
 
 const searchAbaris=filterEntries({query:'Abaris'});
-assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 (Abaris)')));
+assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
 const searchBuer=filterEntries({query:'Buer'});
 assert.ok(searchBuer.some(e=>e.id==='buer'));

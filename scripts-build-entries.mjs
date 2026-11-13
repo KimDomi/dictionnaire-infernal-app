@@ -24,7 +24,7 @@ const WORD_DICT = {
   'abracadabra': '아브라카다브라', 'abracax': '아브라카스', 'abraham': '아브라함', 'abrahel': '아브라엘',
   'absalon': '압살롬', 'abstinence': '금욕', 'abundia': '아분디아', 'acatriel': '아카트리엘',
   'acca-laurentia': '아카 라우렌티아', 'accidents': '기이한 재해', 'accouchements': '출산 미신',
-  'accouchements prodigieux': '기이한 출산', 'acham': '아캄', 'achamoth': '아카모트',
+  'accouchements prodigieux': '불가사의한 출산', 'acham': '아캄', 'achamoth': '아카모트',
   'acharai-rioho': '아카라이 리오호', 'achéron': '아케론', 'achérusie': '아케루시아',
   'achguaya-xerac': '아치과야 세라크', 'achmet': '아흐메트', 'aconce': '아콘시오', 'adalbert': '아달베르트',
   'adam': '아담', 'adamantius': '아다만티우스', 'adamiens': '아담파', 'adelgreiff': '아델그라이프',
@@ -308,12 +308,12 @@ const NAME_MAP = {
   'joseph': '조제프', 'marie': '마리', 'marguerite': '마르그리트', 'catherine': '카트린',
   'anne': '안', 'madeleine': '마들렌', 'élisabeth': '엘리자베트', 'guillaume': '기욤',
   'robert': '로베르', 'richard': '리샤르', 'thomas': '토마', 'martin': '마르탱',
-  'bernard': '베르나르', 'albert': '알베르', 'alexandre': '알렉상드르', 'andré': '앙드레',
+  'bernard': '베르나르', 'albert': '알베르', 'alexandre': '알렉산드로스', 'alexandre le grand': '알렉산드로스 대왕', 'andré': '앙드레',
   'barthélemy': '바르텔레미', 'barthélémy': '바르텔레미', 'benoît': '브누아', 'claude': '클로드',
   'clément': '클레망', 'daniel': '다니엘', 'david': '다비드', 'denis': '드니', 'dominique': '도미니크',
   'édouard': '에두아르', 'étienne': '에티엔', 'eugène': '외젠', 'félipe': '펠리페', 'philippe': '필리프',
   'frédéric': '프레데리크', 'gabriel': '가브리엘', 'gaspard': '가스파르', 'georges': '조르주',
-  'george': '조르주', 'gilles': '질', 'grégoire': '그레구아르', 'guy': '기', 'hugues': '위그',
+  'george': '조르주', 'gilles': '질', 'grégoire': '그레구아르', 'guy': '기', 'hugues': '위그', 'hugues le grand': '위그 대공',
   'ignace': '이냐스', 'innocent': '이노상', 'isaac': '이자크', 'isidore': '이지도르',
   'jérôme': '제롬', 'jules': '쥘', 'julien': '쥘리앵', 'laurent': '로랑', 'léon': '레옹',
   'léopold': '레오폴드', 'luc': '뤼크', 'marc': '마르크', 'mathieu': '마티외', 'maurice': '모리스',
@@ -545,26 +545,289 @@ function frHeadwordToKo(nameFr, baseFr, rawEntry = null) {
     }
   }
 
-  // If nameFr has a parenthetical first name like "Abdeel (Abraham)" or "Abadie (Jeannette d’)", include its Korean transliteration too
+  // Rule 2: Parenthetical surname inversion or title handling
   const parenM = String(nameFr || '').match(/\(([^)]+)\)/);
   if (parenM && !WORD_DICT[fullLow] && !WORD_DICT[fullLowPlain]) {
-    const inner = parenM[1].replace(/(?:\s+de|\s+d’|\s+d'|\s+du|\s+des|\s+la|\s+le)$/i, '').trim();
-    if (inner && inner.length < 28) {
-      const innerTokens = inner.split(/[\s\-]+/).map(t => {
+    const inner = parenM[1].trim();
+    const innerLow = inner.toLowerCase();
+
+    // Check titles
+    if (innerLow === 'l’abbé' || innerLow === "l'abbé" || innerLow === 'abbé') {
+      return `수도원장 ${baseKo}`;
+    }
+    if (innerLow.startsWith('le comte') || innerLow.startsWith('comte')) {
+      return `${baseKo} 백작`;
+    }
+    if (innerLow === 'le chevalier') {
+      return `${baseKo} 기사`;
+    }
+    if (innerLow === 'le roi') {
+      return `${baseKo} 왕`;
+    }
+    if (innerLow === 'le vénérable') {
+      return `가경자 ${baseKo}`;
+    }
+
+    // Given names
+    const cleanInner = inner.replace(/^(?:d’|d'|l’|l'|de\s+)/i, '').trim();
+    if (cleanInner && cleanInner.length < 30) {
+      const innerTokens = cleanInner.split(/[\s\-]+/).map(t => {
         const tl = t.toLowerCase().replace(/^(?:d’|d'|l’|l')/i, '');
         if (!tl || ['m.','mm.','dit','dite','de','du','la','le'].includes(tl)) return '';
         return NAME_MAP[tl] || wordToHangul(tl);
       }).filter(Boolean);
       if (innerTokens.length) {
         const innerStr = innerTokens.join(' ');
-        if (!baseKo.includes(innerStr)) {
-          return `${baseKo} (${innerStr})`;
+        if (baseKo.includes(innerStr)) return baseKo;
+        if (innerLow.includes('d’') || innerLow.includes("d'") || innerLow.startsWith('de ')) {
+          const joinedBase = (baseKo.startsWith('다') || baseKo.startsWith('드')) ? baseKo : `드 ${baseKo}`;
+          return `${innerStr} ${joinedBase}`;
         }
+        return `${innerStr} ${baseKo}`;
       }
     }
   }
 
   return baseKo || baseFr || nameFr;
+}
+
+
+const CURATED_HEADWORD_RULES = {
+  'aigle@@11': { nameKo: '독수리 [Aigle / Eagle]', nameKoShort: '독수리' },
+  'accouchements prodigieux@@5': { nameKo: '불가사의한 출산 [Accouchements Prodigieux / Prodigious Births]', nameKoShort: '불가사의한 출산' },
+  'adam (l’abbé)@@6': { nameKo: '수도원장 아담 [Adam (L’Abbé)]', nameKoShort: '수도원장 아담' },
+  'abadie (jeannette d’)@@1': { nameKo: '자네뜨 다바디 [Abadie (Jeannette d’)]', nameKoShort: '자네뜨 다바디' },
+  'abracax@@3': { nameKo: '아브라카스 또는 아브락사스 [Abracax, Abraxas]', nameKoShort: '아브라카스 또는 아브락사스' },
+  'alexandre le grand@@14': { nameKo: '알렉산드로스 대왕 [Alexandre le Grand / Alexander the Great]', nameKoShort: '알렉산드로스 대왕' },
+  'hugues le grand@@340': { nameKo: '위그 대공 [Hugues le Grand / Hugh the Great]', nameKoShort: '위그 대공' },
+  'albert le grand@@12': { nameKo: '알베르투스 마그누스 [Albert le Grand / Albert the Great]', nameKoShort: '알베르투스 마그누스' },
+  'alary (françois)@@12': { nameKo: '프랑수아 알라리 [Alary (François)]', nameKoShort: '프랑수아 알라리' },
+  'abdeel (abraham)@@1': { nameKo: '아브라함 압델 [Abdeel (Abraham)]', nameKoShort: '아브라함 압델' },
+  'aconce (jacques)@@6': { nameKo: '자크 아콘시오 [Aconce (Jacques)]', nameKoShort: '자크 아콘시오' },
+  'adelgreiff (jean-albert)@@7': { nameKo: '장알베르트 아델그라이프 [Adelgreiff (Jean-Albert)]', nameKoShort: '장알베르트 아델그라이프' },
+  'adelung (jean-christophe)@@7': { nameKo: '요한 크리스토프 아델룽 [Adelung (Jean-Christophe)]', nameKoShort: '요한 크리스토프 아델룽' },
+  'ævoli (césar)@@9': { nameKo: '체사레 아에볼리 [Ævoli (César)]', nameKoShort: '체사레 아에볼리' },
+  'agrippa (henri-corneille)@@10': { nameKo: '하인리히 코르넬리우스 아그리파 [Agrippa (Henri-Corneille)]', nameKoShort: '하인리히 코르넬리우스 아그리파' },
+  'aguerre (pierre d’)@@10': { nameKo: '피에르 다게르 [Aguerre (Pierre d’)]', nameKoShort: '피에르 다게르' }
+};
+
+const ENGLISH_HEADWORD_MAP = {
+  'alexandre le grand': 'Alexander the Great',
+  'hugues le grand': 'Hugh the Great',
+  'albert le grand': 'Albert the Great',
+  'aigle': 'Eagle',
+  'accouchements prodigieux': 'Prodigious Births',
+  'abeilles': 'Bees',
+  'abîme': 'Abyss',
+  'abominations': 'Abominations',
+  'aboyeurs': 'Barkers',
+  'abstinence': 'Abstinence',
+  'accidents': 'Accidents',
+  'accouchements': 'Childbirth Superstitions',
+  'adeptes': 'Adepts',
+  'adjuration': 'Adjuration',
+  'adoration du crapaud': 'Worship of the Toad',
+  'aéromancie': 'Aeromancy',
+  'aétite': 'Eagle-stone',
+  'aglaophotis': 'Aglaophotis',
+  'aguapa': 'Aguapa',
+  'aiguilles': 'Needles',
+  'aiguillette': 'Lacing Spell',
+  'aimant': 'Magnet',
+  'aimant (magnes)': 'Magnet, Magnes',
+  'ajournement': 'Summons',
+  'alchimie': 'Alchemy',
+  'alchimistes': 'Alchemists',
+  'alectryomancie': 'Alectryomancy',
+  'aleuromancie': 'Aleuromancy',
+  'allégorie': 'Allegory',
+  'alliance': 'Pact',
+  'almanach': 'Almanac',
+  'almanachs': 'Almanacs',
+  'aloès': 'Aloes',
+  'alomancie': 'Alomancy',
+  'alrunes': 'Alrunes (Mandrake Idols)',
+  'alphitomancie': 'Alphitomancy',
+  'améthyste': 'Amethyst',
+  'amitié': 'Friendship',
+  'amnios': 'Caul',
+  'amour': 'Love Spells',
+  'amulettes': 'Amulets',
+  'anagramme': 'Anagram',
+  'anathème': 'Anathema',
+  'anatomie': 'Anatomy',
+  'androgynes': 'Androgynes',
+  'âne': 'Donkey',
+  'anges': 'Angels',
+  'anguilles': 'Eels',
+  'animaux': 'Animals',
+  'anneau': 'Magic Ring',
+  'anneaux': 'Magic Rings',
+  'année': 'Year Superstitions',
+  'antéchrist': 'Antichrist',
+  'antechrist': 'Antichrist',
+  'anthropomancie': 'Anthropomancy',
+  'anthropophages': 'Cannibals',
+  'antipathie': 'Antipathy',
+  'apantomancie': 'Apantomancy',
+  'apocalypse': 'Apocalypse',
+  'apparitions': 'Apparitions',
+  'araignée': 'Spider',
+  'arbre': 'Tree',
+  'arbres': 'Trees',
+  'arc-en-ciel': 'Rainbow',
+  'archanges': 'Archangels',
+  'argent': 'Money & Silver',
+  'arithmomancie': 'Arithmancy',
+  'armes': 'Magic Weapons',
+  'armoires': 'Cupboard Haunting',
+  'art': 'Magic Art',
+  'asmodee': 'Asmodeus',
+  'asmodée': 'Asmodeus',
+  'astragalomancie': 'Astragalomancy',
+  'astrologie': 'Astrology',
+  'bâillement': 'Yawning',
+  'balai': 'Broomstick',
+  'bélomancie': 'Belomancy',
+  'bibliomancie': 'Bibliomancy',
+  'botanomancie': 'Botanomancy',
+  'capnomancie': 'Capnomancy',
+  'cartomancie': 'Cartomancy',
+  'catoptromancie': 'Catoptromancy',
+  'céphalonomancie': 'Cephalonomancy',
+  'cerbère': 'Cerberus',
+  'chat': 'Cat',
+  'chats': 'Cats',
+  'chien': 'Dog',
+  'chiens': 'Dogs',
+  'chouette': 'Owl',
+  'chiromancie': 'Chiromancy',
+  'cléidomancie': 'Cleidomancy',
+  'cléromancie': 'Cleromancy',
+  'corbeau': 'Crow',
+  'cosquinomancie': 'Coscinomancy',
+  'crapaud': 'Toad',
+  'cristallomancie': 'Crystallomancy',
+  'cygne': 'Swan',
+  'dactyliomancie': 'Dactyliomancy',
+  'danse du sabbat': 'Sabbath Dance',
+  'démons': 'Demons',
+  'diable': 'Devil',
+  'enfer': 'Hell',
+  'esprits': 'Spirits',
+  'fantômes': 'Phantoms',
+  'géomancie': 'Geomancy',
+  'hydromancie': 'Hydromancy',
+  'loup-garou': 'Werewolf',
+  'loups-garous': 'Werewolves',
+  'lutin': 'Goblin',
+  'lutins': 'Goblins',
+  'magie': 'Magic',
+  'magiciens': 'Magicians',
+  'miroir magique': 'Magic Mirror',
+  'nécromancie': 'Necromancy',
+  'onéiromancie': 'Oneiromancy',
+  'pacte': 'Pact',
+  'poule noire': 'Black Hen',
+  'pyromancie': 'Pyromancy',
+  'rhabdomancie': 'Rhabdomancy',
+  'sabbat': "Witches' Sabbath",
+  'sorciers': 'Sorcerers',
+  'sorcières': 'Witches',
+  'spectres': 'Spectres',
+  'transport des sorciers': 'Flight of the Sorcerers',
+  'vampires': 'Vampires',
+  'voyages des sorciers': 'Journey of the Witches'
+};
+
+function buildEntryHeadword(raw, koBase, matchedPlate = null) {
+  if (matchedPlate) {
+    return {
+      nameKo: matchedPlate.nameKo,
+      nameKoShort: matchedPlate.nameKoShort || matchedPlate.nameKo.replace(/\s*\[.*\]$/, ''),
+      nameFr: matchedPlate.nameFr,
+      nameEn: matchedPlate.nameEn || ''
+    };
+  }
+
+  const rawKey = `${raw.nameFr.toLowerCase()}@@${raw.page1863}`;
+  if (CURATED_HEADWORD_RULES[rawKey]) {
+    const c = CURATED_HEADWORD_RULES[rawKey];
+    return {
+      nameKo: c.nameKo,
+      nameKoShort: c.nameKoShort,
+      nameFr: raw.nameFr,
+      nameEn: ''
+    };
+  }
+
+  const fullLow = String(raw.nameFr || '').toLowerCase().trim();
+  const baseLow = String(raw.baseFr || '').toLowerCase().trim();
+
+  // Rule 3: Alternative names with 'ou'
+  if (/\bou\b/i.test(raw.nameFr)) {
+    const parts = raw.nameFr.split(/\s+ou\s+/i);
+    if (parts.length === 2) {
+      const ko1 = frHeadwordToKo(parts[0].trim(), parts[0].trim());
+      const ko2 = frHeadwordToKo(parts[1].trim(), parts[1].trim());
+      const koMerged = `${ko1} 또는 ${ko2}`;
+      return {
+        nameKo: `${koMerged} [${parts[0].trim()}, ${parts[1].trim()}]`,
+        nameKoShort: koMerged,
+        nameFr: raw.nameFr,
+        nameEn: ''
+      };
+    }
+  }
+
+  // Rule 2: Parenthetical surname inversion
+  if (raw.nameFr.includes('(')) {
+    return {
+      nameKo: `${koBase} [${raw.nameFr}]`,
+      nameKoShort: koBase,
+      nameFr: raw.nameFr,
+      nameEn: ''
+    };
+  }
+
+  // Rule 1: English headword when needed & different
+  if (ENGLISH_HEADWORD_MAP[fullLow]) {
+    const en = ENGLISH_HEADWORD_MAP[fullLow];
+    return {
+      nameKo: `${koBase} [${raw.nameFr} / ${en}]`,
+      nameKoShort: koBase,
+      nameFr: raw.nameFr,
+      nameEn: en
+    };
+  }
+  if (ENGLISH_HEADWORD_MAP[baseLow]) {
+    const en = ENGLISH_HEADWORD_MAP[baseLow];
+    return {
+      nameKo: `${koBase} [${raw.nameFr} / ${en}]`,
+      nameKoShort: koBase,
+      nameFr: raw.nameFr,
+      nameEn: en
+    };
+  }
+
+  // Rule 1: Divinations ending in -mancie
+  if (fullLow.endsWith('mancie')) {
+    const en = raw.nameFr.replace(/mancie$/i, 'mancy');
+    return {
+      nameKo: `${koBase} [${raw.nameFr} / ${en}]`,
+      nameKoShort: koBase,
+      nameFr: raw.nameFr,
+      nameEn: en
+    };
+  }
+
+  // Default: Rule 1 standard [French]
+  return {
+    nameKo: `${koBase} [${raw.nameFr}]`,
+    nameKoShort: koBase,
+    nameFr: raw.nameFr,
+    nameEn: ''
+  };
 }
 
 const ADJ_SET = new Set([
@@ -642,68 +905,71 @@ function convertEnding(word) {
 }
 
 const BODY_PROPER_REPLACEMENTS = [
-  [/\bDelancre\b/g, '피에르 드 랑크르 (Delancre)'],
-  [/\bWierus\b|\bWiérus\b/g, '요한 바이어 (Wierus)'],
-  [/\bBodin\b/g, '장 보댕 (Bodin)'],
-  [/\bBoguet\b/g, '앙리 보게 (Boguet)'],
-  [/\bDelrio\b/g, '마르틴 델리오 (Delrio)'],
-  [/\bLeloyer\b/g, '피에르 르루아예 (Leloyer)'],
-  [/\bBekker\b/g, '발타자르 베커르 (Bekker)'],
-  [/\bCalmet\b/g, '돔 칼메 (Calmet)'],
-  [/\bGörres\b|\bGœrres\b/g, '요제프 괴레스 (Görres)'],
-  [/\bPaymon\b/g, '파이몬 (Paymon)'],
-  [/\bCardan\b/g, '카르다노 (Cardan)'],
-  [/\bPliny\b|\bPline\b/g, '플리니우스 (Pliny)'],
-  [/\bPlutarch\b|\bPlutarque\b/g, '플루타르코스 (Plutarch)'],
-  [/\bSuetonius\b|\bSuétone\b/g, '수에토니우스 (Suetonius)'],
-  [/\bLucien\b/g, '루키아노스 (Lucien)'],
-  [/\bIamblichus\b/g, '이암블리코스 (Iamblichus)'],
-  [/\bApuleius\b|\bApulée\b/g, '아풀레이우스 (Apuleius)'],
-  [/\bPausanias\b/g, '파우사니아스 (Pausanias)'],
-  [/\bCicero\b|\bCicéron\b/g, '키케로 (Cicéron)'],
-  [/\bVirgil\b|\bVirgile\b/g, '베르길리우스 (Virgil)'],
-  [/\bTorquemada\b/g, '토르케마다 (Torquemada)'],
-  [/\bLavater\b/g, '라바터 (Lavater)'],
-  [/\bCagliostro\b/g, '칼리오스트로 (Cagliostro)'],
-  [/\bAgrippa\b/g, '아그리파 (Agrippa)'],
-  [/\bParacelse\b|\bParacelsus\b/g, '파라켈수스 (Paracelsus)'],
-  [/\bBeelzebub\b|\bBelzébuth\b/g, '벨제붑 (Belzébuth)'],
-  [/\bAstaroth\b/g, '아스타로트 (Astaroth)'],
-  [/\bJupiter\b/g, '유피테르 (Jupiter)'],
-  [/\bApollo\b|\bApollon\b/g, '아폴론 (Apollon)'],
-  [/\bMinerve\b|\bMinerva\b/g, '미네르바 (Minerve)'],
-  [/\bPythagore\b|\bPythagoras\b/g, '피타고라스 (Pythagore)'],
-  [/\bOdin\b/g, '오딘 (Odin)'],
+  // Rule 4: French persons and regions use French
+  [/\bDelancre\b/g, '피에르 드 랑크르 (Pierre de Lancre)'],
+  [/\bBodin\b/g, '장 보댕 (Jean Bodin)'],
+  [/\bBoguet\b/g, '앙리 보게 (Henri Boguet)'],
+  [/\bLeloyer\b/g, '피에르 르루아예 (Pierre Le Loyer)'],
+  [/\bCalmet\b/g, '돔 칼메 (Dom Calmet)'],
+  [/\bFlamel\b/g, '니콜라 플라멜 (Nicolas Flamel)'],
+  [/\bLebrun\b/g, '피에르 르브룅 (Pierre Lebrun)'],
+  [/\bThiers\b/g, '장바티스트 티에르 (Jean-Baptiste Thiers)'],
+  [/\bGrandier\b/g, '위르뱅 그랑디에 (Urbain Grandier)'],
+  [/\bMousseaux\b/g, '구즈노 데 무소 (Gougenot des Mousseaux)'],
   [/\bLoudun\b/g, '루됭 (Loudun)'],
   [/\bLouviers\b/g, '루비에 (Louviers)'],
   [/\bFinistère\b/g, '피니스테르 (Finistère)'],
   [/\bGascony\b|\bGascogne\b/g, '가스코뉴 (Gascogne)'],
-  [/\bHermes-Trismegistus\b|\bHermès-Trismégiste\b/g, '헤르메스 트리스메기스투스 (Hermès-Trismégiste)'],
-  [/\bAlchabitius\b/g, '알카비티우스 (Alchabitius)'],
-  [/\bJulius Africanus\b/g, '율리우스 아프리카누스 (Julius Africanus)'],
   [/\bNicolas Remy\b/g, '니콜라 레미 (Nicolas Remy)'],
-  [/\bValère-Maxime\b/g, '발레리우스 막시무스 (Valère-Maxime)'],
-  [/\bCésaire d'Heisterbach\b|\bCésaire d’Heisterbach\b/g, '세자르 데스테르바흐 (Césaire d’Heisterbach)'],
+
+  // Rule 4: Non-French persons and regions use English
+  [/\bWierus\b|\bWiérus\b/g, '요한 바이어 (Johann Weyer)'],
+  [/\bDelrio\b/g, '마르틴 델리오 (Martin Delrio)'],
+  [/\bBekker\b/g, '발타자르 베커르 (Balthasar Bekker)'],
+  [/\bGörres\b|\bGœrres\b/g, '요제프 괴레스 (Joseph Görres)'],
+  [/\bCardan\b/g, '카르다노 (Gerolamo Cardano)'],
+  [/\bPliny\b|\bPline\b/g, '플리니우스 (Pliny the Elder)'],
+  [/\bPlutarch\b|\bPlutarque\b/g, '플루타르코스 (Plutarch)'],
+  [/\bSuetonius\b|\bSuétone\b/g, '수에토니우스 (Suetonius)'],
+  [/\bLucien\b/g, '루키아노스 (Lucian)'],
+  [/\bIamblichus\b/g, '이암블리코스 (Iamblichus)'],
+  [/\bApuleius\b|\bApulée\b/g, '아풀레이우스 (Apuleius)'],
+  [/\bPausanias\b/g, '파우사니아스 (Pausanias)'],
+  [/\bCicero\b|\bCicéron\b/g, '키케로 (Cicero)'],
+  [/\bVirgil\b|\bVirgile\b/g, '베르길리우스 (Virgil)'],
+  [/\bTorquemada\b/g, '토르케마다 (Tomás de Torquemada)'],
+  [/\bLavater\b/g, '라바터 (Johann Kaspar Lavater)'],
+  [/\bCagliostro\b/g, '칼리오스트로 (Alessandro Cagliostro)'],
+  [/\bAgrippa\b/g, '아그리파 (Heinrich Cornelius Agrippa)'],
+  [/\bParacelse\b|\bParacelsus\b/g, '파라켈수스 (Paracelsus)'],
+  [/\bPythagore\b|\bPythagoras\b/g, '피타고라스 (Pythagoras)'],
+  [/\bOdin\b/g, '오딘 (Odin)'],
+  [/\bHermes-Trismegistus\b|\bHermès-Trismégiste\b/g, '헤르메스 트리스메기스투스 (Hermes Trismegistus)'],
+  [/\bAlchabitius\b/g, '알카비티우스 (Alchabitius)'],
+  [/\bJulius Africanus\b/g, '율리우스 아프리카누스 (Sextus Julius Africanus)'],
+  [/\bValère-Maxime\b/g, '발레리우스 막시무스 (Valerius Maximus)'],
+  [/\bCésaire d'Heisterbach\b|\bCésaire d’Heisterbach\b/g, '세자르 데스테르바흐 (Caesarius of Heisterbach)'],
   [/\bApollonius\b/g, '아폴로니우스 (Apollonius)'],
-  [/\bFlamel\b/g, '니콜라 플라멜 (Flamel)'],
-  [/\bPeucer\b/g, '카스파르 포이케르 (Peucer)'],
-  [/\bLebrun\b/g, '피에르 르브룅 (Lebrun)'],
-  [/\bThiers\b/g, '장바티스트 티에르 (Thiers)'],
-  [/\bGrandier\b/g, '그랑디에 (Grandier)'],
-  [/\bMirville\b/g, '미르빌 (Mirville)'],
-  [/\bMousseaux\b/g, '구즈노 데 무소 (Mousseaux)']
+  [/\bPeucer\b/g, '카스파르 포이케르 (Caspar Peucer)'],
+  [/\bMirville\b/g, '미르빌 (Jules de Mirville)'],
+  [/\bPaymon\b/g, '파이몬 (Paymon)'],
+  [/\bBeelzebub\b|\bBelzébuth\b/g, '벨제붑 (Belzébuth)'],
+  [/\bAstaroth\b/g, '아스타로트 (Astaroth)'],
+  [/\bJupiter\b/g, '유피테르 (Jupiter)'],
+  [/\bApollo\b|\bApollon\b/g, '아폴론 (Apollon)'],
+  [/\bMinerve\b|\bMinerva\b/g, '미네르바 (Minerva)']
 ];
 
 // Replace regex matches only when outside parentheses (...) so nested parentheses never occur
 function replaceOutsideParens(text, re, replacement) {
-  const parts = text.split(/(\([^)]*\))/g);
-  return parts.map(part => (part.startsWith('(') && part.endsWith(')')) ? part : part.replace(re, replacement)).join('');
+  const parts = text.split(/(\[[^\]]*\]|\([^)]*\))/g);
+  return parts.map(part => ((part.startsWith('(') && part.endsWith(')')) || (part.startsWith('[') && part.endsWith(']'))) ? part : part.replace(re, replacement)).join('');
 }
 
 // Harmonize Korean particles (은/는, 이/가, 을/를, 과/와, 으로/로) after Korean nouns or Korean + (Original)
 function fixKoreanParticles(text) {
   // 1. After "한글 (Original)" + particle
-  let out = text.replace(/([가-힣])(\s*\([^)]+\))+(은|는|이|가|을|를|과|와|으로|로(?=[ \.,;!\?]|$)|이라고|라고|이라는|라는)/g, (m, korChar, parens, particle) => {
+  let out = text.replace(/([가-힣])(\s*(?:\[[^\]]+\]|\([^)]+\)))+(은|는|이|가|을|를|과|와|으로|로(?=[ \.,;!\?]|$)|이라고|라고|이라는|라는)/g, (m, korChar, parens, particle) => {
     const code = korChar.charCodeAt(0) - 0xAC00;
     if (code < 0 || code > 11171) return m;
     const jong = code % 28;
@@ -734,14 +1000,14 @@ function fixKoreanParticles(text) {
   return out;
 }
 
-function polishTranslation(rawKo, e, koBase) {
+function polishTranslation(rawKo, e, koBase, headword = null) {
   const cacheKey = `${e.nameFr}@@${e.page1863}`;
   if (CURATED_OVERRIDES[cacheKey]) {
     return CURATED_OVERRIDES[cacheKey];
   }
 
   let s = String(rawKo || '').trim();
-  const displayTitle = `${koBase} (${e.nameFr})`;
+  const displayTitle = headword ? headword.nameKo : `${koBase} [${e.nameFr}]`;
   if (!s) return `${displayTitle} — ${e.textFr}`;
 
   // Remove any leftover wiki table markup
@@ -751,7 +1017,7 @@ function polishTranslation(rawKo, e, koBase) {
   const escName = e.nameFr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const escBase = e.baseFr.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const escKo = koBase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  s = s.replace(new RegExp(`^(?:${escName}|${escBase}|${escKo})(?:\\s*\\([^)]+\\))?\\s*(?:—|-|\\.|:)\\s*`, 'i'), '');
+  s = s.replace(new RegExp(`^(?:${escName}|${escBase}|${escKo})(?:\\s*(?:\\[[^\]]+\\]|\\([^)]+\\)))?\\s*(?:—|-|\\.|:)\\s*`, 'i'), '');
   s = s.replace(/^[^\.\n]{1,35}\s+—\s+/, '');
   // Also strip short 1-3 word leading noun phrase + period if French text did not start with a short 1-3 word sentence
   const firstDotIdx = s.indexOf('. ');
@@ -768,7 +1034,7 @@ function polishTranslation(rawKo, e, koBase) {
   for (const prefix of [e.nameFr, plainNameFr, e.baseFr]) {
     if (s.startsWith(prefix)) {
       let rest = s.slice(prefix.length);
-      if ( e.nameFr.includes('(')) {
+      if (e.nameFr.includes('(')) {
         rest = rest.replace(/^\s*\([^)]+\)/, '');
       }
       s = displayTitle + rest;
@@ -779,7 +1045,7 @@ function polishTranslation(rawKo, e, koBase) {
   // Fix occult/historical mistranslations and literal French idioms across the 1863 corpus
   s = s
     .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마녀들의 안식일|안식일/g, '사바트 (Sabbat)')
-    .replace(/솔로몬의 빗장뼈|솔로몬의 쇄골/g, '『솔로몬의 열쇠 (Clavicules de Salomon)』')
+    .replace(/솔로몬의 빗장뼈|솔로몬의 쇄골/g, '「솔로몬의 열쇠(Clavicules de Salomon)」')
     .replace(/유대인 도당/g, '유대 카발라 (Cabale)')
     .replace(/위대한 도당으로/g, '대카발라 학자 (Cabaliste)로')
     .replace(/마술사,\s*도당으로/g, '마법사이자 카발라 학자 (Cabaliste)로')
@@ -793,9 +1059,9 @@ function polishTranslation(rawKo, e, koBase) {
     .replace(/바늘을 묶는 기술/g, '매듭 주술(에귀예트, Aiguillette)을 거는 기술')
     .replace(/바늘을 묶/g, '매듭 주술을 걸')
     .replace(/바늘을 풀/g, '매듭 주술을 풀')
-    .replace(/물리적 합자\s*\(Physical Ligatures\)/g, '『물리적 결박 주술 (Ligatures physiques)』')
-    .replace(/참조\s*:\s*합자\.?/g, '참조: 결박 주술 (Ligatures).')
-    .replace(/\(참조\s*:\s*합자\)/g, '(참조: 결박 주술 (Ligatures))')
+    .replace(/물리적 합자\s*\(Physical Ligatures\)/g, '「물리적 결박 주술(Ligatures physiques)」')
+    .replace(/참조\s*:\s*합자\.?/g, '참조: 결박 주술 [Ligatures].')
+    .replace(/\(참조\s*:\s*합자\)/g, '(참조: 결박 주술 [Ligatures])')
     .replace(/사법 점성술|법한 점성술/g, '판단 점성술 (Astrologie judiciaire)')
     .replace(/후기 제국의/g, '동로마(비잔티움) 제국의')
     .replace(/산적이라는 선고를/g, '강도·흉악범으로 판결을')
@@ -811,7 +1077,7 @@ function polishTranslation(rawKo, e, koBase) {
     .replace(/천사들과 거래/g, '천사들과 교류')
     .replace(/악마들과 거래|악마와 거래/g, '악마와 교류(계약)')
     .replace(/조약에 따라/g, '계약(Pacte)에 따라')
-    .replace(/미란돌라 그림/g, '피코 델라 미란돌라 (Pic de la Mirandole)')
+    .replace(/미란돌라 그림/g, '피코 델라 미란돌라 (Giovanni Pico della Mirandola)')
     .replace(/그러한 기사는/g, '이러한 표제어는')
     .replace(/이 기사는/g, '이 항목은')
     .replace(/표창은 정령을/g, '소환장(Citation)은 정령을')
@@ -819,8 +1085,8 @@ function polishTranslation(rawKo, e, koBase) {
     .replace(/마법의 인물을/g, '마법 도형(부적)을')
     .replace(/과도한 도덕성 때문에/g, '방종한 품행 때문에')
     .replace(/화살을주었습니다|화살을주었다/g, '화살을 주었다')
-    .replace(/피타고라스의 주인이었다/g, '피타고라스 (Pythagore)의 스승이었다')
-    .replace(/Brandenburg 행진에서/g, '브란덴부르크 변경백령 (Marche de Brandebourg)의')
+    .replace(/피타고라스의 주인이었다/g, '피타고라스 (Pythagoras)의 스승이었다')
+    .replace(/Brandenburg 행진에서/g, '브란덴부르크 변경백령 (Margraviate of Brandenburg)의')
     .replace(/화가 나서 환상을 보고 있다고/g, '광기에 빠져 환시를 본다고')
     .replace(/원칙이 되지 않았습니다|원칙이 되지 않았다/g, '정설로 받아들여지지는 않았다')
     .replace(/비극적인 무질서로/g, '비극적인 사랑과 파란만장한 행적으로')
@@ -845,9 +1111,31 @@ function polishTranslation(rawKo, e, koBase) {
     .replace(/사단이나/g, '사탄 (Satan)이나')
     .replace(/희귀한\./g, '희귀본이다.')
     .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?/g, '해당 항목 참조.')
-    .replace(/참조\s*:\s*이 단어\.?|참조\s*:\s*이 이름\.?/g, '해당 항목 참조.');
+    .replace(/참조\s*:\s*이 단어\.?|참조\s*:\s*이 이름\.?/g, '해당 항목 참조.')
+    // Rule 6: Newspapers use 《 》, books use 「 」
+    .replace(/『주르날 뒤 론 \(Journal du Rhône\)』/g, '《주르날 뒤 론(Journal du Rhône)》')
+    .replace(/『/g, '「')
+    .replace(/』/g, '」')
+    // Rule 8: Book citations (Lib -> 권, Cap -> 장, P -> 페이지, etc.)
+    .replace(/\bLib\.\s*([0-9IVXLCDM]+)/gi, '$1권')
+    .replace(/\b(?:Cap|Ch)\.\s*([0-9IVXLCDM]+)/gi, '$1장')
+    .replace(/\bT\.\s*([0-9IVXLCDM]+)/gi, '$1권')
+    .replace(/\bP\.\s*([0-9]+)/gi, '$1페이지')
+    .replace(/\bDis\.\s*([0-9IVXLCDM]+)/gi, '논설 $1')
+    .replace(/\bExt\.\s*([0-9IVXLCDM]+)/gi, '추가본 $1')
+    .replace(/제([0-9IVXLCDM]+)권\s*제([0-9IVXLCDM]+)장/g, '$1권 $2장')
+    .replace(/제([0-9IVXLCDM]+)권/g, '$1권')
+    .replace(/제([0-9IVXLCDM]+)장/g, '$1장')
+    // Occult and machine translation fixes from audit
+    .replace(/초등 영/g, '4원소 정령')
+    .replace(/알렉상드르 르 대/g, '알렉산드로스 대왕')
+    .replace(/위그 르 대/g, '위그 대공')
+    .replace(/매혹적인 단어/g, '마법의 주문')
+    .replace(/허용 마법/g, '자연 마법')
+    .replace(/약간의 물리학자였다/g, '단지 당대의 자연학자에 불과했다')
+    .replace(/분류하는 데 만족한/g, '분류하는 데 그쳤던');
 
-  // Replace un-annotated proper nouns outside parentheses
+  // Replace un-annotated proper nouns outside parentheses and brackets
   for (const [re, rep] of BODY_PROPER_REPLACEMENTS) {
     s = replaceOutsideParens(s, re, rep);
   }
@@ -879,22 +1167,23 @@ function polishTranslation(rawKo, e, koBase) {
     .replace(/정확하지 않는다/g, '정확하지 않다')
     .replace(/아닙다/g, '아니다');
 
-  // Harmonize Korean particles after replacements and parentheticals
+  // Harmonize Korean particles after replacements and parentheticals/brackets
   s = fixKoreanParticles(s);
 
-  // Translate trailing "참조: X" targets into "참조: 한글 (X)"
+  // Translate trailing "참조: X" targets into "참조: [한국어명] [[원어명]]"
   s = s.replace(/참조\s*:\s*([A-ZÀ-ŸŒÆ][^\.\n]{1,40})\.?$/g, (_, target) => {
     const tClean = target.trim().replace(/\.$/, '');
     if (/[가-힣]/.test(tClean)) return `참조: ${tClean}.`;
     const tKo = frHeadwordToKo(tClean, tClean);
-    return `참조: ${tKo} (${tClean}).`;
+    const tHead = buildEntryHeadword({ nameFr: tClean, baseFr: tClean }, tKo);
+    return `참조: ${tHead.nameKo}.`;
   });
 
   return s.replace(/\s+/g, ' ').trim();
 }
 
 // Classify and attach pure Korean translation for any 1863 entry
-function analyzeAndTranslateEntry(e, koBase) {
+function analyzeAndTranslateEntry(e, koBase, headword = null) {
   const t = e.textFr.trim();
   const lead = t.slice(0, 260);
 
@@ -902,12 +1191,13 @@ function analyzeAndTranslateEntry(e, koBase) {
   if (/^(?:voy\.|voyez)\s+/i.test(t) && t.length < 110) {
     const target = t.replace(/^(?:voy\.|voyez)\s+/i, '').replace(/\.$/, '').trim();
     const targetKo = frHeadwordToKo(target, target);
-    const pureRef = `${targetKo} (${target}) 참조.`;
+    const targetHead = buildEntryHeadword({ nameFr: target, baseFr: target }, targetKo);
+    const pureRef = `${targetHead.nameKo} 참조.`;
     return {
       category: 'crossref',
       rank: '상호참조 표제어 (Renvoi)',
       legions: 0,
-      domains: ['상호참조', `${targetKo} (${target})`],
+      domains: ['상호참조', targetHead.nameKo],
       summary: pureRef,
       description: pureRef
     };
@@ -1043,9 +1333,8 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
     }
   }
 
-  const koBase = matchedPlate ? matchedPlate.nameKo : frHeadwordToKo(raw.nameFr, raw.baseFr, raw);
-  // Ensure nameKo ALWAYS includes English/Original notation alongside Korean proper noun!
-  const nameKoWithOriginal = `${koBase} (${raw.nameFr})`;
+  const koBase = matchedPlate ? (matchedPlate.nameKoShort || matchedPlate.nameKo) : frHeadwordToKo(raw.nameFr, raw.baseFr, raw);
+  const headword = buildEntryHeadword(raw, koBase, matchedPlate);
 
   if (matchedPlate) {
     usedPlateIds.add(matchedPlate.id);
@@ -1055,9 +1344,10 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
       plate: matchedPlate.plate,
       plateNo: matchedPlate.plateNo,
       hasPlate: true,
-      nameKo: nameKoWithOriginal,
-      nameKoShort: koBase,
+      nameKo: headword.nameKo,
+      nameKoShort: headword.nameKoShort,
       nameFr: matchedPlate.nameFr,
+      nameEn: headword.nameEn || '',
       rank: matchedPlate.rank,
       legions: matchedPlate.legions || 0,
       category: 'demon',
@@ -1072,16 +1362,17 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
   } else {
     const slugBase = norm(raw.nameFr).slice(0, 28) || `entry${idx + 1}`;
     const id = `e${idx + 1}-${slugBase}`;
-    const info = analyzeAndTranslateEntry(raw, koBase);
+    const info = analyzeAndTranslateEntry(raw, koBase, headword);
     fullEntries.push({
       id,
       letter: raw.letter,
       plate: '',
       plateNo: 0,
       hasPlate: false,
-      nameKo: nameKoWithOriginal,
-      nameKoShort: koBase,
+      nameKo: headword.nameKo,
+      nameKoShort: headword.nameKoShort,
       nameFr: raw.nameFr,
+      nameEn: headword.nameEn || '',
       rank: info.rank,
       legions: info.legions,
       category: info.category,
@@ -1185,7 +1476,9 @@ export function filterEntries({query="",category="all",letter="ALL",sort="page",
     if(!q)return true;
     const haystack=[
       entry.nameKo,
+      entry.nameKoShort || '',
       entry.nameFr,
+      entry.nameEn || '',
       entry.rank,
       entry.summary,
       entry.description,
@@ -1196,7 +1489,7 @@ export function filterEntries({query="",category="all",letter="ALL",sort="page",
   });
 
   return filtered.sort((a,b)=>{
-    if(sort==="ko")return a.nameKo.localeCompare(b.nameKo,"ko");
+    if(sort==="ko")return (a.nameKoShort||a.nameKo).localeCompare(b.nameKoShort||b.nameKo,"ko") || a.nameKo.localeCompare(b.nameKo,"ko");
     if(sort==="fr")return a.nameFr.localeCompare(b.nameFr,"fr");
     if(sort==="legions")return (b.legions||0)-(a.legions||0)||(a.plateNo||9999)-(b.plateNo||9999)||a.page1863-b.page1863;
     if(sort==="plate")return (b.hasPlate?1:0)-(a.hasPlate?1:0)||(a.plateNo||9999)-(b.plateNo||9999)||a.page1863-b.page1863;
