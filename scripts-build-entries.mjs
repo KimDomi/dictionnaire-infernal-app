@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { BODY_PROPER_REPLACEMENTS } from './scripts-proper-nouns.mjs';
 
 // Load the 3,810 clean 1863 entries
 const rawEntries = JSON.parse(fs.readFileSync('resources/entries_1863_all.json', 'utf8'));
@@ -293,6 +294,7 @@ const WORD_DICT = {
   'voix': '신비한 목소리', 'vol': '공중 부양과 비행', 'voleurs': '도둑을 잡는 점술',
   'volac': '볼라크', 'volonté': '의지의 마법', 'voyages des sorcières': '마녀들의 사바트 비행',
   'vue': '시력과 투시',
+  'voisin (la)': '라 부아쟁', 'voisin': '라 부아쟁', 'voisinla': '라 부아쟁',
   'wall': '발(부알)', 'wierus': '요한 바이어', 'wiérus': '요한 바이어',
   'xaphan': '자판', 'xéno': '제노',
   'yan-gant-y-tan': '얀간티탄', 'yeux': '눈과 사안',
@@ -480,7 +482,7 @@ const CURATED_OVERRIDES = fs.existsSync('resources/curated_ko_overrides.json')
 const BAD_CACHE_HEADWORDS = new Set([
   '헛소리','바커','콘돔','방부제','캐릭터','표창','도당','마법의 책','그러나','하지만',
   '따라서','그들은','우리는','이것은','그것은','그녀는','그는','모든','일부','많은',
-  '어떤','비록','아마도','오늘날','옛날','참조','보라'
+  '어떤','비록','아마도','오늘날','옛날','참조','보라','이웃'
 ]);
 
 function extractKoHeadwordFromCache(rawKo, e) {
@@ -904,66 +906,15 @@ function convertEnding(word) {
   return word;
 }
 
-const BODY_PROPER_REPLACEMENTS = [
-  // Rule 4: French persons and regions use French
-  [/\bDelancre\b/g, '피에르 드 랑크르(Pierre de Lancre)'],
-  [/\bBodin\b/g, '장 보댕(Jean Bodin)'],
-  [/\bBoguet\b/g, '앙리 보게(Henri Boguet)'],
-  [/\bLeloyer\b/g, '피에르 르루아예(Pierre Le Loyer)'],
-  [/\bCalmet\b/g, '돔 칼메(Dom Calmet)'],
-  [/\bFlamel\b/g, '니콜라 플라멜(Nicolas Flamel)'],
-  [/\bLebrun\b/g, '피에르 르브룅(Pierre Lebrun)'],
-  [/\bThiers\b/g, '장바티스트 티에르(Jean-Baptiste Thiers)'],
-  [/\bGrandier\b/g, '위르뱅 그랑디에(Urbain Grandier)'],
-  [/\bMousseaux\b/g, '구즈노 데 무소(Gougenot des Mousseaux)'],
-  [/\bLoudun\b/g, '루됭(Loudun)'],
-  [/\bLouviers\b/g, '루비에(Louviers)'],
-  [/\bFinistère\b/g, '피니스테르(Finistère)'],
-  [/\bGascony\b|\bGascogne\b/g, '가스코뉴(Gascogne)'],
-  [/\bNicolas Remy\b/g, '니콜라 레미(Nicolas Remy)'],
-
-  // Rule 4: Non-French persons and regions use English
-  [/\bWierus\b|\bWiérus\b/g, '요한 바이어(Johann Weyer)'],
-  [/\bDelrio\b/g, '마르틴 델리오(Martin Delrio)'],
-  [/\bBekker\b/g, '발타자르 베커르(Balthasar Bekker)'],
-  [/\bGörres\b|\bGœrres\b/g, '요제프 괴레스(Joseph Görres)'],
-  [/\bCardan\b/g, '카르다노(Gerolamo Cardano)'],
-  [/\bPliny\b|\bPline\b/g, '플리니우스(Pliny the Elder)'],
-  [/\bPlutarch\b|\bPlutarque\b/g, '플루타르코스(Plutarch)'],
-  [/\bSuetonius\b|\bSuétone\b/g, '수에토니우스(Suetonius)'],
-  [/\bLucien\b/g, '루키아노스(Lucian)'],
-  [/\bIamblichus\b/g, '이암블리코스(Iamblichus)'],
-  [/\bApuleius\b|\bApulée\b/g, '아풀레이우스(Apuleius)'],
-  [/\bPausanias\b/g, '파우사니아스(Pausanias)'],
-  [/\bCicero\b|\bCicéron\b/g, '키케로(Cicero)'],
-  [/\bVirgil\b|\bVirgile\b/g, '베르길리우스(Virgil)'],
-  [/\bTorquemada\b/g, '토르케마다(Tomás de Torquemada)'],
-  [/\bLavater\b/g, '라바터(Johann Kaspar Lavater)'],
-  [/\bCagliostro\b/g, '칼리오스트로(Alessandro Cagliostro)'],
-  [/\bAgrippa\b/g, '아그리파(Heinrich Cornelius Agrippa)'],
-  [/\bParacelse\b|\bParacelsus\b/g, '파라켈수스(Paracelsus)'],
-  [/\bPythagore\b|\bPythagoras\b/g, '피타고라스(Pythagoras)'],
-  [/\bOdin\b/g, '오딘(Odin)'],
-  [/\bHermes-Trismegistus\b|\bHermès-Trismégiste\b/g, '헤르메스 트리스메기스투스(Hermes Trismegistus)'],
-  [/\bAlchabitius\b/g, '알카비티우스(Alchabitius)'],
-  [/\bJulius Africanus\b/g, '율리우스 아프리카누스(Sextus Julius Africanus)'],
-  [/\bValère-Maxime\b/g, '발레리우스 막시무스(Valerius Maximus)'],
-  [/\bCésaire d'Heisterbach\b|\bCésaire d’Heisterbach\b/g, '세자르 데스테르바흐(Caesarius of Heisterbach)'],
-  [/\bApollonius\b/g, '아폴로니우스(Apollonius)'],
-  [/\bPeucer\b/g, '카스파르 포이케르(Caspar Peucer)'],
-  [/\bMirville\b/g, '미르빌(Jules de Mirville)'],
-  [/\bPaymon\b/g, '파이몬(Paymon)'],
-  [/\bBeelzebub\b|\bBelzébuth\b/g, '벨제붑(Belzébuth)'],
-  [/\bAstaroth\b/g, '아스타로트(Astaroth)'],
-  [/\bJupiter\b/g, '유피테르(Jupiter)'],
-  [/\bApollo\b|\bApollon\b/g, '아폴론(Apollon)'],
-  [/\bMinerve\b|\bMinerva\b/g, '미네르바(Minerva)']
-];
-
 // Replace regex matches only when outside parentheses (...) so nested parentheses never occur
 function replaceOutsideParens(text, re, replacement) {
-  const parts = text.split(/(\[[^\]]*\]|\([^)]*\))/g);
-  return parts.map(part => ((part.startsWith('(') && part.endsWith(')')) || (part.startsWith('[') && part.endsWith(']'))) ? part : part.replace(re, replacement)).join('');
+  const parts = text.split(/(\[[^\]]*\]|\([^)]*\)|「[^」]*」|《[^》]*》)/g);
+  return parts.map(part => {
+    if ((part.startsWith('(') && part.endsWith(')')) || (part.startsWith('[') && part.endsWith(']')) || (part.startsWith('「') && part.endsWith('」')) || (part.startsWith('《') && part.endsWith('》'))) {
+      return part;
+    }
+    return part.replace(re, replacement);
+  }).join('');
 }
 
 // Remove original language annotations inside outer parenthetical explanations so no parenthesis is nested inside another
@@ -1303,14 +1254,14 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     .replace(/무슬림 의사들은/g, '이슬람 학자들은')
     .replace(/유대인 의사들은/g, '유대 학자들은')
     .replace(/동정과 반감에 관한 논문/g, '교감(Sympathie)과 반감(Antipathie)에 관한 논문')
-    .replace(/\bin-folio\b|\bin-fol\.(?!\w)|\bin-f°(?!\w)/gi, '전지판(in-folio)')
-    .replace(/\bin-4[°o]?(?!\w)/gi, '4절판(in-4°)')
-    .replace(/\bin-8[°o]?(?!\w)|\bin-a°(?!\w)/gi, '8절판(in-8°)')
-    .replace(/\bin-12[°o]?(?!\w)/gi, '12절판(in-12)')
-    .replace(/\bin-16[°o]?(?!\w)/gi, '16절판(in-16)')
-    .replace(/\bin-18[°o]?(?!\w)/gi, '18절판(in-18)')
-    .replace(/\bin-24[°o]?(?!\w)/gi, '24절판(in-24)')
-    .replace(/\bin-32[°o]?(?!\w)/gi, '32절판(in-32)')
+    .replace(/\bin\s*-\s*folio\b|\bin\s*-\s*fol\.(?!\w)|\bin\s*-\s*f°(?!\w)/gi, '전지판(in-folio)')
+    .replace(/\bin\s*-\s*4[°o]?(?!\w)/gi, '4절판(in-4°)')
+    .replace(/\bin\s*-\s*8[°o]?(?!\w)|\bin\s*-\s*a°(?!\w)/gi, '8절판(in-8°)')
+    .replace(/\bin\s*-\s*12[°o]?(?!\w)/gi, '12절판(in-12)')
+    .replace(/\bin\s*-\s*16[°o]?(?!\w)/gi, '16절판(in-16)')
+    .replace(/\bin\s*-\s*18[°o]?(?!\w)/gi, '18절판(in-18)')
+    .replace(/\bin\s*-\s*24[°o]?(?!\w)/gi, '24절판(in-24)')
+    .replace(/\bin\s*-\s*32[°o]?(?!\w)/gi, '32절판(in-32)')
     .replace(/(\d+절판\([^)]+\))°+/g, '$1')
     .replace(/(\d+절판)°+/g, '$1')
     .replace(/\b1o\s+/g, '첫째, ')
@@ -1348,14 +1299,20 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     .replace(/매혹적인 단어/g, '마법의 주문')
     .replace(/허용 마법/g, '자연 마법')
     .replace(/약간의 물리학자였다/g, '단지 당대의 자연학자에 불과했다')
-    .replace(/분류하는 데 만족한/g, '분류하는 데 그쳤던');
+    .replace(/분류하는 데 만족한/g, '분류하는 데 그쳤던')
+    .replace(/사기꾼,\s*사기꾼,\s*사기꾼,\s*미치광이,\s*미치광이/g, '협잡꾼, 사기꾼, 돌팔이, 광인, 망상가')
+    .replace(/가이 피로/g, '가 이 피로')
+    .replace(/독살했다고보고한다/g, '독살했다고 보고한다');
 
   // Replace un-annotated proper nouns outside parentheses and brackets
   for (const [re, rep] of BODY_PROPER_REPLACEMENTS) {
     s = replaceOutsideParens(s, re, rep);
   }
-  // Deduplicate any accidental double parenthetical
-  s = s.replace(/([가-힣A-Za-z·\s]+)\s*\(\1\s*\(([^)]+)\)\)/g, '$1 ($2)');
+  // Deduplicate any accidental double parenthetical or duplicate title
+  s = s.replace(/([가-힣A-Za-z·\s]+)\s*\(\1\s*\(([^)]+)\)\)/g, '$1 ($2)')
+       .replace(/수도원장\(Abbé\)\s*de\s*빌라르\s*수도원장\(Abbé\s*de\s*Villars\)/g, '빌라르 수도원장(Abbé de Villars)')
+       .replace(/수도원장\(Abbé\)의\s*수도원장\(Abbé\)/g, '수도원장(Abbé)')
+       .replace(/라\s*부아쟁\(La\s*Voisin\)\(la\)/g, '라 부아쟁(La Voisin)');
 
   // Handle "~지 않습니다" before general convertEnding so adjective stems become "~지 않다"
   s = s.replace(/([가-힣]+지)\s*않습니다/g, (_, jiWord) => {
