@@ -211,6 +211,67 @@ assert.ok(wivre && wivre.category === 'myth' && wivre.nameKo.includes('부아브
 const woden = ENTRIES.find(e => e.id === 'e3770-woden');
 assert.ok(woden && woden.category === 'myth' && woden.nameKo.includes('오딘'), 'Woden Odin myth');
 
+// V section audit assertions (76 entries)
+const vEntries = ENTRIES.filter(e => e.letter === 'V');
+assert.equal(vEntries.length, 76, 'V section must contain exactly 76 entries');
+
+const vaccine = ENTRIES.find(e => e.id === 'e3675-vaccine');
+assert.ok(vaccine && vaccine.category === 'superstition' && vaccine.nameKo.includes('우두 접종'), 'Vaccine medical superstition');
+
+const vache = ENTRIES.find(e => e.id === 'e3676-vache');
+assert.ok(vache && vache.hasPlate && vache.plate === 'plates/e3676-vache.jpg' && vache.nameKo.includes('암소'), 'Vache sacred cow illustrated');
+
+const vaicarani = ENTRIES.find(e => e.id === 'e3680-vaicarani');
+assert.ok(vaicarani && vaicarani.category === 'myth' && vaicarani.nameKo.includes('바이타라니 강'), 'Vaicarani Hindu underworld river');
+
+const valafar = ENTRIES.find(e => e.id === 'e3682-valafar');
+assert.ok(valafar && valafar.category === 'demon' && valafar.legions === 36 && valafar.nameKo.includes('발라파르'), 'Valafar demon duke');
+
+const vampires = ENTRIES.find(e => e.id === 'e3688-vampires');
+assert.ok(vampires && vampires.hasPlate && vampires.plate === 'plates/e3688-vampires.jpg' && vampires.nameKo.includes('흡혈귀'), 'Vampires illustrated treatise');
+
+const vapula = ENTRIES.find(e => e.id === 'e3692-vapula');
+assert.ok(vapula && vapula.category === 'demon' && vapula.legions === 36 && vapula.nameKo.includes('바풀라'), 'Vapula demon duke');
+
+const vaulx = ENTRIES.find(e => e.id === 'e3695-vaulxjeande');
+assert.ok(vaulx && vaulx.category === 'person' && vaulx.hasPlate && vaulx.plate === 'plates/e3695-vaulx-jean-de.jpg' && vaulx.nameKo.includes('장 드 볼크스'), 'Vaulx illustrated sorcerer');
+
+const veaudor = ENTRIES.find(e => e.id === 'e3697-veaudor');
+assert.ok(veaudor && veaudor.category === 'myth' && veaudor.hasPlate && veaudor.plate === 'plates/e3697-veau-d-or.jpg' && veaudor.nameKo.includes('황금 송아지'), 'Veau dor illustrated golden calf');
+
+const veneur = ENTRIES.find(e => e.id === 'e3702-veneur');
+assert.ok(veneur && veneur.category === 'myth' && veneur.hasPlate && veneur.plate === 'plates/e3702-veneur.jpg' && veneur.nameKo.includes('르 그랑 베뇌르'), 'Veneur illustrated Great Hunter');
+
+const vepar = ENTRIES.find(e => e.id === 'e3705-vepar');
+assert.ok(vepar && vepar.category === 'demon' && vepar.legions === 29 && vepar.nameKo.includes('베파르'), 'Vepar demon duke');
+
+const vieille = ENTRIES.find(e => e.id === 'e3725-vieille');
+assert.ok(vieille && vieille.category === 'superstition' && vieille.hasPlate && vieille.plate === 'plates/e3725-vieille.jpg' && vieille.nameKo.includes('노파 유령'), 'Vieille illustrated old woman spectre');
+
+const villain = ENTRIES.find(e => e.id === 'e3726-villainlabbe');
+assert.ok(villain && !villain.nameKo.includes('수도원장 악당') && villain.nameKo.includes('에티엔 빌랭 수도원장'), 'Villain no mistranslation as abbot villain');
+
+const vine = ENTRIES.find(e => e.id === 'e3729-vine');
+assert.ok(vine && !vine.nameKo.includes('포도나무') && vine.category === 'demon' && vine.nameKo.includes('비네'), 'Vine demon king not grape vine');
+
+const virgile1 = ENTRIES.find(e => e.id === 'e3731-virgile');
+assert.ok(virgile1 && virgile1.nameKo.includes('1부') && virgile1.category === 'person', 'Virgile part 1 magician');
+
+const virgile2 = ENTRIES.find(e => e.id === 'e3732-virgile');
+assert.ok(virgile2 && virgile2.nameKo.includes('2부') && virgile2.category === 'person', 'Virgile part 2 bishop');
+
+const volac = ENTRIES.find(e => e.id === 'volac');
+assert.ok(volac && volac.category === 'demon' && volac.hasPlate && volac.plate === 'plates/volac.jpg' && volac.nameKo.includes('볼라크'), 'Volac illustrated president demon');
+
+const voltigeur1 = ENTRIES.find(e => e.id === 'e3744-voltigeurhollandais');
+assert.ok(voltigeur1 && !voltigeur1.nameKo.includes('볼티게르') && voltigeur1.nameKo.includes('1부') && voltigeur1.nameKo.includes('방황하는 네덜란드인'), 'Voltigeur part 1 Flying Dutchman');
+
+const voltigeur2 = ENTRIES.find(e => e.id === 'e3745-voltigeurhollandais');
+assert.ok(voltigeur2 && voltigeur2.hasPlate && voltigeur2.plate === 'plates/e3745-voltigeur-hollandais.jpg' && voltigeur2.nameKo.includes('2부') && voltigeur2.nameKo.includes('방황하는 네덜란드인'), 'Voltigeur part 2 illustrated Flying Dutchman');
+
+const voyagesSorcerers = ENTRIES.find(e => e.id === 'voyages-sorcerers');
+assert.ok(voyagesSorcerers && voyagesSorcerers.category === 'myth' && voyagesSorcerers.hasPlate && voyagesSorcerers.plate === 'plates/voyages-sorcerers.jpg' && voyagesSorcerers.nameKo.includes('빗자루를 탄 마녀의 여행'), 'Voyages des sorcieres illustrated witches flight');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
