@@ -365,6 +365,62 @@ assert.ok(tvardowski && tvardowski.category === 'myth' && tvardowski.nameKo.incl
 const tyre = ENTRIES.find(e => e.id === 'e3664-tyre');
 assert.ok(tyre && tyre.nameKo.includes('튀레') && tyre.description.includes('셰페루스'), 'Tyre Sami magical ball');
 
+// S section audit assertions (235 entries, 30 illustrated)
+const sEntries = ENTRIES.filter(e => e.letter === 'S');
+assert.equal(sEntries.length, 235, 'S section must contain exactly 235 entries');
+
+// 68 Plates demons & illustrations in S
+const scox = ENTRIES.find(e => e.id === 'scox');
+assert.ok(scox && scox.letter === 'S' && scox.hasPlate && scox.plate === 'plates/scox.jpg' && scox.plateNo === 58 && scox.nameKo.includes('스콕스'), 'Scox illustrated demon duke');
+
+const stolas = ENTRIES.find(e => e.id === 'stolas');
+assert.ok(stolas && stolas.letter === 'S' && stolas.hasPlate && stolas.plate === 'plates/stolas.jpg' && stolas.plateNo === 59 && stolas.nameKo.includes('스톨라스'), 'Stolas illustrated grand prince');
+
+const sIllustrated = sEntries.filter(e => e.hasPlate);
+assert.equal(sIllustrated.length, 30, 'S section must contain exactly 30 illustrated entries');
+
+// Key S illustrated entries
+const sabbat = ENTRIES.find(e => e.id === 'e3273-sabbat');
+assert.ok(sabbat && sabbat.hasPlate && sabbat.nameKo.includes('사바트'), 'Sabbat illustrated');
+
+const satyres = ENTRIES.find(e => e.id === 'e3328-satyres');
+assert.ok(satyres && satyres.hasPlate && satyres.nameKo.includes('사티로스'), 'Satyres illustrated');
+
+const serpentDeMer = ENTRIES.find(e => e.id === 'e3381-serpentdemerlegrand');
+assert.ok(serpentDeMer && serpentDeMer.hasPlate && serpentDeMer.nameKo.includes('거대 바다뱀'), 'Serpent de mer illustrated');
+
+const spee = ENTRIES.find(e => e.id === 'e3443-spee');
+assert.ok(spee && spee.hasPlate && spee.nameKo.includes('프리드리히 슈페 신부') && spee.category === 'person', 'Spee illustrated Jesuit priest');
+
+const stanoska = ENTRIES.find(e => e.id === 'e3460-stanoska');
+assert.ok(stanoska && stanoska.hasPlate && stanoska.nameKo.includes('스타노스카') && stanoska.category === 'demon', 'Stanoska illustrated vampire');
+
+const swedenborg = ENTRIES.find(e => e.id === 'e3493-swedenborgemmanuel');
+assert.ok(swedenborg && swedenborg.hasPlate && swedenborg.nameKo.includes('스베덴보리') && swedenborg.category === 'person', 'Swedenborg illustrated');
+
+const syrenes = ENTRIES.find(e => e.id === 'e3501-syrenes');
+assert.ok(syrenes && syrenes.hasPlate && syrenes.nameKo.includes('세이렌') && syrenes.category === 'myth', 'Syrenes illustrated');
+
+// Disambiguated Strauss Part 1 & Part 2
+const strauss1 = ENTRIES.find(e => e.id === 'e3474-strauss');
+assert.ok(strauss1 && strauss1.nameKo.includes('1부') && strauss1.category === 'person', 'Strauss Part 1');
+
+const strauss2 = ENTRIES.find(e => e.id === 'e3476-strauss');
+assert.ok(strauss2 && strauss2.hasPlate && strauss2.plate === 'plates/e3476-strauss.jpg' && strauss2.nameKo.includes('2부'), 'Strauss Part 2 illustrated portrait');
+
+// Other notable S demons & entries
+const satan = ENTRIES.find(e => e.id === 'e3324-satan');
+assert.ok(satan && satan.category === 'demon' && satan.nameKo.includes('사탄') && satan.rank.includes('대원수'), 'Satan demon prince');
+
+const samael = ENTRIES.find(e => e.id === 'e3307-samael');
+assert.ok(samael && samael.category === 'demon' && samael.nameKo.includes('사마엘') && samael.rank.includes('죽음의 천사'), 'Samael demon');
+
+const sytry = ENTRIES.find(e => e.id === 'e3503-sytry');
+assert.ok(sytry && sytry.category === 'demon' && sytry.legions === 60 && sytry.nameKo.includes('시트리'), 'Sytry demon prince');
+
+const sabnac = ENTRIES.find(e => e.id === 'e3280-sabnac');
+assert.ok(sabnac && sabnac.category === 'demon' && sabnac.legions === 50 && sabnac.nameKo.includes('사브낙'), 'Sabnac demon marquis');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
