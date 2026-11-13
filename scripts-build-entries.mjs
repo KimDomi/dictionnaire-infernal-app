@@ -286,9 +286,10 @@ const WORD_DICT = {
   'transport des sorcières': '마녀들의 공중 이동', 'trèfle': '네잎클로버 미신',
   'treize': '숫자 13의 미신', 'tremblements de terre': '지진', 'trésors': '숨겨진 보물과 수호 악령',
   'trinité': '삼위일체', 'trois': '숫자 3의 신비', 'trompette': '나팔', 'tunique': '성모의 성의',
-  'turcs': '튀르크인의 미신', 'turquoise': '터키석',
-  'ulcères': '궤양', 'ukobach': '우코바크', 'urne': '단지',
-  'vaccine': '우두 접종과 백신', 'vache': '암소', 'vade': '바데', 'vafthrudnis': '바프스루드니르',
+  'ulcères': '궤양', 'ukobach': '우코바크', 'universités occultes': '오컬트 비밀 학회와 대학',
+  'uphir': '우피르', 'upiers': '우피에르', 'urda': '우르드', 'urgande': '우르간드',
+  'urine': '소변', 'urotopégnie': '우로토페그니', 'uterpen': '유서 펜드래건', 'utéseture': '우티세타',
+  'urne': '단지',
   'vagnoste': '바뇨스트', 'vaïcarani': '바이타라니 강', 'vaisseau-fantôme': '유령선',
   'valafar': '발라파르', 'valens': '발렌스 황제', 'valentin': '발렌티누스',
   'valentin (basile)': '바실 발랑탱', 'valère-maxime': '발레리우스 막시무스', 'valkiries': '발키리',
@@ -729,6 +730,18 @@ const CURATED_HEADWORD_RULES = {
   // Disambiguated Année climatérique entries (p.39)
   'e225-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (1) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
   'e227-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (2) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
+
+  // U entries curated headwords (p.672-675)
+  'ukobach': { nameKo: '우코바크 [Ukobach]', nameKoShort: '우코바크', nameFr: 'Ukobach', nameEn: 'Ukobach' },
+  'e3666-universitesoccultes': { nameKo: '오컬트 비밀 학회와 대학 [Universités occultes / Secret Occult Academies]', nameKoShort: '오컬트 비밀 학회와 대학', nameFr: 'Universités occultes', nameEn: 'Secret Occult Academies' },
+  'e3667-uphir': { nameKo: '우피르 [Uphir]', nameKoShort: '우피르', nameFr: 'Uphir', nameEn: 'Uphir' },
+  'e3668-upiers': { nameKo: '우피에르 [Upiers / Upir]', nameKoShort: '우피에르', nameFr: 'Upiers', nameEn: 'Upir' },
+  'e3669-urda': { nameKo: '우르드 [Urda / Urd]', nameKoShort: '우르드', nameFr: 'Urda', nameEn: 'Urd' },
+  'e3670-urgande': { nameKo: '우르간드 [Urgande / Urganda]', nameKoShort: '우르간드', nameFr: 'Urgande', nameEn: 'Urganda the Unknown' },
+  'e3671-urine': { nameKo: '소변에 얽힌 민간요법과 기우제 주술 [Urine / Superstition of Urine]', nameKoShort: '소변에 얽힌 민간요법과 주술', nameFr: 'Urine', nameEn: 'Urine in Folk Medicine and Magic' },
+  'e3672-urotopegnie': { nameKo: '우로토페그니(매듭 결박 주술서) [Urotopégnie / Urotopegny]', nameKoShort: '우로토페그니', nameFr: 'Urotopégnie', nameEn: 'Urotopegny' },
+  'e3673-uterpen': { nameKo: '유서 펜드래건 또는 우테르펜 [Uterpen / Uther Pendragon]', nameKoShort: '유서 펜드래건 또는 우테르펜', nameFr: 'Uterpen', nameEn: 'Uther Pendragon' },
+  'e3674-uteseture': { nameKo: '우티세타(야외 철야 강령술) [Utéseture / Útiseta]', nameKoShort: '우티세타', nameFr: 'Utéseture', nameEn: 'Útiseta' },
 
   // V entries curated headwords (p.675-698)
   'e3675-vaccine': { nameKo: '우두 접종과 백신 미신 [Vaccine]', nameKoShort: '우두 접종과 백신 미신', nameFr: 'Vaccine', nameEn: 'Vaccine' },
@@ -1673,6 +1686,18 @@ const CURATED_META = {
   'e1296-desfontaines': { category: 'superstition', rank: '유령·환영 기담(Spectre & Fantôme)', domains: ['미신·민속(Superstition)', '유령·환영', '프랑스 기담'] },
   'e225-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '점성술·수비학', '위기의 해'] },
   'e227-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '신체 변화 주기', '수비학'] },
+
+  // U entries curated metadata (p.672-675)
+  'ukobach': { category: 'demon', subCategory: 'subordinate', rank: '지옥 제2계급 악마·화마(Démon du Second Ordre)', domains: ['악마학(Démonologie)', '지옥의 계급 체계', '1863 원서 삽화 수록', '지옥 가마솥 관리자', '튀김과 불꽃놀이의 발명자'] },
+  'e3666-universitesoccultes': { category: 'superstition', rank: '16세기 궁정 점성술·연금술 학회 총론(Histoire des Sciences Occultes)', domains: ['미신·민속(Superstition)', '16세기 오컬트 역사', '1863 원서 삽화 수록', '카트린 드 메디시스', '노스트라다무스와 루지에리', '오노레 드 발자크'] },
+  'e3667-uphir': { category: 'demon', subCategory: 'subordinate', rank: '지옥의 화학자·시의 악마(Démon Chimiste & Médecin)', domains: ['악마학(Démonologie)', '지옥의 계급 체계', '약초학과 화학', '벨제붑의 주치의'] },
+  'e3668-upiers': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '슬라브 민속', '흡혈귀'] },
+  'e3669-urda': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '북유럽 신화', '노른 여신'] },
+  'e3670-urgande': { category: 'myth', rank: '기사도 로맨스의 선한 수호 요정(Bonne Fée des Romans de Chevalerie)', domains: ['신화·전설(Mythologie)', '기사도 문학', '아마디스 드 가울라', '마법의 검', '사악한 요정 멜리에'] },
+  'e3671-urine': { category: 'superstition', rank: '민간요법·기우제 주술 미신(Médecine Populaire & Magie)', domains: ['미신·민속(Superstition)', '민간요법', '마녀의 기우제', '마틴 델리오 악마학', '키노케팔루스 전승'] },
+  'e3672-urotopegnie': { category: 'grimoire', rank: '사물과 사람을 결박하는 마술서(Grimoire de Ligatures)', domains: ['마도서·문헌(Grimoire)', '매듭 결박 주술', '피에르 드 랑크르', '풍차와 양조통 주술'] },
+  'e3673-uterpen': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '아서왕 전설', '마법사 멀린'] },
+  'e3674-uteseture': { category: 'divination', rank: '고대 노르드·아이슬란드의 강령 점술(Magie Nocturne d’Odin)', domains: ['점술·예언(Divination)', '아이슬란드 오컬트', '오딘의 비술', '망령과의 교신', '야외 철야'] },
 
   // V entries curated metadata (p.675-698)
   'e3675-vaccine': { category: 'superstition', rank: '19세기 의학 미신·종교 반발(Superstition Médicale)', domains: ['미신·민속(Superstition)', '19세기 의학사', '종두법 논쟁', '종교적 미신'] },

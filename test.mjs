@@ -272,6 +272,34 @@ assert.ok(voltigeur2 && voltigeur2.hasPlate && voltigeur2.plate === 'plates/e374
 const voyagesSorcerers = ENTRIES.find(e => e.id === 'voyages-sorcerers');
 assert.ok(voyagesSorcerers && voyagesSorcerers.category === 'myth' && voyagesSorcerers.hasPlate && voyagesSorcerers.plate === 'plates/voyages-sorcerers.jpg' && voyagesSorcerers.nameKo.includes('빗자루를 탄 마녀의 여행'), 'Voyages des sorcieres illustrated witches flight');
 
+// U section audit assertions (10 entries)
+const uEntries = ENTRIES.filter(e => e.letter === 'U');
+assert.equal(uEntries.length, 10, 'U section must contain exactly 10 entries');
+
+const ukobach = ENTRIES.find(e => e.id === 'ukobach');
+assert.ok(ukobach && ukobach.hasPlate && ukobach.plate === 'plates/ukobach.jpg' && ukobach.category === 'demon' && ukobach.nameKo.includes('우코바크'), 'Ukobach illustrated demon');
+
+const universites = ENTRIES.find(e => e.id === 'e3666-universitesoccultes');
+assert.ok(universites && universites.hasPlate && universites.plate === 'plates/e3666-universit-s-occultes.jpg' && universites.category === 'superstition' && universites.description.includes('루지에리'), 'Universites occultes illustrated');
+
+const uphir = ENTRIES.find(e => e.id === 'e3667-uphir');
+assert.ok(uphir && uphir.category === 'demon' && uphir.nameKo.includes('우피르') && uphir.description.includes('약초학'), 'Uphir demon physician');
+
+const urgande = ENTRIES.find(e => e.id === 'e3670-urgande');
+assert.ok(urgande && urgande.category === 'myth' && urgande.nameKo.includes('우르간드') && urgande.description.includes('아마디스'), 'Urgande chivalric fairy');
+
+const urine = ENTRIES.find(e => e.id === 'e3671-urine');
+assert.ok(urine && urine.category === 'superstition' && urine.nameKo.includes('소변') && urine.description.includes('델리오'), 'Urine superstition and rain magic');
+
+const urotopegnie = ENTRIES.find(e => e.id === 'e3672-urotopegnie');
+assert.ok(urotopegnie && urotopegnie.category === 'grimoire' && urotopegnie.nameKo.includes('우로토페그니'), 'Urotopegnie grimoire');
+
+const uterpen = ENTRIES.find(e => e.id === 'e3673-uterpen');
+assert.ok(uterpen && uterpen.category === 'crossref' && uterpen.nameKo.includes('유서 펜드래건'), 'Uterpen King Uther crossref');
+
+const uteseture = ENTRIES.find(e => e.id === 'e3674-uteseture');
+assert.ok(uteseture && uteseture.category === 'divination' && uteseture.nameKo.includes('우티세타') && uteseture.description.includes('오딘'), 'Uteseture Norse divination');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
