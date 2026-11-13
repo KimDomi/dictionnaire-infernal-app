@@ -834,11 +834,32 @@ dialog#modal::backdrop {
 }
 
 .detail-header-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
   width: 100%;
+}
+
+.detail-header-top .header-read-btn {
+  justify-self: start;
+}
+
+.detail-header-top .entry-plate-no {
+  grid-column: 2;
+  justify-self: center;
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--gold);
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.detail-header-top .header-bookmark-btn {
+  justify-self: end;
 }
 
 .header-read-btn {
@@ -881,6 +902,23 @@ dialog#modal::backdrop {
 
 .header-bookmark-btn.active {
   color: var(--gold);
+}
+
+@media (max-width: 480px) {
+  .detail-header-top {
+    gap: 6px;
+  }
+  .detail-header-top .entry-plate-no {
+    font-size: 0.70rem;
+  }
+  .header-read-btn {
+    font-size: 0.74rem;
+    padding: 3px 7px;
+  }
+  .header-bookmark-btn {
+    font-size: 1.25rem;
+    padding: 0 2px;
+  }
 }
 
 .detail-bottom-controls {

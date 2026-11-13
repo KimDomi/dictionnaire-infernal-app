@@ -237,7 +237,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         <button type="button" class="header-read-btn${isRead?' active':''}" data-action="toggle-read" data-id="${escapeHtml(entry.id)}" aria-label="${isRead?'열람 완료 해제':'열람 표시'}">
           ${isRead?'✓ 열람 완료됨':'열람'}
         </button>
-        <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
+        <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
         <button type="button" class="header-bookmark-btn${isBookmarked?' active':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}" aria-label="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}">
           ${isBookmarked?'★':'☆'}
         </button>
