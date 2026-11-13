@@ -68,8 +68,30 @@ assert.ok(monarchs.some(e=>e.id==='belzebuth'));
 assert.ok(monarchs.some(e=>e.id==='astaroth'));
 
 const letterZ=filterEntries({letter:'Z'});
-assert.ok(letterZ.length>=15,'Expected letter Z entries');
+assert.equal(letterZ.length,15,'Expected 15 letter Z entries');
 assert.ok(letterZ.some(e=>e.id==='zaebos'));
+
+// Verify Z audit corrections
+const zabulon = ENTRIES.find(e => e.id === 'e3796-zabulon');
+assert.ok(zabulon && zabulon.description.includes('평수녀') && !zabulon.description.includes('자매를 소유한'), 'Zabulon lay sister possession');
+
+const zacharie = ENTRIES.find(e => e.id === 'e3797-zacharie');
+assert.ok(zacharie && zacharie.category === 'crossref' && !zacharie.description.includes('귀국자'), 'Zacharie crossref not revenant repatriate');
+
+const zagam = ENTRIES.find(e => e.id === 'e3800-zagam');
+assert.ok(zagam && zagam.category === 'demon' && zagam.rank.includes('왕'), 'Zagam demon king');
+
+const zahuris = ENTRIES.find(e => e.id === 'e3801-zahuris');
+assert.ok(zahuris && !zahuris.description.includes('눈을 갉아먹') && zahuris.description.includes('수맥'), 'Zahuris clairvoyant not eating eyes');
+
+const zairagie = ENTRIES.find(e => e.id === 'e3802-zairagiezairagiah');
+assert.ok(zairagie && zairagie.category === 'divination', 'Zairagie divination category');
+
+const zedechias = ENTRIES.find(e => e.id === 'e3806-zedechias');
+assert.ok(zedechias && zedechias.description.includes('실프') && !zedechias.description.includes('기본 존재'), 'Zedechias elementals not basic beings');
+
+const zepar = ENTRIES.find(e => e.id === 'e3808-zepar');
+assert.ok(zepar && zepar.category === 'demon' && zepar.rank.includes('대공'), 'Zepar demon duke');
 
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));

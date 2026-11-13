@@ -302,9 +302,11 @@ const WORD_DICT = {
   'voisin (la)': '라 부아쟁', 'voisin': '라 부아쟁', 'voisinla': '라 부아쟁',
   'wall': '발(부알)', 'wierus': '요한 바이어', 'wiérus': '요한 바이어',
   'xaphan': '자판', 'xéno': '제노',
-  'yan-gant-y-tan': '얀간티탄', 'yeux': '눈과 사안',
-  'zaebos': '자에보스', 'zapan': '자판', 'zeernébooch': '체르네보크', 'zodiaque': '황도 12궁',
-  'zombi': '좀비', 'zoroastre': '조로아스터'
+  'zabulon': '자불론', 'zacharie': '자카리아', 'zacoum': '자쿰 나무', 'zaebos': '자에보스',
+  'zagam': '자감', 'zahuris': '자후리스', 'zairagie': '자이라지에', 'zairagie (zairagiah)': '자이라지에',
+  'zapan': '자판', 'zariatnatmik': '자리아트나트믹', 'zazarraguan': '자자라구안', 'zédéchias': '체데키아스',
+  'zeernébooch': '체르노보그', 'zépar': '제파르', 'ziganis': '치가니스', 'zigheuners': '치고이너',
+  'zodiaque': '황도 12궁', 'zombi': '좀비', 'zoroastre': '조로아스터'
 };
 
 const NAME_MAP = {
@@ -682,7 +684,24 @@ const CURATED_HEADWORD_RULES = {
 
   // Disambiguated Année climatérique entries (p.39)
   'e225-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (1) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
-  'e227-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (2) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' }
+  'e227-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (2) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
+
+  // Z entries curated headwords
+  'e3796-zabulon': { nameKo: '자불론 [Zabulon]', nameKoShort: '자불론', nameFr: 'Zabulon', nameEn: '' },
+  'e3797-zacharie': { nameKo: '자카리아 [Zacharie / Zechariah]', nameKoShort: '자카리아', nameFr: 'Zacharie', nameEn: 'Zechariah' },
+  'e3798-zacoum': { nameKo: '자쿰 나무 또는 자꿈 [Zacoum / Zaqqum]', nameKoShort: '자쿰 나무 또는 자꿈', nameFr: 'Zacoum', nameEn: 'Zaqqum' },
+  'zaebos': { nameKo: '자에보스 또는 살로스 [Zaebos, Sallos]', nameKoShort: '자에보스 또는 살로스', nameFr: 'Zaebos (Sallos)', nameEn: '' },
+  'e3800-zagam': { nameKo: '자감 또는 자간 [Zagam / Zagan]', nameKoShort: '자감 또는 자간', nameFr: 'Zagam', nameEn: 'Zagan' },
+  'e3801-zahuris': { nameKo: '자후리스 또는 자호리스 [Zahuris, Zahories]', nameKoShort: '자후리스 또는 자호리스', nameFr: 'Zahuris', nameEn: '' },
+  'e3802-zairagiezairagiah': { nameKo: '자이라지에 또는 자이라지아 [Zairagie, Zairagiah / Zairaja]', nameKoShort: '자이라지에 또는 자이라지아', nameFr: 'Zairagie (Zairagiah)', nameEn: 'Zairaja' },
+  'e3803-zapan': { nameKo: '자판 [Zapan]', nameKoShort: '자판', nameFr: 'Zapan', nameEn: '' },
+  'e3804-zariatnatmik': { nameKo: '자리아트나트믹 [Zariatnatmik]', nameKoShort: '자리아트나트믹', nameFr: 'Zariatnatmik', nameEn: '' },
+  'e3805-zazarraguan': { nameKo: '자자라구안 [Zazarraguan]', nameKoShort: '자자라구안', nameFr: 'Zazarraguan', nameEn: '' },
+  'e3806-zedechias': { nameKo: '체데키아스 또는 제데시아스 [Zédéchias / Zedechias]', nameKoShort: '체데키아스 또는 제데시아스', nameFr: 'Zédéchias', nameEn: 'Zedechias' },
+  'e3807-zeernebooch': { nameKo: '체르노보그 또는 체르네보크 [Zeernébooch / Chernobog]', nameKoShort: '체르노보그 또는 체르네보크', nameFr: 'Zeernébooch', nameEn: 'Chernobog' },
+  'e3808-zepar': { nameKo: '제파르 [Zépar / Zepar]', nameKoShort: '제파르', nameFr: 'Zépar', nameEn: 'Zepar' },
+  'e3809-ziganis': { nameKo: '치가니스 또는 지가니스 [Ziganis / Tsiganes]', nameKoShort: '치가니스 또는 지가니스', nameFr: 'Ziganis', nameEn: 'Tsiganes' },
+  'e3810-zigheuners': { nameKo: '치고이너 또는 지그회네르스 [Zigheuners / Zigeuner]', nameKoShort: '치고이너 또는 지그회네르스', nameFr: 'Zigheuners', nameEn: 'Zigeuner' }
 };
 
 const ENGLISH_HEADWORD_MAP = {
@@ -1480,7 +1499,23 @@ const CURATED_META = {
   'e1294-desfontaines': { category: 'superstition', rank: '유령·환영 기담(Spectre & Fantôme)', domains: ['미신·민속(Superstition)', '유령·환영', '프랑스 기담'] },
   'e1296-desfontaines': { category: 'superstition', rank: '유령·환영 기담(Spectre & Fantôme)', domains: ['미신·민속(Superstition)', '유령·환영', '프랑스 기담'] },
   'e225-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '점성술·수비학', '위기의 해'] },
-  'e227-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '신체 변화 주기', '수비학'] }
+  'e227-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '신체 변화 주기', '수비학'] },
+
+  // Z entries curated metadata
+  'e3796-zabulon': { category: 'demon', rank: '지옥의 악마(Démon)', domains: ['악마학(Démonologie)', '루됭 빙의 사건', '빙의 악령'] },
+  'e3797-zacharie': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '망령 전승', '비엣카'] },
+  'e3798-zacoum': { category: 'myth', rank: '지옥의 마목(Arbre Infernal)', domains: ['신화·종교 전승', '이슬람 지옥 전승', '마법 수목'] },
+  'e3800-zagam': { category: 'demon', subCategory: 'monarch', rank: '지옥의 왕·총재(Grand Roi & Président)', legions: 30, domains: ['악마학(Démonologie)', '지옥의 계급 체계', '연금술 악마', '고에티아 72 악마'] },
+  'e3801-zahuris': { category: 'superstition', rank: '투시 능력자 전승(Voyance & Clairvoyance)', domains: ['미신·민속(Superstition)', '스페인 민간 전승', '투시술'] },
+  'e3802-zairagiezairagiah': { category: 'divination', rank: '아랍의 천문 점술(Divination Arabe)', domains: ['점술·점성술(Divination)', '아랍 오컬트', '천문 바퀴 점술'] },
+  'e3803-zapan': { category: 'demon', subCategory: 'monarch', rank: '지옥의 왕(Roi de l’Enfer)', domains: ['악마학(Démonologie)', '지옥의 군주', '의사악마왕국'] },
+  'e3804-zariatnatmik': { category: 'superstition', rank: '마법 지팡이의 비전적 존재(Entité Magique)', domains: ['미신·민속(Superstition)', '마법 도구', '지팡이 비술'] },
+  'e3805-zazarraguan': { category: 'myth', rank: '태평양 마리아나 제도의 지옥(Enfer des Mariannes)', domains: ['신화·종교 전승', '타계관·지옥 전승', '오세아니아 신화'] },
+  'e3806-zedechias': { category: 'person', rank: '카발리스트·궁정 의사(Cabaliste & Médecin)', domains: ['인물·역사(Personnage)', '서양 마법사', '카발라 비전', '원소 정령 전승'] },
+  'e3807-zeernebooch': { category: 'myth', rank: '명계의 흑신(Dieu Noir des Morts)', domains: ['신화·종교 전승', '북방·슬라브 신화', '암흑과 명계의 신격'] },
+  'e3808-zepar': { category: 'demon', subCategory: 'duke', rank: '지옥의 대공(Grand-Duc)', legions: 28, domains: ['악마학(Démonologie)', '지옥의 계급 체계', '고위 악마', '솔로몬 72 악마'] },
+  'e3809-ziganis': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '집시 전승', '진칼리스'] },
+  'e3810-zigheuners': { category: 'superstition', rank: '독일 집시 전승과 미신(Tradition des Bohémiens)', domains: ['미신·민속(Superstition)', '유럽 집시 전승', '민간 점술', '민담'] }
 };
 
 // Classify and attach pure Korean translation for any 1863 entry
