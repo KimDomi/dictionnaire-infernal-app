@@ -504,6 +504,97 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// J section audit assertions (74 entries, 8 illustrated)
+const jEntries = ENTRIES.filter(e => e.letter === 'J');
+assert.equal(jEntries.length, 74, 'J section must contain exactly 74 entries (after I/J boundary fix and Jurieu transfer)');
+
+const jIllustrated = jEntries.filter(e => e.hasPlate);
+assert.equal(jIllustrated.length, 8, 'J section must contain exactly 8 illustrated entries');
+
+const jacquesIer = ENTRIES.find(e => e.id === 'e2153-jacquesier');
+assert.ok(jacquesIer && jacquesIer.hasPlate && jacquesIer.plate === 'plates/e2153-jacques-ier.jpg' && jacquesIer.category === 'person' && jacquesIer.nameKo.includes('제임스 1세'), 'James I illustrated monarch author of Daemonologie');
+
+const jannesEtMambres = ENTRIES.find(e => e.id === 'e2161-jannesetmambres');
+assert.ok(jannesEtMambres && jannesEtMambres.hasPlate && jannesEtMambres.plate === 'plates/e2161-jann-s-et-mambr-s.jpg' && jannesEtMambres.category === 'person' && jannesEtMambres.nameKo.includes('얀네와 얌브레'), 'Jannes and Jambres illustrated Egyptian magicians');
+
+const jeanDeLeyde = ENTRIES.find(e => e.id === 'e2174-jeandeleyde');
+assert.ok(jeanDeLeyde && jeanDeLeyde.hasPlate && jeanDeLeyde.plate === 'plates/e2174-jean-de-leyde.jpg' && jeanDeLeyde.category === 'person' && jeanDeLeyde.nameKo.includes('얀 판 레이던'), 'John of Leiden illustrated Anabaptist king of Münster');
+
+const jeanneDArc = ENTRIES.find(e => e.id === 'e2180-jeannedarc');
+assert.ok(jeanneDArc && jeanneDArc.hasPlate && jeanneDArc.plate === 'plates/e2180-jeanne-d-arc.jpg' && jeanneDArc.category === 'person' && jeanneDArc.nameKo.includes('잔 다르크'), 'Joan of Arc Maid of Orleans illustrated');
+
+const jenounes = ENTRIES.find(e => e.id === 'e2188-jenounes');
+assert.ok(jenounes && jenounes.hasPlate && jenounes.plate === 'plates/e2188-j-nounes.jpg' && jenounes.category === 'myth' && jenounes.nameKo.includes('제눈'), 'Jenounes Arab jinn spirits illustrated');
+
+const jormungandur = ENTRIES.find(e => e.id === 'e2207-jormungandur');
+assert.ok(jormungandur && jormungandur.hasPlate && jormungandur.plate === 'plates/e2207-jormungandur.jpg' && jormungandur.category === 'myth' && jormungandur.nameKo.includes('요르문간드'), 'Jormungandr Norse world serpent illustrated');
+
+const juifErrant = ENTRIES.find(e => e.id === 'e2215-juiferrant');
+assert.ok(juifErrant && juifErrant.hasPlate && juifErrant.plate === 'plates/e2215-juif-errant.jpg' && juifErrant.category === 'myth' && juifErrant.nameKo.includes('방랑하는 유대인'), 'Wandering Jew Ahasuerus illustrated');
+
+const juifs = ENTRIES.find(e => e.id === 'e2216-juifs');
+assert.ok(juifs && juifs.hasPlate && juifs.plate === 'plates/e2216-juifs.jpg' && juifs.category === 'superstition' && juifs.nameKo.includes('유대인'), 'Jewish superstitions illustrated');
+
+const jabamiah = ENTRIES.find(e => e.id === 'e2149-jabamiah');
+assert.ok(jabamiah && jabamiah.category === 'grimoire' && jabamiah.nameKo.includes('자바미아'), 'Jabamiah cabalistic healing word');
+
+const jack = ENTRIES.find(e => e.id === 'e2152-jack');
+assert.ok(jack && jack.category === 'demon' && jack.nameKo.includes('등불 든 잭'), 'Jack with the lantern fire sphere demon');
+
+const jade = ENTRIES.find(e => e.id === 'e2154-jade');
+assert.ok(jade && jade.category === 'superstition' && jade.nameKo.includes('비취'), 'Jade nephritic healing stone');
+
+const jagghernat = ENTRIES.find(e => e.id === 'e2155-jagghernat');
+assert.ok(jagghernat && jagghernat.category === 'demon' && jagghernat.nameKo.includes('자게르나트'), 'Jagannath idol demon');
+
+const jaldabaoth = ENTRIES.find(e => e.id === 'e2157-jaldabaoth');
+assert.ok(jaldabaoth && jaldabaoth.category === 'myth' && jaldabaoth.nameKo.includes('얄다바오트'), 'Yaldabaoth Ophite demiurge');
+
+const jamambuxes = ENTRIES.find(e => e.id === 'e2158-jamambuxes');
+assert.ok(jamambuxes && jamambuxes.category === 'person' && jamambuxes.nameKo.includes('야마부시'), 'Yamabushi Japanese mountain ascetics');
+
+const jamblique = ENTRIES.find(e => e.id === 'e2159-jamblique');
+assert.ok(jamblique && jamblique.category === 'person' && jamblique.nameKo.includes('이암블리코스'), 'Iamblichus theurgic philosopher');
+
+const jammaloka = ENTRIES.find(e => e.id === 'e2160-jammaloka');
+assert.ok(jammaloka && jammaloka.category === 'myth' && jammaloka.nameKo.includes('야마 로카'), 'Yama-Loka Hindu underworld');
+
+const jarretiere = ENTRIES.find(e => e.id === 'e2162-jarretiere');
+assert.ok(jarretiere && jarretiere.category === 'grimoire' && jarretiere.nameKo.includes('각반 비방'), 'Traveler garter charm with mugwort');
+
+const jayetIslande = ENTRIES.find(e => e.id === 'e2165-jayetdislande');
+assert.ok(jayetIslande && jayetIslande.category === 'superstition' && jayetIslande.nameKo.includes('아이슬란드의 흑옥'), 'Icelandic jet black amber');
+
+const jechiel = ENTRIES.find(e => e.id === 'e2185-jechiel');
+assert.ok(jechiel && jechiel.category === 'person' && jechiel.nameKo.includes('예히엘'), 'Rabbi Jehiel of Paris magic lamp');
+
+const jetzer = ENTRIES.find(e => e.id === 'e2193-jetzer');
+assert.ok(jetzer && jetzer.category === 'person' && jetzer.nameKo.includes('예처'), 'Johann Jetzer Dominican fraud of Bern');
+
+const jezerTob = ENTRIES.find(e => e.id === 'e2196-jezertob');
+assert.ok(jezerTob && jezerTob.category === 'myth' && jezerTob.nameKo.includes('예체르 토브'), 'Yetzer Tov and Yetzer Hara Cabala inclinations');
+
+const joachim = ENTRIES.find(e => e.id === 'e2197-joachim');
+assert.ok(joachim && joachim.category === 'person' && joachim.nameKo.includes('피오레의 요아킴'), 'Joachim of Fiore prophetic abbot');
+
+const jockeyDesFees = ENTRIES.find(e => e.id === 'e2201-jockeydesfees');
+assert.ok(jockeyDesFees && jockeyDesFees.category === 'myth' && jockeyDesFees.nameKo.includes('요정의 기수'), 'Fairy Jockey Scottish folklore');
+
+const josueBenLevi = ENTRIES.find(e => e.id === 'e2210-josuebenlevi');
+assert.ok(josueBenLevi && josueBenLevi.category === 'person' && josueBenLevi.nameKo.includes('여호수아 벤 레비'), 'Joshua ben Levi rabbi who tricked death');
+
+const julienLApostat = ENTRIES.find(e => e.id === 'e2217-julienlapostat');
+assert.ok(julienLApostat && julienLApostat.category === 'person' && julienLApostat.nameKo.includes('율리아누스 배교자'), 'Julian the Apostate Roman emperor');
+
+const jungStilling = ENTRIES.find(e => e.id === 'e2218-jung');
+assert.ok(jungStilling && jungStilling.category === 'person' && jungStilling.nameKo.includes('융'), 'Jung-Stilling author of Geister-Kunde');
+
+const junier = ENTRIES.find(e => e.id === 'e2219-junier');
+assert.ok(junier && junier.category === 'demon' && junier.nameKo.includes('쥐니에'), 'Junier demon called prince of angels');
+
+const jurieu = ENTRIES.find(e => e.id === 'e2222-jurieu');
+assert.ok(jurieu && jurieu.category === 'person' && jurieu.nameKo.includes('피에르 쥐리외'), 'Pierre Jurieu Huguenot false prophet');
+
 // K section audit assertions (69 entries, 16 illustrated)
 const kEntries = ENTRIES.filter(e => e.letter === 'K');
 assert.equal(kEntries.length, 69, 'K section must contain exactly 69 entries (after J/K and K/L boundary fixes)');
