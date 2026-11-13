@@ -659,6 +659,15 @@ function frHeadwordToKo(nameFr, baseFr, rawEntry = null, id = null) {
 
 const CURATED_HEADWORD_RULES = {
   'e973-chax': { nameKo: '샥스 또는 칵스 [Chax]', nameKoShort: '샥스 또는 칵스', nameFr: 'Chax', nameEn: 'Chax (Crossref to Scox)' },
+  // Q entries curated headwords (p.567-568)
+  'e3165-quakerisme': { nameKo: '퀘이커교의 광신과 황홀경 [Quakerisme / Quakerism]', nameKoShort: '퀘이커교', nameFr: 'Quakerisme', nameEn: 'Quakerism (Tremblers\' Sect)' },
+  'e3166-queiranisaac': { nameKo: '이자크 케랑 [Queiran (Isaac)]', nameKoShort: '이자크 케랑', nameFr: 'Queiran (Isaac)', nameEn: 'Isaac Queiran (Sorcerer of Nérac)' },
+  'e3167-question': { nameKo: '사법 고문(문초) [Question / Judicial Torture]', nameKoShort: '사법 고문(문초)', nameFr: 'Question', nameEn: 'Judicial Torture (Crossref to Insensibilité)' },
+  'e3168-queys': { nameKo: '귀신(중국의 악귀) [Queys / Chinese Demons (Gui)]', nameKoShort: '귀신', nameFr: 'Queys', nameEn: 'Queys (Chinese Demons and Spectres)' },
+  'e3169-quintillianites': { nameKo: '퀸틸리아누스파(영지주의 이단) [Quintillianites]', nameKoShort: '퀸틸리아누스파', nameFr: 'Quintillianites', nameEn: 'Quintillianists (Gnostic Sect)' },
+  'e3170-quirim': { nameKo: '퀴림(비밀을 토하게 하는 돌) [Quirim / Stone of Betrayal]', nameKoShort: '퀴림', nameFr: 'Quirim', nameEn: 'Quirim (Stone of the Traitor)' },
+  'e3171-quivognefemme': { nameKo: '키보뉴 부인 [Quivogne (Femme) / Madame Quivogne]', nameKoShort: '키보뉴 부인', nameFr: 'Quivogne (femme)', nameEn: 'Madame Quivogne (19th-Century Fraudulent Witch)' },
+
   // R entries curated headwords (p.569-586)
   'e3172-rabbats': { nameKo: '라바트(목깃 달린 요정) [Rabbats]', nameKoShort: '라바트', nameFr: 'Rabbats', nameEn: 'Rabbats (Noisy Hobgoblins)' },
   'e3173-rabbins': { nameKo: '랍비의 마법 전승 [Rabbins / Rabbinical Magic]', nameKoShort: '랍비의 마법 전승', nameFr: 'Rabbins', nameEn: 'Rabbinical Occult Traditions' },
@@ -2154,6 +2163,15 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
 }
 
 const CURATED_META = {
+  // Q entries curated metadata (p.567-568)
+  'e3165-quakerisme': { category: 'superstition', rank: '17세기 신비주의 종파와 종교적 황홀경(Secte Mystique des Trembleurs)', domains: ["미신·민속(Superstition)","1863 원서 삽화 수록","조지 폭스와 윌리엄 펜","종교적 광신","신체 경련과 황홀경"] },
+  'e3166-queiranisaac': { category: 'person', rank: '1609년 보르도 마녀재판의 마법사 하인(Sorcier de Nérac)', domains: ["인물·역사(Personnage)","1863 원서 삽화 수록","피에르 드 랑크르","사바트와 독약 제조","1609년 처형"] },
+  'e3167-question': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["미신·민속(Superstition)","상호참조","마녀재판 고문","고통 무감각"] },
+  'e3168-queys': { category: 'myth', rank: '중국 전통 신앙의 원혼과 악귀(Mauvais Génies Chinois)', domains: ["신화·전설(Mythologie)","동양 신화","중국 민속 신앙","귀신(鬼神) 전승"] },
+  'e3169-quintillianites': { category: 'superstition', rank: '2세기 북아프리카의 영지주의 카인파 이단(Secte Gnostique Hérétique)', domains: ["미신·민속(Superstition)","초기 기독교 이단","테르툴리아누스 기록","카인파 영지주의","상호참조"] },
+  'e3170-quirim': { category: 'superstition', rank: '수면 중 가슴속 진실을 자백하게 만드는 마법의 돌(Pierre Merveilleuse)', domains: ["미신·민속(Superstition)","광물 마법","중세 보석지","배신자의 돌","비밀 누설 주술"] },
+  'e3171-quivognefemme': { category: 'person', rank: '19세기 브줄의 사기 점쟁이이자 마녀 피고인(Sorcière Contemporaine)', domains: ["인물·역사(Personnage)","1863 원서 삽화 수록","19세기 프랑스 범죄","공중 전차 마법 사기","브줄 법원 판결"] },
+
   // R entries curated meta (p.569-586)
   'e3172-rabbats': { category: 'myth', rank: '가정의 소음 요정·코볼트(Lutin tapageur)', domains: ["미신·민속(Superstition)","가정 정령·소령","폴터가이스트","민간 전승"] },
   'e3173-rabbins': { category: 'superstition', rank: '카발라와 유대 신비주의 전승(Traditions Cabalistiques et Magie)', domains: ["미신·민속(Superstition)","유대 카발라","비전 신비주의","골렘과 부적"] },

@@ -504,6 +504,34 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// Q section audit assertions (7 entries, 3 illustrated)
+const qEntries = ENTRIES.filter(e => e.letter === 'Q');
+assert.equal(qEntries.length, 7, 'Q section must contain exactly 7 entries');
+
+const qIllustrated = qEntries.filter(e => e.hasPlate);
+assert.equal(qIllustrated.length, 3, 'Q section must contain exactly 3 illustrated entries');
+
+const quakerisme = ENTRIES.find(e => e.id === 'e3165-quakerisme');
+assert.ok(quakerisme && quakerisme.hasPlate && quakerisme.plate === 'plates/e3165-quakerisme.jpg' && quakerisme.nameKo.includes('퀘이커교'), 'Quakerisme illustrated');
+
+const queiran = ENTRIES.find(e => e.id === 'e3166-queiranisaac');
+assert.ok(queiran && queiran.hasPlate && queiran.plate === 'plates/e3166-queiran-isaac.jpg' && queiran.category === 'person' && queiran.nameKo.includes('이자크 케랑'), 'Queiran Isaac illustrated sorcerer');
+
+const question = ENTRIES.find(e => e.id === 'e3167-question');
+assert.ok(question && question.category === 'crossref' && question.nameKo.includes('사법 고문') && !question.nameKo.startsWith('질문 ['), 'Question translated as judicial torture, not generic question');
+
+const queys = ENTRIES.find(e => e.id === 'e3168-queys');
+assert.ok(queys && queys.category === 'myth' && queys.nameKo.includes('귀신'), 'Queys Chinese evil spirits');
+
+const quintillianites = ENTRIES.find(e => e.id === 'e3169-quintillianites');
+assert.ok(quintillianites && quintillianites.category === 'superstition' && quintillianites.nameKo.includes('퀸틸리아누스파'), 'Quintillianites Gnostic sect');
+
+const quirim = ENTRIES.find(e => e.id === 'e3170-quirim');
+assert.ok(quirim && quirim.category === 'superstition' && quirim.nameKo.includes('퀴림'), 'Quirim stone of betrayal');
+
+const quivogne = ENTRIES.find(e => e.id === 'e3171-quivognefemme');
+assert.ok(quivogne && quivogne.hasPlate && quivogne.plate === 'plates/e3171-quivogne-femme.jpg' && quivogne.category === 'person' && quivogne.nameKo.includes('키보뉴 부인') && !quivogne.nameKo.includes('펨 키보느'), 'Quivogne femme translated as Madame Quivogne, not femme MT');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
