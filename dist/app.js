@@ -228,10 +228,19 @@ function formatParagraphs(text){
 }
 
 function renderEntryArticleCard(entry,extraFooterHtml=''){
+  const isBookmarked=state.bookmarks.includes(entry.id);
+  const isRead=state.readIds.includes(entry.id);
+
   return `<article class="detail-card">
     <header class="detail-header">
-      <div class="detail-meta-row">
+      <div class="detail-header-top">
+        <button type="button" class="header-read-btn${isRead?' active':''}" data-action="toggle-read" data-id="${escapeHtml(entry.id)}" aria-label="${isRead?'열람 완료 해제':'열람 표시'}">
+          ${isRead?'✓ 열람 완료됨':'열람'}
+        </button>
         <span class="entry-plate-no">${entry.hasPlate?`루이 브르통 판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
+        <button type="button" class="header-bookmark-btn${isBookmarked?' active':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}" aria-label="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}">
+          ${isBookmarked?'★':'☆'}
+        </button>
       </div>
       <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
       ${rankIsTitle(entry)?`<div class="detail-rank-line">${escapeHtml(entry.rank)}</div>`:''}
@@ -272,8 +281,6 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
 }
 
 function renderEntryDetailPage(entry){
-  const isBookmarked=state.bookmarks.includes(entry.id);
-  const isRead=state.readIds.includes(entry.id);
   const backLabel=TAB_BACK_LABELS[activeTab]||'← 목록으로 돌아가기';
 
   const contextList=getActiveContextList();
@@ -283,42 +290,35 @@ function renderEntryDetailPage(entry){
   const prevEntry=idx>0?navList[idx-1]:null;
   const nextEntry=idx>=0&&idx<navList.length-1?navList[idx+1]:null;
 
-  const prevNextHtml=`<nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
-    ${prevEntry
-      ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
-          <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
-          <strong>${escapeHtml(prevEntry.nameKo)}</strong>
-        </button>`
-      :`<div class="prev-next-spacer"></div>`}
-    ${nextEntry
-      ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
-          <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
-          <strong>${escapeHtml(nextEntry.nameKo)}</strong>
-        </button>`
-      :`<div class="prev-next-spacer"></div>`}
-  </nav>
-  <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>`;
+  const extraFooterHtml=`
+    <div class="detail-bottom-controls">
+      <button type="button" class="secondary french-toggle-btn" data-action="toggle-french">
+        ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
+      </button>
+    </div>
+    <nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
+      ${prevEntry
+        ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
+            <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
+            <strong>${escapeHtml(prevEntry.nameKo)}</strong>
+          </button>`
+        :`<div class="prev-next-spacer"></div>`}
+      ${nextEntry
+        ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
+            <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
+            <strong>${escapeHtml(nextEntry.nameKo)}</strong>
+          </button>`
+        :`<div class="prev-next-spacer"></div>`}
+    </nav>
+    <div class="detail-bottom-back">
+      <button type="button" class="detail-back-btn" data-action="close-entry">
+        ${escapeHtml(backLabel)}
+      </button>
+    </div>
+    <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>`;
 
   return `<section class="entry-detail-page">
-    <div class="detail-topbar">
-      <button type="button" class="detail-back-btn" data-action="close-entry">
-        <span class="back-text-full">${escapeHtml(backLabel)}</span>
-        <span class="back-text-short">← 목록</span>
-      </button>
-      <div class="detail-top-actions">
-        <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
-          ${isBookmarked?'★ 즐겨찾기':'☆ 즐겨찾기'}
-        </button>
-        <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">
-          ${isRead?'✓ 열람 완료':'열람'}
-        </button>
-        <button type="button" class="secondary" data-action="toggle-french">
-          ${settings.showFrench?'FR 닫기':'FR 원문'}
-        </button>
-      </div>
-    </div>
-
-    ${renderEntryArticleCard(entry,prevNextHtml)}
+    ${renderEntryArticleCard(entry,extraFooterHtml)}
   </section>`;
 }
 
@@ -431,26 +431,17 @@ function advanceRandomEntry(){
 function renderDailyTab(){
   const entry=getCurrentRandomEntry();
   markEntryAsRead(entry.id);
-  const isBookmarked=state.bookmarks.includes(entry.id);
-  const isRead=state.readIds.includes(entry.id);
+
+  const extraFooterHtml=`
+    <div class="detail-bottom-controls">
+      <button type="button" class="secondary french-toggle-btn" data-action="toggle-french">
+        ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
+      </button>
+    </div>
+    <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>`;
 
   return `<section class="entry-detail-page daily-view" aria-label="무작위 지옥사전 표제어">
-    <div class="detail-topbar" style="justify-content:flex-end">
-      <div class="detail-top-actions">
-        <button type="button" class="${isBookmarked?'primary':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}">
-          ${isBookmarked?'★ 즐겨찾기':'☆ 즐겨찾기'}
-        </button>
-        <button type="button" data-action="toggle-read" data-id="${escapeHtml(entry.id)}">
-          ${isRead?'✓ 열람 완료됨':'열람'}
-        </button>
-        <button type="button" class="secondary" data-action="toggle-french">
-          ${settings.showFrench?'FR 닫기':'FR 원문'}
-        </button>
-      </div>
-    </div>
-
-    ${renderEntryArticleCard(entry)}
-    <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
+    ${renderEntryArticleCard(entry,extraFooterHtml)}
   </section>`;
 }
 
