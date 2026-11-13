@@ -301,7 +301,20 @@ const WORD_DICT = {
   'vue': '시력과 투시',
   'voisin (la)': '라 부아쟁', 'voisin': '라 부아쟁', 'voisinla': '라 부아쟁',
   'wall': '발(부알)', 'wierus': '요한 바이어', 'wiérus': '요한 바이어',
-  'xaphan': '자판', 'xéno': '제노',
+  'xaphan': '자판', 'xéno': '제노', 'xylomancie': '크실로망시',
+  'yaga-baba': '야가-바바', 'yagababa': '야가-바바',
+  'yakouts': '야쿠트족',
+  'yan-gant-y-tan': '얀 강 이 탄',
+  'yasdh': '야쉬드',
+  'ychain-bonawgs': '이카인-바나옥', 'ychainbonawgs': '이카인-바나옥',
+  'yen-vang': '옌왕', 'yenvang': '옌왕',
+  'yesdhoon': '예스둔',
+  'yermoloff': '예르몰로프',
+  'yeux': '악마의 눈과 마안',
+  'yffrotte': '이프로테',
+  'yormoungandour': '요르문간드',
+  'youf (marie-anne)': '마리-안 유프', 'youf': '마리-안 유프', 'youfmarieanne': '마리-안 유프',
+  'youma': '유마',
   'zabulon': '자불론', 'zacharie': '자카리아', 'zacoum': '자쿰 나무', 'zaebos': '자에보스',
   'zagam': '자감', 'zahuris': '자후리스', 'zairagie': '자이라지에', 'zairagie (zairagiah)': '자이라지에',
   'zapan': '자판', 'zariatnatmik': '자리아트나트믹', 'zazarraguan': '자자라구안', 'zédéchias': '체데키아스',
@@ -685,6 +698,24 @@ const CURATED_HEADWORD_RULES = {
   // Disambiguated Année climatérique entries (p.39)
   'e225-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (1) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
   'e227-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (2) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
+
+  // Xylomancie curated headword (p.707)
+  'e3782-xylomancie': { nameKo: '크실로망시(나무 점술) [Xylomancie / Xylomancy]', nameKoShort: '크실로망시(나무 점술)', nameFr: 'Xylomancie', nameEn: 'Xylomancy' },
+
+  // Y entries curated headwords (p.707-711)
+  'e3783-yagababa': { nameKo: '야가-바바 또는 바바 야가 [Yaga-Baba / Baba Yaga]', nameKoShort: '야가-바바 또는 바바 야가', nameFr: 'Yaga-Baba', nameEn: 'Baba Yaga' },
+  'e3784-yakouts': { nameKo: '야쿠트족 [Yakouts / Yakuts]', nameKoShort: '야쿠트족', nameFr: 'Yakouts', nameEn: 'Yakuts' },
+  'yan-gant-y-tan': { nameKo: '얀 강 이 탄 [Yan-gant-y-tan]', nameKoShort: '얀 강 이 탄', nameFr: 'Yan-gant-y-tan', nameEn: 'Yan-gant-y-tan' },
+  'e3786-yasdh': { nameKo: '야쉬드 또는 야쉬트 [Yasdh / Yashd]', nameKoShort: '야쉬드 또는 야쉬트', nameFr: 'Yasdh', nameEn: 'Yashd' },
+  'e3787-ychainbonawgs': { nameKo: '이카인-바나옥 [Ychain-bonawgs / Ychain Bannog]', nameKoShort: '이카인-바나옥', nameFr: 'Ychain-bonawgs', nameEn: 'Ychain Bannog' },
+  'e3788-yenvang': { nameKo: '옌왕 또는 염라대왕 [Yen-vang / Yanwang]', nameKoShort: '옌왕 또는 염라대왕', nameFr: 'Yen-vang', nameEn: 'Yanwang' },
+  'e3789-yesdhoon': { nameKo: '예스둔 또는 야즈단 [Yesdhoon / Yazdan]', nameKoShort: '예스둔 또는 야즈단', nameFr: 'Yesdhoon', nameEn: 'Yazdan' },
+  'e3790-yermoloff': { nameKo: '예르몰로프 [Yermoloff / Aleksey Yermolov]', nameKoShort: '예르몰로프', nameFr: 'Yermoloff', nameEn: 'Aleksey Yermolov' },
+  'e3791-yeux': { nameKo: '악마의 눈과 마안 [Yeux / Evil Eye]', nameKoShort: '악마의 눈과 마안', nameFr: 'Yeux', nameEn: 'Evil Eye' },
+  'e3792-yffrotte': { nameKo: '이프로테 [Yffrotte / Frotho]', nameKoShort: '이프로테', nameFr: 'Yffrotte', nameEn: 'Frotho' },
+  'e3793-yormoungandour': { nameKo: '요르문간드 [Yormoungandour / Jörmungandr]', nameKoShort: '요르문간드', nameFr: 'Yormoungandour', nameEn: 'Jörmungandr' },
+  'e3794-youfmarieanne': { nameKo: '마리-안 유프 [Youf (Marie-Anne)]', nameKoShort: '마리-안 유프', nameFr: 'Youf (Marie-Anne)', nameEn: 'Marie-Anne Youf' },
+  'e3795-youma': { nameKo: '유마 또는 유말라 [Youma / Jumala]', nameKoShort: '유마 또는 유말라', nameFr: 'Youma', nameEn: 'Jumala' },
 
   // Z entries curated headwords
   'e3796-zabulon': { nameKo: '자불론 [Zabulon]', nameKoShort: '자불론', nameFr: 'Zabulon', nameEn: '' },
@@ -1500,6 +1531,24 @@ const CURATED_META = {
   'e1296-desfontaines': { category: 'superstition', rank: '유령·환영 기담(Spectre & Fantôme)', domains: ['미신·민속(Superstition)', '유령·환영', '프랑스 기담'] },
   'e225-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '점성술·수비학', '위기의 해'] },
   'e227-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '신체 변화 주기', '수비학'] },
+
+  // Xylomancie curated metadata (p.707)
+  'e3782-xylomancie': { category: 'divination', rank: '고대·중세 점술(Art Divinatoire)', domains: ['점술·예언(Divination)', '고대·중세 점복술', '슬라브 민속'] },
+
+  // Y entries curated metadata (p.707-711)
+  'e3783-yagababa': { category: 'myth', rank: '슬라브 전승의 악마적 마녀·괴물(Monstre Infernal)', domains: ['신화·전설(Mythologie)', '슬라브 민담', '민간 괴물'] },
+  'e3784-yakouts': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '시베리아 샤머니즘', '민속 신앙'] },
+  'yan-gant-y-tan': { category: 'demon', subCategory: 'subordinate', rank: '브르타뉴 피니스테르의 밤길 촛불 악령(Démon Errant)', domains: ['악마학(Démonologie)', '브르타뉴 전승', '밤의 방랑자', '불길한 징조'] },
+  'e3786-yasdh': { category: 'crossref', rank: '상호참조 표제어 (Renvoi)', domains: ['상호참조', '조로아스터교', '성스러운 경전'] },
+  'e3787-ychainbonawgs': { category: 'myth', rank: '스코틀랜드 산악의 전설적 괴수 황소(Bœufs Monstres)', domains: ['신화·전설(Mythologie)', '켈트 전승', '괴수·환상종', '산악 정령'] },
+  'e3788-yenvang': { category: 'demon', subCategory: 'monarch', rank: '중국의 지옥의 왕·염라대왕(Roi de l’Enfer Chinois)', domains: ['악마학(Démonologie)', '동양 명계 신앙', '지옥의 왕', '사후세계의 심판자'] },
+  'e3789-yesdhoon': { category: 'myth', rank: '조로아스터교의 유일신격(Dieu Unique Zoroastrien)', domains: ['신화·전설(Mythologie)', '조로아스터교(배화교)', '오르무즈드', '종말론과 신성한 불'] },
+  'e3790-yermoloff': { category: 'person', rank: '19세기 러시아 장군·학자(Général Russe)', domains: ['인물·문헌(Personnages)', '유령의 집(Maison Hantée)', '러시아 심령 기록'] },
+  'e3791-yeux': { category: 'superstition', rank: '시선 저주와 마안 신앙(Superstition du Mauvais Œil)', domains: ['미신·민속(Superstition)', '마안(Evil Eye)', '시선 저주', '마녀 판별법', '민간 방양술'] },
+  'e3792-yffrotte': { category: 'person', rank: '고티아와 스웨덴의 전설적 국왕(Roi Légendaire)', domains: ['인물·문헌(Personnages)', '북유럽 군주 전설', '마녀 둔갑담', '토르케마다 헥사메론'] },
+  'e3793-yormoungandour': { category: 'myth', rank: '북유럽 신화의 거대한 세계뱀(Serpent Monstrueux)', domains: ['신화·전설(Mythologie)', '북유럽 신화(에다)', '세계뱀', '라그나로크'] },
+  'e3794-youfmarieanne': { category: 'person', rank: '19세기 프랑스 마술 치료 사기 피해자(Victime d’Escroquerie)', domains: ['인물·문헌(Personnages)', '프랑스 법정 실화', '마술 치료 사기', '19세기 미신 풍속'] },
+  'e3795-youma': { category: 'myth', rank: '볼가 핀계 체레미스인의 최고신(Dieu Suprême des Tchérémisses)', domains: ['신화·전설(Mythologie)', '핀-우그리아 신화', '자연 숭배', '신성한 숲(케레메트)', '희생 제의'] },
 
   // Z entries curated metadata
   'e3796-zabulon': { category: 'demon', rank: '지옥의 악마(Démon)', domains: ['악마학(Démonologie)', '루됭 빙의 사건', '빙의 악령'] },

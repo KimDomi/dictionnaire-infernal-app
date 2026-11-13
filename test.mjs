@@ -93,6 +93,53 @@ assert.ok(zedechias && zedechias.description.includes('실프') && !zedechias.de
 const zepar = ENTRIES.find(e => e.id === 'e3808-zepar');
 assert.ok(zepar && zepar.category === 'demon' && zepar.rank.includes('대공'), 'Zepar demon duke');
 
+// Y section audit assertions (13 entries)
+const yEntries = ENTRIES.filter(e => e.letter === 'Y');
+assert.equal(yEntries.length, 13, 'Y section must contain exactly 13 entries in 1863 edition');
+
+const xylomancie = ENTRIES.find(e => e.nameFr === 'Xylomancie');
+assert.ok(xylomancie && xylomancie.letter === 'X' && xylomancie.category === 'divination', 'Xylomancie must be in X letter');
+assert.ok(xylomancie.description.includes('목점') && xylomancie.description.includes('슬라보니아'), 'Xylomancie wood divination translation');
+
+const yagababa = ENTRIES.find(e => e.id === 'e3783-yagababa');
+assert.ok(yagababa && yagababa.category === 'myth' && yagababa.nameKo.includes('바바 야가'), 'Yaga-Baba myth Baba Yaga');
+
+const yakouts = ENTRIES.find(e => e.id === 'e3784-yakouts');
+assert.ok(yakouts && yakouts.category === 'crossref' && yakouts.summary.includes('Mangtaar'), 'Yakouts crossref Mangtaar');
+
+const yangant = ENTRIES.find(e => e.id === 'yan-gant-y-tan');
+assert.ok(yangant && yangant.hasPlate && yangant.plate === 'plates/yan-gant-y-tan.jpg' && yangant.category === 'demon', 'Yan-gant-y-tan illustrated plate demon');
+
+const yasdh = ENTRIES.find(e => e.id === 'e3786-yasdh');
+assert.ok(yasdh && yasdh.category === 'crossref' && !yasdh.description.includes('raw=1') && yasdh.description.includes('Yesdhoon'), 'Yasdh crossref not raw=1 bug');
+
+const ychain = ENTRIES.find(e => e.id === 'e3787-ychainbonawgs');
+assert.ok(ychain && ychain.category === 'myth' && ychain.description.includes('괴물 황소'), 'Ychain-bonawgs myth monster oxen');
+
+const yenvang = ENTRIES.find(e => e.id === 'e3788-yenvang');
+assert.ok(yenvang && yenvang.category === 'demon' && yenvang.nameKo.includes('염라대왕'), 'Yen-vang demon king Yanwang');
+
+const yesdhoon = ENTRIES.find(e => e.id === 'e3789-yesdhoon');
+assert.ok(yesdhoon && yesdhoon.category === 'myth' && yesdhoon.description.includes('조로아스터'), 'Yesdhoon myth Zoroastrianism');
+
+const yermoloff = ENTRIES.find(e => e.id === 'e3790-yermoloff');
+assert.ok(yermoloff && yermoloff.category === 'person' && yermoloff.description.includes('모스크바'), 'Yermoloff person haunted house Moscow');
+
+const yeux = ENTRIES.find(e => e.id === 'e3791-yeux');
+assert.ok(yeux && yeux.category === 'superstition' && yeux.description.includes('마안') && yeux.description.includes('사슴뿔'), 'Yeux evil eye superstition');
+
+const yffrotte = ENTRIES.find(e => e.id === 'e3792-yffrotte');
+assert.ok(yffrotte && yffrotte.category === 'person' && yffrotte.description.includes('토르케마다'), 'Yffrotte person Torquemada');
+
+const yormoungandour = ENTRIES.find(e => e.id === 'e3793-yormoungandour');
+assert.ok(yormoungandour && yormoungandour.category === 'myth' && yormoungandour.nameKo.includes('요르문간드'), 'Yormoungandour myth Jormungandr');
+
+const youf = ENTRIES.find(e => e.id === 'e3794-youfmarieanne');
+assert.ok(youf && youf.category === 'person' && youf.description.includes('생로') && youf.description.includes('사기'), 'Youf person Saint-Lo trial');
+
+const youma = ENTRIES.find(e => e.id === 'e3795-youma');
+assert.ok(youma && youma.category === 'myth' && youma.description.includes('체레미스') && youma.description.includes('케레메트'), 'Youma myth Cheremisses Keremet');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
