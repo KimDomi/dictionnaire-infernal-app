@@ -300,6 +300,71 @@ assert.ok(uterpen && uterpen.category === 'crossref' && uterpen.nameKo.includes(
 const uteseture = ENTRIES.find(e => e.id === 'e3674-uteseture');
 assert.ok(uteseture && uteseture.category === 'divination' && uteseture.nameKo.includes('우티세타') && uteseture.description.includes('오딘'), 'Uteseture Norse divination');
 
+// T section audit assertions (161 entries)
+const tEntries = ENTRIES.filter(e => e.letter === 'T');
+assert.equal(tEntries.length, 161, 'T section must contain exactly 161 entries');
+
+// 68 Plates demons & illustrations
+const tap = ENTRIES.find(e => e.id === 'tap');
+assert.ok(tap && tap.letter === 'T' && tap.hasPlate && tap.plate === 'plates/tap.jpg' && tap.plateNo === 60 && tap.nameKo.includes('타프 또는 가프'), 'Tap illustrated demon');
+
+const torngarsuk = ENTRIES.find(e => e.id === 'torngarsuk');
+assert.ok(torngarsuk && torngarsuk.letter === 'T' && torngarsuk.hasPlate && torngarsuk.plate === 'plates/torngarsuk.jpg' && torngarsuk.plateNo === 61 && torngarsuk.nameKo.includes('토른가르수크'), 'Torngarsuk illustrated Inuit spirit');
+
+const transportSorcerers = ENTRIES.find(e => e.id === 'transport-sorcerers');
+assert.ok(transportSorcerers && transportSorcerers.letter === 'T' && transportSorcerers.hasPlate && transportSorcerers.plate === 'plates/transport-sorcerers.jpg' && transportSorcerers.plateNo === 62, 'Transport des sorcieres illustrated');
+
+// Disambiguated Templiers Part 1 & Part 2
+const templiers1 = ENTRIES.find(e => e.id === 'e3545-templiers');
+assert.ok(templiers1 && templiers1.letter === 'T' && templiers1.nameKo.includes('1부') && templiers1.description.length > 500, 'Templiers Part 1');
+
+const templiers2 = ENTRIES.find(e => e.id === 'e3547-templiers');
+assert.ok(templiers2 && templiers2.letter === 'T' && templiers2.hasPlate && templiers2.plate === 'plates/e3547-templiers.jpg' && templiers2.nameKo.includes('2부') && templiers2.description.length > 200, 'Templiers Part 2 illustrated');
+
+// Illustrated entries in T (14 total)
+const tIllustrated = tEntries.filter(e => e.hasPlate);
+assert.equal(tIllustrated.length, 14, 'T section must contain exactly 14 illustrated entries');
+
+// Other notable T entries
+const tablesTournantes = ENTRIES.find(e => e.id === 'e3506-tablestournantes');
+assert.ok(tablesTournantes && tablesTournantes.hasPlate && tablesTournantes.plate === 'plates/e3506-tables-tournantes.jpg' && tablesTournantes.nameKo.includes('탁자 회전 강신술'), 'Tables tournantes');
+
+const theodoric = ENTRIES.find(e => e.id === 'e3580-theodoric');
+assert.ok(theodoric && theodoric.hasPlate && theodoric.plate === 'plates/e3580-th-odoric.jpg' && theodoric.nameKo.includes('테오도릭'), 'Theodoric illustrated');
+
+const thespesius = ENTRIES.find(e => e.id === 'e3586-thespesius');
+assert.ok(thespesius && thespesius.hasPlate && thespesius.plate === 'plates/e3586-thesp-sius.jpg' && thespesius.nameKo.includes('테스페시우스'), 'Thespesius illustrated');
+
+const tourMontpellier = ENTRIES.find(e => e.id === 'e3622-tourdemontpellier');
+assert.ok(tourMontpellier && tourMontpellier.hasPlate && tourMontpellier.plate === 'plates/e3622-tour-de-montpellier.jpg', 'Tour de Montpellier illustrated');
+
+const traditionsPop = ENTRIES.find(e => e.id === 'e3626-traditionspopulaires');
+assert.ok(traditionsPop && traditionsPop.hasPlate && traditionsPop.plate === 'plates/e3626-traditions-populaires.jpg', 'Traditions populaires illustrated');
+
+const trazegnies = ENTRIES.find(e => e.id === 'e3632-trazegnies');
+assert.ok(trazegnies && trazegnies.hasPlate && trazegnies.plate === 'plates/e3632-traz-gnies.jpg' && trazegnies.nameKo.includes('트라제니'), 'Trazegnies illustrated');
+
+const tribunalSecret = ENTRIES.find(e => e.id === 'e3639-tribunalsecret');
+assert.ok(tribunalSecret && tribunalSecret.hasPlate && tribunalSecret.plate === 'plates/e3639-tribunal-secret.jpg' && tribunalSecret.nameKo.includes('페메 비밀 재판소'), 'Tribunal secret illustrated');
+
+const troian = ENTRIES.find(e => e.id === 'e3642-troian');
+assert.ok(troian && troian.hasPlate && troian.plate === 'plates/e3642-troian.jpg' && troian.nameKo.includes('트로얀'), 'Troian illustrated');
+
+const troupeaux = ENTRIES.find(e => e.id === 'e3652-troupeaux');
+assert.ok(troupeaux && troupeaux.hasPlate && troupeaux.plate === 'plates/e3652-troupeaux.jpg' && troupeaux.nameKo.includes('가축 보호 주술'), 'Troupeaux illustrated');
+
+const thamuz = ENTRIES.find(e => e.id === 'e3573-thamuz');
+assert.ok(thamuz && thamuz.category === 'demon' && thamuz.nameKo.includes('타무즈') && thamuz.description.includes('화포'), 'Thamuz demon of artillery');
+
+const turlupins = ENTRIES.find(e => e.id === 'e3657-turlupins');
+assert.ok(turlupins && turlupins.category === 'person' && turlupins.nameKo.includes('튀를뤼팽파'), 'Turlupins sect');
+
+const tvardowski = ENTRIES.find(e => e.id === 'e3659-tvardowski');
+assert.ok(tvardowski && tvardowski.category === 'myth' && tvardowski.nameKo.includes('판 트바르도프스키') && tvardowski.description.includes('파우스트'), 'Tvardowski Polish Faust');
+
+const tyre = ENTRIES.find(e => e.id === 'e3664-tyre');
+assert.ok(tyre && tyre.nameKo.includes('튀레') && tyre.description.includes('셰페루스'), 'Tyre Sami magical ball');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
