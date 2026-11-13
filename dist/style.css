@@ -796,19 +796,19 @@ dialog#modal::backdrop {
 }
 
 .detail-card {
-  background: var(--bg-elevated);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  padding: 24px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 8px 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  box-shadow: var(--shadow);
+  gap: 22px;
+  box-shadow: none;
 }
 
 @media (min-width: 680px) {
   .detail-card {
-    padding: 32px 34px;
+    padding: 12px 0 20px;
   }
 }
 
@@ -901,9 +901,10 @@ dialog#modal::backdrop {
 
 .detail-appearance-box {
   padding: 14px 16px;
-  border-radius: 12px;
+  border-radius: 0 12px 12px 0;
   background: var(--bg-soft);
-  border: 1px solid var(--border);
+  border: none;
+  border-left: 3px solid var(--gold);
 }
 
 .detail-appearance-box strong {
