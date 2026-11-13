@@ -504,6 +504,88 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// K section audit assertions (69 entries, 16 illustrated)
+const kEntries = ENTRIES.filter(e => e.letter === 'K');
+assert.equal(kEntries.length, 69, 'K section must contain exactly 69 entries (after J/K and K/L boundary fixes)');
+
+const kIllustrated = kEntries.filter(e => e.hasPlate);
+assert.equal(kIllustrated.length, 16, 'K section must contain exactly 16 illustrated entries');
+
+const kahlhammer = ENTRIES.find(e => e.id === 'e2229-kahlhammermarie');
+assert.ok(kahlhammer && kahlhammer.hasPlate && kahlhammer.nameKo.includes('마리 칼하머'), 'Kahlhammer possessed woman illustrated');
+
+const kalmouks = ENTRIES.find(e => e.id === 'e2233-kalmouks');
+assert.ok(kalmouks && kalmouks.hasPlate && kalmouks.nameKo.includes('칼미크족'), 'Kalmouks shamanism illustrated');
+
+const kalpatarou = ENTRIES.find(e => e.id === 'e2234-kalpatarou');
+assert.ok(kalpatarou && kalpatarou.hasPlate && kalpatarou.nameKo.includes('칼파타루'), 'Kalpa-Tarou wish-granting tree illustrated');
+
+const kalta = ENTRIES.find(e => e.id === 'e2236-kalta');
+assert.ok(kalta && kalta.hasPlate && kalta.nameKo.includes('칼타'), 'Kalta Eyrbyggja saga witch illustrated');
+
+const kantius = ENTRIES.find(e => e.id === 'e2240-kantiuslesilesien');
+assert.ok(kantius && kantius.hasPlate && kantius.nameKo.includes('칸티우스'), 'John Cantius vampire illustrated');
+
+const kamlatPlate = ENTRIES.find(e => e.id === 'e2241-kamlat');
+assert.ok(kamlatPlate && kamlatPlate.hasPlate && kamlatPlate.nameKo.includes('카믈라트 주술사'), 'Kamlat Siberian shaman illustrated');
+
+const kephalonomancie = ENTRIES.find(e => e.id === 'e2256-kephalonomancie');
+assert.ok(kephalonomancie && kephalonomancie.hasPlate && kephalonomancie.nameKo.includes('당나귀 머리뼈'), 'Kephalonomancie ass head divination illustrated');
+
+const khumanoGoo = ENTRIES.find(e => e.id === 'e2259-khumanogoo');
+assert.ok(khumanoGoo && khumanoGoo.hasPlate && khumanoGoo.nameKo.includes('구마노 고오후'), 'Khumano-Goo Japanese crow talisman ordeal illustrated');
+
+const kericoff = ENTRIES.find(e => e.id === 'e2264-kericoff');
+assert.ok(kericoff && kericoff.hasPlate && kericoff.nameKo.includes('케리코프'), 'Kericoff Russian lake monster illustrated');
+
+const kisilova = ENTRIES.find(e => e.id === 'e2265-kisilovalevampirede');
+assert.ok(kisilova && kisilova.hasPlate && kisilova.nameKo.includes('키실로바'), 'Kisilova vampire Peter Plogojowitz illustrated');
+
+const kleudde = ENTRIES.find(e => e.id === 'e2267-kleudde');
+assert.ok(kleudde && kleudde.hasPlate && kleudde.nameKo.includes('클뢰드'), 'Kleudde Flemish shapeshifting fiend illustrated');
+
+const knipperdolinck = ENTRIES.find(e => e.id === 'e2269-knipperdolinck');
+assert.ok(knipperdolinck && knipperdolinck.hasPlate && knipperdolinck.nameKo.includes('크니퍼돌링'), 'Knipperdolinck Anabaptist leader illustrated');
+
+const kobold = ENTRIES.find(e => e.id === 'e2272-kobold');
+assert.ok(kobold && kobold.hasPlate && kobold.nameKo.includes('코볼트'), 'Kobold German goblin illustrated');
+
+const kojozed = ENTRIES.find(e => e.id === 'e2273-kojozed');
+assert.ok(kojozed && kojozed.hasPlate && kojozed.nameKo.includes('코요제드'), 'Kojozed phantom hound illustrated');
+
+const kraken = ENTRIES.find(e => e.id === 'e2282-kraken');
+assert.ok(kraken && kraken.hasPlate && kraken.nameKo.includes('크라켄'), 'Kraken giant sea monster illustrated');
+
+const krechting = ENTRIES.find(e => e.id === 'e2284-krechting');
+assert.ok(krechting && krechting.hasPlate && krechting.nameKo.includes('크레히팅'), 'Krechting Anabaptist leader illustrated');
+
+const kaaba = ENTRIES.find(e => e.id === 'e2223-kaaba');
+assert.ok(kaaba && kaaba.category === 'superstition' && kaaba.nameKo.includes('카바 신전'), 'Kaaba Black Stone of Mecca');
+
+const kaf = ENTRIES.find(e => e.id === 'e2227-kaf');
+assert.ok(kaf && kaf.category === 'myth' && kaf.nameKo.includes('카프 산'), 'Mount Kaf emerald realm of Jinn');
+
+const kardec = ENTRIES.find(e => e.id === 'e2244-kardecallan');
+assert.ok(kardec && kardec.category === 'person' && kardec.nameKo.includes('알랑 카르덱'), 'Allan Kardec spiritism founder');
+
+const katakhanes = ENTRIES.find(e => e.id === 'e2246-katakhanes');
+assert.ok(katakhanes && katakhanes.category === 'myth' && katakhanes.nameKo.includes('카타카나스'), 'Katakhanas Cretan vampire');
+
+const kobal = ENTRIES.find(e => e.id === 'e2271-kobal');
+assert.ok(kobal && kobal.category === 'demon' && kobal.nameKo.includes('코발'), 'Kobal director of infernal comedies');
+
+const kourrigans = ENTRIES.find(e => e.id === 'e2281-kourrigans');
+assert.ok(kourrigans && kourrigans.category === 'myth' && kourrigans.nameKo.includes('코리간'), 'Kourrigans Breton dolmen fairies');
+
+const kratim = ENTRIES.find(e => e.id === 'e2283-kratim');
+assert.ok(kratim && kratim.category === 'myth' && kratim.nameKo.includes('크라팀'), 'Kratim dog of Seven Sleepers');
+
+const kupay = ENTRIES.find(e => e.id === 'e2288-kupay');
+assert.ok(kupay && kupay.category === 'demon' && kupay.nameKo.includes('쿠파이'), 'Kupay Incan underworld demon Supay');
+
+const kutuktus = ENTRIES.find(e => e.id === 'e2291-kutuktus');
+assert.ok(kutuktus && kutuktus.category === 'myth' && kutuktus.nameKo.includes('후툭투'), 'Kutuktus Mongolian living Buddha');
+
 // L section audit assertions (169 entries, 20 illustrated)
 const lEntries = ENTRIES.filter(e => e.letter === 'L');
 assert.equal(lEntries.length, 169, 'L section must contain exactly 169 entries (after K/L and L/M boundary fixes)');
