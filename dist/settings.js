@@ -6,7 +6,8 @@ export const DEFAULT_SETTINGS=Object.freeze({
   theme:'dark',
   fontSize:'normal',
   showFrench:true,
-  keepAwake:false
+  keepAwake:false,
+  animations:true
 });
 
 export function normalizeSettings(raw){
@@ -15,7 +16,8 @@ export function normalizeSettings(raw){
     theme:['dark','light','system'].includes(src.theme)?src.theme:'dark',
     fontSize:['normal','large'].includes(src.fontSize)?src.fontSize:'normal',
     showFrench:typeof src.showFrench==='boolean'?src.showFrench:true,
-    keepAwake:typeof src.keepAwake==='boolean'?src.keepAwake:false
+    keepAwake:typeof src.keepAwake==='boolean'?src.keepAwake:false,
+    animations:typeof src.animations==='boolean'?src.animations:true
   };
 }
 
@@ -46,6 +48,7 @@ export function applySettingsToDocument(settings,doc=globalThis.document){
   if(doc?.documentElement?.dataset){
     doc.documentElement.dataset.theme=effective;
     doc.documentElement.dataset.fontsize=settings.fontSize;
+    doc.documentElement.dataset.animations=settings.animations?'on':'off';
   }
   doc?.querySelector?.('meta[name="theme-color"]')?.setAttribute?.('content',effective==='dark'?'#151312':'#f4eee1');
   syncSystemBars(effective);

@@ -111,6 +111,9 @@ async function run(initial,native=false){
   click({tab:'settings'});
   assert.equal(header.textContent,'설정');
   assert.ok(main.innerHTML.includes('data-action="backup"'));
+  assert.ok(main.innerHTML.includes('data-action="toggle-animations"'));
+  click({action:'toggle-animations'});
+  assert.ok(main.innerHTML.includes('data-action="toggle-animations"'));
 
   click({action:'help'});
   assert.ok(modal.innerHTML.includes('설정 안내'));

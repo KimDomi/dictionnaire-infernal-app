@@ -1,8 +1,8 @@
 import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=6158cd2e25e3';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
-import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=30d69e69c3cf';
-import {STORAGE_KEY,createBackupPayload,normalizeState,parseBackupPayload} from './backup.js?v=a7f53b351470';
+import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
+import {STORAGE_KEY,createBackupPayload,normalizeState,parseBackupPayload} from './backup.js?v=ce6c73ab474c';
 
 const mainEl=document.querySelector('#main');
 const headerTitleEl=document.querySelector('header h1');
@@ -37,6 +37,7 @@ let activeSort='page';
 let visibleLimit=PAGE_STEP;
 let activeEntryId=null;
 let savedScrollY=0;
+let pendingPageTurnDirection=null;
 
 const tabEntryIds={
   dictionary:null,
@@ -199,7 +200,7 @@ function getActiveContextList(){
   return filtered.length?filtered:ENTRIES;
 }
 
-function navigateEntryRelative(delta){
+function navigateEntryRelative(delta,dir=null){
   if(!activeEntryId)return false;
   const entry=ENTRY_MAP.get(activeEntryId);
   if(!entry)return false;
@@ -209,7 +210,7 @@ function navigateEntryRelative(delta){
   if(idx<0)idx=navList.findIndex(item=>item.id===entry.id);
   const targetIdx=idx+delta;
   if(targetIdx>=0&&targetIdx<navList.length){
-    openEntryPage(navList[targetIdx].id);
+    openEntryPage(navList[targetIdx].id,true,dir||(delta>0?'next':'prev'));
     return true;
   }
   return false;
@@ -341,7 +342,9 @@ function renderEntryDetailPage(entry){
       <div class="detail-swipe-guide-wrap"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
     </div>`;
 
-  return `<section class="entry-detail-page">
+  const animClass=settings.animations&&pendingPageTurnDirection?` page-turn-${pendingPageTurnDirection}`:'';
+  pendingPageTurnDirection=null;
+  return `<section class="entry-detail-page${animClass}">
     ${renderEntryArticleCard(entry,extraFooterHtml)}
   </section>`;
 }
@@ -437,7 +440,7 @@ function getCurrentRandomEntry(){
   return randomOverrideId&&ENTRY_MAP.get(randomOverrideId)||getDailyEntry(todayStr);
 }
 
-function advanceRandomEntry(){
+function advanceRandomEntry(dir='next'){
   const current=getCurrentRandomEntry();
   if(current)markEntryAsRead(current.id);
   let pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
@@ -446,6 +449,7 @@ function advanceRandomEntry(){
   }
   randomOverrideId=pick.id;
   markEntryAsRead(pick.id);
+  if(settings.animations)pendingPageTurnDirection=dir;
   render();
   if(typeof window!=='undefined'){
     window.scrollTo?.({top:0,behavior:'instant'});
@@ -466,7 +470,9 @@ function renderDailyTab(){
       <div class="detail-swipe-guide-wrap"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
     </div>`;
 
-  return `<section class="entry-detail-page daily-view" aria-label="무작위 지옥사전 표제어">
+  const animClass=settings.animations&&pendingPageTurnDirection?` page-turn-${pendingPageTurnDirection}`:'';
+  pendingPageTurnDirection=null;
+  return `<section class="entry-detail-page daily-view${animClass}" aria-label="무작위 지옥사전 표제어">
     ${renderEntryArticleCard(entry,extraFooterHtml)}
   </section>`;
 }
@@ -535,6 +541,15 @@ function renderSettingsTab(){
           ${settings.keepAwake?'켜짐':'꺼짐'}
         </button>
       </div>
+
+      <div class="setting-row">
+        <div class="setting-label">
+          <strong>페이지 넘김 및 화면 애니메이션</strong>
+        </div>
+        <button type="button" class="${settings.animations?'primary':''}" data-action="toggle-animations">
+          ${settings.animations?'켜짐':'꺼짐'}
+        </button>
+      </div>
     </div>
 
     <div class="panel">
@@ -595,7 +610,7 @@ function render(){
   syncWakeLock();
 }
 
-function openEntryPage(entryId,pushHistory=true){
+function openEntryPage(entryId,pushHistory=true,dir=null){
   const entry=ENTRY_MAP.get(entryId);
   if(!entry)return;
   if(!activeEntryId&&typeof window!=='undefined'){
@@ -614,6 +629,7 @@ function openEntryPage(entryId,pushHistory=true){
       window.history.pushState({entryId:entry.id,tab:activeTab},'',`#entry=${encodeURIComponent(entry.id)}`);
     }catch{}
   }
+  if(dir&&settings.animations)pendingPageTurnDirection=dir;
   render();
   if(typeof window!=='undefined'){
     window.scrollTo?.({top:0,behavior:'instant'});
@@ -755,6 +771,7 @@ function openHelpModal(){
       <li><strong>글자 크기</strong>: 본문 및 번역문의 글씨 크기를 조절합니다.</li>
       <li><strong>1863년 불문 원문</strong>: 자크 콜랭 드 플랑시의 1863년 프랑스어 전문을 함께 표시할지 선택합니다.</li>
       <li><strong>화면 켜짐 유지</strong>: 독서 중 화면이 자동으로 꺼지지 않도록 방지합니다.</li>
+      <li><strong>페이지 넘김 및 애니메이션</strong>: 스와이프 시 1863년 고서 종이 넘김 효과와 화면 전환 애니메이션을 켜거나 끕니다.</li>
       <li><strong>서재 정보 관리</strong>: ${escapeHtml(storageNotice())}</li>
     </ul>`;
   }
@@ -828,7 +845,9 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='open-entry'&&id){
-    openEntryPage(id);
+    const btn=target?.closest?.('.prev-next-btn');
+    const dir=btn?.classList?.contains('next')?'next':btn?.classList?.contains('prev')?'prev':null;
+    openEntryPage(id,true,dir);
     return;
   }
 
@@ -944,6 +963,13 @@ document.addEventListener('click',event=>{
     return;
   }
 
+  if(action==='toggle-animations'){
+    settings=saveSettings({...settings,animations:!settings.animations});
+    applySettingsToDocument(settings);
+    render();
+    return;
+  }
+
   if(action==='backup'){
     openBackupModal();
     return;
@@ -992,12 +1018,12 @@ document.addEventListener('touchend',event=>{
   if(Math.abs(dx)>=48&&Math.abs(dx)>Math.abs(dy)*1.25){
     if(activeEntryId){
       if(dx<0){
-        if(!navigateEntryRelative(1))showToast('마지막 항목입니다.');
+        if(!navigateEntryRelative(1,'next'))showToast('마지막 항목입니다.');
       }else{
-        if(!navigateEntryRelative(-1))showToast('첫 번째 항목입니다.');
+        if(!navigateEntryRelative(-1,'prev'))showToast('첫 번째 항목입니다.');
       }
     }else if(activeTab==='daily'){
-      advanceRandomEntry();
+      advanceRandomEntry(dx<0?'next':'prev');
     }
   }
 },{passive:true});
@@ -1029,12 +1055,12 @@ document.addEventListener('mouseup',event=>{
   if(Math.abs(dx)>=60&&Math.abs(dx)>Math.abs(dy)*1.25){
     if(activeEntryId){
       if(dx<0){
-        if(!navigateEntryRelative(1))showToast('마지막 항목입니다.');
+        if(!navigateEntryRelative(1,'next'))showToast('마지막 항목입니다.');
       }else{
-        if(!navigateEntryRelative(-1))showToast('첫 번째 항목입니다.');
+        if(!navigateEntryRelative(-1,'prev'))showToast('첫 번째 항목입니다.');
       }
     }else if(activeTab==='daily'){
-      advanceRandomEntry();
+      advanceRandomEntry(dx<0?'next':'prev');
     }
   }
 });
@@ -1046,12 +1072,12 @@ document.addEventListener('keydown',event=>{
   if(event?.key==='ArrowLeft'||event?.key==='ArrowRight'){
     if(activeEntryId){
       if(event.key==='ArrowRight'){
-        if(!navigateEntryRelative(1))showToast('마지막 항목입니다.');
+        if(!navigateEntryRelative(1,'next'))showToast('마지막 항목입니다.');
       }else{
-        if(!navigateEntryRelative(-1))showToast('첫 번째 항목입니다.');
+        if(!navigateEntryRelative(-1,'prev'))showToast('첫 번째 항목입니다.');
       }
     }else if(activeTab==='daily'){
-      advanceRandomEntry();
+      advanceRandomEntry(event.key==='ArrowRight'?'next':'prev');
     }
   }
 });
