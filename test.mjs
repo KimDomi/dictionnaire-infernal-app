@@ -504,6 +504,61 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// N section audit assertions (91 entries, 11 illustrated)
+const nEntries = ENTRIES.filter(e => e.letter === 'N');
+assert.equal(nEntries.length, 91, 'N section must contain exactly 91 entries');
+
+const nIllustrated = nEntries.filter(e => e.hasPlate);
+assert.equal(nIllustrated.length, 11, 'N section must contain exactly 11 illustrated entries');
+
+const nickar = ENTRIES.find(e => e.id === 'nickar');
+assert.ok(nickar && nickar.hasPlate && nickar.plate === 'plates/nickar.jpg' && nickar.category === 'demon' && nickar.nameKo.includes('니카르'), 'Nickar 68 plate Nordic water demon');
+
+const nybbas = ENTRIES.find(e => e.id === 'nybbas');
+assert.ok(nybbas && nybbas.hasPlate && nybbas.plate === 'plates/nybbas.jpg' && nybbas.category === 'demon' && nybbas.nameKo.includes('니바스'), 'Nybbas 68 plate Grand Paradiste demon of dreams');
+
+const nagates = ENTRIES.find(e => e.id === 'e2737-nagates');
+assert.ok(nagates && nagates.hasPlate && nagates.nameKo.includes('나가테스'), 'Nagates illustrated');
+
+const nainLaurin = ENTRIES.find(e => e.id === 'e2743-nainlaurinoulelfroi');
+assert.ok(nainLaurin && nainLaurin.hasPlate && nainLaurin.nameKo.includes('라우린'), 'Nain-Laurin illustrated dwarf king');
+
+const nains = ENTRIES.find(e => e.id === 'e2744-nains');
+assert.ok(nains && nains.hasPlate && nains.nameKo.includes('난쟁이 요정'), 'Nains illustrated dwarfs');
+
+const napoleonIer = ENTRIES.find(e => e.id === 'e2754-napoleonier');
+assert.ok(napoleonIer && napoleonIer.hasPlate && napoleonIer.nameKo.includes('나폴레옹 1세'), 'Napoleon Ier Red Man illustrated');
+
+const nostradamus = ENTRIES.find(e => e.id === 'e2810-nostradamusmichel');
+assert.ok(nostradamus && nostradamus.hasPlate && nostradamus.nameKo.includes('노스트라다무스'), 'Nostradamus illustrated prophet');
+
+const noyes = ENTRIES.find(e => e.id === 'e2812-noyes');
+assert.ok(noyes && noyes.hasPlate && noyes.nameKo.includes('익사자'), 'Noyes drowned sailors illustrated');
+
+const nuitDesTrepasses = ENTRIES.find(e => e.id === 'e2813-nuitdestrepasses');
+assert.ok(nuitDesTrepasses && nuitDesTrepasses.hasPlate && nuitDesTrepasses.nameKo.includes('위령의 밤'), 'Nuit des trepasses illustrated All Souls Night');
+
+const nymphes = ENTRIES.find(e => e.id === 'e2817-nymphes');
+assert.ok(nymphes && nymphes.hasPlate && nymphes.nameKo.includes('님프'), 'Nymphes illustrated');
+
+const nympheDeLElbe = ENTRIES.find(e => e.id === 'e2818-nymphedelelbe');
+assert.ok(nympheDeLElbe && nympheDeLElbe.hasPlate && nympheDeLElbe.nameKo.includes('엘베강의 님프'), 'Nymphe de l Elbe illustrated');
+
+const nan = ENTRIES.find(e => e.id === 'e2748-nan');
+assert.ok(nan && nan.category === 'superstition' && nan.nameKo.includes('난') && !nan.nameKo.startsWith('아니 ['), 'Nan Lappish gadfly fairy, not French non');
+
+const notarique = ENTRIES.find(e => e.id === 'e2811-notarique');
+assert.ok(notarique && notarique.category === 'grimoire' && notarique.nameKo.includes('노타리콘') && !notarique.nameKo.includes('공증인'), 'Notarique Cabbalistic acronym method, not notary');
+
+const naberus = ENTRIES.find(e => e.id === 'e2733-naberus');
+assert.ok(naberus && naberus.category === 'demon' && naberus.legions === 19 && naberus.nameKo.includes('나베리우스'), 'Naberius demon Marquis with 19 legions');
+
+const nysrock = ENTRIES.find(e => e.id === 'e2822-nysrock');
+assert.ok(nysrock && nysrock.category === 'demon' && nysrock.nameKo.includes('니스록'), 'Nysrock Nisroch demon chef of Beelzebub');
+
+const neuhaus = ENTRIES.find(e => e.id === 'e2781-neuhausfemmeblanchede');
+assert.ok(neuhaus && neuhaus.category === 'crossref' && neuhaus.nameKo.includes('노이하우스의 백의 부인') && !neuhaus.nameKo.includes('펨 블란슈'), 'Neuhaus White Lady, not raw femme blanche MT');
+
 // O section audit assertions (104 entries, 11 illustrated)
 const oEntries = ENTRIES.filter(e => e.letter === 'O');
 assert.equal(oEntries.length, 104, 'O section must contain exactly 104 entries (after N boundary fix)');
