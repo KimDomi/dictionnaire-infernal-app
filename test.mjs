@@ -504,6 +504,52 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// P section audit assertions (238 entries, 31 illustrated)
+const pEntries = ENTRIES.filter(e => e.letter === 'P');
+assert.equal(pEntries.length, 238, 'P section must contain exactly 238 entries');
+
+const pIllustrated = pEntries.filter(e => e.hasPlate);
+assert.equal(pIllustrated.length, 31, 'P section must contain exactly 31 illustrated entries');
+
+const paymon = ENTRIES.find(e => e.id === 'paymon');
+assert.ok(paymon && paymon.hasPlate && paymon.plate === 'plates/paymon.jpg' && paymon.category === 'demon' && paymon.legions === 200 && paymon.nameKo.includes('파이몬'), 'Paymon 68 Goetic demon King with 200 legions');
+
+const picollus = ENTRIES.find(e => e.id === 'picollus');
+assert.ok(picollus && picollus.hasPlate && picollus.plate === 'plates/picollus.jpg' && picollus.category === 'demon' && picollus.nameKo.includes('피콜루스'), 'Picollus 68 plate ancient Prussian underworld god');
+
+const pruflas = ENTRIES.find(e => e.id === 'pruflas');
+assert.ok(pruflas && pruflas.hasPlate && pruflas.plate === 'plates/pruflas.jpg' && pruflas.category === 'demon' && pruflas.legions === 26 && pruflas.nameKo.includes('프루플라스'), 'Pruflas 68 plate demon Prince with 26 legions');
+
+const peanite = ENTRIES.find(e => e.id === 'e2974-peanite');
+assert.ok(peanite && peanite.category === 'superstition' && peanite.nameKo.includes('페아니테스') && !peanite.nameKo.includes('땅콩'), 'Peanite gemstone for childbirth, not peanut');
+
+const pharmacie = ENTRIES.find(e => e.id === 'e3010-pharmacie');
+assert.ok(pharmacie && pharmacie.category === 'divination' && pharmacie.nameKo.includes('약초 훈증 점술') && !pharmacie.nameKo.includes('약국'), 'Pharmacie ancient herbal divination, not drugstore');
+
+const persil = ENTRIES.find(e => e.id === 'e2995-persilmaitre');
+assert.ok(persil && persil.category === 'crossref' && persil.nameKo.includes('마스터 파슬리') && !persil.nameKo.startsWith('파슬리 ['), 'Master Parsley alias of Verdelet');
+
+const pythons = ENTRIES.find(e => e.id === 'e3164-pythons');
+assert.ok(pythons && pythons.category === 'myth' && pythons.nameKo.includes('퓌톤') && !pythons.nameKo.includes('비단뱀'), 'Pythons Apollo divining spirits, not pythons snake');
+
+const philinnion = ENTRIES.find(e => e.id === 'e3014-philinnion');
+assert.ok(philinnion && philinnion.hasPlate && philinnion.plate === 'plates/e3014-philinnion.jpg' && philinnion.nameKo.includes('필린니온'), 'Philinnion illustrated ancient vampire bride');
+
+const pierrePhilosophale = ENTRIES.find(e => e.id === 'e3038-pierrephilosophale');
+assert.ok(pierrePhilosophale && pierrePhilosophale.hasPlate && pierrePhilosophale.nameKo.includes('현자의 돌'), 'Philosopher Stone illustrated');
+
+const pouleNoire = ENTRIES.find(e => e.id === 'e3109-poulenoire');
+assert.ok(pouleNoire && pouleNoire.hasPlate && pouleNoire.category === 'grimoire' && pouleNoire.nameKo.includes('검은 암탉'), 'Black Pullet grimoire illustrated');
+
+const puck = ENTRIES.find(e => e.id === 'e3152-puck');
+assert.ok(puck && puck.hasPlate && puck.nameKo.includes('퍽'), 'Puck illustrated fairy');
+
+const pursan = ENTRIES.find(e => e.id === 'e3156-pursan');
+assert.ok(pursan && pursan.hasPlate && pursan.legions === 22 && pursan.nameKo.includes('푸르손'), 'Purson King with 22 legions illustrated');
+
+const pythagore = ENTRIES.find(e => e.id === 'e3162-pythagore');
+assert.ok(pythagore && pythagore.hasPlate && pythagore.category === 'person' && pythagore.nameKo.includes('피타고라스'), 'Pythagoras illustrated philosopher');
+
 // Q section audit assertions (7 entries, 3 illustrated)
 const qEntries = ENTRIES.filter(e => e.letter === 'Q');
 assert.equal(qEntries.length, 7, 'Q section must contain exactly 7 entries');
