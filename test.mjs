@@ -504,6 +504,67 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// M section audit assertions (271 entries, 33 illustrated)
+const mEntries = ENTRIES.filter(e => e.letter === 'M');
+assert.equal(mEntries.length, 271, 'M section must contain exactly 271 entries (after L boundary fix)');
+
+const mIllustrated = mEntries.filter(e => e.hasPlate);
+assert.equal(mIllustrated.length, 33, 'M section must contain exactly 33 illustrated entries');
+
+const malphas = ENTRIES.find(e => e.id === 'malphas');
+assert.ok(malphas && malphas.hasPlate && malphas.plate === 'plates/malphas.jpg' && malphas.category === 'demon' && malphas.legions === 40 && malphas.nameKo.includes('말파스'), 'Malphas 68 plate demon President with 40 legions');
+
+const mammon = ENTRIES.find(e => e.id === 'mammon');
+assert.ok(mammon && mammon.hasPlate && mammon.plate === 'plates/mammon.jpg' && mammon.category === 'demon' && mammon.nameKo.includes('마몬'), 'Mammon 68 plate demon of avarice');
+
+const marchocias = ENTRIES.find(e => e.id === 'marchocias');
+assert.ok(marchocias && marchocias.hasPlate && marchocias.plate === 'plates/marchocias.jpg' && marchocias.category === 'demon' && marchocias.legions === 30 && marchocias.nameKo.includes('마르코시아스'), 'Marchosias 68 plate demon Marquis with 30 legions');
+
+const melchom = ENTRIES.find(e => e.id === 'melchom');
+assert.ok(melchom && melchom.hasPlate && melchom.plate === 'plates/melchom.jpg' && melchom.category === 'demon' && melchom.nameKo.includes('멜콤'), 'Melchom 68 plate purse-bearing paymaster demon');
+
+const moloch = ENTRIES.find(e => e.id === 'moloch');
+assert.ok(moloch && moloch.hasPlate && moloch.plate === 'plates/moloch.jpg' && moloch.category === 'demon' && moloch.nameKo.includes('몰록'), 'Moloch 68 plate Prince of Tears');
+
+const mycale = ENTRIES.find(e => e.id === 'mycale');
+assert.ok(mycale && mycale.hasPlate && mycale.plate === 'plates/mycale.jpg' && mycale.category === 'myth' && mycale.nameKo.includes('미칼레'), 'Mycale 68 plate Thessalian moon-drawing sorceress');
+
+const mainPlate = ENTRIES.find(e => e.id === 'e2486-main');
+assert.ok(mainPlate && mainPlate.hasPlate && mainPlate.nameKo.includes('손과 수상술'), 'Main chiromancy illustrated');
+
+const mainfroi = ENTRIES.find(e => e.id === 'e2489-mainfroi');
+assert.ok(mainfroi && mainfroi.hasPlate && mainfroi.nameKo.includes('만프레디'), 'Mainfroi Manfred king illustrated');
+
+const marat = ENTRIES.find(e => e.id === 'e2530-marat');
+assert.ok(marat && marat.hasPlate && marat.nameKo.includes('장폴 마라'), 'Marat demon of Terror illustrated');
+
+const merlin = ENTRIES.find(e => e.id === 'e2618-merlin');
+assert.ok(merlin && merlin.hasPlate && merlin.nameKo.includes('마법사 멀린'), 'Merlin the enchanter illustrated');
+
+const mort = ENTRIES.find(e => e.id === 'e2697-mort');
+assert.ok(mort && mort.hasPlate && mort.nameKo.includes('죽음의 신'), 'Mort Grim Reaper illustrated');
+
+const mozart = ENTRIES.find(e => e.id === 'e2707-mozart');
+assert.ok(mozart && mozart.hasPlate && mozart.nameKo.includes('모차르트'), 'Mozart Requiem illustrated');
+
+const muncer = ENTRIES.find(e => e.id === 'e2714-muncerthomas');
+assert.ok(muncer && muncer.hasPlate && muncer.nameKo.includes('토마스 뮌처'), 'Thomas Muncer illustrated');
+
+const myomancie = ENTRIES.find(e => e.id === 'e2728-myomancie');
+assert.ok(myomancie && myomancie.hasPlate && myomancie.nameKo.includes('쥐 점술'), 'Myomancie rat divination illustrated');
+
+const mephisto = ENTRIES.find(e => e.id === 'e2610-mephistopheles');
+assert.ok(mephisto && mephisto.category === 'demon' && mephisto.nameKo.includes('메피스토펠레스'), 'Mephistopheles demon of Faust');
+
+const morax = ENTRIES.find(e => e.id === 'e2690-morax');
+assert.ok(morax && morax.category === 'demon' && morax.legions === 36 && morax.nameKo.includes('모락스'), 'Morax Earl and President with 36 legions');
+
+const murmur = ENTRIES.find(e => e.id === 'e2718-murmur');
+assert.ok(murmur && murmur.category === 'demon' && murmur.legions === 30 && murmur.nameKo.includes('무르무르'), 'Murmur Duke and Earl with 30 legions');
+
+const mastication = ENTRIES.find(e => e.id === 'e2568-mastication');
+assert.ok(mastication && mastication.category === 'superstition' && mastication.nameKo.includes('시체 저작'), 'Mastication of the dead vampire shroud chewing');
+
 // N section audit assertions (91 entries, 11 illustrated)
 const nEntries = ENTRIES.filter(e => e.letter === 'N');
 assert.equal(nEntries.length, 91, 'N section must contain exactly 91 entries');
