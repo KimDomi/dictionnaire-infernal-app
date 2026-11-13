@@ -502,7 +502,6 @@ function renderBookmarksTab(){
 function renderSettingsTab(){
   return `<section class="settings-view">
     <div class="panel">
-      <h2>화면 및 독서 환경</h2>
       <div class="setting-row">
         <div class="setting-label">
           <strong>테마 모드</strong>
