@@ -137,6 +137,10 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.includes('Buer'));
   assert.ok(main.innerHTML.indexOf('detail-header')<main.innerHTML.indexOf('detail-plate-showcase'));
   assert.ok(main.innerHTML.indexOf('detail-plate-showcase')<main.innerHTML.indexOf('detail-body'));
+  assert.ok(main.innerHTML.includes('detail-french-card'),'Collapsible French card must be present');
+  assert.ok(main.innerHTML.includes('french-card-trigger'),'French card trigger button must be present');
+  assert.ok(main.innerHTML.includes('불문 원문'),'Button title must be shortened to 불문 원문');
+  assert.ok(!main.innerHTML.includes('불문 원문 함께 보기'),'Old verbose button text must not exist');
 
   // Tab switching retains open entry page in gallery
   click({tab:'bookmarks'});

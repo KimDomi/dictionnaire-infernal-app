@@ -300,14 +300,26 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
         ${formatParagraphs(entry.description)}
       </div>
 
-      ${settings.showFrench?`<blockquote class="detail-french-box">
-        <div class="detail-french-header">
-          <strong>1863년 프랑스어 원문 (${escapeHtml(entry.nameFr)})</strong>
-          <span>p.${entry.page1863}</span>
+      ${entry.quoteFr?`<section class="detail-french-card${settings.showFrench?' expanded':''}">
+        <button type="button" class="french-card-trigger" data-action="toggle-french" aria-expanded="${settings.showFrench?'true':'false'}">
+          <div class="french-trigger-left">
+            <span class="french-badge">1863 FR</span>
+            <strong class="french-trigger-title">불문 원문</strong>
+            <span class="french-page-no">p.${entry.page1863}</span>
+          </div>
+          <span class="french-trigger-action">
+            <span class="french-trigger-label">${settings.showFrench?'접기':'펼치기'}</span>
+            <span class="french-trigger-arrow" aria-hidden="true">${settings.showFrench?'▴':'▾'}</span>
+          </span>
+        </button>
+        <div class="french-card-collapse">
+          <div class="french-card-inner">
+            <div class="french-original-name">원문 표제어: <em>${escapeHtml(entry.nameFr)}</em></div>
+            <p class="french-quote-text">“${escapeHtml(entry.quoteFr)}”</p>
+            <footer class="french-quote-footer">— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863 · p.${entry.page1863})</footer>
+          </div>
         </div>
-        <p>“${escapeHtml(entry.quoteFr)}”</p>
-        <footer>— J.-A.-S. Collin de Plancy, <em>Dictionnaire Infernal</em> (6e édition, 1863)</footer>
-      </blockquote>`:''}
+      </section>`:''}
     </div>
   </article>
 
@@ -325,11 +337,6 @@ function renderEntryDetailPage(entry){
   const nextEntry=idx>=0&&idx<navList.length-1?navList[idx+1]:null;
 
   const extraFooterHtml=`
-    <div class="detail-bottom-controls">
-      <button type="button" class="secondary french-toggle-btn" data-action="toggle-french">
-        ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
-      </button>
-    </div>
     <div class="detail-footer">
       <nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
         ${prevEntry
@@ -470,17 +477,10 @@ function renderDailyTab(){
   const entry=getCurrentRandomEntry();
   markEntryAsRead(entry.id);
 
-  const extraFooterHtml=`
-    <div class="detail-bottom-controls">
-      <button type="button" class="secondary french-toggle-btn" data-action="toggle-french">
-        ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
-      </button>
-    </div>`;
-
   const animClass='';
   pendingPageTurnDirection=null;
   return `<section class="entry-detail-page daily-view${animClass}" aria-label="무작위 지옥사전 표제어">
-    ${renderEntryArticleCard(entry,extraFooterHtml)}
+    ${renderEntryArticleCard(entry)}
   </section>`;
 }
 
@@ -1060,6 +1060,21 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='toggle-french'){
+    const card=target?.closest?.('.detail-french-card');
+    if(card){
+      const isExpanding=!card.classList.contains('expanded');
+      card.classList.toggle('expanded',isExpanding);
+      const btn=card.querySelector('.french-card-trigger');
+      if(btn){
+        btn.setAttribute('aria-expanded',isExpanding?'true':'false');
+        const label=btn.querySelector('.french-trigger-label');
+        if(label)label.textContent=isExpanding?'접기':'펼치기';
+        const arrow=btn.querySelector('.french-trigger-arrow');
+        if(arrow)arrow.textContent=isExpanding?'▴':'▾';
+      }
+      settings=saveSettings({...settings,showFrench:isExpanding});
+      return;
+    }
     settings=saveSettings({...settings,showFrench:!settings.showFrench});
     render();
     return;
