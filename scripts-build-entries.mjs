@@ -5,6 +5,11 @@ import { BODY_PROPER_REPLACEMENTS } from './scripts-proper-nouns.mjs';
 const rawEntries = JSON.parse(fs.readFileSync('resources/entries_1863_all.json', 'utf8'));
 // Load the existing 68 rich illustrated entries
 const PLATE_ENTRIES = JSON.parse(fs.readFileSync('resources/entries_68_plates.json', 'utf8'));
+const entryPlateMap = fs.existsSync('resources/entry_plate_map.json')
+  ? JSON.parse(fs.readFileSync('resources/entry_plate_map.json', 'utf8'))
+  : {};
+import path from 'node:path';
+let nextPlateNo = 69;
 
 function norm(s) {
   return String(s || '')
@@ -1691,12 +1696,14 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
     });
   } else {
     const info = analyzeAndTranslateEntry(raw, koBase, headword, id);
+    const assignedPlate = entryPlateMap[String(idx)];
+    const hasAssignedPlate = Boolean(assignedPlate && fs.existsSync(path.join(process.cwd(), 'dist', assignedPlate)));
     fullEntries.push({
       id,
       letter: raw.letter,
-      plate: '',
-      plateNo: 0,
-      hasPlate: false,
+      plate: hasAssignedPlate ? assignedPlate : '',
+      plateNo: hasAssignedPlate ? (nextPlateNo++) : 0,
+      hasPlate: hasAssignedPlate,
       nameKo: headword.nameKo,
       nameKoShort: headword.nameKoShort,
       nameFr: headword.nameFr || raw.nameFr,
@@ -1743,12 +1750,13 @@ for (const pe of PLATE_ENTRIES) {
   }
 }
 
+const illustratedCount = fullEntries.filter(e => e.hasPlate).length;
 console.log('Total full entries built:', fullEntries.length);
-console.log('Illustrated plate entries:', fullEntries.filter(e => e.hasPlate).length);
+console.log('Illustrated plate entries:', illustratedCount);
 
 const jsContent = `export const CATEGORIES=[
-  {id:"all",label:"전체 (3,810)"},
-  {id:"illustrated",label:"판화 수록 (68)"},
+  {id:"all",label:"전체 (${fullEntries.length.toLocaleString()})"},
+  {id:"illustrated",label:"판화 수록 (${illustratedCount.toLocaleString()})"},
   {id:"demon",label:"악마·정령"},
   {id:"myth",label:"신화·종교"},
   {id:"person",label:"마법사·인물"},
@@ -1759,11 +1767,13 @@ const jsContent = `export const CATEGORIES=[
 ];
 
 export const GALLERY_CATEGORIES=[
-  {id:"all",label:"전체 (68)"},
-  {id:"monarch",label:"악마 · 지옥 군주 (16)"},
-  {id:"duke",label:"악마 · 대공·후작·총재 (26)"},
-  {id:"spirit",label:"악마 · 하급 악마·괴이 (13)"},
-  {id:"myth",label:"신화 · 고대 신격·사바트 (13)"}
+  {id:"all",label:"전체 (${illustratedCount.toLocaleString()})"},
+  {id:"monarch",label:"악마 · 지옥 군주"},
+  {id:"duke",label:"악마 · 대공·후작"},
+  {id:"demon",label:"악마·괴이"},
+  {id:"myth",label:"신화·종교"},
+  {id:"person",label:"마법사·연금술사"},
+  {id:"superstition",label:"미신·마법 의식"}
 ];
 
 export const LETTERS=["ALL","A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
@@ -1792,7 +1802,7 @@ export function filterEntries({query="",category="all",letter="ALL",sort="page",
     if(letter&&letter!=="ALL"&&entry.letter!==letter)return false;
     if(category!=="all"){
       if(onlyIllustrated){
-        if(entry.subCategory!==category)return false;
+        if(category!=="all"&&entry.subCategory!==category&&entry.category!==category)return false;
       }else if(category==="illustrated"){
         if(!entry.hasPlate)return false;
       }else if(category==="monarch"||category==="duke"||category==="spirit"){

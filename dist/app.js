@@ -1,4 +1,4 @@
-import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=666305dc8adf';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=81def1d45f93';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
@@ -1253,6 +1253,32 @@ installNativeNavigation(
     syncWakeLock();
   }
 );
+
+if(typeof window!=='undefined'&&window.location?.hash){
+  const h=window.location.hash.replace(/^#/,'');
+  if(['gallery','daily','bookmarks','settings'].includes(h)){
+    activeTab=h;
+  }else if(h.startsWith('entry/')){
+    const eid=h.slice(6);
+    if(VALID_ENTRY_IDS.has(eid))activeEntryId=eid;
+  }
+}
+
+if(typeof window!=='undefined'){
+  window.addEventListener?.('hashchange',()=>{
+    const h=window.location.hash.replace(/^#/,'');
+    if(['gallery','daily','bookmarks','settings'].includes(h)){
+      activeTab=h;
+      activeEntryId=null;
+      render();
+    }else if(h.startsWith('entry/')){
+      const eid=h.slice(6);
+      if(VALID_ENTRY_IDS.has(eid)){
+        openEntryPage(eid,false);
+      }
+    }
+  });
+}
 
 render();
 

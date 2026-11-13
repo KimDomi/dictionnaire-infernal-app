@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import {ENTRIES,ILLUSTRATED_ENTRIES,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './dist/entries.js';
 
 assert.equal(ENTRIES.length,3810,'Expected all 3,810 A-Z entries from the 1863 6th edition');
-assert.equal(ILLUSTRATED_ENTRIES.length,68,'Expected 68 illustrated plate entries');
+assert.ok(ILLUSTRATED_ENTRIES.length>=400,`Expected at least 400 illustrated plate entries from 1863 edition, got ${ILLUSTRATED_ENTRIES.length}`);
 assert.equal(VALID_ENTRY_IDS.size,3810,'All entry IDs must be unique');
 
 for(const entry of ENTRIES){
