@@ -1,0 +1,918 @@
+export const L_BATCH1 = [
+  {
+    "id": "e2292-labadiejean",
+    "nameFr": "Labadie (Jean)",
+    "nameKo": "장 드 라바디 [Jean de Labadie]",
+    "nameKoShort": "장 드 라바디",
+    "nameEn": "Jean de Labadie (Pietist Mystic and Sect Founder)",
+    "category": "person",
+    "rank": "예수회와 칼뱅파를 거쳐 직통 계시와 완전주의를 주장하며 라바디파를 창설한 17세기 신비주의자",
+    "domains": [
+      "인물·역사(Personnage)",
+      "개신교 신비주의",
+      "라바디파(Labadists)",
+      "정적주의와 환시",
+      "17세기 종교 분파"
+    ],
+    "translationKo": "17세기의 종교적 열광주의자이자 신비주의 분파 창시자이다. 1610년 보르도 인근의 부르쉬르지롱드에서 태어나 처음에는 예수회에 입회하여 사제가 되었으나, 곧 탈퇴하고 칼뱅주의로 개종하였다. 이후 몽토방과 제네바에서 목사로 활동하며 설교자로 큰 명성을 얻었으나, 점차 기존 교회의 교리를 거부하고 성령의 직접적인 내적 조명과 신자들의 완전무결성을 주장하기 시작했다. 그는 자신에게 신의 특별한 계시가 내렸다고 믿으며 제도 교회를 떠나 자신을 따르는 신도들을 이끌고 네덜란드의 암스테르담과 독일의 헤르포르트 등지로 이동하여 엄격한 공동체 생활을 영위하는 '라바디파(Labadistes)'를 창설하였다. 이들은 모든 세속적 재산을 공유하고 환시와 방언을 중시하였으나, 방종과 이단적 교리라는 비난을 받으며 각지에서 추방당했고 라바디는 1674년 알토나에서 생을 마감했다."
+  },
+  {
+    "id": "e2293-labitte",
+    "nameFr": "Labitte",
+    "nameKo": "라비트(지각없는 아베) [Labitte / L'Abbé de peu de sens]",
+    "nameKoShort": "라비트",
+    "nameEn": "Labitte (The Senseless Abbot)",
+    "category": "person",
+    "rank": "아라스 출신의 화가이자 시인, 기이한 환상과 괴이한 시풍으로 알려진 괴짜 사제",
+    "domains": [
+      "인물·역사(Personnage)",
+      "프랑스 괴짜 시인",
+      "환상 문학",
+      "성직자 일화"
+    ],
+    "translationKo": "‘지각없는 아베(L’abbé de peu de sens)’라는 별칭으로 불렸던 아라스 출신의 화가, 시인이자 사제이다. 17세기에 기이하고 황당무계한 환각과 마법적 상상력을 담은 시와 그림을 다수 남겨 당시 세간의 웃음거리이자 기담의 주인공이 되었다."
+  },
+  {
+    "id": "e2294-labourd",
+    "nameFr": "Labourd",
+    "nameKo": "라부르 지방의 마녀 전승 [Labourd / Witchcraft of Labourd]",
+    "nameKoShort": "라부르",
+    "nameEn": "Labourd (Basque Region Notorious for 1609 Witch Trials)",
+    "category": "superstition",
+    "rank": "1609년 피에르 드 랑크르 판사의 대대적인 마녀사냥이 벌어졌던 프랑스 바스크 지방의 영지",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "바스크 마녀재판",
+      "사바트(Sabbat)",
+      "피에르 드 랑크르",
+      "해양 마법"
+    ],
+    "translationKo": "프랑스 남서부 바스크 해안가에 위치한 가스코뉴의 역사적 지방이다. 1609년 앙리 4세의 명을 받은 보르도 고등법원 판사 피에르 드 랑크르(Pierre de Lancre)가 파견되어 대대적인 마녀재판을 집행했던 곳으로 악명 높다. 주민들의 대다수가 어업과 해상 무역에 종사하여 남성들이 바다로 나가 있는 동안, 여성들과 아이들이 밤마다 악마가 주재하는 사바트에 참석하여 해상 폭풍을 일으키고 기괴한 난교와 유아 살해를 저질렀다는 고발이 잇따랐다. 랑크르는 이곳에서 수많은 마녀와 사제들을 심문하여 화형에 처했으며, 바스크 산악과 해안 절벽이 악마 숭배의 소굴로 묘사되었다."
+  },
+  {
+    "id": "e2295-labourant",
+    "nameFr": "Labourant",
+    "nameKo": "라부랑 [Labourant]",
+    "nameKoShort": "라부랑",
+    "nameEn": "Labourant (Crossref to Pierre Labourant)",
+    "category": "crossref",
+    "rank": "상호참조 표제어 (Renvoi)",
+    "domains": [
+      "상호참조",
+      "피에르 라부랑 [Pierre Labourant]"
+    ],
+    "translationKo": "피에르 라부랑(Pierre Labourant) 항목을 참조하라."
+  },
+  {
+    "id": "e2296-labrosse",
+    "nameFr": "Labrosse",
+    "nameKo": "라브로스 [Labrosse]",
+    "nameKoShort": "라브로스",
+    "nameEn": "Labrosse (Astrologer and Physician to the Guise Family)",
+    "category": "person",
+    "rank": "기즈 공작의 전사를 천문 점성술로 예언하여 적중시켰던 16세기 의사 겸 점성가",
+    "domains": [
+      "인물·역사(Personnage)",
+      "점성술(Astrologie)",
+      "기즈 가문",
+      "예언 적중"
+    ],
+    "translationKo": "별자리를 읽어 미래를 예언하던 16세기 프랑스의 의사이자 점성가이다. 블루아 삼부회에서 암살당한 앙리 드 기즈의 아들인 청년 기즈 공작이 1595년 샤를로트 드 브렝빌과 사랑에 빠졌을 때, 라브로스는 공작의 천궁도를 작성하여 공작이 전쟁터에서 큰 영예를 얻겠으나 결국 적의 손에 전사할 운명이라고 경고하였다. 공작은 그의 예언을 경시하였으나 훗날 예언대로 참담한 최후를 맞이하였다."
+  },
+  {
+    "id": "e2297-lac",
+    "nameFr": "Lac",
+    "nameKo": "호수 숭배와 폭풍 미신 [Lac / Lake Superstitions]",
+    "nameKoShort": "호수 미신",
+    "nameEn": "Lakes (Ancient Gaulish Mountain Lake Offerings and Tempest Lore)",
+    "category": "superstition",
+    "rank": "고대 갈리아와 중세 유럽에서 호수에 제물을 던져 폭풍을 달래거나 정령을 숭배하던 민간 미신",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "호수 숭배",
+      "투르의 그레고리우스",
+      "갈리아 민속",
+      "날씨 주술"
+    ],
+    "translationKo": "투르의 그레고리우스(Grégoire de Tours)의 기록에 따르면, 프랑스 제보당(Gévaudan) 지방에는 헬라누스(Helanus) 산 정상에 신성시되는 호수가 있었다. 매년 정해진 축제일이 되면 인근 주민들이 몰려와 마치 신에게 제사를 드리듯 리넨 옷, 양모 천 조각, 치즈, 빵, 밀랍 덩어리 등을 호수 속에 던져 넣었다. 제물을 바친 뒤 사흘 동안 잔치를 벌이고 춤을 추었는데, 나흘째 되는 날 호수에서 거센 폭풍과 천둥번개가 일어나 그들의 공물을 거두어갔다고 전해진다. 후대 성직자가 그곳에 성당을 짓고 성인의 유해를 안치하면서 이러한 이교도적 호수 숭배 의식이 점차 근절되었다."
+  },
+  {
+    "id": "e2298-lacailledenysede",
+    "nameFr": "Lacaille (Denyse de)",
+    "nameKo": "드니즈 드 라 카유 [Denyse de La Caille]",
+    "nameKoShort": "드니즈 드 라 카유",
+    "nameEn": "Denyse de La Caille (Possessed Woman of Beauvais in 1612)",
+    "category": "person",
+    "rank": "1612년 보베에서 악마 리시(Lissi) 등에게 빙의되어 서명한 서약서가 발견된 수녀원 빙의 사건의 피해자",
+    "domains": [
+      "인물·역사(Personnage)",
+      "악령 빙의(Possession)",
+      "보베 구마식",
+      "사탄 서약서"
+    ],
+    "translationKo": "1612년 프랑스 보베(Beauvais) 시를 뒤흔들었던 악령 빙의 사건의 중심에 섰던 여인이다. 그녀는 자신을 괴롭히는 악마들로부터 벗어나기 위해 주교와 신부들 앞에서 대대적인 공지 구마식을 치렀다. 심문 과정에서 그녀의 몸속에 기생하던 악마 리시(Lissi)가 직접 피로 서명한 악마와의 서약서가 제출되어 큰 충격을 주었으며, 악마는 구마 의식 끝에 십자가의 권능에 굴복하여 성당 제단 위에서 공중으로 솟구쳐 달아났다고 전해진다."
+  },
+  {
+    "id": "e2299-lachanopteres",
+    "nameFr": "Lachanopteres",
+    "nameKo": "라카놉테레스 [Lachanoptères / Vegetable-Winged Beings]",
+    "nameKoShort": "라카놉테레스",
+    "nameEn": "Lachanopteres (Fabulous Winged Creatures in Lucian's Moon Lore)",
+    "category": "myth",
+    "rank": "고대 풍자 작가 루키아노스가 달 세계에 산다고 묘사한 양배추 날개를 지닌 가공의 비행 괴수",
+    "domains": [
+      "신화·전설(Mythe)",
+      "루키아노스",
+      "환상 동물",
+      "달 세계의 괴물"
+    ],
+    "translationKo": "고대 그리스의 풍자 작가 루키아노스(Lucian)가 자신의 풍자 소설 『진실한 이야기』에서 달 세계의 주민으로 묘사한 가상의 비행 동물이다. 거대한 벼룩이나 도마뱀 몸통에 새의 깃털 대신 배추나 양배추 잎사귀로 된 거대한 날개를 달고 공중을 날아다니며, 달의 왕 엔디미온의 군대에서 공중 기병으로 복무한다고 전해진다."
+  },
+  {
+    "id": "e2300-lachus",
+    "nameFr": "Lachus",
+    "nameKo": "라쿠스 [Lachus]",
+    "nameKoShort": "라쿠스",
+    "nameEn": "Lachus (Celestial Spirit in Basilidian Gnosticism)",
+    "category": "myth",
+    "rank": "2세기 바실리데스파 영지주의자들이 365개 천계의 영적 계보 부적에 이름을 새긴 천상의 수호령",
+    "domains": [
+      "신화·전설(Mythe)",
+      "영지주의(Gnosticisme)",
+      "바실리데스 학파",
+      "천상령",
+      "아브락사스 보석"
+    ],
+    "translationKo": "2세기 영지주의 교주 바실리데스(Basilides)를 따르던 분파가 숭배했던 천상의 수호령이다. 이들은 아브락사스(Abraxas)가 다스리는 365개 천계마다 각기 다른 영적 지배자가 존재한다고 믿었으며, 라쿠스의 신성한 이름을 보석이나 부적에 새겨 악령의 침범을 막고 구원을 얻는 영적 통행증으로 삼았다."
+  },
+  {
+    "id": "e2301-lacijean",
+    "nameFr": "Laci (Jean)",
+    "nameKo": "존 레이시 [Jean Laci / John Lacy]",
+    "nameKoShort": "존 레이시",
+    "nameEn": "John Lacy (English Prophet Inspired by the French Camisards)",
+    "category": "person",
+    "rank": "프랑스 세벤 카미자르 예언자들의 계시를 받아 런던에서 종말과 죽은 자의 부활을 예언했던 18세기 열광주의자",
+    "domains": [
+      "인물·역사(Personnage)",
+      "예언과 환시",
+      "카미자르 운동",
+      "18세기 영국 종교"
+    ],
+    "translationKo": "1707년 런던에서 『예언적 경고(Prophetical Warnings)』를 출간한 영국의 종교적 광신자이자 저술가이다. 프랑스 세벤 산맥의 신교도 반란군(카미자르파) 예언자들이 영국으로 망명해 오자 그들의 열광적 경련과 예언에 깊이 감화되어 스스로 신의 대변자를 자처했다. 그는 황홀경에 빠져 런던 시민들에게 곧 닥칠 신의 심판과 사도의 부활을 외쳤으며, 심지어 런던 광장에서 죽은 동료를 부활시키겠다고 공언했다가 실패하여 큰 조롱을 당하고 치안 방해죄로 처벌받았다."
+  },
+  {
+    "id": "e2302-ladwaiturs",
+    "nameFr": "Ladwaiturs",
+    "nameKo": "흘라드베이투르 [Ladwaiturs / Hladveitur]",
+    "nameKoShort": "흘라드베이투르",
+    "nameEn": "Ladwaiturs (Benevolent Guardian Spirits in Norse Lore)",
+    "category": "myth",
+    "rank": "고대 스칸디나비아 북유럽 전승에서 인간을 보살피고 항해와 가정을 수호하는 은혜로운 신령",
+    "domains": [
+      "신화·전설(Mythe)",
+      "북유럽 신화",
+      "수호 정령",
+      "노르드 민속"
+    ],
+    "translationKo": "고대 스칸디나비아 노르드인들의 신앙에 등장하는 호의적인 수호 정령들이다. 집안의 번영과 바다로 나간 어부들의 안전을 지켜주며, 사악한 트롤이나 요마의 습격으로부터 인간을 보호하는 선량한 정령으로 여겨졌다. (하롤드[Harold] 항목 참조)."
+  },
+  {
+    "id": "e2303-laensberghmatthieu",
+    "nameFr": "Lænsbergh (Matthieu)",
+    "nameKo": "마티외 랭스베르크 [Matthieu Lænsbergh]",
+    "nameKoShort": "마티외 랭스베르크",
+    "nameEn": "Matthieu Laensbergh (Crossref to Matthieu Laensbergh)",
+    "category": "crossref",
+    "rank": "상호참조 표제어 (Renvoi)",
+    "domains": [
+      "상호참조",
+      "마티외 랭스베르크 [Matthieu Lænsbergh]"
+    ],
+    "translationKo": "마티외 랭스베르크(Matthieu Lænsbergh) 항목을 참조하라."
+  },
+  {
+    "id": "e2304-lafinjacques",
+    "nameFr": "Lafin (Jacques)",
+    "nameKo": "자크 라팽 [Jacques Lafin]",
+    "nameKoShort": "자크 라팽",
+    "nameEn": "Jacques Lafin (Sorcerer Accused of Wax Doll Envoûtement under Henri IV)",
+    "category": "person",
+    "rank": "앙리 4세 치하에서 밀랍 인형에 바늘을 찔러 귀족을 살해하려 했다는 혐의로 기소된 마법사",
+    "domains": [
+      "인물·역사(Personnage)",
+      "밀랍 인형 저주(Envoûtement)",
+      "앙리 4세 궁정",
+      "마녀재판"
+    ],
+    "translationKo": "앙리 4세 치하에서 밀랍 인형 저주술(앙부트망) 혐의로 고발된 프랑스의 마법사이다. 그는 정적을 해치려는 귀족의 사주를 받아 표적의 머리카락과 손톱 조각을 섞어 밀랍 인형을 빚은 뒤 악마의 이름을 부르며 심장 부위에 바늘을 찔러 서서히 쇠약해져 죽게 만들려 했다는 혐의로 재판을 받았다."
+  },
+  {
+    "id": "e2305-laghernhardnicole",
+    "nameFr": "Laghernhard (Nicole)",
+    "nameKo": "니콜 라게른하르트 [Nicole Laghernhard]",
+    "nameKoShort": "니콜 라게른하르트",
+    "nameEn": "Nicole Laghernhard (Basque Woman Witness to Goat Demon on the Sea)",
+    "category": "superstition",
+    "rank": "1590년 바스크 해안에서 숫염소를 탄 거대한 악마가 바다 폭풍을 일으키는 것을 보았다고 증언한 여인",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "바스크 마녀전승",
+      "사바트 환각",
+      "해상 폭풍 악마"
+    ],
+    "translationKo": "1590년 8월, 바스크 라부르 지방의 해안 절벽에서 기이한 악마의 환시를 목격했다고 증언한 서른 살의 여인이다. 그녀는 바다 한가운데에서 거대한 검은 숫염소를 탄 악마가 파도 위를 질주하며 거센 폭풍과 파도를 일으켜 어선들을 침몰시키는 광경을 보았다고 진술하여 당대 마녀재판 판사들의 악마학 저술에 인용되었다."
+  },
+  {
+    "id": "e2306-lagneau",
+    "nameFr": "Lagneau",
+    "nameKo": "다비드 라뇨 [David Lagneau / Laigneau]",
+    "nameKoShort": "다비드 라뇨",
+    "nameEn": "David Lagneau (17th-Century French Alchemist and Physician)",
+    "category": "person",
+    "rank": "17세기 프랑스의 명의이자 『신비 철학의 요약』을 저술한 저명한 연금술 비전가",
+    "domains": [
+      "인물·역사(Personnage)",
+      "연금술(Alchimie)",
+      "헤르메스 철학",
+      "17세기 의학"
+    ],
+    "translationKo": "다비드 레뇨(David Laigneau)로도 불리는 17세기 프랑스의 의사이자 저명한 연금술 비전가(Adeptus)이다. 파리 의과대학의 의사로 활동하면서 헤르메스 철학과 현자의 돌 연구에 깊이 몰두하였다. 그는 1612년 『신비 철학의 화합 및 금속 변성에 관한 요약(Harmonie chimique et abrégé de la philosophie secrète)』이라는 방대한 연금술 논문을 저술하여 당대 유럽 학계에서 연금술의 대가로 널리 인정받았다."
+  },
+  {
+    "id": "e2307-laica",
+    "nameFr": "Laica",
+    "nameKo": "라이카(페루 안데스의 요정 마녀) [Laica / Incan Fairy]",
+    "nameKoShort": "라이카",
+    "nameEn": "Laica (Incan Fairy and Sorceress in Peruvian Folklore)",
+    "category": "myth",
+    "rank": "페루 잉카 전통 민속에서 산악의 바위 동굴과 폭포에 은거하며 길흉을 점치던 마법 요정",
+    "domains": [
+      "신화·전설(Mythe)",
+      "안데스 민속",
+      "잉카 신화",
+      "정령과 마녀",
+      "자연의 영"
+    ],
+    "translationKo": "페루 원주민들의 전설에 등장하는 여성 요정 또는 마녀를 일컫는 명칭이다. 라이카들은 주로 안데스 산맥의 깊은 동굴이나 외딴 바위 절벽, 폭포 주변에 거처하며, 인간의 눈에 띌 때는 늙고 구부정한 노파나 황홀할 만큼 아름다운 처녀의 모습으로 변신한다. 그녀들은 약초를 다루고 병을 고치며 미래의 재앙을 예언하기도 하지만, 자신들의 신성한 거처를 침범한 여행자에게는 악령을 씌워 미치게 만들거나 낭떠러지로 떨어뜨리는 무서운 마력을 부린다고 전해진다."
+  },
+  {
+    "id": "lamia",
+    "nameFr": "Lamia (Lamies)",
+    "nameKo": "라미아(고대 리비아 여왕·야간 흡혈 요마) [Lamia / Queen of Libya]",
+    "nameKoShort": "라미아",
+    "nameEn": "Lamia (Mythological Libyan Queen and Nocturnal Blood-Sucking Demon)",
+    "category": "demon",
+    "rank": "자식을 잃고 발광하여 임산부의 배를 가르고 아이들의 피를 마시는 고대 전승의 야간 흡혈 요마(Plate 39)",
+    "domains": [
+      "악마학(Démonologie)",
+      "루이 브르통 68대 판화",
+      "고대 그리스 신화",
+      "흡혈귀·몽마",
+      "아동 약탈자"
+    ],
+    "translationKo": "고대 리비아의 아름다운 여왕이었으나 헤라의 질투로 자식들을 모두 잃고 미쳐 날뛰며 밤마다 다른 어머니들의 태아와 어린아이를 약탈해 피를 빨아먹는 괴물로 변했다는 그리스 신화의 마물이다. 이 여왕의 이름에서 밤마다 사막과 숲속을 배회하는 사악한 흡혈 요마 무리인 라미아(Lamies)들의 명칭이 유래하였다. 중세와 근세 악마학에서는 뱀의 하반신을 숨긴 채 매혹적인 여인의 모습으로 젊은 여행자를 유혹하여 살점을 뜯어먹거나 요람의 갓난아이를 질식시키는 몽마이자 흡혈귀의 전형으로 다루어졌다."
+  },
+  {
+    "id": "e2309-lamies",
+    "nameFr": "Lamies",
+    "nameKo": "라미아 무리(사막의 용족 흡혈 요마) [Lamies / Lamiae]",
+    "nameKoShort": "라미아 무리",
+    "nameEn": "Lamiae (Desert Female Fiends with Dragon-Headed Feet)",
+    "category": "demon",
+    "rank": "사막과 묘지를 배회하며 시체를 파먹고 발끝에 용 머리가 달린 사악한 지옥의 흡혈 마녀 무리(p.397 삽화)",
+    "domains": [
+      "악마학(Démonologie)",
+      "1863 원서 삽화 수록",
+      "시체 포식자",
+      "피에르 르루아예",
+      "플랑드르 마차 괴담"
+    ],
+    "translationKo": "사막과 황야에 출몰하는 사악한 여성 형상의 악마 무리로, 발끝에 흉측한 용의 머리가 달려 있다고 전해진다. 이들은 주로 묘지를 배회하며 갓 묻힌 시체를 파내어 살점을 뜯어먹고 뼈만 남겨놓는다. 피에르 르루아예(Pierre Le Loyer)는 시리아 전쟁 직후 땅에 얕게 묻힌 전사자들의 시체를 밤마다 게걸스럽게 파먹는 라미아 무리가 목격되어 병사들이 화승총을 쏘아 사살했는데, 이튿날 아침 확인해보니 늑대와 하이에나 사체였다는 기담을 전한다. 고대 리비아에 서식하는 라미아는 달리는 속도가 지극히 빠르며 뱀의 쉭쉭거리는 소리로 운다. 토르케마다의 『헥사메론』에 따르면 말의 발굽과 여인의 얼굴을 지녔다고도 하며, 올빼미나 사이렌, 아라비아의 구울(Ghouls)과 동일시되기도 한다. 플랑드르에서는 붉은 포장을 두른 마차를 몰고 다니며 사탕으로 아이들을 유인해 납치해 죽이는 '피의 엘프(Bloed-elven)' 전설로 전승되었다."
+  },
+  {
+    "id": "e2310-lamottelevayerfrancois",
+    "nameFr": "Lamotte le Vayer (François)",
+    "nameKo": "프랑수아 드 라 모트 르 바이에 [François de La Motte Le Vayer]",
+    "nameKoShort": "라 모트 르 바이에",
+    "nameEn": "François de La Motte Le Vayer (French Skeptic and Philosopher of Sleep and Dreams)",
+    "category": "person",
+    "rank": "고대의 철학적 회의주의를 계승하여 수면과 꿈의 메커니즘을 탐구한 17세기 프랑스 사상가",
+    "domains": [
+      "인물·역사(Personnage)",
+      "회의주의 철학",
+      "수면과 꿈(Songes)",
+      "17세기 프랑스 문학"
+    ],
+    "translationKo": "1588년 파리에서 태어나 1672년에 사망한 프랑스의 저명한 문인이자 철학자이다. 당대 석학 가브리엘 노데(Gabriel Naudé)는 그를 고대인의 엄격한 윤리와 사상을 이어받은 '프랑스의 플루타르코스'라 극찬하였다. 그는 1640년 파리에서 『수면과 꿈에 관한 소론집(Opuscules sur le sommeil et les songes)』을 펴내어, 초자연적인 악마의 계시나 미래 예언으로 여겨지던 꿈의 현상을 신체 생리학적 관점과 철학적 회의주의 시각에서 날카롭게 분석하였다."
+  },
+  {
+    "id": "e2311-lampadomancie",
+    "nameFr": "Lampadomancie",
+    "nameKo": "등불 점술 [Lampadomancie / Lampadomancy]",
+    "nameKoShort": "등불 점술",
+    "nameEn": "Lampadomancy (Divination by Observing Lamp Flames)",
+    "category": "divination",
+    "rank": "등불의 불꽃 형태, 색채, 일렁임과 그을음을 관찰하여 미래의 길흉을 점치던 고대 복술",
+    "domains": [
+      "점술·점성술(Divination)",
+      "불 점술(Pyromancie)",
+      "고대 그리스·로마",
+      "전조 해석"
+    ],
+    "translationKo": "기름등잔이나 등불의 불꽃 모양, 빛깔, 흔들림, 연기의 방향 등을 세밀하게 관찰하여 미래의 길흉화복을 점치던 고대의 복술이다. 불꽃이 맑고 고요하게 위로 솟아오르면 소원 성취와 평안의 길조로 보았으나, 불꽃이 붉게 타오르며 탁한 연기를 내뿜거나 까닭 없이 파닥거리면 전쟁, 질병, 배신 등 불길한 재앙의 전조로 해석하였다."
+  },
+  {
+    "id": "e2312-lampemerveilleuse",
+    "nameFr": "Lampe merveilleuse",
+    "nameKo": "기적의 등불(랍비 예키엘의 신비로운 등불) [Lampe merveilleuse / The Miraculous Lamp]",
+    "nameKoShort": "기적의 등불",
+    "nameEn": "The Miraculous Lamp (Perpetual Magic Lamp of Rabbi Jechiel under Saint Louis)",
+    "category": "superstition",
+    "rank": "생루이 국왕 치하 파리의 랍비 예키엘이 기름 없이 밝히고 침입자를 응징했다는 전설의 영구 램프",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "파리 전설",
+      "랍비 예키엘",
+      "영구 램프",
+      "생루이(루이 9세)"
+    ],
+    "translationKo": "프랑스 성왕 루이 9세(Saint Louis) 치하 파리에 거주하던 저명한 유대인 랍비 예키엘(Jéchiel)에 얽힌 신비로운 마법 등불 전설이다. 예키엘은 뛰어난 학식과 마법적 기예로 유명하여 유대인들에게는 성자로, 파리 시민들에게는 대마법사로 여겨졌다. 밤이 되면 그는 기름을 전혀 붓지 않아도 대낮처럼 밝고 순수한 빛을 내뿜는 불가사의한 등불 아래에서 연구에 몰두했다. 밤마다 호기심에 찬 자들이 그의 집 문을 두드려 방해했는데, 고결한 귀족이 문을 두드리면 등불이 눈부시게 밝아져 맞이하게 하였고, 불량배들이 문을 부수려 하면 등불이 파랗게 흐려졌다. 이때 랍비가 방 한가운데 박힌 커다란 대못을 망치로 내리치면 땅이 쩍 갈라지며 소란을 피우던 자들을 집어삼켰다고 전해진다. 소문을 들은 루이 9세가 그를 궁정으로 불러 시험한 뒤 그의 놀라운 지혜에 탄복했는데, 훗날 학자들은 그가 일종의 인화성 가스를 발견해 조명으로 사용했을 것이라 추정한다."
+  },
+  {
+    "id": "e2313-lampesperpetuelles",
+    "nameFr": "Lampes perpétuelles",
+    "nameKo": "영구 등불(고대 무덤의 불멸의 등잔) [Lampes perpétuelles / Perpetual Lamps]",
+    "nameKoShort": "영구 등불",
+    "nameEn": "Perpetual Lamps (Legendary Ever-Burning Sepulchral Lamps of Antiquity)",
+    "category": "superstition",
+    "rank": "고대 로마 무덤 등에서 봉인을 뜯는 순간까지 꺼지지 않고 타오르고 있었다는 불멸의 램프 전승",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "고고학 미신",
+      "키케로의 딸 툴리아",
+      "인광 현상",
+      "피에르 르브룅"
+    ],
+    "translationKo": "고대 로마나 이집트의 석관과 무덤을 발굴할 때, 키케로의 딸 툴리아의 묘처럼 수백 년 동안 밀폐되어 있었음에도 여전히 불을 밝히고 있었다는 전설적인 등불들에 관한 미신이다. 오라토리오회 신부 피에르 르브룅(Pierre Lebrun)은 이에 대해 무덤이 봉인되어 있는 동안 계속 타올랐다는 증거는 없으며, 무덤 문을 열고 신선한 공기가 유입되는 순간 유골 항아리 속에 응축되어 있던 인화성 물질이나 인(Phosphorus) 성분이 산소와 반응하여 자연 발화한 현상에 불과하다고 날카롭게 반박하였다. 또한 지하 묘지나 저장고의 초석과 염분, 바닷물이나 특정 부패한 목재가 내뿜는 생물 발광을 무지한 자들이 영구히 타오르는 마법 등불로 착각한 것이라고 분석했다."
+  },
+  {
+    "id": "e2314-lampon",
+    "nameFr": "Lampon",
+    "nameKo": "람폰(아테네의 예언가) [Lampon / Lampon of Athens]",
+    "nameKoShort": "람폰",
+    "nameEn": "Lampon (Athenian Diviner Who Interpreted the One-Horned Ram for Pericles)",
+    "category": "person",
+    "rank": "페리클레스의 농장에서 태어난 외뿔 양의 이마를 보고 정치 권력의 통일을 예언했던 고대 아테네 복술가",
+    "domains": [
+      "인물·역사(Personnage)",
+      "고대 그리스 점술",
+      "페리클레스",
+      "기형 가축 점술(Tératomancie)"
+    ],
+    "translationKo": "고대 그리스 아테네에서 활동했던 저명한 예언가이자 복술가이다. 어느 날 아테네의 정치가 페리클레스의 시골 영지에서 이마 한가운데에 단 하나의 강인한 뿔이 돋아난 기형 숫양이 태어나 궁정으로 옮겨졌다. 당시 아테네 정계는 투키디데스 파와 페리클레스 파로 양분되어 치열한 정쟁을 벌이고 있었는데, 람폰은 이 기이한 전조를 보고 아테네의 권력이 장차 한 사람, 즉 이 기형 숫양이 태어난 집의 주인인 페리클레스의 손에 완전히 집중될 것이라 예언하였고, 이 예언은 그대로 실현되었다."
+  },
+  {
+    "id": "e2315-lamproies",
+    "nameFr": "Lamproies",
+    "nameKo": "칠성장어의 아홉 눈 미신 [Lamproies / Nine-Eyed Lamprey Myth]",
+    "nameKoShort": "칠성장어 미신",
+    "nameEn": "Lampreys (Popular Superstition of the Nine-Eyed Fish)",
+    "category": "superstition",
+    "rank": "머리 양옆의 아가미구멍 때문에 아홉 개의 눈을 가졌다고 믿어졌던 물고기에 얽힌 민간 미신",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "동물 민속",
+      "박물학적 오류",
+      "민간 믿음"
+    ],
+    "translationKo": "중세 유럽의 민간 전승에서 '아홉 개의 눈을 가진 기이한 물고기'로 불리며 불길하거나 신비한 능력을 지녔다고 믿어졌던 칠성장어에 관한 미신이다. 민중은 이 물고기가 사방을 꿰뚫어보는 눈을 가졌다고 여겼으나, 실제로는 머리 양쪽에 배열된 일곱 개의 아가미구멍(외새공)과 콧구멍, 진짜 눈 하나를 합쳐 아홉 개의 눈으로 오인한 대중적 착각에 불과하다."
+  },
+  {
+    "id": "e2316-lancinet",
+    "nameFr": "Lancinet",
+    "nameKo": "랑시네 기사(국왕의 연주창 치유 전설) [Lancinet / Knight Healed by Clovis]",
+    "nameKoShort": "랑시네 기사",
+    "nameEn": "Lancinet (Legendary French Knight Healed of King's Evil by Clovis)",
+    "category": "superstition",
+    "rank": "클로비스 왕이 손을 얹어 결핵성 경부 임파선염을 치유함으로써 프랑스 국왕의 치유 기적 시초가 된 전설의 기사",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "프랑스 왕권 신화",
+      "연주창 치유(Écrouelles)",
+      "클로비스 1세",
+      "메로빙거 전설"
+    ],
+    "translationKo": "프랑스 국왕이 손을 대어 결핵성 질환인 연주창(경부 임파선염)을 고치는 신비한 권능을 지녔다는 이른바 '국왕의 치유 기적(Toucher des écrouelles)' 전설에 등장하는 시초의 인물이다. 전설에 따르면 프랑크 왕국의 클로비스 왕을 보좌하던 기사 랑시네가 극심한 연주창에 걸려 고대의 뱀을 먹는 처방을 썼으나 낫지 않았다. 어느 날 클로비스 왕이 꿈속에서 랑시네의 목을 부드럽게 쓰다듬자 상처가 흉터도 없이 깨끗이 낫는 꿈을 꾸었다. 왕이 잠에서 깨어나 랑시네를 불러 손을 얹자 즉시 병이 완치되었고, 이때부터 프랑스 국왕 가문에 대대로 연주창을 고치는 기적의 권능이 세습되었다고 전해진다. 그러나 콜랭 드 플랑시는 클로비스 시대에 랑시네라는 이름의 기사가 존재하지 않았으며, 메로빙거나 카롤링거 왕들은 이러한 치유 능력을 주장한 적이 없고 카페 왕조에 이르러서야 조작된 전설이라고 지적한다."
+  },
+  {
+    "id": "e2317-landat",
+    "nameFr": "Landat",
+    "nameKo": "카트린 랑다 [Landat / Catherine Landalde]",
+    "nameKoShort": "카트린 랑다",
+    "nameEn": "Catherine Landat (Basque Witch Transported to Sabbat Through Sheer Desire)",
+    "category": "superstition",
+    "rank": "잠들 필요 없이 벽난로 곁에서 열망하는 것만으로 사바트로 이동했다고 진술한 16세기 바스크 마녀",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "바스크 마녀재판",
+      "사바트 이동술",
+      "피에르 드 랑크르"
+    ],
+    "translationKo": "카트린 랑달드(Catherine Landalde)로도 불리는 스페인 국경 지대 바스크 지방의 서른 살 농부 여인이다. 판사 피에르 드 랑크르가 마녀 혐의로 그녀를 심문했을 때, 그녀는 사바트에 가기 위해 수면제나 마법 기름을 바르고 잠들 필요가 전혀 없었다고 진술했다. 그녀는 그저 벽난로 곁에 앉아 사바트에 가고 싶다는 강한 열망을 품기만 하면, 그 즉시 몸과 영혼이 공중으로 솟구쳐 사바트 집회 장소로 공간 이동되었다고 자백하여 마녀 판관들의 비상한 관심을 끌었다."
+  },
+  {
+    "id": "e2318-landela",
+    "nameFr": "Landela",
+    "nameKo": "랑델라 [Landela]",
+    "nameKoShort": "랑델라",
+    "nameEn": "Landela (Crossref to Harppe)",
+    "category": "crossref",
+    "rank": "상호참조 표제어 (Renvoi)",
+    "domains": [
+      "상호참조",
+      "하르페 [Harppe]"
+    ],
+    "translationKo": "마녀. 하르페(Harppe) 항목을 참조하라."
+  },
+  {
+    "id": "e2319-langeac",
+    "nameFr": "Langeac",
+    "nameKo": "랑제아크 [Langeac]",
+    "nameKoShort": "랑제아크",
+    "nameEn": "Langeac (French Minister Accused of Demonic Intelligence Networks)",
+    "category": "person",
+    "rank": "거대한 첩보망을 운용하여 모든 비밀을 알아내 악마와 내통한다는 의혹을 받았던 프랑스의 대신",
+    "domains": [
+      "인물·역사(Personnage)",
+      "궁정 첩보",
+      "악마 밀통 의혹",
+      "정치 음모"
+    ],
+    "translationKo": "수많은 밀정과 스파이를 고용하여 프랑스 국내외의 모든 은밀한 정보를 손바닥 보듯 파악했던 프랑스의 고위 대신이다. 그가 남들이 도저히 알 수 없는 궁정의 비밀과 음모를 족족 꿰뚫어보자, 당대 정적들과 대중은 그가 인간의 정보망이 아닌 지옥의 악마와 직접 소통하며 초자연적인 계시를 받고 있다고 의심하고 고발하였다."
+  },
+  {
+    "id": "e2320-langue",
+    "nameFr": "Langue",
+    "nameKo": "두 갈래 혀의 종족 미신 [Langue / Tongues in Lore]",
+    "nameKoShort": "두 갈래 혀 미신",
+    "nameEn": "Tongues (Diodorus Siculus' Account of Forked-Tongued Island Dwellers)",
+    "category": "superstition",
+    "rank": "디오도로스 시쿨로스가 기록한 입천장과 혀가 갈라져 동시에 두 언어를 구사했다는 미지의 종족 전설",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "고대 지리학",
+      "디오도로스 시쿨로스",
+      "환상 종족",
+      "기이한 신체"
+    ],
+    "translationKo": "고대 그리스 역사가 디오도로스 시쿨로스(Diodorus Siculus)가 전하는 남쪽 바다 미지의 섬 주민들에 관한 기이한 신체 미신이다. 그들의 입천장과 혀는 태어날 때부터 깊게 두 갈래로 나뉘어 있어, 한 번에 두 사람과 동시에 대화를 나누거나 한쪽 혀로는 새의 노랫소리를 흉내 내고 다른 쪽 혀로는 인간의 언어를 유창하게 구사할 수 있었다고 기록되었다."
+  },
+  {
+    "id": "e2321-langueprimitive",
+    "nameFr": "Langue primitive",
+    "nameKo": "원초 언어 미신 [Langue primitive / The Primitive Language]",
+    "nameKoShort": "원초 언어",
+    "nameEn": "Primitive Language (Ancient Experiments on Isolated Children to Find Edenic Tongue)",
+    "category": "superstition",
+    "rank": "아이들을 고립시켜 기르면 신의 최초 언어인 히브리어를 저절로 말하게 된다는 역사적 고립 양육 미신",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "언어학 미신",
+      "고립 실험",
+      "에덴의 언어",
+      "프사메티코스"
+    ],
+    "translationKo": "갓 태어난 갓난아이들을 아무런 언어도 들려주지 않고 숲이나 외딴 탑에 격리하여 키우면, 인간 본연에 새겨진 태초의 언어(원초 언어)를 저절로 말하게 될 것이라는 유구한 역사적 미신이다. 고대 이집트의 왕 프사메티코스 1세나 신성로마제국의 프리드리히 2세, 스코틀랜드의 제임스 4세가 실제로 갓난아기들을 벙어리 유모들에게 맡겨 격리 실험을 감행했다는 일화가 전해진다. 중세 신학자들은 이 아이들이 결국 에덴동산에서 아담이 사용했던 성스러운 언어인 히브리어를 말할 것이라 맹신했으나, 실제로는 아무런 말도 배우지 못한 채 짐승 같은 울음소리만 내다가 요절하였다."
+  },
+  {
+    "id": "e2322-languet",
+    "nameFr": "Languet",
+    "nameKo": "장밥티스트 랑게 [Jean-Baptiste Languet de Gergy]",
+    "nameKoShort": "장밥티스트 랑게",
+    "nameEn": "Jean-Baptiste Languet de Gergy (Célebre Curé of Saint-Sulpice)",
+    "category": "person",
+    "rank": "파리 생쉴피스 대성당을 건립하고 임종자들의 환시와 영적 위기를 꿰뚫어보았던 18세기 주임사제",
+    "domains": [
+      "인물·역사(Personnage)",
+      "생쉴피스 성당",
+      "18세기 프랑스 가톨릭",
+      "영적 식별",
+      "자선 사업"
+    ],
+    "translationKo": "파리 생쉴피스(Saint-Sulpice) 성당의 주임신부로 활동하며 오늘날의 웅장한 대성당을 건립하고 방대한 구호 자선 사업을 펼쳤던 18세기의 유명한 가톨릭 사제이다. 그는 영적 통찰력이 매우 뛰어나 임종을 앞둔 환자들의 숨겨진 죄악과 악령의 유혹, 영혼의 고뇌를 직관적으로 꿰뚫어보고 위로하는 비범한 능력을 지녔다고 전해진다."
+  },
+  {
+    "id": "e2323-lanthila",
+    "nameFr": "Lanthila",
+    "nameKo": "란틸라 [Lanthila]",
+    "nameKoShort": "란틸라",
+    "nameEn": "Lanthila (Supreme Dual Spirit of Good and Evil in the Moluccas)",
+    "category": "myth",
+    "rank": "인도네시아 몰루카 제도 원주민들이 세계의 창조와 선악의 응보를 주관한다고 믿은 최고 신령",
+    "domains": [
+      "신화·전설(Mythe)",
+      "동남아시아 신화",
+      "몰루카 제도",
+      "토착 정령 신앙"
+    ],
+    "translationKo": "인도네시아 동부 몰루카(말루쿠) 제도의 원주민들이 우주의 최고 지배자이자 초자연적 존재에게 붙인 명칭이다. 란틸라는 하늘과 땅의 삼라만상을 주관하며 인간에게 풍요와 건강을 내리는 자애로운 면모와 함께, 금기를 어기거나 불경한 자에게는 악령을 보내 질병과 재앙으로 처벌하는 엄벌의 신령으로 숭배되었다."
+  },
+  {
+    "id": "e2324-lapalud",
+    "nameFr": "Lapalud",
+    "nameKo": "라팔뤼 [Lapalud]",
+    "nameKoShort": "라팔뤼",
+    "nameEn": "Lapalud (Crossref to Palud)",
+    "category": "crossref",
+    "rank": "상호참조 표제어 (Renvoi)",
+    "domains": [
+      "상호참조",
+      "팔뤼 [Palud]"
+    ],
+    "translationKo": "팔뤼(Palud) 항목을 참조하라."
+  },
+  {
+    "id": "e2325-lapons",
+    "nameFr": "Lapons",
+    "nameKo": "라플란드 사미족 주술사와 요술 북 [Lapons / Laplanders and Magic Drums]",
+    "nameKoShort": "사미족 주술사",
+    "nameEn": "Laplanders (Sami Shamans, Runebom Drums, and Wind Magic)",
+    "category": "superstition",
+    "rank": "요술 북(룬드롬메)을 치며 탈혼 여행을 하고 바람을 매듭에 묶어 팔았다는 북극 사미족 샤머니즘(p.399 삽화)",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "1863 원서 삽화 수록",
+      "샤머니즘(Chamanisme)",
+      "사미족 민속",
+      "바람 매듭 주술"
+    ],
+    "translationKo": "북유럽 극북 스칸디나비아와 러시아 북부에 거주하는 사미족(라플란드인)에 얽힌 마법과 주술 전승이다. 키가 작고 다부진 체격의 사미족은 유럽인들에게 대마법사의 민족으로 널리 알려졌다. 그들의 주술사(노이디)들은 태양과 달, 동물과 신령들이 그려진 요술 북(룬드롬메) 위에 황동 고리를 얹고 순록 뿔 망치로 북을 두드려 고리의 움직임으로 미래를 점쳤다. 또한 북소리에 맞추어 황홀경에 빠지면 육신은 죽은 듯 쓰러지고 영혼만이 멀리 날아가 다른 나라의 소식을 알아오거나 맹수를 부렸다. 항해자들에게 세 개의 매듭이 묶인 밧줄을 팔았는데, 첫 번째 매듭을 풀면 순풍이 불고, 두 번째를 풀면 강풍이 일며, 세 번째를 풀면 거센 폭풍우가 닥친다는 '바람 매듭' 전설로 유명하다."
+  },
+  {
+    "id": "e2326-lares",
+    "nameFr": "Lares",
+    "nameKo": "라레스(고대 로마의 가정 수호신) [Lares / Roman Household Deities]",
+    "nameKoShort": "라레스",
+    "nameEn": "Lares (Ancient Roman Guardian Spirits of the Hearth and Ancestors)",
+    "category": "myth",
+    "rank": "고대 로마인들이 화덕 곁에 신당(라라리움)을 마련하고 조상의 가호를 빌었던 가정과 도로의 수호령",
+    "domains": [
+      "신화·전설(Mythe)",
+      "로마 종교",
+      "조상 숭배",
+      "가정 수호령",
+      "라라리움(Lararium)"
+    ],
+    "translationKo": "고대 로마 신앙에서 가정, 토지, 교차로 등을 수호하던 조상신이자 수호 정령들이다. 로마인들은 선량하게 살다 죽은 선조들의 영혼이 라레스가 되어 후손들을 보살핀다고 믿었으며, 집안의 화덕 곁에 '라라리움(Lararium)'이라는 작은 신당을 세우고 술, 꽃, 향을 바치며 제사를 지냈다. 이들은 가족의 결속과 재산을 지켜주는 가택 수호신(Lares familiares)뿐만 아니라 여행자를 보호하는 도로의 수호신(Lares viales)으로도 숭배되었다."
+  },
+  {
+    "id": "e2327-larmes",
+    "nameFr": "Larmes",
+    "nameKo": "눈물의 결여(마녀 판별법) [Larmes / Tears of Witches]",
+    "nameKoShort": "마녀 눈물 판별법",
+    "nameEn": "Tears (Inability of Accused Witches to Shed Sincere Tears)",
+    "category": "superstition",
+    "rank": "악마와 계약한 마녀는 참회의 눈물을 흘릴 수 없다고 믿어 고문 중에 눈물을 관찰했던 중세 재판 관습",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "마녀재판",
+      "눈물 시험",
+      "마녀망치(Malleus Maleficarum)"
+    ],
+    "translationKo": "중세와 근세 마녀재판에서 고발당한 여인이 진짜 마녀인지 판별하기 위해 사용되었던 기괴한 심문 관습이다. 하인리히 크레머의 『마녀의 망치(Malleus Maleficarum)』 등에 따르면, 악마에게 영혼을 팔고 은총을 저버린 마녀는 절대로 슬픔이나 참회의 눈물을 흘릴 수 없다고 여겨졌다. 심문관들은 피고인에게 고문을 가하거나 그리스도의 십자가를 들이대며 울부짖게 만들었는데, 극심한 고통 속에서도 눈물이 나오지 않거나 왼쪽 눈에서만 한두 방울 흘리면 악마의 표식으로 간주하여 유죄의 확증으로 삼았다."
+  },
+  {
+    "id": "e2328-larriveypierre",
+    "nameFr": "Larrivey (Pierre)",
+    "nameKo": "피에르 드 라리베 [Pierre de Larrivey]",
+    "nameKoShort": "피에르 드 라리베",
+    "nameEn": "Pierre de Larrivey (French Dramatist and Astrological Writer)",
+    "category": "person",
+    "rank": "16세기 트루아의 참사회원이자 이탈리아 희극을 프랑스에 번안하고 점성술 문헌을 번역한 문인",
+    "domains": [
+      "인물·역사(Personnage)",
+      "프랑스 르네상스 문학",
+      "점성술 번역",
+      "희극 작가"
+    ],
+    "translationKo": "1549년경 트루아에서 태어난 이탈리아계 프랑스 극작가이자 성직자이다. 이탈리아의 유명한 희극들을 프랑스어로 번안하여 몰리에르 등 후대 프랑스 희극 문학에 지대한 영향을 미쳤다. 성당 참사회원으로 봉직하는 한편 고대와 중세의 점성술 및 비의 문헌에도 조예가 깊어 신비주의와 천문 점성술에 관한 저술과 번역을 다수 남겼다."
+  },
+  {
+    "id": "e2329-larves",
+    "nameFr": "Larves",
+    "nameKo": "라르바이(밤을 배회하는 사악한 원혼) [Larves / Larvae]",
+    "nameKoShort": "라르바이",
+    "nameEn": "Larvae (Malicious Wandering Ghosts and Phantoms of Roman Lore)",
+    "category": "myth",
+    "rank": "생전에 죄악을 저질러 저승에 들지 못하고 산 자들을 공포와 광기로 몰아넣는 사악한 유령",
+    "domains": [
+      "신화·전설(Mythe)",
+      "로마 신화",
+      "원혼과 유령",
+      "레무레스(Lemures)",
+      "야간 망령"
+    ],
+    "translationKo": "고대 로마 신앙에서 생전에 악행을 저지르거나 비참하게 살해당하여 안식을 얻지 못한 악인들의 원혼이다. 선량한 조상신인 라레스(Lares)와 대조적으로, 라르바이(단수형 라르바)는 밤마다 무덤을 빠져나와 흉측한 형체로 뼈마디를 부딪치며 떠돌아다닌다. 산 자들의 집안에 침입하여 이성과 분별을 빼앗고 미치게 만들거나 어린아이들을 놀라게 하여 병들게 하는 사악한 귀신으로 여겨졌다."
+  },
+  {
+    "id": "e2330-launoyjean",
+    "nameFr": "Launoy (Jean)",
+    "nameKo": "장 드 로누아(성인들의 추방자) [Jean de Launoy / Dénicheur de saints]",
+    "nameKoShort": "장 드 로누아",
+    "nameEn": "Jean de Launoy (Critical Theologian Who Debunked False Saints and Relics)",
+    "category": "person",
+    "rank": "엄격한 역사 비판으로 중세의 위조된 성인전과 가짜 유해 기적을 논파했던 17세기 소르본 신학자",
+    "domains": [
+      "인물·역사(Personnage)",
+      "소르본 신학",
+      "미신 비판",
+      "가짜 성인 고증",
+      "교회사"
+    ],
+    "translationKo": "1603년 노르망디에서 태어나 1678년에 사망한 소르본 대학의 저명한 신학 박사이다. 그는 당대 교회에 만연해 있던 위조 성인전, 가짜 성해 유골, 출처가 불분명한 기적 설화들을 엄격한 문헌 비판과 사료 검증을 통해 가차 없이 논파하였다. 프랑스의 수호성인 디오니시오(생드니)가 파리의 초대 주교와 동일 인물이 아니라는 사실을 밝혀내는 등 수많은 허구적 전승을 무너뜨려 당대인들로부터 '성인들의 추방자(Le dénicheur de saints)'라는 경외 섞인 별칭을 얻었다."
+  },
+  {
+    "id": "e2331-laurier",
+    "nameFr": "Laurier",
+    "nameKo": "월계수의 마법적 벽사 미신 [Laurier / Laurel in Magic]",
+    "nameKoShort": "월계수 미신",
+    "nameEn": "Laurel (Protective Plant Against Lightning, Demons, and Nightmares)",
+    "category": "superstition",
+    "rank": "아풀레이우스가 기록한 벼락을 막고 악마와 악몽을 쫓아내는 신성한 마법 식물 전승",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "마법 식물(Herbes)",
+      "벽사 미신",
+      "아풀레이우스",
+      "벼락 방지"
+    ],
+    "translationKo": "고대 로마의 작가 아풀레이우스(Apuleius)를 비롯한 고대인들이 악마와 마법의 해악으로부터 인간을 보호하는 가장 신성한 식물 중 하나로 꼽았던 월계수에 얽힌 미신이다. 월계수 잎을 몸에 지니거나 침대 머리맡에 두면 악령의 침범과 몽마의 악몽을 막아주며, 지붕에 월계수 가지를 꽂아두면 하늘에서 떨어지는 벼락을 피할 수 있다고 믿었다. 로마 황제 티베리우스는 천둥번개가 칠 때마다 벼락을 피하기 위해 머리에 월계관을 썼다고 전해진다."
+  },
+  {
+    "id": "e2332-lauthu",
+    "nameFr": "Lauthu",
+    "nameKo": "라우투(통킹의 뱀 부리는 마술사) [Lauthu / Tonkinese Magician]",
+    "nameKoShort": "라우투",
+    "nameEn": "Lauthu (17th-Century Vietnamese Sorcerer Carried by Serpents)",
+    "category": "person",
+    "rank": "60여 마리의 독사에게 둘러싸여 공중 부양을 행하고 기적을 과시했다고 주장한 17세기 베트남 마술사",
+    "domains": [
+      "인물·역사(Personnage)",
+      "동양 마술",
+      "베트남 통킹",
+      "뱀 주술",
+      "공중 부양"
+    ],
+    "translationKo": "17세기 베트남 북부 통킹(Tonkin) 지역에서 활동했던 전설적인 토착 마술사이다. 그는 자신이 부리는 60여 마리의 거대한 뱀들의 몸통 위에 올라타 공중으로 수십 피트씩 날아올라 사람들의 머리 위를 지나다녔다고 주장했다. 백성들은 그가 지옥의 파충류 악마들과 계약을 맺어 초자연적인 신통력을 얻었다고 믿으며 두려워하였다."
+  },
+  {
+    "id": "e2333-lavaterlouis",
+    "nameFr": "Lavater (Louis)",
+    "nameKo": "루트비히 라바터 [Louis Lavater / Ludwig Lavater]",
+    "nameKoShort": "루트비히 라바터",
+    "nameEn": "Ludwig Lavater (Swiss Protestant Reformer and Author on Spectres and Apparitions)",
+    "category": "person",
+    "rank": "『유령과 밤의 징조에 대하여』를 저술하여 중세 가톨릭의 연옥 영혼 설을 논파한 16세기 스위스 신학자",
+    "domains": [
+      "인물·역사(Personnage)",
+      "스위스 종교개혁",
+      "유령론(Spectres)",
+      "악마 환각",
+      "16세기 신학"
+    ],
+    "translationKo": "1527년 스위스 키부르크에서 태어나 1586년 취리히에서 사망한 개혁파 신학자이자 츠빙글리의 사위이다. 그는 1569년 『밤에 출몰하는 유령, 망령 및 전조들에 대하여(De spectris, lemuribus et magnis atque insolitis prodigiis)』라는 유명한 논문을 발표하였다. 그는 가톨릭에서 주장하던 '연옥에서 구원을 청하러 찾아오는 죽은 자의 영혼'이라는 개념을 전면 부정하고, 사람들이 목격하는 유령이란 사탄이 인간을 기만하고 우상숭배에 빠뜨리기 위해 조작해낸 거짓 환영이거나 육체적 멜랑콜리(우울증)의 망상에 불과하다고 논증하였다."
+  },
+  {
+    "id": "e2334-lavaterjeangaspard",
+    "nameFr": "Lavater (Jean-Gaspard)",
+    "nameKo": "요한 카스파어 라바터 [Jean-Gaspard Lavater / Johann Kaspar Lavater]",
+    "nameKoShort": "요한 카스파어 라바터",
+    "nameEn": "Johann Kaspar Lavater (Swiss Theologian, Poet, and Founder of Physiognomy)",
+    "category": "person",
+    "rank": "인간의 얼굴 윤곽과 골격에서 영혼의 본성과 미래 운명을 읽어내는 관상학 체계를 집대성한 학자(p.401 삽화)",
+    "domains": [
+      "인물·역사(Personnage)",
+      "1863 원서 삽화 수록",
+      "관상학(Physiognomonie)",
+      "스위스 사상사",
+      "괴테와의 교류"
+    ],
+    "translationKo": "1741년 스위스 취리히에서 태어나 1801년에 사망한 목사이자 시인, 근대 관상학(Physiognomonie)의 창시자이다. 그는 1775년부터 1778년까지 방대한 도판을 곁들인 『인간 관찰과 인류애를 증진하기 위한 관상학 단상(Physiognomische Fragmente)』을 저술하여 유럽 전역에 거대한 관상학 열풍을 불러일으켰다. 그는 인간의 이마, 코, 턱선, 눈매의 비례와 골격 구조가 보이지 않는 내면의 영혼, 도덕적 품성, 지적 능력의 물리적 발현이라고 주장하며 동물과 인간의 두개골을 세밀하게 비교 분석하였다. 그의 이론은 당대 지성계에 막대한 영향을 미쳤으나 점차 비과학적인 신비주의라는 비판을 받기도 했다."
+  },
+  {
+    "id": "e2335-lavisari",
+    "nameFr": "Lavisari",
+    "nameKo": "라비사리 [Lavisari]",
+    "nameKoShort": "라비사리",
+    "nameEn": "Lavisari (Milanese Secretary Tormented by an Incubus in Cardan's Accounts)",
+    "category": "person",
+    "rank": "지롤라모 카르다노의 기록에 등장하는 악령의 지속적인 괴롭힘으로 쇠약해져 사망한 밀라노의 비서관",
+    "domains": [
+      "인물·역사(Personnage)",
+      "카르다노(Cardan)",
+      "악령 괴롭힘(Obsession)",
+      "밀라노 일화"
+    ],
+    "translationKo": "16세기 이탈리아의 저명한 수학자이자 의사 지롤라모 카르다노(Girolamo Cardano)의 기록에 등장하는 인물이다. 밀라노 총독의 고문관이자 비서로 일하던 라비사리는 어느 날부터 정체불명의 악령에게 밤낮으로 시달리기 시작했다. 악령은 그의 침실 가구를 뒤흔들고 귓가에 끔찍한 비명을 질렀으며, 라비사리는 신앙심 깊은 생활과 구마 기도에도 불구하고 신경 쇠약과 공포에 시달리다 결국 비참하게 숨을 거두었다고 전해진다."
+  },
+  {
+    "id": "e2336-layra",
+    "nameFr": "Layra",
+    "nameKo": "라이라(개 짖는 저주병) [Layra / Barking Curse]",
+    "nameKoShort": "라이라 저주병",
+    "nameEn": "Layra (Demonic Malady Infused in Apples Causing Uncontrollable Barking)",
+    "category": "superstition",
+    "rank": "마녀들이 독이 든 사과를 먹여 피해자가 개처럼 통제할 수 없이 짖게 만들었다는 저주성 질환",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "마녀 저주",
+      "빙의 증상",
+      "피에르 드 랑크르",
+      "간질과 히스테리"
+    ],
+    "translationKo": "16세기와 17세기 프랑스 바스크 지방의 마녀재판 기록에 등장하는 기이한 저주성 질환의 명칭이다. 판사 피에르 드 랑크르의 기록에 따르면, 사악한 마녀들은 사과나 다른 음식물 속에 마법의 가루와 악마적 독극물을 주입하여 사람들에게 먹였다. 이 음식을 먹은 피해자는 이성을 잃고 개처럼 격렬하게 짖어대는 통제 불가능한 발작을 일으켰으며, 마녀들은 동일한 수법으로 사람들에게 치명적인 간질 발작과 전신 마비를 일으켰다고 자백하였다."
+  },
+  {
+    "id": "e2337-lazare",
+    "nameFr": "Lazare",
+    "nameKo": "라자르 공작(코소보 전투의 순교 군주) [Lazare / Prince Lazar Hrebeljanović]",
+    "nameKoShort": "라자르 공작",
+    "nameEn": "Prince Lazar (Heroic Serbian Ruler Martyr at Kosovo Polje)",
+    "category": "myth",
+    "rank": "1389년 코소보 전투에서 오스만에 맞서다 전사한 후 40년간 샘물 속에서 달처럼 빛난 머리의 전설",
+    "domains": [
+      "신화·전설(Mythe)",
+      "세르비아 서사시",
+      "코소보 전투(1389)",
+      "성인 군주",
+      "기적 설화"
+    ],
+    "translationKo": "세르비아 민족 서사시의 영웅적 주역이자 순교자로 추앙받는 세르비아의 군주 라자르 흐레벨랴노비치(Lazar Hrebeljanović)이다. 1389년 오스만 제국의 무라트 1세에 맞서 벌어진 코소보 전투(Kosovo Polje) 전날 밤, 예언자 엘리야가 매의 모습으로 나타나 영원한 천상의 왕국과 일시적인 지상의 왕국 중 하나를 선택하라는 신의 뜻을 전하자 라자르는 주저 없이 천상의 면류관을 택하고 전군과 함께 성찬식을 치렀다. 전투 중 사위의 배신으로 군대가 궤멸되고 라자르는 참수되어 순교하였다. 전설에 따르면 한 튀르크 청년이 그의 잘린 머리를 맑은 샘물에 던졌는데, 머리는 40년 동안 물속에서 보름달처럼 영롱한 빛을 내뿜으며 썩지 않았다. 훗날 머리를 건져 잔디밭에 내려놓자 스스로 굴러가 몸통과 결합하였으며, 라자르가 생전에 백성들의 피눈물을 쥐어짜지 않고 자신의 사재로 건립한 마케도니아의 라바니차(Ravanica) 수도원에 성스럽게 안치되었다."
+  },
+  {
+    "id": "e2338-lazaredenys",
+    "nameFr": "Lazare (Denys)",
+    "nameKo": "데니 라자르 [Denys Lazare]",
+    "nameKoShort": "데니 라자르",
+    "nameEn": "Denys Lazare (Serbian Pretender and Author on Prophetic Dreams)",
+    "category": "person",
+    "rank": "17세기 후반 자신을 세르비아의 왕자라 자처하며 야간의 예언적 꿈과 환시를 기록한 저술가",
+    "domains": [
+      "인물·역사(Personnage)",
+      "꿈과 환시",
+      "예언서",
+      "17세기 동유럽"
+    ],
+    "translationKo": "자신이 이슬람력 788년에 살았던 고대 세르비아의 왕족 후예라고 자칭했던 17세기 후반의 저술가이다. 그는 1686년 파리에서 『꿈(Les Songes)』이라는 한 권의 책을 출간하여, 자신이 스테판과 멜리슈의 왕국 및 프라하 등지에서 잠든 동안 신비로운 천사와 영령들로부터 계시받은 야간 환각과 미래의 왕국 흥망에 관한 기이한 예언들을 서술하였다."
+  },
+  {
+    "id": "e2339-leaupartie",
+    "nameFr": "Leaupartie",
+    "nameKo": "로파르티 가문의 빙의 소동 [Leaupartie / Possessions of Leaupartie]",
+    "nameKoShort": "로파르티 빙의 소동",
+    "nameEn": "Leaupartie (Affair of Alleged Possessions in Normandy in 1735)",
+    "category": "superstition",
+    "rank": "1735년 노르망디 귀족의 딸들이 개처럼 짖고 문을 통과했다는 집단 빙의 사기극과 주교의 제지",
+    "domains": [
+      "미신·풍습(Superstition)",
+      "가짜 빙의 소동",
+      "18세기 노르망디",
+      "소르본 감정",
+      "교회의 미신 척결"
+    ],
+    "translationKo": "1735년 프랑스 노르망디의 우둔한 귀족 로파르티(Leaupartie) 영주가 자신의 딸들과 하녀들이 악령에 씌었다고 주장하며 파리 소르본 신학교와 의과대학에 감정을 의뢰했던 유명한 빙의 사건이다. 그는 딸들이 배우지도 않은 라틴어를 알아듣고, 종소리를 들으면 발작하며, 대형 사냥개처럼 짖어대고, 묶여 있던 하녀 안 네엘이 닫힌 문을 그대로 통과해 빠져나갔다는 황당한 보고서를 제출했다. 한 어리석은 본당 신부가 이를 기화로 대대적인 구마식을 벌이며 소란을 피우자, 바이외 주교 륀(Luynes) 몬시뇰이 직접 개입하여 사기극을 주동한 신부를 신학교에 감금하고 딸들을 수녀원으로 분리 격리시키자 빙의 증상이 거짓말처럼 즉시 사라졌다."
+  },
+  {
+    "id": "e2340-lebruncharles",
+    "nameFr": "Lebrun (Charles)",
+    "nameKo": "샤를 르브룅 [Charles Lebrun]",
+    "nameKoShort": "샤를 르브룅",
+    "nameEn": "Charles Lebrun (French Premier Painter and Theorist of Human and Animal Physiognomy)",
+    "category": "person",
+    "rank": "루이 14세의 수석 궁정 화가로서 인간의 표정과 동물의 두개골 형태를 비교 연구한 인상학의 대가",
+    "domains": [
+      "인물·역사(Personnage)",
+      "프랑스 왕립 아카데미",
+      "인상학(Physiognomonie)",
+      "동물 형상학",
+      "루이 14세 궁정"
+    ],
+    "translationKo": "1619년 파리에서 태어나 1690년에 사망한 베르사유 궁전의 거장이자 프랑스 국왕 루이 14세의 수석 화가이다. 왕립 회화 조각 아카데미의 초대 원장을 지낸 그는 영혼의 격정과 감정이 인간의 얼굴 근육에 어떻게 드러나는지를 해부학적으로 분석한 『동물의 형상과 비교한 인간의 인상학에 관한 논문(Traité sur la physionomie humaine comparée avec celle des animaux)』을 남겼다. 그는 인간의 얼굴 특징을 사자, 독수리, 낙타, 돼지 등 동물들과 체계적으로 대조하여 동물의 성벽이 인간의 외모에 투영된다는 독창적인 인상학 이론을 정립하였다."
+  },
+  {
+    "id": "e2341-lebrunpierre",
+    "nameFr": "Lebrun (Pierre)",
+    "nameKo": "피에르 르브룅 [Pierre Lebrun]",
+    "nameKoShort": "피에르 르브룅",
+    "nameEn": "Pierre Lebrun (Oratorian Priest and Author of Critical History of Superstitious Practices)",
+    "category": "person",
+    "rank": "수맥 탐사 막대와 마법 미신의 허구를 과학적·신학적 실증주의로 논파한 18세기 박식한 오라토리오회 사제",
+    "domains": [
+      "인물·역사(Personnage)",
+      "오라토리오회",
+      "수맥 점술 비판",
+      "미신 비판사",
+      "계몽주의 선구"
+    ],
+    "translationKo": "1661년 브리뇰에서 태어나 1729년에 사망한 프랑스 오라토리오회(Oratoire)의 석학이자 사제이다. 그는 1693년 수맥 탐사 막대(Baguette divinatoire)의 초자연적 능력을 맹신하던 철학자들의 착각을 반박하는 서한집을 출간하였으며, 1702년에는 3권으로 이루어진 불후의 역작 『민중을 현혹하고 학자들을 곤혹스럽게 한 미신적 관행의 비판적 역사(Histoire critique des pratiques superstitieuses)』를 저술하였다. 콜랭 드 플랑시는 『지옥사전』 전반에 걸쳐 미신의 오류를 규명하기 위해 르브룅 신부의 객관적 분석을 가장 빈번하게 인용하고 있다."
+  },
+  {
+    "id": "e2342-lecanomancie",
+    "nameFr": "Lécanomancie",
+    "nameKo": "대야 수맥 점술 [Lécanomancie / Lecanomancy]",
+    "nameKoShort": "대야 수맥 점술",
+    "nameEn": "Lecanomancy (Ancient Divination Using Basins of Water, Gemstones, or Molten Lead)",
+    "category": "divination",
+    "rank": "은쟁반이나 물 채운 대야에 보석, 금속판, 녹인 납을 던져 뱀 소리 같은 악마의 음성을 듣던 고대 복술",
+    "domains": [
+      "점술·점성술(Divination)",
+      "물 점술(Hydromancie)",
+      "고대 바빌론·이집트",
+      "밀랍과 납 점술",
+      "환시경"
+    ],
+    "translationKo": "물을 채운 대야나 은쟁반을 이용하여 미래의 비밀을 알아내던 고대의 물 점술이다. 구리 판에 마법의 주문을 새겨 물속에 넣은 뒤 처녀로 하여금 수면을 응시하게 하여 환영을 보게 하거나, 맑은 달밤에 은제 대야에 물을 가득 채우고 촛불 빛을 칼날로 반사시켜 점을 쳤다. 고대 칼데아와 이집트에서는 대야의 물속에 기괴한 문자가 새겨진 금은 판과 보석을 던져 악마에게 바친 뒤 주문을 외우면, 물 밑바닥에서 뱀이 쉭쉭거리는 듯한 음성이 흘러나와 질문에 답해주었다고 한다. 비잔티움의 역사가 글리카스는 이집트의 마지막 파라오 넥타네보가 이 점술을 통해 자신의 폐위를 미리 알았다고 전하며, 녹인 납을 끓는 물에 부어 굳어지는 형상으로 길흉을 점치기도 했다."
+  },
+  {
+    "id": "e2343-lecanumlabbe",
+    "nameFr": "Lecanu (M. l’abbé)",
+    "nameKo": "르카뉘 아베 [M. l'abbé Lecanu]",
+    "nameKoShort": "르카뉘 아베",
+    "nameEn": "Abbé Lecanu (Parisian Cleric and Author of History of Satan in 1862)",
+    "category": "person",
+    "rank": "1862년 사탄의 타락과 역사, 동물 자기와 강령술 현상을 총망라한 『사탄의 역사』를 저술한 파리 사제",
+    "domains": [
+      "인물·역사(Personnage)",
+      "악마학 문헌",
+      "19세기 프랑스 가톨릭",
+      "강령술 비판"
+    ],
+    "translationKo": "19세기 파리 교구 소속의 사제이자 가톨릭 저술가이다. 그는 1862년 파리에서 『사탄의 역사: 그의 타락, 숭배, 발현, 역사, 하느님과 인간을 향한 투쟁; 마법, 빙의, 일루미나티, 동물 자기, 노크하는 유령, 강령술사 등(Histoire de Satan)』이라는 방대한 저서를 출간하여 당대 프랑스 사회를 휩쓸던 신흥 심령주의와 강령술 열풍을 전통 악마학의 관점에서 분석하고 비판하였다."
+  },
+  {
+    "id": "lechies",
+    "nameFr": "Lechies (Leshy)",
+    "nameKo": "레시(슬라브 숲의 거인 방랑 정령) [Lechies / Leshy]",
+    "nameKoShort": "레시",
+    "nameEn": "Lechies (Slavic Forest Spirit Growing Tall as Trees or Short as Grass)",
+    "category": "demon",
+    "rank": "나무 꼭대기만큼 커지거나 풀잎만큼 작아지며 나그네의 길을 잃게 만드는 러시아와 슬라브 숲의 영주(Plate 40)",
+    "domains": [
+      "악마학(Démonologie)",
+      "루이 브르통 68대 판화",
+      "슬라브 신화",
+      "숲의 정령",
+      "변신과 환각"
+    ],
+    "translationKo": "러시아와 폴란드 등 슬라브 민족의 울창한 삼림 지대에 깃들어 사는 숲의 정령이자 도깨비 악령이다. 레시는 인간의 눈에 띌 때 숲의 나무 꼭대기만큼 거대하게 키를 부풀리거나, 풀잎 아래 숨을 수 있을 만큼 아주 작은 난쟁이로 순식간에 몸을 줄일 수 있다. 온몸이 거친 털과 푸른 이끼로 뒤덮여 있고 머리카락과 수염은 초록빛 나뭇가지 같으며, 숲속을 지나는 여행자들에게 다가가 친절한 길 안내인인 척 유혹하다가 늪지대나 깊은 골짜기로 끌고 가 길을 잃게 만든 뒤 나뭇가지 뒤에서 기괴한 웃음소리를 터뜨린다. 사냥꾼이나 나무꾼들은 그를 노엽히지 않기 위해 숲 어귀의 그루터기에 빵이나 소금, 담배를 바쳤다."
+  },
+  {
+    "id": "e2345-lecoq",
+    "nameFr": "Lecoq",
+    "nameKo": "르코크 [Lecoq]",
+    "nameKoShort": "르코크",
+    "nameEn": "Lecoq (16th-Century French Sorcerer Burned for Feather-Bed Serpent Curse)",
+    "category": "person",
+    "rank": "깃털 베개 속에 독사를 부화시켜 잠든 사람들을 물어 죽이려 했다는 혐의로 화형된 16세기 소뮈르의 마법사",
+    "domains": [
+      "인물·역사(Personnage)",
+      "마녀재판",
+      "소뮈르 일화",
+      "독살과 주술"
+    ],
+    "translationKo": "16세기 프랑스 소뮈르(Saumur)에서 유아 독살과 기괴한 주술을 부린 죄로 체포되어 화형당한 마법사이다. 당시 소뮈르 일대에는 르코크와 그의 동료 마법사들이 침대의 깃털 요와 베개에 사악한 저주를 걸어, 밤마다 그 속에서 독사가 저절로 부화하여 잠든 착한 사람들을 물어 죽일 것이라는 흉흉한 소문이 돌아 주민들이 공포에 질려 잠자리에 들지 못했다. 결국 르코크가 체포되어 화형대에 오르고 나서야 주민들은 안심하고 잠을 청할 수 있었다고 전해진다."
+  },
+  {
+    "id": "e2346-ledouxmademoiselle",
+    "nameFr": "Ledoux (Mademoiselle)",
+    "nameKo": "르두 양(몽발레리앙 대구 꼬리 점술사) [Mademoiselle Ledoux]",
+    "nameKoShort": "르두 양",
+    "nameEn": "Mademoiselle Ledoux (Parisian Fortune-Teller Prosecuted in 1818 for Cod-Tail Spell)",
+    "category": "person",
+    "rank": "1818년 부유한 청년의 마음을 사로잡기 위해 몽발레리앙에 대구 꼬리를 바치게 했다가 투옥된 파리 카드 점쟁이",
+    "domains": [
+      "인물·역사(Personnage)",
+      "카드 점술(Cartomancie)",
+      "19세기 파리 사기 사건",
+      "사랑의 주술"
+    ],
+    "translationKo": "1818년 7월 14일 파리 법정에서 사기 혐의로 기소되어 징역 2년과 벌금 12프랑을 선고받았던 파리의 유명한 여성 카드 점쟁이이다. 그녀는 한 부유한 청년의 사랑을 얻고자 찾아온 젊은 여성에게 해괴한 카발라 비방을 처방했다. 즉 네 조각으로 자른 침대보 천에 대구 꼬리 네 개를 각각 싸서 한밤중에 파리 근교 몽발레리앙(Mont-Valérien) 언덕의 갈보리 십자가로 가져가 순례를 바치면, 청년을 쫓아다니던 9명의 과부와 처녀들의 마음이 단번에 떨어져 나갈 것이라고 속여 거액을 갈취했다가 사기죄로 체포되었다."
+  },
+  {
+    "id": "e2347-legendregilbertcharles",
+    "nameFr": "Legendre (Gilbert-Charles)",
+    "nameKo": "질베르샤를 르장드르 [Gilbert-Charles Legendre]",
+    "nameKoShort": "질베르샤를 르장드르",
+    "nameEn": "Gilbert-Charles Legendre (Marquis de Saint-Aubin, Historian of Human Errors)",
+    "category": "person",
+    "rank": "1733년 인류 지성사의 그릇된 편견과 미신적 오류를 방대하게 집대성한 『의견에 관한 논문』의 저자",
+    "domains": [
+      "인물·역사(Personnage)",
+      "인류 지성사",
+      "미신과 편견 비판",
+      "18세기 계몽사상"
+    ],
+    "translationKo": "생토뱅쉬르루아르(Saint-Aubin-sur-Loire)의 후작으로, 1688년 파리에서 태어나 1746년에 사망한 프랑스의 저명한 학자이자 문인이다. 그는 1733년 파리에서 전 6권에 달하는 방대한 저작인 『인간 정신사의 사료가 되는 의견에 관한 논문(Traité de l'opinion)』을 발표하였다. 이 책은 고대부터 당대에 이르기까지 인류 사회를 지배해온 온갖 종교적 편견, 점술의 미신, 거짓된 기담들의 기원과 해악을 백과전서적으로 파헤친 명저로, 후대 살그(Salgues)를 비롯한 비판 학자들에게 막대한 학문적 영감을 제공하였다."
+  }
+];

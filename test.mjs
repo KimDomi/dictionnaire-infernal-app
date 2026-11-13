@@ -504,6 +504,100 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// L section audit assertions (169 entries, 20 illustrated)
+const lEntries = ENTRIES.filter(e => e.letter === 'L');
+assert.equal(lEntries.length, 169, 'L section must contain exactly 169 entries (after K/L and L/M boundary fixes)');
+
+const lIllustrated = lEntries.filter(e => e.hasPlate);
+assert.equal(lIllustrated.length, 20, 'L section must contain exactly 20 illustrated entries');
+
+const lamia = ENTRIES.find(e => e.id === 'lamia');
+assert.ok(lamia && lamia.hasPlate && lamia.plate === 'plates/lamia.jpg' && lamia.category === 'demon' && lamia.nameKo.includes('라미아'), 'Lamia 68 plate demon queen of Libya');
+
+const lechies = ENTRIES.find(e => e.id === 'lechies');
+assert.ok(lechies && lechies.hasPlate && lechies.plate === 'plates/lechies.jpg' && lechies.category === 'demon' && lechies.nameKo.includes('레시'), 'Lechies 68 plate Slavic forest spirit');
+
+const leonard = ENTRIES.find(e => e.id === 'leonard');
+assert.ok(leonard && leonard.hasPlate && leonard.plate === 'plates/leonard.jpg' && leonard.category === 'demon' && leonard.nameKo.includes('레오나르'), 'Leonard 68 plate Grand Master of the Sabbath');
+
+const lucifer = ENTRIES.find(e => e.id === 'lucifer');
+assert.ok(lucifer && lucifer.hasPlate && lucifer.plate === 'plates/lucifer.jpg' && lucifer.category === 'demon' && lucifer.nameKo.includes('루시퍼'), 'Lucifer 68 plate Monarch of the East');
+
+const lamiesPlate = ENTRIES.find(e => e.id === 'e2309-lamies');
+assert.ok(lamiesPlate && lamiesPlate.hasPlate && lamiesPlate.nameKo.includes('라미아 무리'), 'Lamies illustrated in-text desert fiends');
+
+const lapons = ENTRIES.find(e => e.id === 'e2325-lapons');
+assert.ok(lapons && lapons.hasPlate && lapons.nameKo.includes('사미족'), 'Lapons Sami shamans illustrated');
+
+const lavater = ENTRIES.find(e => e.id === 'e2334-lavaterjeangaspard');
+assert.ok(lavater && lavater.hasPlate && lavater.nameKo.includes('라바터'), 'Lavater physiognomy illustrated');
+
+const leonIII = ENTRIES.find(e => e.id === 'e2357-leoniii');
+assert.ok(leonIII && leonIII.hasPlate && leonIII.nameKo.includes('교황 레오 3세'), 'Pope Leo III illustrated');
+
+const lieder = ENTRIES.find(e => e.id === 'e2384-liedermadeleine');
+assert.ok(lieder && lieder.hasPlate && lieder.nameKo.includes('마들렌 리더'), 'Madeleine Lieder possessed illustrated');
+
+const lievre = ENTRIES.find(e => e.id === 'e2385-lievre');
+assert.ok(lievre && lievre.hasPlate && lievre.nameKo.includes('토끼'), 'Lievre hare superstition illustrated');
+
+const ligature = ENTRIES.find(e => e.id === 'e2387-ligature');
+assert.ok(ligature && ligature.hasPlate && ligature.nameKo.includes('리가튀르'), 'Ligature knot magic illustrated');
+
+const limacons = ENTRIES.find(e => e.id === 'e2390-limacons');
+assert.ok(limacons && limacons.hasPlate && limacons.nameKo.includes('달팽이'), 'Limacons snails illustrated');
+
+const lion = ENTRIES.find(e => e.id === 'e2395-lion');
+assert.ok(lion && lion.hasPlate && lion.nameKo.includes('사자'), 'Lion magical virtues illustrated');
+
+const louisXIII = ENTRIES.find(e => e.id === 'e2421-louisxiii');
+assert.ok(louisXIII && louisXIII.hasPlate && louisXIII.nameKo.includes('루이 13세'), 'Louis XIII king illustrated');
+
+const louisHongrie = ENTRIES.find(e => e.id === 'e2423-louisdehongrie');
+assert.ok(louisHongrie && louisHongrie.hasPlate && louisHongrie.nameKo.includes('러요시 2세'), 'Louis of Hungary Mohacs omens illustrated');
+
+const loup = ENTRIES.find(e => e.id === 'e2425-loup');
+assert.ok(loup && loup.hasPlate && loup.nameKo.includes('늑대'), 'Loup wolf demonology illustrated');
+
+const ludlam = ENTRIES.find(e => e.id === 'e2437-ludlam');
+assert.ok(ludlam && ludlam.hasPlate && ludlam.nameKo.includes('러들럼'), 'Mother Ludlam cave fairy illustrated');
+
+const luricaunes = ENTRIES.find(e => e.id === 'e2444-luricaunes');
+assert.ok(luricaunes && luricaunes.hasPlate && luricaunes.nameKo.includes('루리카운'), 'Luricaunes Irish brownies illustrated');
+
+const luther = ENTRIES.find(e => e.id === 'e2448-luthermartin');
+assert.ok(luther && luther.hasPlate && luther.nameKo.includes('마르틴 루터'), 'Martin Luther devil encounters illustrated');
+
+const lynx = ENTRIES.find(e => e.id === 'e2458-lynx');
+assert.ok(lynx && lynx.hasPlate && lynx.nameKo.includes('스라소니'), 'Lynx penetrating vision illustrated');
+
+const legions = ENTRIES.find(e => e.id === 'e2348-legions');
+assert.ok(legions && legions.category === 'demon' && legions.nameKo.includes('지옥 군단론'), 'Legions of Hell demon hierarchy');
+
+const leviathan = ENTRIES.find(e => e.id === 'e2375-leviathan');
+assert.ok(leviathan && leviathan.category === 'demon' && leviathan.nameKo.includes('레비아탄'), 'Leviathan grand admiral of Hell');
+
+const lilith = ENTRIES.find(e => e.id === 'e2388-lilith');
+assert.ok(lilith && lilith.category === 'demon' && lilith.nameKo.includes('릴리트'), 'Lilith queen of succubi');
+
+const loudun = ENTRIES.find(e => e.id === 'e2418-loudun');
+assert.ok(loudun && loudun.category === 'superstition' && loudun.nameKo.includes('루됭'), 'Loudun possessions scandal');
+
+const loupsGarous = ENTRIES.find(e => e.id === 'e2428-loupsgarous');
+assert.ok(loupsGarous && loupsGarous.category === 'superstition' && loupsGarous.nameKo.includes('늑대인간'), 'Loups-garous werewolves history');
+
+const louviers = ENTRIES.find(e => e.id === 'e2429-louvierspossessionde');
+assert.ok(louviers && louviers.category === 'superstition' && louviers.nameKo.includes('루비에'), 'Louviers convent possessions');
+
+const lutins = ENTRIES.find(e => e.id === 'e2449-lutins');
+assert.ok(lutins && lutins.category === 'myth' && lutins.nameKo.includes('뤼탱'), 'Lutins French house goblins');
+
+const lycanthropie = ENTRIES.find(e => e.id === 'e2454-lycanthropie');
+assert.ok(lycanthropie && lycanthropie.category === 'superstition' && lycanthropie.nameKo.includes('라이칸스로피'), 'Lycanthropy mental delusion');
+
+const lycaon = ENTRIES.find(e => e.id === 'e2455-lycaon');
+assert.ok(lycaon && lycaon.category === 'myth' && lycaon.nameKo.includes('뤼카온'), 'Lycaon first werewolf of Arcadia');
+
 // M section audit assertions (271 entries, 33 illustrated)
 const mEntries = ENTRIES.filter(e => e.letter === 'M');
 assert.equal(mEntries.length, 271, 'M section must contain exactly 271 entries (after L boundary fix)');
