@@ -560,8 +560,8 @@ select.sort-select {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 16px;
-  margin-bottom: 14px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
 }
 
 .panel h2, .panel h3 {
@@ -575,11 +575,16 @@ select.sort-select {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 0;
+  padding: 11px 0;
   border-bottom: 1px solid var(--border);
 }
 
+.setting-row:first-child {
+  padding-top: 0;
+}
+
 .setting-row:last-child {
+  padding-bottom: 0;
   border-bottom: none;
 }
 
