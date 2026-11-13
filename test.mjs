@@ -421,6 +421,89 @@ assert.ok(sytry && sytry.category === 'demon' && sytry.legions === 60 && sytry.n
 const sabnac = ENTRIES.find(e => e.id === 'e3280-sabnac');
 assert.ok(sabnac && sabnac.category === 'demon' && sabnac.legions === 50 && sabnac.nameKo.includes('사브낙'), 'Sabnac demon marquis');
 
+// R section audit assertions (97 entries, 12 illustrated)
+const rEntries = ENTRIES.filter(e => e.letter === 'R');
+assert.equal(rEntries.length, 97, 'R section must contain exactly 97 entries');
+
+const rIllustrated = rEntries.filter(e => e.hasPlate);
+assert.equal(rIllustrated.length, 12, 'R section must contain exactly 12 illustrated entries');
+
+// 68 Plates demons in R
+const rahouart = ENTRIES.find(e => e.id === 'rahouart');
+assert.ok(rahouart && rahouart.letter === 'R' && rahouart.hasPlate && rahouart.plate === 'plates/rahouart.jpg' && rahouart.plateNo === 55 && rahouart.nameKo.includes('라우아르'), 'Rahouart illustrated demon');
+
+const ribesal = ENTRIES.find(e => e.id === 'ribesal');
+assert.ok(ribesal && ribesal.letter === 'R' && ribesal.hasPlate && ribesal.plate === 'plates/ribesal.jpg' && ribesal.plateNo === 56 && ribesal.nameKo.includes('뤼베찰'), 'Ribesal illustrated mountain spirit');
+
+const ronwe = ENTRIES.find(e => e.id === 'ronwe');
+assert.ok(ronwe && ronwe.letter === 'R' && ronwe.hasPlate && ronwe.plate === 'plates/ronwe.jpg' && ronwe.plateNo === 57 && ronwe.legions === 19 && ronwe.nameKo.includes('로노베'), 'Ronwe illustrated demon marquis');
+
+// Key R illustrated entries
+const rat = ENTRIES.find(e => e.id === 'e3190-rat');
+assert.ok(rat && rat.hasPlate && rat.nameKo.includes('쥐'), 'Rat illustrated');
+
+const remords = ENTRIES.find(e => e.id === 'e3203-remords');
+assert.ok(remords && remords.hasPlate && remords.nameKo.includes('양심의 가책'), 'Remords illustrated');
+
+const renards = ENTRIES.find(e => e.id === 'e3206-renards');
+assert.ok(renards && renards.hasPlate && renards.nameKo.includes('여우'), 'Renards illustrated');
+
+const revenants = ENTRIES.find(e => e.id === 'e3216-revenants');
+assert.ok(revenants && revenants.hasPlate && revenants.nameKo.includes('되살아난 망령'), 'Revenants illustrated');
+
+const rhapsodomancie = ENTRIES.find(e => e.id === 'e3217-rhapsodomancie');
+assert.ok(rhapsodomancie && rhapsodomancie.hasPlate && rhapsodomancie.category === 'divination' && rhapsodomancie.nameKo.includes('시편점'), 'Rhapsodomancie illustrated');
+
+const rhone = ENTRIES.find(e => e.id === 'e3219-rhone');
+assert.ok(rhone && rhone.hasPlate && rhone.nameKo.includes('론 강'), 'Rhône illustrated');
+
+const rhotomago = ENTRIES.find(e => e.id === 'e3220-rhotomago');
+assert.ok(rhotomago && rhotomago.hasPlate && rhotomago.category === 'demon' && rhotomago.nameKo.includes('로토마고'), 'Rhotomago illustrated');
+
+const robertLeDiable = ENTRIES.find(e => e.id === 'e3232-robertlediable');
+assert.ok(robertLeDiable && robertLeDiable.hasPlate && robertLeDiable.nameKo.includes('악마 로베르'), 'Robert le Diable illustrated');
+
+const roderik = ENTRIES.find(e => e.id === 'e3239-roderik');
+assert.ok(roderik && roderik.hasPlate && roderik.nameKo.includes('로드리고'), 'Roderik illustrated');
+
+// Critical mistranslation fixes in R
+const repare = ENTRIES.find(e => e.id === 'e3207-repare');
+assert.ok(repare && repare.nameKo.includes('레파라투스') && !repare.nameKo.includes('수리됨'), 'Réparé not translated as 수리됨');
+
+const elspetRule = ENTRIES.find(e => e.id === 'e3264-ruleelspet');
+assert.ok(elspetRule && elspetRule.nameKo.includes('엘스펫 룰') && !elspetRule.nameKo.includes('규칙'), 'Rule (Elspet) not translated as 규칙');
+
+const rush = ENTRIES.find(e => e.id === 'e3266-rush');
+assert.ok(rush && rush.letter === 'R' && rush.category === 'demon' && rush.nameKo.includes('프라이어 러시'), 'Rush friar goblin');
+
+const ryence = ENTRIES.find(e => e.id === 'e3267-ryence');
+assert.ok(ryence && ryence.letter === 'R' && ryence.nameKo.includes('리엔스 왕'), 'Ryence king of Wales');
+
+const rymer = ENTRIES.find(e => e.id === 'e3268-rymer');
+assert.ok(rymer && rymer.letter === 'R' && rymer.nameKo.includes('흐륌'), 'Rymer Hrym of Naglfar');
+
+const raum = ENTRIES.find(e => e.id === 'e3191-raum');
+assert.ok(raum && raum.category === 'demon' && raum.legions === 30 && raum.nameKo.includes('라움'), 'Raum demon count 30 legions');
+
+const rimmon = ENTRIES.find(e => e.id === 'e3229-rimmon');
+assert.ok(rimmon && rimmon.category === 'demon' && rimmon.nameKo.includes('림몬'), 'Rimmon demon chief physician');
+
+// Disambiguated Retz & Robert in R
+const rRetzGilles = ENTRIES.find(e => e.id === 'e3211-retz');
+assert.ok(rRetzGilles && rRetzGilles.nameKo.includes('질 드 레 남작'), 'Gilles de Rais');
+
+const rRetzCardinal = ENTRIES.find(e => e.id === 'e3212-retz');
+assert.ok(rRetzCardinal && rRetzCardinal.nameKo.includes('레츠 추기경'), 'Cardinal de Retz');
+
+const robertDemon = ENTRIES.find(e => e.id === 'e3231-robert');
+assert.ok(robertDemon && robertDemon.nameKo.includes('악마 로베르') && robertDemon.category === 'demon', 'Demon Robert');
+
+const robertArtois = ENTRIES.find(e => e.id === 'e3233-robert');
+assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베르') && robertArtois.category === 'person', 'Robert of Artois');
+
+const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
+assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 

@@ -659,6 +659,105 @@ function frHeadwordToKo(nameFr, baseFr, rawEntry = null, id = null) {
 
 const CURATED_HEADWORD_RULES = {
   'e973-chax': { nameKo: '샥스 또는 칵스 [Chax]', nameKoShort: '샥스 또는 칵스', nameFr: 'Chax', nameEn: 'Chax (Crossref to Scox)' },
+  // R entries curated headwords (p.569-586)
+  'e3172-rabbats': { nameKo: '라바트(목깃 달린 요정) [Rabbats]', nameKoShort: '라바트', nameFr: 'Rabbats', nameEn: 'Rabbats (Noisy Hobgoblins)' },
+  'e3173-rabbins': { nameKo: '랍비의 마법 전승 [Rabbins / Rabbinical Magic]', nameKoShort: '랍비의 마법 전승', nameFr: 'Rabbins', nameEn: 'Rabbinical Occult Traditions' },
+  'e3174-rabdomancie': { nameKo: '막대점·수맥 찾기(랍도망시) [Rabdomancie / Rhabdomancy]', nameKoShort: '막대점·수맥 찾기', nameFr: 'Rabdomancie', nameEn: 'Rhabdomancy (Dowsing Divination)' },
+  'e3175-rachaders': { nameKo: '라샤데르(인도의 악령) [Rachaders / Rakshasas]', nameKoShort: '라샤데르', nameFr: 'Rachaders', nameEn: 'Rachaders (Indian Evil Spirits)' },
+  'e3176-radcliffeanne': { nameKo: '앤 래드클리프 [Radcliffe (Anne)]', nameKoShort: '앤 래드클리프', nameFr: 'Radcliffe (Anne)', nameEn: 'Ann Radcliffe (Gothic Novelist)' },
+  'e3177-ragalomancie': { nameKo: '라갈로망시(주사위·수조 점술) [Ragalomancie / Ragalomancy]', nameKoShort: '라갈로망시', nameFr: 'Ragalomancie', nameEn: 'Ragalomancy' },
+  'e3178-rage': { nameKo: '광견병 치유의 주문과 미신 [Rage / Hydrophobia Superstitions]', nameKoShort: '광견병 치유 미신', nameFr: 'Rage', nameEn: 'Superstitions of Hydrophobia Cure' },
+  'e3179-raginis': { nameKo: '라기니(천상의 님프) [Raginis / Rāginī]', nameKoShort: '라기니', nameFr: 'Raginis', nameEn: 'Raginis (Nymphs of Melody)' },
+  'e3180-ragusegeorgede': { nameKo: '조르주 드 라구즈 [Raguse (George de)]', nameKoShort: '조르주 드 라구즈', nameFr: 'Raguse (George de)', nameEn: 'Georgius Raguseus' },
+  'rahouart': { nameKo: '라우아르 [Rahouart]', nameKoShort: '라우아르', nameFr: 'Rahouart', nameEn: 'Rahouart (Demon of the Miser)' },
+  'e3182-raiz': { nameKo: '레즈 또는 레츠 [Raiz]', nameKoShort: '레즈', nameFr: 'Raiz', nameEn: 'Raiz (Crossref to Retz)' },
+  'e3183-raidemariedela': { nameKo: '마리 드 라 레드 [Raide (Marie de la)]', nameKoShort: '마리 드 라 레드', nameFr: 'Raide (Marie de la)', nameEn: 'Marie de la Raide (Child Witch)' },
+  'e3184-raleighwalter': { nameKo: '월터 롤리 경 [Raleigh (Walter) / Sir Walter Raleigh]', nameKoShort: '월터 롤리 경', nameFr: 'Raleigh (Walter)', nameEn: 'Sir Walter Raleigh' },
+  'e3185-rambouillet': { nameKo: '랑부예 후작의 유령 서약 [Rambouillet / Marquis de Rambouillet]', nameKoShort: '랑부예 후작의 유령', nameFr: 'Rambouillet', nameEn: 'Marquis of Rambouillet (Ghost Compact)' },
+  'e3186-ranfaingmariede': { nameKo: '마리 드 랑팽 [Ranfaing (Marie de)]', nameKoShort: '마리 드 랑팽', nameFr: 'Ranfaing (Marie de)', nameEn: 'Elisabeth de Ranfaing' },
+  'e3187-ranirazal': { nameKo: '라니 라잘(인도 혼인 여신) [Rani-Razal]', nameKoShort: '라니 라잘', nameFr: 'Rani-Razal', nameEn: 'Rani-Razal (Goddess of Satpura)' },
+  'e3188-rannou': { nameKo: '라누 전설(브르타뉴 인어 이야기) [Rannou]', nameKoShort: '라누 전설', nameFr: 'Rannou', nameEn: 'Rannou (Breton Mermaid Legend)' },
+  'e3189-raolletjacques': { nameKo: '자크 라올레 [Raollet (Jacques)]', nameKoShort: '자크 라올레', nameFr: 'Raollet (Jacques)', nameEn: 'Jacques Raollet (Werewolf of Angers)' },
+  'e3190-rat': { nameKo: '쥐의 전조와 흉조 [Rat / Omens of the Rat]', nameKoShort: '쥐의 전조와 흉조', nameFr: 'Rat', nameEn: 'Omens and Superstitions of the Rat' },
+  'e3191-raum': { nameKo: '라움 [Raum / Raym]', nameKoShort: '라움', nameFr: 'Raum', nameEn: 'Raum (Great Count of Hell)' },
+  'e3192-realisme': { nameKo: '실재론과 유물론의 허구 [Réalisme / Realism and Materialism]', nameKoShort: '실재론과 유물론', nameFr: 'Réalisme', nameEn: 'Realism and Materialism Critique' },
+  'e3193-redcap': { nameKo: '레드캡(붉은 모자 요정) [Red-cap / Redcap]', nameKoShort: '레드캡', nameFr: 'Red-cap', nameEn: 'Redcap (Bloodthirsty Goblin)' },
+  'e3194-regard': { nameKo: '사시와 마안(사악한 눈) [Regard / Evil Eye]', nameKoShort: '사시와 마안', nameFr: 'Regard', nameEn: 'Evil Eye (Crossref to Yeux)' },
+  'e3195-regensberg': { nameKo: '레겐스베르크의 사역마 [Regensberg]', nameKoShort: '레겐스베르크의 사역마', nameFr: 'Regensberg', nameEn: 'Regensberg (Familiar Spirit)' },
+  'e3196-regiomontanus': { nameKo: '레기오몬타누스(요하네스 뮐러) [Regiomontanus]', nameKoShort: '레기오몬타누스', nameFr: 'Regiomontanus', nameEn: 'Regiomontanus (Crossref to Muller)' },
+  'e3197-reidthomas': { nameKo: '토머스 리드 [Reid (Thomas)]', nameKoShort: '토머스 리드', nameFr: 'Reid (Thomas)', nameEn: 'Thomas Reid (Scottish Philosopher)' },
+  'e3198-reineguetet': { nameKo: '게테 여왕(여장한 악마) [Reine Guétet]', nameKoShort: '게테 여왕', nameFr: 'Reine Guétet', nameEn: 'Reine Guétet (Queen of the Sabbath)' },
+  'e3199-reinesdusabbat': { nameKo: '사바트의 여왕들 [Reines du sabbat / Queens of the Sabbath]', nameKoShort: '사바트의 여왕들', nameFr: 'Reines du sabbat', nameEn: 'Queens of the Witches\' Sabbath' },
+  'e3200-religion': { nameKo: '원시 종교와 미신의 기원 [Religion / Origin of Religions and Superstitions]', nameKoShort: '원시 종교와 미신', nameFr: 'Religion', nameEn: 'Origins of Religion and Superstition' },
+  'e3201-reminicolas': { nameKo: '니콜라 레미 [Remi (Nicolas) / Nicolaus Remigius]', nameKoShort: '니콜라 레미', nameFr: 'Remi (Nicolas)', nameEn: 'Nicolas de Rémy (Demonologist)' },
+  'e3202-remmon': { nameKo: '렘몬 [Remmon]', nameKoShort: '렘몬', nameFr: 'Remmon', nameEn: 'Remmon (Crossref to Rimmon)' },
+  'e3203-remords': { nameKo: '양심의 가책과 망령의 복수 [Remords / Remorse and Vengeful Ghosts]', nameKoShort: '양심의 가책과 망령', nameFr: 'Remords', nameEn: 'Remorse (White Lady Legend of Orlamünde)' },
+  'e3204-remore': { nameKo: '빨판상어(레모라)의 신비적 냉기 [Rémore / Remora]', nameKoShort: '빨판상어의 냉기', nameFr: 'Rémore', nameEn: 'Remora (Ice-Fish Superstition)' },
+  'e3205-remures': { nameKo: '레무레스(떠도는 망령) [Rémures / Lemures]', nameKoShort: '레무레스', nameFr: 'Rémures', nameEn: 'Lemures (Crossref to Lémures)' },
+  'e3206-renards': { nameKo: '여우 요괴와 구미호 미신 [Renards / Fox Demons (Kitsune)]', nameKoShort: '여우 요괴 미신', nameFr: 'Renards', nameEn: 'Fox Demons and Kitsune Superstition' },
+  'e3207-repare': { nameKo: '레파라투스 [Réparé / Reparatus]', nameKoShort: '레파라투스', nameFr: 'Réparé', nameEn: 'Reparatus (Visionary of Purgatory)' },
+  'e3208-repasdumort': { nameKo: '망자의 진찬(사자 진찬 의례) [Repas du mort / Feast for the Dead]', nameKoShort: '망자의 진찬', nameFr: 'Repas du mort', nameEn: 'Feast for the Dead (Funeral Banquets)' },
+  'e3209-repasdusabbat': { nameKo: '사바트의 연회와 모독의 식사 [Repas du sabbat / Banquet of the Sabbath]', nameKoShort: '사바트의 연회', nameFr: 'Repas du sabbat', nameEn: 'Witches\' Sabbath Feast' },
+  'e3210-resurrection': { nameKo: '파르시교도의 육체 부활 전설 [Résurrection / Parsi Superstitions of Resurrection]', nameKoShort: '파르시교도의 육체 부활', nameFr: 'Résurrection', nameEn: 'Zoroastrian and Parsi Resurrection Myths' },
+  'e3211-retz': { nameKo: '질 드 레 남작 [Retz, Gilles de Laval de / Gilles de Rais]', nameKoShort: '질 드 레 남작', nameFr: 'Retz (Gilles de Laval de)', nameEn: 'Gilles de Rais (Baron de Retz)' },
+  'e3212-retz': { nameKo: '레츠 추기경의 야간 유령 목격담 [Retz (Le Cardinal de)]', nameKoShort: '레츠 추기경의 유령 목격담', nameFr: 'Retz (Le Cardinal de)', nameEn: 'Cardinal de Retz (Phantom of Saint-Cloud)' },
+  'e3213-reve': { nameKo: '꿈과 해몽의 미신 [Rêve / Dreams and Oneiromancy]', nameKoShort: '꿈과 해몽의 미신', nameFr: 'Rêve', nameEn: 'Superstitions of Dreams and Oneiromancy' },
+  'e3214-reveillematin': { nameKo: '등대풀(악마의 젖) [Réveille-matin / Petty Spurge]', nameKoShort: '등대풀(악마의 젖)', nameFr: 'Réveille-matin', nameEn: 'Petty Spurge (Devil\'s Milk)' },
+  'e3215-revelations': { nameKo: '초자연적 계시와 환시 [Révélations / Supernatural Revelations]', nameKoShort: '초자연적 계시', nameFr: 'Révélations', nameEn: 'Supernatural Revelations and Omens' },
+  'e3216-revenants': { nameKo: '되살아난 망령(르브낭) [Revenants / The Returned]', nameKoShort: '되살아난 망령', nameFr: 'Revenants', nameEn: 'Revenants (The Walking Dead and Phantoms)' },
+  'e3217-rhapsodomancie': { nameKo: '시편점(랩소도망시) [Rhapsodomancie / Rhapsodomancy]', nameKoShort: '시편점', nameFr: 'Rhapsodomancie', nameEn: 'Rhapsodomancy (Divination by Poetry)' },
+  'e3218-rhombus': { nameKo: '마법 회전판(롬보스) [Rhombus / Bullroarer]', nameKoShort: '마법 회전판(롬보스)', nameFr: 'Rhombus', nameEn: 'Rhombus (Ancient Magic Bullroarer)' },
+  'e3219-rhone': { nameKo: '론 강의 악마와 괴물 [Rhône / Spirit of the River Rhône]', nameKoShort: '론 강의 악마', nameFr: 'Rhône', nameEn: 'Demon of the Rhône (River Legends)' },
+  'e3220-rhotomago': { nameKo: '로토마고(요술의 거장 악마) [Rhotomago]', nameKoShort: '로토마고', nameFr: 'Rhotomago', nameEn: 'Rhotomago (Grand Master of Sorcerers)' },
+  'e3221-rhune': { nameKo: '라 륀 산(숫염소의 숲) [Rhune / La Rhune]', nameKoShort: '라 륀 산', nameFr: 'Rhune', nameEn: 'La Rhune (Sabbath Mountain of the Basque)' },
+  'e3222-ribadinjeannette': { nameKo: '잔 리바댕 [Ribadin (Jeannette)]', nameKoShort: '잔 리바댕', nameFr: 'Ribadin (Jeannette)', nameEn: 'Jeannette Ribadin (Basque Witch)' },
+  'ribesal': { nameKo: '뤼베찰(산령) [Ribesal, Rübezahl]', nameKoShort: '뤼베찰', nameFr: 'Ribesal (Rübezahl)', nameEn: 'Rübezahl (Mountain Spirit of Krkonoše)' },
+  'e3224-richardcoeurdelion': { nameKo: '사자심왕 리처드 1세 [Richard Cœur de lion / Richard the Lionheart]', nameKoShort: '사자심왕 리처드 1세', nameFr: 'Richard Cœur de lion', nameEn: 'Richard the Lionheart' },
+  'e3225-richardsanspeur': { nameKo: '무용공 리샤르 1세 [Richard Sans peur / Richard the Fearless]', nameKoShort: '무용공 리샤르', nameFr: 'Richard Sans peur', nameEn: 'Richard the Fearless (Duke of Normandy)' },
+  'e3226-richelieu': { nameKo: '리슐리외 원수 [Richelieu / Maréchal de Richelieu]', nameKoShort: '리슐리외 원수', nameFr: 'Richelieu', nameEn: 'Louis François Armand de Vignerot du Plessis, Duke of Richelieu' },
+  'e3227-rickiusjacques': { nameKo: '야코부스 리키우스 [Rickius (Jacques)]', nameKoShort: '야코부스 리키우스', nameFr: 'Rickius (Jacques)', nameEn: 'Jacobus Rickius (Cologne Jurist)' },
+  'e3228-rigouxmaitre': { nameKo: '마스터 리고 [Rigoux (maître) / Master Rigoux]', nameKoShort: '마스터 리고', nameFr: 'Rigoux (maître)', nameEn: 'Master Rigoux (Sabbath Demon)' },
+  'e3229-rimmon': { nameKo: '림몬 [Rimmon]', nameKoShort: '림몬', nameFr: 'Rimmon', nameEn: 'Rimmon (Chief Physician of Hell)' },
+  'e3230-riviererochlebaillifsieurdel': { nameKo: '로슈 르 바이프 드 라 리비에르 [Rivière (Roch le Baillif, sieur de la)]', nameKoShort: '로슈 르 바이프', nameFr: 'Rivière (Roch le Baillif, sieur de la)', nameEn: 'Roch le Baillif, Sieur de la Rivière' },
+  'e3231-robert': { nameKo: '악마 로베르 [Robert (Démon)]', nameKoShort: '악마 로베르', nameFr: 'Robert (Démon)', nameEn: 'Robert (Possessing Demon of the Sabbath)' },
+  'e3232-robertlediable': { nameKo: '악마 로베르(노르망디 전설) [Robert le Diable / Robert the Devil]', nameKoShort: '악마 로베르 전설', nameFr: 'Robert le Diable', nameEn: 'Robert the Devil (Norman Legend)' },
+  'e3233-robert': { nameKo: '아르투아의 로베르 [Robert (Sorcier d’Artois) / Robert of Artois]', nameKoShort: '아르투아의 로베르', nameFr: 'Robert (Sorcier d’Artois)', nameEn: 'Robert of Artois (14th Century Sorcerer)' },
+  'e3234-robert': { nameKo: '로베르 2세 국왕 [Robert II (Roi de France) / Robert II of France]', nameKoShort: '로베르 2세 국왕', nameFr: 'Robert II (Roi de France)', nameEn: 'Robert II the Pious (King of France)' },
+  'e3235-robinhood': { nameKo: '로빈 후드 [Robin Hood]', nameKoShort: '로빈 후드', nameFr: 'Robin Hood', nameEn: 'Robin Hood (Crossref to Puck)' },
+  'e3236-robinetdevaulx': { nameKo: '로비네 드 보 [Robinet de Vaulx]', nameKoShort: '로비네 드 보', nameFr: 'Robinet de Vaulx', nameEn: 'Robinet de Vaulx (False Hermit)' },
+  'e3237-rocayamariede': { nameKo: '마리 드 로카야 [Rocaya (Marie de)]', nameKoShort: '마리 드 로카야', nameFr: 'Rocaya (Marie de)', nameEn: 'Marie de Rocaya (Basque Witch)' },
+  'e3238-rodenstein': { nameKo: '로덴슈타인 기사 전설 [Rodenstein]', nameKoShort: '로덴슈타인', nameFr: 'Rodenstein', nameEn: 'Rodenstein (Crossref to Hakelberg)' },
+  'e3239-roderik': { nameKo: '로드리고 국왕(로데릭) [Roderik / King Roderic]', nameKoShort: '로드리고 국왕', nameFr: 'Roderik', nameEn: 'Roderic (Last King of the Visigoths)' },
+  'e3240-rodriguezignazio': { nameKo: '이그나시오 로드리게스 [Rodriguez (Ignazio)]', nameKoShort: '이그나시오 로드리게스', nameFr: 'Rodriguez (Ignazio)', nameEn: 'Ignazio Rodriguez (Crossref to Inquisition)' },
+  'e3241-roisdelenfer': { nameKo: '지옥의 일곱 왕 [Rois de l’enfer / Kings of Hell]', nameKoShort: '지옥의 일곱 왕', nameFr: 'Rois de l’enfer', nameEn: 'Seven Kings of Hell' },
+  'e3242-roisdefrance': { nameKo: '프랑스 국왕들의 신화와 기형 전설 [Rois de France / Kings of France Legends]', nameKoShort: '프랑스 국왕들의 신화', nameFr: 'Rois de France', nameEn: 'Myths and Monstrous Legends of French Kings' },
+  'e3243-roitelet': { nameKo: '상모솔새의 미신 [Roitelet / Wren Superstitions]', nameKoShort: '상모솔새의 미신', nameFr: 'Roitelet', nameEn: 'Wren Superstitions (King of Birds)' },
+  'e3244-rolandeduvernois': { nameKo: '롤랑드 뒤 베르누아 [Rolande du Vernois]', nameKoShort: '롤랑드 뒤 베르누아', nameFr: 'Rolande du Vernois', nameEn: 'Rolande du Vernois (Burgundian Witch)' },
+  'e3245-rome': { nameKo: '로마와 교황권 전설 [Rome / Legends of Rome]', nameKoShort: '로마와 교황권 전설', nameFr: 'Rome', nameEn: 'Rome (The City Inviolable to Hell)' },
+  'e3246-romulus': { nameKo: '로물루스 [Romulus]', nameKoShort: '로물루스', nameFr: 'Romulus', nameEn: 'Romulus (Founder of Rome)' },
+  'ronwe': { nameKo: '로노베 또는 론웨 [Ronwe, Ronove]', nameKoShort: '로노베 또는 론웨', nameFr: 'Ronwe (Ronove)', nameEn: 'Ronove (Marquis and Earl of Hell)' },
+  'e3248-rosecroix': { nameKo: '장미십자회 [Rose-croix / Rosicrucians]', nameKoShort: '장미십자회', nameFr: 'Rose-croix', nameEn: 'Rosicrucianism (Brethren of the Rosy Cross)' },
+  'e3249-rosedejericho': { nameKo: '여리고의 장미 [Rose de Jéricho / Rose of Jericho]', nameKoShort: '여리고의 장미', nameFr: 'Rose de Jéricho', nameEn: 'Rose of Jericho (Crossref to Brown)' },
+  'e3250-rosemberg': { nameKo: '로젠베르크의 백색 부인 [Rosemberg / White Lady of Rosenberg]', nameKoShort: '로젠베르크의 백색 부인', nameFr: 'Rosemberg', nameEn: 'White Lady of Rosenberg (Crossref to Femmes blanches)' },
+  'e3251-rosendal': { nameKo: '로센달(장미의 계곡) [Rosendal / Valley of Roses]', nameKoShort: '로센달', nameFr: 'Rosendal', nameEn: 'Rosendal (Swedish Witches\' Sabbath Site)' },
+  'e3252-rosier': { nameKo: '로지에르 [Rosier]', nameKoShort: '로지에르', nameFr: 'Rosier', nameEn: 'Rosier (Prince of Dominations)' },
+  'e3253-roskolnicks': { nameKo: '라스콜니키(러시아 고의식파) [Roskolnicks / Raskolniks]', nameKoShort: '라스콜니키', nameFr: 'Roskolnicks', nameEn: 'Raskolniks (Russian Old Believers)' },
+  'e3254-rounfl': { nameKo: '룬플(브르타뉴 식인귀) [Rounfl / Breton Ogre]', nameKoShort: '룬플', nameFr: 'Rounfl', nameEn: 'Rounfl (Breton Ogre)' },
+  'e3255-roussalkis': { nameKo: '루살카(슬라브 물의 정령) [Roussalkis / Rusalkas]', nameKoShort: '루살카', nameFr: 'Roussalkis', nameEn: 'Rusalkas (Slavic Water Nymphs)' },
+  'e3256-roustem': { nameKo: '로스탐 [Roustem / Rostam]', nameKoShort: '로스탐', nameFr: 'Roustem', nameEn: 'Rostam (Hero of the Shahnameh)' },
+  'e3257-roux': { nameKo: '붉은 머리·붉은 수염의 미신 [Roux / Red Hair Superstitions]', nameKoShort: '붉은 머리·붉은 수염의 미신', nameFr: 'Roux', nameEn: 'Superstitions of Red Hair and Beards' },
+  'e3258-rubezal': { nameKo: '뤼베잘 [Rubezal / Rübezahl]', nameKoShort: '뤼베잘', nameFr: 'Rubezal', nameEn: 'Rubezal (Crossref to Ribesal)' },
+  'e3259-rubis': { nameKo: '루비의 신비적 효능 [Rubis / Virtues of the Ruby]', nameKoShort: '루비의 신비적 효능', nameFr: 'Rubis', nameEn: 'Mystical Properties of the Ruby' },
+  'e3260-ruedenfer': { nameKo: '지옥 거리(뤼 당페르) [Rue d’Enfer / Hell Street]', nameKoShort: '지옥 거리', nameFr: 'Rue d’Enfer', nameEn: 'Rue d\'Enfer (Crossref to Vauvert)' },
+  'e3261-ruffais': { nameKo: '루파이 수피 교단 [Ruffaïs / Rifa\'i Sufis]', nameKoShort: '루파이 수피 교단', nameFr: 'Ruffaïs', nameEn: 'Rifa\'i Dervishes (Howling Dervishes)' },
+  'e3262-ruggiericosme': { nameKo: '코스모 루지에리 [Ruggieri (Cosme) / Cosmo Ruggieri]', nameKoShort: '코스모 루지에리', nameFr: 'Ruggieri (Cosme)', nameEn: 'Cosmo Ruggieri (Florentine Astrologer)' },
+  'e3263-rugner': { nameKo: '흐룽그니르 [Rugner / Hrungnir]', nameKoShort: '흐룽그니르', nameFr: 'Rugner', nameEn: 'Hrungnir (Norse Stone Giant)' },
+  'e3264-ruleelspet': { nameKo: '엘스펫 룰 [Rule (Elspet)]', nameKoShort: '엘스펫 룰', nameFr: 'Rule (Elspet)', nameEn: 'Elspet Rule (Dumfries Witch Trial)' },
+  'e3265-runes': { nameKo: '룬 문자의 마법과 비전 [Runes / Runic Magic]', nameKoShort: '룬 문자의 마법', nameFr: 'Runes', nameEn: 'Runic Magic and Inscriptions' },
+  'e3266-rush': { nameKo: '프라이어 러시(러시 수사) [Rush / Friar Rush]', nameKoShort: '프라이어 러시', nameFr: 'Rush', nameEn: 'Friar Rush (Monastery Goblin)' },
+  'e3267-ryence': { nameKo: '리엔스 왕 [Ryence / King Ryence]', nameKoShort: '리엔스 왕', nameFr: 'Ryence', nameEn: 'King Ryence of North Wales' },
+  'e3268-rymer': { nameKo: '흐륌(나글파르의 조종사 거인) [Rymer / Hrym]', nameKoShort: '흐륌', nameFr: 'Rymer', nameEn: 'Hrym (Captain of Naglfar)' },
+
   // S entries curated headwords (p.586-645)
   'e3269-sabaoth': { nameKo: '만군의 주(사바오트) [Sabaoth]', nameKoShort: '만군의 주(사바오트)', nameFr: 'Sabaoth', nameEn: 'Lord of Hosts (Sabaoth)' },
   'e3270-sabasius': { nameKo: '사바지우스 [Sabasius / Sabazios]', nameKoShort: '사바지우스', nameFr: 'Sabasius', nameEn: 'Sabazios (Thracian Deity)' },
@@ -921,15 +1020,6 @@ const CURATED_HEADWORD_RULES = {
   // Disambiguated Phénix entries (p.525)
   'e3011-phenix': { nameKo: '페닉스 [Phénix / Phenex]', nameKoShort: '페닉스', nameFr: 'Phénix', nameEn: 'Phenex' },
   'e3012-phenix': { nameKo: '불사조 [Phénix / Phoenix]', nameKoShort: '불사조', nameFr: 'Phénix', nameEn: 'Phoenix' },
-
-  // Disambiguated Retz entries (p.576)
-  'e3211-retz': { nameKo: '질 드 레 또는 레츠 [Retz, Gilles de Laval de / Gilles de Rais]', nameKoShort: '질 드 레 또는 레츠', nameFr: 'Retz (Gilles de Laval de)', nameEn: 'Gilles de Rais' },
-  'e3212-retz': { nameKo: '레츠 추기경 [Retz (Le Cardinal de)]', nameKoShort: '레츠 추기경', nameFr: 'Retz (Le Cardinal de)', nameEn: '' },
-
-  // Disambiguated Robert entries (p.583)
-  'e3231-robert': { nameKo: '악마 로베르 [Robert (Démon)]', nameKoShort: '악마 로베르', nameFr: 'Robert (Démon)', nameEn: '' },
-  'e3233-robert': { nameKo: '아르투아의 로베르 [Robert (Sorcier d’Artois) / Robert of Artois]', nameKoShort: '아르투아의 로베르', nameFr: 'Robert (Sorcier d’Artois)', nameEn: 'Robert of Artois' },
-  'e3234-robert': { nameKo: '로베르 2세 [Robert II (Roi de France) / Robert II of France]', nameKoShort: '로베르 2세', nameFr: 'Robert II (Roi de France)', nameEn: 'Robert II of France' },
 
   // Disambiguated David entries (p.199)
   'e1248-david': { nameKo: '다윗 [David / King David]', nameKoShort: '다윗', nameFr: 'David', nameEn: 'King David' },
@@ -1420,6 +1510,17 @@ const ENGLISH_HEADWORD_MAP = {
 };
 
 function buildEntryHeadword(raw, koBase, matchedPlate = null, id = null) {
+  const rawKey = `${raw.nameFr.toLowerCase()}@@${raw.page1863}`;
+  const c = (id && CURATED_HEADWORD_RULES[id]) || CURATED_HEADWORD_RULES[rawKey];
+  if (c) {
+    return {
+      nameKo: c.nameKo,
+      nameKoShort: c.nameKoShort || c.nameKo.replace(/\s*\[.*\]$/, ''),
+      nameFr: c.nameFr || (matchedPlate ? matchedPlate.nameFr : raw.nameFr),
+      nameEn: c.nameEn || ''
+    };
+  }
+
   if (matchedPlate) {
     return {
       nameKo: matchedPlate.nameKo,
@@ -1428,9 +1529,6 @@ function buildEntryHeadword(raw, koBase, matchedPlate = null, id = null) {
       nameEn: matchedPlate.nameEn || ''
     };
   }
-
-  const rawKey = `${raw.nameFr.toLowerCase()}@@${raw.page1863}`;
-  const c = (id && CURATED_HEADWORD_RULES[id]) || CURATED_HEADWORD_RULES[rawKey];
   if (c) {
     return {
       nameKo: c.nameKo,
@@ -2056,6 +2154,105 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
 }
 
 const CURATED_META = {
+  // R entries curated meta (p.569-586)
+  'e3172-rabbats': { category: 'myth', rank: '가정의 소음 요정·코볼트(Lutin tapageur)', domains: ["미신·민속(Superstition)","가정 정령·소령","폴터가이스트","민간 전승"] },
+  'e3173-rabbins': { category: 'superstition', rank: '카발라와 유대 신비주의 전승(Traditions Cabalistiques et Magie)', domains: ["미신·민속(Superstition)","유대 카발라","비전 신비주의","골렘과 부적"] },
+  'e3174-rabdomancie': { category: 'divination', rank: '지팡이와 막대기를 이용한 점술(Divination par la Baguette)', domains: ["점술·예언(Divination)","고대 점술","수맥 탐사봉","성서 시대 미신"] },
+  'e3175-rachaders': { category: 'myth', rank: '인도 신화의 악령과 식인귀(Génies malfaisants des Indiens)', domains: ["신화·전설(Mythologie)","인도 신화","악령과 나찰","동양 전승"] },
+  'e3176-radcliffeanne': { category: 'person', rank: '영국 고딕 소설 문학의 개척자(Romancière Gothique Anglaise)', domains: ["인물·역사(Personnage)","고딕 문학","유령 소설","『우돌포의 비밀』"] },
+  'e3177-ragalomancie': { category: 'divination', rank: '수조와 목말뼈를 이용한 고대 비전 점술(Divination par Bassins et Osselets)', domains: ["점술·예언(Divination)","고대 점술","수조점과 주사위","비전 복술"] },
+  'e3178-rage': { category: 'superstition', rank: '광견병에 대항하는 부적과 주술(Charmes contre la Rage)', domains: ["미신·민속(Superstition)","민간요법","주술 부적","악마의 병 미신"] },
+  'e3179-raginis': { category: 'myth', rank: '인도 전통의 천상 정령과 음악의 여신(Nymphes et Déesses de la Musique)', domains: ["신화·전설(Mythologie)","인도 신화","음악과 라가","천상 정령"] },
+  'e3180-ragusegeorgede': { category: 'person', rank: '파도바 대학교의 철학 교수이자 점술 연구가(Professeur à Padoue)', domains: ["인물·역사(Personnage)","파도바 대학","1623년 문헌","점술과 카발라 연구"] },
+  'rahouart': { category: 'demon', rank: '중세 종교극의 수전노 영혼 수거 악마(Démon Collecteur d\'Âmes)', domains: ["악마학(Démonologie)","1863 원서 삽화 수록","루이 브르통 68대 목판화","중세 도덕극","나쁜 부자 전설"] },
+  'e3182-raiz': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["인물·역사(Personnage)","상호참조","질 드 레"] },
+  'e3183-raidemariedela': { category: 'person', rank: '10세에 사바트에 입문한 바스크 마녀(Sorcière Basque)', domains: ["인물·역사(Personnage)","마녀재판","사바트 고백","피에르 드 랑크르"] },
+  'e3184-raleighwalter': { category: 'person', rank: '영국의 탐험가이자 황금향 엘도라도 탐사자(Navigateur et Écrivain)', domains: ["인물·역사(Personnage)","신대륙 탐험","황금향 엘도라도","가슴에 얼굴 달린 괴물 블레미에스"] },
+  'e3185-rambouillet': { category: 'superstition', rank: '사후 출현 서약과 전쟁터의 망령(Pacte d\'Apparition d\'Outre-Tombe)', domains: ["미신·민속(Superstition)","유령과 망령","사후 출현 서약","17세기 프랑스 귀족"] },
+  'e3186-ranfaingmariede': { category: 'person', rank: '17세기 로렌의 유명한 빙의 피해자이자 수녀원 설립자(Possédée de Lorraine)', domains: ["인물·역사(Personnage)","악마 빙의","구마 의식","로렌 공국 역사"] },
+  'e3187-ranirazal': { category: 'myth', rank: '인도 사트푸라 민간 신앙의 수호 여신(Déesse Vénérée des Indiens)', domains: ["신화·전설(Mythologie)","인도 민속 신앙","혼인 수호신","신성한 나무 숭배"] },
+  'e3188-rannou': { category: 'myth', rank: '브르타뉴 해안의 인어 은혜 갚기 전설(Légende Bretonne de la Sirène)', domains: ["신화·전설(Mythologie)","브르타뉴 민담","인어 전설","바다의 요정"] },
+  'e3189-raolletjacques': { category: 'person', rank: '앙제 고등법원에서 사형을 선고받은 늑대인간(Loup-Garou d\'Angers)', domains: ["인물·역사(Personnage)","늑대인간(루가루)","16세기 마녀재판","식인 변신수"] },
+  'e3190-rat': { category: 'superstition', rank: '전쟁과 재앙을 예고하는 동물의 징조(Présages et Superstitions des Rats)', domains: ["미신·민속(Superstition)","1863 원서 삽화 수록","동물 징조","고대 로마 예언","침몰선 탈출"] },
+  'e3191-raum': { category: 'demon', rank: '지옥의 대백작(Grand Comte aux Enfers)', legions: 30, domains: ["악마학(Démonologie)","솔로몬 72악마","좌천사 계급","도시 파괴와 화해"] },
+  'e3192-realisme': { category: 'superstition', rank: '19세기 유물론적 자연주의 철학 비판(Critique du Matérialisme)', domains: ["미신·민속(Superstition)","19세기 사상 비판","쥘 미슐레와 오귀스트 콩트","자연주의 미신"] },
+  'e3193-redcap': { category: 'demon', rank: '스코틀랜드 변경의 흉포한 고블린(Lutin Malfaisant Écossais)', domains: ["악마학(Démonologie)","스코틀랜드 민속","폐허 고성의 살인귀","퍽 상호참조"] },
+  'e3194-regard': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["미신·민속(Superstition)","상호참조","마안(이블 아이)"] },
+  'e3195-regensberg': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["악마학(Démonologie)","상호참조","사역마"] },
+  'e3196-regiomontanus': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["인물·역사(Personnage)","상호참조","자동인형과 점성술"] },
+  'e3197-reidthomas': { category: 'person', rank: '스코틀랜드 상식학파 철학의 창시자(Philosophe Écossais)', domains: ["인물·역사(Personnage)","스코틀랜드 철학","상식학파","회의론 반박"] },
+  'e3198-reineguetet': { category: 'demon', rank: '사바트에서 여장을 하고 나타나는 악마(Démon en Habit de Femme)', domains: ["악마학(Démonologie)","사바트 전승","마녀 집회","악마의 둔갑"] },
+  'e3199-reinesdusabbat': { category: 'superstition', rank: '마녀 집회에서 악마의 짝으로 추대된 필멸자 마녀(Reines Humaines du Sabbat)', domains: ["미신·민속(Superstition)","사바트 의식","마녀재판 증언","악마의 연회"] },
+  'e3200-religion': { category: 'superstition', rank: '고대 다신교 신화와 성서 원형론 고찰(Mythologie Comparée et Révélation)', domains: ["미신·민속(Superstition)","비교신화학","원시 계시론","이교 신들의 성서적 변형"] },
+  'e3201-reminicolas': { category: 'person', rank: '로렌 공국의 대법관이자 악마학 저술가(Procureur Général de Lorraine)', domains: ["인물·역사(Personnage)","악마학자","『악마숭배론』","로렌 마녀재판"] },
+  'e3202-remmon': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["악마학(Démonologie)","상호참조","시리아의 우상"] },
+  'e3203-remords': { category: 'superstition', rank: '죄책감이 불러일으킨 유령 출현 전설(Revenants Nés du Remords)', domains: ["미신·민속(Superstition)","1863 원서 삽화 수록","호엔촐레른 백색 부인","영아 살해 전설","올라뮌데 백작부인"] },
+  'e3204-remore': { category: 'superstition', rank: '배를 멈추고 바다를 얼린다는 전설의 물고기(Poisson Magique Glacial)', domains: ["미신·민속(Superstition)","바다 괴물과 박물지","시라노 드 베르주라크","고대 항해 미신"] },
+  'e3205-remures': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["신화·전설(Mythologie)","상호참조","로마의 사령"] },
+  'e3206-renards': { category: 'myth', rank: '인간을 홀리고 영혼이 깃드는 영물(Renards Fantastiques et Possessions)', domains: ["신화·전설(Mythologie)","1863 원서 삽화 수록","일본 신토와 요괴(키츠네)","구미호 전설","빙의 동물"] },
+  'e3207-repare': { category: 'person', rank: '12세기 연옥과 지옥, 천국의 환시를 본 인물(Visionnaire du Purgatoire)', domains: ["인물·역사(Personnage)","중세 사후세계 환시","연옥과 지옥","영적 체험"] },
+  'e3208-repasdumort': { category: 'superstition', rank: '무덤에서 망자의 넋을 기리는 고대 제례(Banquets Funéraires Anciens)', domains: ["미신·민속(Superstition)","장례 풍습","조상 숭배","사후세계 음식 공양"] },
+  'e3209-repasdusabbat': { category: 'superstition', rank: '악마를 찬양하며 치러지는 밤의 기괴한 향연(Festin Infernal du Sabbat)', domains: ["미신·민속(Superstition)","사바트 의식","식인과 영아 살해","소금 없는 악마 음식"] },
+  'e3210-resurrection': { category: 'superstition', rank: '조로아스터교·파르시의 종말론적 육체 부활관(Croyances Parsies de la Résurrection)', domains: ["미신·민속(Superstition)","조로아스터교 종말론","파르시 전통","종말의 정화와 새 세상"] },
+  'e3211-retz': { category: 'person', rank: '프랑스의 원수이자 연금술 흑마술 연루자(Maréchal de France et Barbe-Bleue)', domains: ["인물·역사(Personnage)","백년전쟁과 잔 다르크","푸른 수염의 원형","연금술과 인신공양"] },
+  'e3212-retz': { category: 'person', rank: '프롱드의 난 주역이자 프랑스의 정치가(Cardinal et Mémorialiste)', domains: ["인물·역사(Personnage)","프랑스 정치가·추기경","생클루 유령 조우","회고록의 괴담"] },
+  'e3213-reve': { category: 'superstition', rank: '복권 번호와 미래를 점치는 수면 미신(Songes et Présages Oniriques)', domains: ["미신·민속(Superstition)","꿈과 해몽","왕실 복권 미신","몽유병과 환각"] },
+  'e3214-reveillematin': { category: 'superstition', rank: '유독성 유액을 지닌 마법 식물(Plante Magique et Toxique)', domains: ["미신·민속(Superstition)","식물 민속","악마의 풀","플랑드르 민간의학"] },
+  'e3215-revelations': { category: 'superstition', rank: '원거리 참사와 국가 변란의 영적 예고(Avertissements Célestes et Visions)', domains: ["미신·민속(Superstition)","신비 계시","모리스 황제 암살 전조","원격 감응 예언"] },
+  'e3216-revenants': { category: 'superstition', rank: '무덤에서 돌아와 산 자를 찾는 원혼과 육체 유령(Morts-Vivants et Ombres)', domains: ["미신·민속(Superstition)","1863 원서 삽화 수록","유령과 망령","망자의 한기","지롤라모 카르다노 증언"] },
+  'e3217-rhapsodomancie': { category: 'divination', rank: '고대 서사시를 무작위로 펼쳐 미래를 점치는 점술(Sortes Homericae et Virgilianae)', domains: ["점술·예언(Divination)","1863 원서 삽화 수록","호메로스 점술","베르길리우스 점술","서지점(비블리오망시)"] },
+  'e3218-rhombus': { category: 'superstition', rank: '회전을 통해 마법적 바람과 정념을 일으키는 주술 도구(Toupie Magique)', domains: ["미신·민속(Superstition)","고대 그리스 마법","주술 팽이와 회전구","사랑의 미약과 매혹"] },
+  'e3219-rhone': { category: 'myth', rank: '알프스 눈 녹은 물을 타고 내려오는 강의 정령(Monstre Aquatique du Rhône)', domains: ["신화·전설(Mythologie)","1863 원서 삽화 수록","프랑스 강 전설","타라스크와 수룡","황금 구체의 악마"] },
+  'e3220-rhotomago': { category: 'demon', rank: '오컬트 환상 문학 속 지옥의 마법 총재(Grand Maître des Enchanteurs)', domains: ["악마학(Démonologie)","1863 원서 삽화 수록","베르비기에의 『소악마』","마법사들의 지배자"] },
+  'e3221-rhune': { category: 'superstition', rank: '바스크 지방의 전설적인 사바트 성지(Bosquet du Bouc)', domains: ["미신·민속(Superstition)","바스크 마녀재판","피에르 드 랑크르","사바트 성지"] },
+  'e3222-ribadinjeannette': { category: 'person', rank: '16세기 말 바스크 지방의 마녀재판 피고인(Sorcière Basque)', domains: ["인물·역사(Personnage)","마녀재판","사바트 고백","바스크 역사"] },
+  'ribesal': { category: 'demon', rank: '실레지아 거인산맥의 영주이자 거인 산령(Seigneur des Monts Géants)', domains: ["악마학(Démonologie)","1863 원서 삽화 수록","루이 브르통 68대 목판화","독일·보헤미아 민속","날씨 조종 산령"] },
+  'e3224-richardcoeurdelion': { category: 'person', rank: '십자군 전쟁의 영웅이자 잉글랜드 국왕(Roi d\'Angleterre et Croisé)', domains: ["인물·역사(Personnage)","십자군 전쟁","잉글랜드 역사","악마의 가문 전설"] },
+  'e3225-richardsanspeur': { category: 'myth', rank: '노르망디 공작이자 기사도 모험 전설의 주인공(Duc de Normandie)', domains: ["신화·전설(Mythologie)","노르망디 중세 전설","악마 로베르 전승","악마 서큐버스 신부"] },
+  'e3226-richelieu': { category: 'person', rank: '루이 15세 시대의 프랑스 원수이자 궁정 외교관(Maréchal de France)', domains: ["인물·역사(Personnage)","18세기 프랑스 궁정","벨제불 소환 연루","네크로맨시 스캔들"] },
+  'e3227-rickiusjacques': { category: 'person', rank: '16세기 독일의 법학자이자 마녀 수침 재판 옹호론자(Juriste Rhénan)', domains: ["인물·역사(Personnage)","마녀재판 법학","수침 시험(냉수 시험)","1597년 쾰른 간행"] },
+  'e3228-rigouxmaitre': { category: 'demon', rank: '사바트를 주재하는 악마의 이명(Nom du Diable Président)', domains: ["악마학(Démonologie)","사바트 전승","악마의 가명","프랑스 마녀재판"] },
+  'e3229-rimmon': { category: 'demon', rank: '지옥 제국의 수석 시의(Premier Médecin de l\'Empire Infernal)', domains: ["악마학(Démonologie)","지옥의 직책","시리아 다마스쿠스의 고대 신","나병 치료와 폭풍우"] },
+  'e3230-riviererochlebaillifsieurdel': { category: 'person', rank: '앙리 4세의 수석 주치의이자 파라켈수스파 연금술 점성가(Médecin de Henri IV)', domains: ["인물·역사(Personnage)","파라켈수스주의","궁정 점성술","1605년 사망"] },
+  'e3231-robert': { category: 'demon', rank: '사바트를 관장하고 처녀들을 홀린 악령(Démon Évocateur)', domains: ["악마학(Démonologie)","악마 빙의","사바트 주재자","마녀재판 기록"] },
+  'e3232-robertlediable': { category: 'myth', rank: '악마의 자식으로 태어나 참회로 성자가 된 전설의 영웅(Héros Légendaire Normand)', domains: ["신화·전설(Mythologie)","1863 원서 삽화 수록","노르망디 전설","마이어베어 오페라","회개와 구원"] },
+  'e3233-robert': { category: 'person', rank: '프랑스 국왕 필리프 6세를 저주한 주술 혐의자(Accusé d\'Envoûtement)', domains: ["인물·역사(Personnage)","중세 마법 재판","밀랍 인형 주살(인보우트망)","1331년 추방"] },
+  'e3234-robert': { category: 'person', rank: '프랑스 카페 왕조의 군주이자 근친혼 파문 국왕(Roi Pieux de France)', domains: ["인물·역사(Personnage)","카페 왕조","교황 그레고리오 5세 파문","거위 머리 괴물 탄생 전설"] },
+  'e3235-robinhood': { category: 'myth', rank: '영국의 전설적 의적이자 숲의 요정(Héros Populaire Anglais)', domains: ["신화·전설(Mythologie)","상호참조","영국 셔우드 숲 전설","퍽(로빈 구드펠로)"] },
+  'e3236-robinetdevaulx': { category: 'person', rank: '15세기 아라스 마녀재판의 거짓 은둔자(Faux Ermite et Sorcier)', domains: ["인물·역사(Personnage)","아라스 마녀재판","거짓 은둔자","사바트 혐의"] },
+  'e3237-rocayamariede': { category: 'person', rank: '16세기 말 바스크 지방의 악명 높은 마녀(Célèbre Sorcière Basque)', domains: ["인물·역사(Personnage)","바스크 마녀재판","피에르 드 랑크르","사형 선고"] },
+  'e3238-rodenstein': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["신화·전설(Mythologie)","상호참조","야생의 사냥(와일드 헌트)"] },
+  'e3239-roderik': { category: 'person', rank: '서고트 왕국의 마지막 군주이자 마법의 탑 전설(Dernier Roi Wisigoth)', domains: ["인물·역사(Personnage)","1863 원서 삽화 수록","스페인 서고트 왕국","톨레도 마법의 탑","무어인의 정복"] },
+  'e3240-rodriguezignazio': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["인물·역사(Personnage)","상호참조","종교재판소"] },
+  'e3241-roisdelenfer': { category: 'demon', rank: '지옥의 최고 통치 군주단(Sept Rois de la Monarchie Infernale)', domains: ["악마학(Démonologie)","지옥의 위계","솔로몬의 마법서","소환의 시간대"] },
+  'e3242-roisdefrance': { category: 'superstition', rank: '초기 프랑크 군주들에게 얽힌 악마적 괴담(Légendes Monstrueuses des Mérovingiens)', domains: ["미신·민속(Superstition)","프랑스 왕실 민속","메로빙거 왕조","원숭이 꼬리와 멧돼지 털"] },
+  'e3243-roitelet': { category: 'superstition', rank: '도박의 승리를 부른다는 작은 새의 깃털(Plume Porte-Bonheur)', domains: ["미신·민속(Superstition)","조류 민속","도박 부적","새들의 왕 전설"] },
+  'e3244-rolandeduvernois': { category: 'person', rank: '앙리 보게에게 기소되어 처형된 16세기 마녀(Sorcière Condamnée par Boguet)', domains: ["인물·역사(Personnage)","부르고뉴 마녀재판","앙리 보게","복화술 악마 빙의"] },
+  'e3245-rome': { category: 'superstition', rank: '지옥의 권세가 결코 이기지 못할 영원의 성도(Siège de l\'Église et Satan)', domains: ["미신·민속(Superstition)","가톨릭 교회 전승","콘스탄티누스의 기증","사탄과의 영적 전쟁"] },
+  'e3246-romulus': { category: 'myth', rank: '로마의 건국 시조이자 악마학상의 마법사 전설(Fondateur de Rome et Magicien)', domains: ["신화·전설(Mythologie)","로마 건국 신화","장 보댕의 『악마광』","회오리바람 실종"] },
+  'ronwe': { category: 'demon', rank: '지옥의 후작 겸 백작(Marquis et Comte aux Enfers)', legions: 19, domains: ["악마학(Démonologie)","1863 원서 삽화 수록","루이 브르통 68대 목판화","솔로몬 72악마","수사학과 언어학"] },
+  'e3248-rosecroix': { category: 'superstition', rank: '17세기 유럽을 뒤흔든 신비주의 비밀결사(Fraternité Secrète Mystique)', domains: ["미신·민속(Superstition)","비의 결사","연금술과 카발라","가브리엘 노데의 비판"] },
+  'e3249-rosedejericho': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["미신·민속(Superstition)","상호참조","부활의 기적 식물"] },
+  'e3250-rosemberg': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["신화·전설(Mythologie)","상호참조","백색 부인 망령"] },
+  'e3251-rosendal': { category: 'superstition', rank: '스웨덴 마녀들의 전설적인 사바트 집회지(Lieu du Sabbat en Suède)', domains: ["미신·민속(Superstition)","스웨덴 마녀재판","모라 마녀재판","사바트 성지 블로쿨라"] },
+  'e3252-rosier': { category: 'demon', rank: '지옥의 주권 군주(Prince des Dominations)', domains: ["악마학(Démonologie)","타락천사","미카엘리스 분류법","주권(주품천사) 계급"] },
+  'e3253-roskolnicks': { category: 'superstition', rank: '담배를 악마의 풀로 금기시한 러시아 분리파 종파(Secte Russe)', domains: ["미신·민속(Superstition)","러시아 정교회 분열","구교도(고의식파)","악마의 풀 금기"] },
+  'e3254-rounfl': { category: 'myth', rank: '브르타뉴 민담 속 숲속의 거인 식인귀(Ogre Légendaire Breton)', domains: ["신화·전설(Mythologie)","브르타뉴 민담","식인귀 오거","어린이 민속 설화"] },
+  'e3255-roussalkis': { category: 'myth', rank: '슬라브 민속의 호수와 강의 매혹적인 운디네(Ondines Slaves)', domains: ["신화·전설(Mythologie)","슬라브 신화","물의 정령 운디네","루살카 주간"] },
+  'e3256-roustem': { category: 'myth', rank: '페르시아 서사시 『샤나메』의 전설적 대영웅(Héros National Persan)', domains: ["신화·전설(Mythologie)","페르시아 신화","피르다우시의 『샤나메』","백마귀 디브 퇴치"] },
+  'e3257-roux': { category: 'superstition', rank: '배신과 마법의 징표로 여겨진 신체적 미신(Préjugés contre les Roux)', domains: ["미신·민속(Superstition)","신체 관상 미신","가룟 유다의 붉은 털","금송아지 가루 전설"] },
+  'e3258-rubezal': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["악마학(Démonologie)","상호참조","실레지아 산령"] },
+  'e3259-rubis': { category: 'superstition', rank: '독과 역병을 막고 재앙을 예고하는 보석(Pierre Précieuse Magique)', domains: ["미신·민속(Superstition)","광물 신비주의","중세 보석지","독극물 해독 부적"] },
+  'e3260-ruedenfer': { category: 'crossref', rank: '상호참조(Renvoi)', domains: ["미신·민속(Superstition)","상호참조","파리 유령 저택 보베르"] },
+  'e3261-ruffais': { category: 'superstition', rank: '불을 밟고 칼을 삼키는 이슬람 수행자·마술사(Derviches Hurleurs)', domains: ["미신·민속(Superstition)","이슬람 수피즘","초자연적 고통 무감각","1838년 영국 군사잡지 기록"] },
+  'e3262-ruggiericosme': { category: 'person', rank: '카트린 드 메디시스의 이탈리아인 궁정 점성술사(Astrologue de la Cour)', domains: ["인물·역사(Personnage)","샤를 9세 암살 음모","밀랍 인형 주살","1574년 고문 심문"] },
+  'e3263-rugner': { category: 'myth', rank: '토르와 결투를 벌인 북유럽 신화의 숫돌 거인(Géant Scandinave)', domains: ["신화·전설(Mythologie)","북유럽 신화","에다 전승","토르의 묠니르와 숫돌"] },
+  'e3264-ruleelspet': { category: 'person', rank: '1708년 스코틀랜드 덤프리스의 마녀재판 피고인(Sorcière Écossaise)', domains: ["인물·역사(Personnage)","스코틀랜드 마녀재판","낙인형과 영구 추방","18세기 사법 완화"] },
+  'e3265-runes': { category: 'superstition', rank: '북유럽 스칸디나비아의 신성 마법 문자(Caractères Magiques du Nord)', domains: ["미신·민속(Superstition)","북유럽 오딘 신화","승리의 룬과 치유의 룬","고대 암각 비문"] },
+  'e3266-rush': { category: 'demon', rank: '수도원에 침투하여 수도사들을 타락시킨 변신 악마(Lutin Diabolique)', domains: ["악마학(Démonologie)","중세 민간 전승","수도원 타락 악마","퍽 상호참조"] },
+  'e3267-ryence': { category: 'myth', rank: '24명의 국왕 수염으로 망토를 만든 북웨일스의 거인 왕(Roi Magicien de Galles)', domains: ["신화·전설(Mythologie)","아서 왕 전설","원탁의 기사","마법사 거인 군주"] },
+  'e3268-rymer': { category: 'myth', rank: '종말의 날 사자의 손톱 배를 모는 서리 거인의 수장(Capitaine de Naglfar)', domains: ["신화·전설(Mythologie)","북유럽 신화","라그나로크 종말론","사자의 손톱 배 나글파르"] },
+
   // S entries curated metadata (p.586-645)
   'e3269-sabaoth': { category: 'myth', rank: '성경·히브리 신명(Nom Divin)', domains: ["신비주의","히브리 전통","구약성경","카발라 신명","구마 의식"] },
   'e3270-sabasius': { category: 'myth', rank: '프리기아·트라키아 신격(Divinité Antique)', domains: ["고대 신화","프리기아 신앙","디오니소스 밀의","뱀 숭배","사바트 기원설"] },
@@ -2298,11 +2495,6 @@ const CURATED_META = {
   'e2170-jean': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '러시아 역사'] },
   'e3011-phenix': { category: 'demon', rank: '지옥의 후작(Marquis de l’Enfer)', legions: 20, domains: ['악마학(Démonologie)', '지옥의 계급 체계', '고위 악마'] },
   'e3012-phenix': { category: 'superstition', rank: '신비 동물·상징(Superstition Animale)', domains: ['미신·민속(Superstition)', '신비 동물·상징', '고대 신화'] },
-  'e3211-retz': { category: 'person', rank: '오컬트·역사 인물(Personnage Historique)', domains: ['인물·역사(Personnage)', '프랑스 역사', '푸른 수염 전설'] },
-  'e3212-retz': { category: 'person', rank: '성직자·종교 인물(Ecclésiastique & Saint)', domains: ['인물·역사(Personnage)', '교회 인물·성직자', '프랑스 역사'] },
-  'e3231-robert': { category: 'demon', rank: '사바트의 악마(Démon du Sabbat)', domains: ['악마학(Démonologie)', '사바트 전승', '악마'] },
-  'e3233-robert': { category: 'person', rank: '마법사·주술사(Sorcier)', domains: ['인물·역사(Personnage)', '서양 마법사', '중세 마법 재판'] },
-  'e3234-robert': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '프랑스 국왕'] },
   'e1248-david': { category: 'person', rank: '성경·역사 인물(Personnage Biblique)', domains: ['인물·역사(Personnage)', '성경 인물', '고대 이스라엘'] },
   'e1249-david': { category: 'person', rank: '성직자·종교 인물(Ecclésiastique & Saint)', domains: ['인물·역사(Personnage)', '마녀 재판 전승', '루비에 빙의 사건'] },
   'e1989-henriiii': { category: 'person', rank: '역사 속 군주·귀족(Souverain & Personnage)', domains: ['인물·역사(Personnage)', '유럽 군주·귀족', '프랑스 국왕'] },
@@ -2655,6 +2847,20 @@ function analyzeAndTranslateEntry(e, koBase, headword = null, id = null) {
     const targetKo = frHeadwordToKo(target, target);
     const targetHead = buildEntryHeadword({ nameFr: target, baseFr: target }, targetKo);
     const pureRef = `${targetHead.nameKo} 참조.`;
+
+    if (id && TRANSLATION_CACHE[id] && TRANSLATION_CACHE[id].length > 25) {
+      const curRef = TRANSLATION_CACHE[id];
+      const meta = (id && CURATED_META[id]) || null;
+      return {
+        category: (meta && meta.category) || 'crossref',
+        rank: (meta && meta.rank) || '상호참조 표제어 (Renvoi)',
+        legions: 0,
+        domains: (meta && meta.domains) || ['상호참조', targetHead.nameKo],
+        summary: curRef.length > 150 ? curRef.slice(0, 150) + '…' : curRef,
+        description: curRef
+      };
+    }
+
     return {
       category: 'crossref',
       rank: '상호참조 표제어 (Renvoi)',
@@ -2855,8 +3061,8 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
       subCategory: (meta && meta.subCategory) || matchedPlate.category,
       domains: (meta && meta.domains) || (matchedPlate.domains || []),
       appearance: matchedPlate.appearance || '',
-      summary: matchedPlate.summary,
-      description: matchedPlate.description,
+      summary: (TRANSLATION_CACHE && TRANSLATION_CACHE[matchedPlate.id] ? (TRANSLATION_CACHE[matchedPlate.id].slice(0, 150) + '…') : matchedPlate.summary),
+      description: (TRANSLATION_CACHE && TRANSLATION_CACHE[matchedPlate.id]) || matchedPlate.description,
       quoteFr: raw.textFr || matchedPlate.quoteFr,
       page1863: raw.page1863 || matchedPlate.page1863
     });
