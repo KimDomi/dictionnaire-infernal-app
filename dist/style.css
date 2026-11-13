@@ -340,6 +340,7 @@ select.sort-select {
   font-family: var(--font-serif);
   font-size: 1.08rem;
   font-weight: 700;
+  word-break: keep-all;
 }
 
 .entry-title-fr {
@@ -967,9 +968,48 @@ dialog#modal::backdrop {
   line-height: 1.25;
 }
 
+.detail-title-ko .title-name-ko {
+  word-break: keep-all;
+}
+
+.detail-title-ko .title-name-en {
+  display: inline-block;
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--text-muted);
+  word-break: keep-all;
+  margin-left: 6px;
+}
+
+@media (max-width: 680px) {
+  .detail-title-ko.is-long-title {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .detail-title-ko.is-long-title .title-name-ko {
+    display: block;
+    word-break: keep-all;
+    line-height: 1.25;
+  }
+  .detail-title-ko.is-long-title .title-name-en {
+    display: block;
+    margin-left: 0;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    line-height: 1.35;
+    word-break: keep-all;
+  }
+}
+
 @media (min-width: 680px) {
   .detail-title-ko {
     font-size: 2.2rem;
+  }
+  .detail-title-ko .title-name-en {
+    font-size: 1.35rem;
+    margin-left: 8px;
   }
 }
 

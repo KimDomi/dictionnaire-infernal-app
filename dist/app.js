@@ -227,6 +227,32 @@ function formatParagraphs(text){
   return lines.map(line=>`<p class="detail-paragraph">${escapeHtml(line)}</p>`).join('');
 }
 
+function splitEntryName(nameKo){
+  if(!nameKo) return { ko: '', orig: '', isLong: false };
+  const lastHangulIdx = nameKo.search(/[가-힣][^가-힣]*$/);
+  if(lastHangulIdx === -1) return { ko: nameKo, orig: '', isLong: nameKo.length >= 18 };
+  const parenIdx = nameKo.indexOf('(', lastHangulIdx);
+  if(parenIdx === -1) return { ko: nameKo, orig: '', isLong: nameKo.length >= 18 };
+  const ko = nameKo.slice(0, parenIdx).trim();
+  let orig = nameKo.slice(parenIdx).trim();
+  if(orig.startsWith('(') && orig.endsWith(')')){
+    orig = orig.slice(1, -1).trim();
+  }
+  const isLong = nameKo.length >= 18 || ko.length >= 9 || orig.length >= 12;
+  return { ko, orig, isLong };
+}
+
+function renderDetailTitle(entry){
+  const split = splitEntryName(entry.nameKo);
+  if(!split.orig){
+    return `<h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>`;
+  }
+  return `<h2 class="detail-title-ko${split.isLong ? ' is-long-title' : ''}">
+    <span class="title-name-ko">${escapeHtml(split.ko)}</span>
+    <span class="title-name-en">(${escapeHtml(split.orig)})</span>
+  </h2>`;
+}
+
 function renderEntryArticleCard(entry,extraFooterHtml=''){
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
@@ -242,7 +268,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
           ${isBookmarked?'★':'☆'}
         </button>
       </div>
-      <h2 class="detail-title-ko">${escapeHtml(entry.nameKo)}</h2>
+      ${renderDetailTitle(entry)}
       ${rankIsTitle(entry)?`<div class="detail-rank-line">${escapeHtml(entry.rank)}</div>`:''}
       <div class="domain-tags">
         <span class="domain-tag">${escapeHtml(getEntryCategoryTag(entry))}</span>
