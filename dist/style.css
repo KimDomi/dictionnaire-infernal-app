@@ -10,6 +10,8 @@
   --gold: #c89d54;
   --gold-soft: rgba(200, 157, 84, 0.15);
   --plate-bg: #efe7d6;
+  --detail-header-bg: #0d0c0a;
+  --detail-header-border: #332d28;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
   --font-serif: "Noto Serif KR", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
   --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -28,6 +30,8 @@
   --gold: #87632d;
   --gold-soft: rgba(135, 99, 45, 0.14);
   --plate-bg: #faf5ea;
+  --detail-header-bg: #e5dbbe;
+  --detail-header-border: #cbbe9f;
   --shadow: 0 10px 26px rgba(45, 32, 18, 0.12);
 }
 
@@ -816,11 +820,17 @@ dialog#modal::backdrop {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 0 18px;
-  border-bottom: 1px solid var(--border);
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
+  padding: 16px 18px 18px;
+  background: var(--detail-header-bg);
+  border: 1px solid var(--detail-header-border);
+  border-bottom: 2px solid var(--gold);
+  border-radius: 4px;
+}
+
+@media (min-width: 680px) {
+  .detail-header {
+    padding: 20px 24px 22px;
+  }
 }
 
 .detail-header-top {
