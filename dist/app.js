@@ -1,8 +1,8 @@
 import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=666305dc8adf';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
-import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=8d4afa2f8c16';
-import {STORAGE_KEY,createBackupPayload,normalizeState,parseBackupPayload} from './backup.js?v=a5d8949b2c98';
+import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
+import {STORAGE_KEY,createBackupPayload,normalizeState,parseBackupPayload} from './backup.js?v=ce6c73ab474c';
 
 const mainEl=document.querySelector('#main');
 const headerTitleEl=document.querySelector('header h1');
@@ -352,7 +352,7 @@ function renderEntryDetailPage(entry){
       </div>
     </div>`;
 
-  const animClass=settings.animations&&pendingPageTurnDirection?` page-turn-${pendingPageTurnDirection}`:'';
+  const animClass='';
   pendingPageTurnDirection=null;
   return `<section class="entry-detail-page${animClass}">
     ${renderEntryArticleCard(entry,extraFooterHtml)}
@@ -477,7 +477,7 @@ function renderDailyTab(){
       </button>
     </div>`;
 
-  const animClass=settings.animations&&pendingPageTurnDirection?` page-turn-${pendingPageTurnDirection}`:'';
+  const animClass='';
   pendingPageTurnDirection=null;
   return `<section class="entry-detail-page daily-view${animClass}" aria-label="무작위 지옥사전 표제어">
     ${renderEntryArticleCard(entry,extraFooterHtml)}
@@ -577,8 +577,106 @@ function renderSettingsTab(){
   </section>`;
 }
 
+/* ---------- Realistic paper page-flip ----------
+ * The outgoing card is snapshotted before re-render. A 3D paper leaf inside mainEl
+ * flips around the book spine with curvature arching, dynamic traveling sheen,
+ * an authentic 1863 antique parchment reverse, and underlying cast shadow.
+ *  next: outgoing page lifts from right edge, arches, and turns over to left.
+ *  prev: previous page swings back from left stack onto the right.
+ */
+const PAGE_FLIP_MS=440;
+let activePageFlip=null;
+
+function capturePageForFlip(node){
+  if(!node||typeof node.getBoundingClientRect!=='function'||typeof node.cloneNode!=='function')return null;
+  try{
+    const rect=node.getBoundingClientRect();
+    if(!rect||!rect.width||!rect.height)return null;
+    return {clone:node.cloneNode(true),rect};
+  }catch{return null;}
+}
+
+function buildFlipFace(clone,extraClass){
+  const face=document.createElement('div');
+  face.className=`page-flip-face ${extraClass}`;
+  clone.classList?.remove?.('page-turn-next','page-turn-prev');
+  clone.setAttribute?.('aria-hidden','true');
+  clone.style.margin='0';
+  clone.style.width='100%';
+  face.appendChild(clone);
+  const sheen=document.createElement('div');
+  sheen.className='page-flip-sheen';
+  face.appendChild(sheen);
+  return face;
+}
+
+function cancelPageFlip(){
+  if(!activePageFlip)return;
+  clearTimeout(activePageFlip.timer);
+  activePageFlip.stage?.remove?.();
+  activePageFlip=null;
+}
+
+function schedulePageFlip(dir,oldPage){
+  if(typeof document==='undefined'||typeof document.createElement!=='function'||!mainEl)return;
+  const raf=typeof requestAnimationFrame==='function'?requestAnimationFrame:(fn=>setTimeout(fn,0));
+  raf(()=>{
+    try{runPageFlip(dir,oldPage);}catch{cancelPageFlip();}
+  });
+}
+
+function runPageFlip(dir,oldPage){
+  cancelPageFlip();
+  if(!mainEl)return;
+  const newTarget=mainEl.querySelector?.('.detail-card')||mainEl.querySelector?.('.entry-detail-page');
+  if(!newTarget)return;
+  const newPage=capturePageForFlip(newTarget);
+  if(!newPage)return;
+
+  const mainRect=mainEl.getBoundingClientRect();
+  const height=Math.round(Math.max(oldPage.rect.height,newPage.rect.height,mainRect.height));
+
+  const stage=document.createElement('div');
+  stage.className=`page-flip-stage page-flip-${dir}`;
+  stage.setAttribute('aria-hidden','true');
+  stage.style.left='0';
+  stage.style.top='0';
+  stage.style.width='100%';
+  stage.style.height=`${height}px`;
+  stage.style.setProperty('--flip-ms',`${PAGE_FLIP_MS}ms`);
+
+  const underPage=dir==='prev'?oldPage:newPage;
+  const under=buildFlipFace(underPage.clone,'page-flip-under');
+  const underShadow=document.createElement('div');
+  underShadow.className='page-flip-under-shadow';
+  under.appendChild(underShadow);
+  stage.appendChild(under);
+
+  const leaf=document.createElement('div');
+  leaf.className='page-flip-leaf';
+  const frontSrc=dir==='prev'?newPage:oldPage;
+  leaf.appendChild(buildFlipFace(frontSrc.clone,'page-flip-front'));
+
+  const back=document.createElement('div');
+  back.className='page-flip-face page-flip-back';
+  const watermark=document.createElement('div');
+  watermark.className='parchment-watermark';
+  watermark.innerHTML=`<div class="wm-fleur">⚜</div><div class="wm-title">DICTIONNAIRE INFERNAL</div><div class="wm-sub">COLLIN DE PLANCY · 1863</div>`;
+  back.appendChild(watermark);
+  const backSheen=document.createElement('div');
+  backSheen.className='page-flip-sheen';
+  back.appendChild(backSheen);
+  leaf.appendChild(back);
+
+  stage.appendChild(leaf);
+  mainEl.appendChild(stage);
+  activePageFlip={stage,timer:setTimeout(cancelPageFlip,PAGE_FLIP_MS+50)};
+}
+
 function render(){
   if(!mainEl)return;
+  const flipDir=settings.animations?pendingPageTurnDirection:null;
+  const flipOldPage=flipDir?capturePageForFlip(mainEl.querySelector?.('.detail-card')||mainEl.querySelector?.('.entry-detail-page')):null;
   const curCat=mainEl.querySelector?.('.category-pills');
   if(curCat){
     if(activeTab==='gallery')savedPillScrolls.galleryCategory=curCat.scrollLeft;
@@ -596,6 +694,7 @@ function render(){
   const activeEntry=activeEntryId?ENTRY_MAP.get(activeEntryId):null;
   if(activeEntry){
     mainEl.innerHTML=renderEntryDetailPage(activeEntry);
+    if(flipOldPage)schedulePageFlip(flipDir,flipOldPage);
     syncWakeLock();
     return;
   }
@@ -609,7 +708,10 @@ function render(){
     }
   }
   else if(activeTab==='gallery')mainEl.innerHTML=renderGalleryTab();
-  else if(activeTab==='daily')mainEl.innerHTML=renderDailyTab();
+  else if(activeTab==='daily'){
+    mainEl.innerHTML=renderDailyTab();
+    if(flipOldPage)schedulePageFlip(flipDir,flipOldPage);
+  }
   else if(activeTab==='bookmarks')mainEl.innerHTML=renderBookmarksTab();
   else if(activeTab==='settings')mainEl.innerHTML=renderSettingsTab();
   restorePillScrolls();

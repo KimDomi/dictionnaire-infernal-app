@@ -61,6 +61,7 @@ html, body {
   font-family: var(--font-sans);
   font-size: var(--base-size);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 .app {
@@ -73,6 +74,8 @@ html, body {
 }
 
 header {
+  position: relative;
+  z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -159,11 +162,11 @@ button.help {
 }
 
 main {
+  position: relative;
   flex: 1;
   padding: 16px;
   display: flex;
   flex-direction: column;
-  perspective: 1200px;
 }
 
 /* Search & Filter Controls */
@@ -768,78 +771,281 @@ dialog#modal::backdrop {
   position: relative;
 }
 
-.entry-detail-page.page-turn-next {
-  transform-origin: left center;
-  animation: bookPageTurnNext 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: transform, opacity;
+/* Realistic 3D paper page-flip stage (anchored inside main) */
+.page-flip-stage {
+  position: absolute;
+  z-index: 25;
+  pointer-events: none !important;
+  perspective: 1800px;
+  perspective-origin: 0% 50%;
+  overflow: visible;
 }
 
-.entry-detail-page.page-turn-prev {
-  transform-origin: right center;
-  animation: bookPageTurnPrev 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
-  will-change: transform, opacity;
+.page-flip-stage * {
+  pointer-events: none !important;
+  user-select: none !important;
 }
 
-.entry-detail-page.page-turn-next::before,
-.entry-detail-page.page-turn-prev::before {
-  content: "";
+main:has(.page-flip-stage) > .entry-detail-page {
+  visibility: hidden !important;
+}
+
+.page-flip-stage .detail-header {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.page-flip-face {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg);
+  padding: 16px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-sizing: border-box;
+}
+
+.page-flip-front {
+  transform: rotateY(0deg);
+  -webkit-transform: rotateY(0deg);
+}
+
+.page-flip-under {
+  z-index: 1;
+}
+
+.page-flip-under-shadow {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.page-flip-leaf {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transform-origin: 0% 50%;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* 1863 Antique parchment back face */
+.page-flip-back {
+  transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  background:
+    radial-gradient(ellipse at 60% 50%, #231f1c 0%, #151312 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow:
+    inset -14px 0 20px -8px rgba(0, 0, 0, 0.65),
+    inset 0 0 30px rgba(0, 0, 0, 0.25);
+}
+
+:root[data-theme="light"] .page-flip-back {
+  background:
+    radial-gradient(ellipse at 60% 50%, #faf4e8 0%, #ede2d0 100%);
+  box-shadow:
+    inset -14px 0 20px -8px rgba(0, 0, 0, 0.2),
+    inset 0 0 30px rgba(120, 95, 60, 0.1);
+}
+
+.parchment-watermark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 32px;
+  border: 1px solid rgba(200, 157, 84, 0.25);
+  border-radius: 6px;
+  color: var(--gold);
+  opacity: 0.35;
+  text-align: center;
+  letter-spacing: 0.16em;
+  font-family: var(--font-serif);
+  pointer-events: none;
+}
+
+.parchment-watermark .wm-fleur {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.parchment-watermark .wm-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+
+.parchment-watermark .wm-sub {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  opacity: 0.85;
+}
+
+.page-flip-sheen {
   position: absolute;
   inset: 0;
   pointer-events: none;
+  opacity: 0;
   z-index: 10;
 }
 
-.entry-detail-page.page-turn-next::before {
-  animation: bookPageSheenNext 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+/* NEXT: outgoing leaf curls from right to left around left spine */
+.page-flip-next .page-flip-leaf {
+  animation: paperCurlNext var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
+}
+.page-flip-next .page-flip-front .page-flip-sheen {
+  animation: paperSheenFrontNext var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
+}
+.page-flip-next .page-flip-back .page-flip-sheen {
+  animation: paperSheenBackNext var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
+}
+.page-flip-next .page-flip-under-shadow {
+  animation: paperUnderShadowNext var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
 }
 
-.entry-detail-page.page-turn-prev::before {
-  animation: bookPageSheenPrev 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+/* PREV: incoming leaf swings from left back onto right */
+.page-flip-prev .page-flip-leaf {
+  animation: paperCurlPrev var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
+}
+.page-flip-prev .page-flip-front .page-flip-sheen {
+  animation: paperSheenFrontPrev var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
+}
+.page-flip-prev .page-flip-back .page-flip-sheen {
+  animation: paperSheenBackPrev var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
+}
+.page-flip-prev .page-flip-under-shadow {
+  animation: paperUnderShadowPrev var(--flip-ms, 440ms) cubic-bezier(0.35, 0.05, 0.2, 1) both;
 }
 
-@keyframes bookPageTurnNext {
+@keyframes paperCurlNext {
   0% {
-    opacity: 0.7;
-    transform: perspective(1200px) rotateY(-14deg) translateX(24px) scale(0.985);
-    box-shadow: -18px 0 30px -6px rgba(0, 0, 0, 0.5);
+    transform: rotateY(0deg) translateZ(0px);
   }
-  60% {
-    opacity: 0.95;
-    box-shadow: -8px 0 16px -4px rgba(0, 0, 0, 0.2);
+  20% {
+    transform: rotateY(-26deg) translateZ(18px) scaleX(0.99);
+  }
+  48% {
+    transform: rotateY(-82deg) translateZ(26px) scaleX(0.975);
+  }
+  70% {
+    transform: rotateY(-132deg) translateZ(22px) scaleX(0.985);
+  }
+  88% {
+    transform: rotateY(-168deg) translateZ(10px) scaleX(0.995);
   }
   100% {
-    opacity: 1;
-    transform: perspective(1200px) rotateY(0deg) translateX(0) scale(1);
-    box-shadow: none;
+    transform: rotateY(-180deg) translateZ(0px) scaleX(1);
   }
 }
 
-@keyframes bookPageTurnPrev {
+@keyframes paperCurlPrev {
   0% {
-    opacity: 0.7;
-    transform: perspective(1200px) rotateY(14deg) translateX(-24px) scale(0.985);
-    box-shadow: 18px 0 30px -6px rgba(0, 0, 0, 0.5);
+    transform: rotateY(-180deg) translateZ(0px) scaleX(1);
   }
-  60% {
-    opacity: 0.95;
-    box-shadow: 8px 0 16px -4px rgba(0, 0, 0, 0.2);
+  16% {
+    transform: rotateY(-165deg) translateZ(12px) scaleX(0.995);
+  }
+  42% {
+    transform: rotateY(-120deg) translateZ(26px) scaleX(0.98);
+  }
+  65% {
+    transform: rotateY(-65deg) translateZ(24px) scaleX(0.985);
+  }
+  85% {
+    transform: rotateY(-18deg) translateZ(10px) scaleX(0.995);
   }
   100% {
-    opacity: 1;
-    transform: perspective(1200px) rotateY(0deg) translateX(0) scale(1);
-    box-shadow: none;
+    transform: rotateY(0deg) translateZ(0px) scaleX(1);
   }
 }
 
-@keyframes bookPageSheenNext {
+@keyframes paperSheenFrontNext {
   0% {
+    opacity: 0;
+    background: linear-gradient(110deg, transparent 50%, rgba(255, 255, 255, 0.15) 75%, transparent 100%);
+  }
+  25% {
+    opacity: 0.85;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.22) 55%, rgba(0, 0, 0, 0.25) 80%, transparent 100%);
+  }
+  48% {
+    opacity: 1;
+    background: linear-gradient(110deg, rgba(0, 0, 0, 0.35) 15%, rgba(255, 255, 255, 0.20) 35%, transparent 65%);
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes paperSheenBackNext {
+  0%, 50% {
+    opacity: 0;
+  }
+  52% {
+    opacity: 0.9;
+    background: linear-gradient(70deg, rgba(0, 0, 0, 0.45) 10%, rgba(255, 255, 255, 0.18) 35%, transparent 65%);
+  }
+  80% {
+    opacity: 0.5;
+    background: linear-gradient(70deg, transparent 20%, rgba(255, 255, 255, 0.10) 60%, transparent 90%);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes paperSheenFrontPrev {
+  0%, 48% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    background: linear-gradient(110deg, rgba(0, 0, 0, 0.35) 15%, rgba(255, 255, 255, 0.20) 35%, transparent 65%);
+  }
+  75% {
     opacity: 0.75;
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0.22) 0%,
-      rgba(0, 0, 0, 0.08) 16%,
-      transparent 45%
-    );
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.18) 55%, rgba(0, 0, 0, 0.2) 80%, transparent 100%);
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes paperSheenBackPrev {
+  0% {
+    opacity: 0.8;
+    background: linear-gradient(70deg, transparent 20%, rgba(255, 255, 255, 0.14) 60%, transparent 90%);
+  }
+  35% {
+    opacity: 1;
+    background: linear-gradient(70deg, rgba(0, 0, 0, 0.45) 10%, rgba(255, 255, 255, 0.18) 35%, transparent 65%);
+  }
+  49%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes paperUnderShadowNext {
+  0% {
+    opacity: 0;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0%, transparent 40%);
+  }
+  30% {
+    opacity: 0.7;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.25) 30%, transparent 65%);
+  }
+  65% {
+    opacity: 0.45;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.15) 20%, transparent 50%);
   }
   100% {
     opacity: 0;
@@ -847,20 +1053,29 @@ dialog#modal::backdrop {
   }
 }
 
-@keyframes bookPageSheenPrev {
+@keyframes paperUnderShadowPrev {
   0% {
-    opacity: 0.75;
-    background: linear-gradient(
-      to left,
-      rgba(0, 0, 0, 0.22) 0%,
-      rgba(0, 0, 0, 0.08) 16%,
-      transparent 45%
-    );
+    opacity: 0.3;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.15) 20%, transparent 50%);
+  }
+  40% {
+    opacity: 0.7;
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.25) 30%, transparent 65%);
+  }
+  85% {
+    opacity: 0.35;
   }
   100% {
     opacity: 0;
-    background: linear-gradient(to left, transparent, transparent);
   }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-flip-stage { display: none !important; }
+}
+
+:root[data-animations="off"] .page-flip-stage {
+  display: none !important;
 }
 
 .detail-topbar {
