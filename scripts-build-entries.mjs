@@ -301,7 +301,9 @@ const WORD_DICT = {
   'vue': '시력과 투시',
   'voisin (la)': '라 부아쟁', 'voisin': '라 부아쟁', 'voisinla': '라 부아쟁',
   'wall': '발(부알)', 'wierus': '요한 바이어', 'wiérus': '요한 바이어',
-  'xaphan': '자판', 'xéno': '제노', 'xylomancie': '크실로망시',
+  'xacca': '샤카', 'xaphan': '자판', 'xéno': '제노', 'xeirscopie': '크세이로스코피',
+  'xerxès': '크세르크세스', 'xerxes': '크세르크세스', 'xezbeth': '크세즈베트',
+  'xitragupten': '치트라굽타', 'xylomancie': '크실로망시',
   'yaga-baba': '야가-바바', 'yagababa': '야가-바바',
   'yakouts': '야쿠트족',
   'yan-gant-y-tan': '얀 강 이 탄',
@@ -699,7 +701,14 @@ const CURATED_HEADWORD_RULES = {
   'e225-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (1) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
   'e227-anneeclimaterique': { nameKo: '환갑의 해 또는 위기의 해 (2) [Année climatérique / Climacteric Year]', nameKoShort: '환갑의 해 또는 위기의 해', nameFr: 'Année climatérique', nameEn: 'Climacteric Year' },
 
-  // Xylomancie curated headword (p.707)
+  // X entries curated headwords (p.705-707)
+  'e3775-xacca': { nameKo: '샤카 또는 석가모니 [Xacca / Shakyamuni]', nameKoShort: '샤카 또는 석가모니', nameFr: 'Xacca', nameEn: 'Shakyamuni' },
+  'xaphan': { nameKo: '자판 또는 크사판 [Xaphan]', nameKoShort: '자판 또는 크사판', nameFr: 'Xaphan', nameEn: 'Xaphan' },
+  'e3777-xeirscopie': { nameKo: '크세이로스코피 또는 수상관찰술 (1부) [Xeirscopie / Cheiroscopy (Part I)]', nameKoShort: '크세이로스코피 또는 수상관찰술 (1부)', nameFr: 'Xeirscopie (Partie I)', nameEn: 'Cheiroscopy (Part I)' },
+  'e3778-xeirscopie': { nameKo: '크세이로스코피 또는 수상관찰술 (2부) [Xeirscopie / Cheiroscopy (Part II)]', nameKoShort: '크세이로스코피 또는 수상관찰술 (2부)', nameFr: 'Xeirscopie (Partie II)', nameEn: 'Cheiroscopy (Part II)' },
+  'e3779-xerxes': { nameKo: '크세르크세스 1세의 예지몽 [Xerxès / Xerxes I]', nameKoShort: '크세르크세스 1세의 예지몽', nameFr: 'Xerxès', nameEn: 'Xerxes I' },
+  'e3780-xezbeth': { nameKo: '크세즈베트 [Xezbeth]', nameKoShort: '크세즈베트', nameFr: 'Xezbeth', nameEn: 'Xezbeth' },
+  'e3781-xitragupten': { nameKo: '치트라굽타 또는 크시트라굽텐 [Xitragupten / Chitragupta]', nameKoShort: '치트라굽타 또는 크시트라굽텐', nameFr: 'Xitragupten', nameEn: 'Chitragupta' },
   'e3782-xylomancie': { nameKo: '크실로망시(나무 점술) [Xylomancie / Xylomancy]', nameKoShort: '크실로망시(나무 점술)', nameFr: 'Xylomancie', nameEn: 'Xylomancy' },
 
   // Y entries curated headwords (p.707-711)
@@ -1532,7 +1541,14 @@ const CURATED_META = {
   'e225-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '점성술·수비학', '위기의 해'] },
   'e227-anneeclimaterique': { category: 'superstition', rank: '민간 미신·기담(Superstition & Coutume)', domains: ['미신·민속(Superstition)', '신체 변화 주기', '수비학'] },
 
-  // Xylomancie curated metadata (p.707)
+  // X entries curated metadata (p.705-707)
+  'e3775-xacca': { category: 'person', rank: '동양의 철학자·불교 창시자(Philosophe & Législateur)', domains: ['인물·문헌(Personnages)', '동양 종교·불교', '석가모니 전승', '아미타불 신앙'] },
+  'xaphan': { category: 'demon', subCategory: 'subordinate', rank: '지옥 제2계급 악마·화부(Démon du Second Ordre)', domains: ['악마학(Démonologie)', '지옥의 계급 체계', '화마·지옥의 풀무질', '루시퍼의 반란'] },
+  'e3777-xeirscopie': { category: 'divination', rank: '손 관상학·수상관찰술(Physiognomie de la Main)', domains: ['점술·예언(Divination)', '골상학·관상학', '19세기 과학과 오컬트'] },
+  'e3778-xeirscopie': { category: 'divination', rank: '손 관상학·수상관찰술(Physiognomie de la Main)', domains: ['점술·예언(Divination)', '골상학·관상학', '1863 원서 삽화 수록', '손 형태 분석'] },
+  'e3779-xerxes': { category: 'superstition', rank: '역사 속 환영·흉몽 기담(Songe & Vision Historique)', domains: ['미신·민속(Superstition)', '고대 페르시아 역사', '예지몽과 환영', '헤로도토스 역사'] },
+  'e3780-xezbeth': { category: 'demon', subCategory: 'subordinate', rank: '거짓말과 허황된 기담의 악마(Démon du Mensonge)', domains: ['악마학(Démonologie)', '거짓말과 환상', '허황된 기담', '미혹의 악령'] },
+  'e3781-xitragupten': { category: 'myth', rank: '힌두 명계의 서기 신격(Secrétaire du Dieu des Enfers)', domains: ['신화·전설(Mythologie)', '인도 힌두 신화', '치트라굽타', '명계의 재판관 야마', '선악의 기록자'] },
   'e3782-xylomancie': { category: 'divination', rank: '고대·중세 점술(Art Divinatoire)', domains: ['점술·예언(Divination)', '고대·중세 점복술', '슬라브 민속'] },
 
   // Y entries curated metadata (p.707-711)

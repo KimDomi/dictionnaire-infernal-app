@@ -140,6 +140,31 @@ assert.ok(youf && youf.category === 'person' && youf.description.includes('생�
 const youma = ENTRIES.find(e => e.id === 'e3795-youma');
 assert.ok(youma && youma.category === 'myth' && youma.description.includes('체레미스') && youma.description.includes('케레메트'), 'Youma myth Cheremisses Keremet');
 
+// X section audit assertions (8 entries)
+const xEntries = ENTRIES.filter(e => e.letter === 'X');
+assert.equal(xEntries.length, 8, 'X section must contain exactly 8 entries');
+
+const xacca = ENTRIES.find(e => e.id === 'e3775-xacca');
+assert.ok(xacca && xacca.category === 'person' && xacca.nameKo.includes('석가모니') && xacca.description.includes('나무묘법연화경'), 'Xacca Shakyamuni translation');
+
+const xaphan = ENTRIES.find(e => e.id === 'xaphan');
+assert.ok(xaphan && xaphan.category === 'demon' && xaphan.hasPlate && xaphan.plate === 'plates/xaphan.jpg', 'Xaphan illustrated demon');
+
+const xeir1 = ENTRIES.find(e => e.id === 'e3777-xeirscopie');
+assert.ok(xeir1 && !xeir1.nameKo.includes('독자들') && xeir1.nameKo.includes('1부') && xeir1.category === 'divination', 'Xeirscopie part 1 no reader mistranslation');
+
+const xeir2 = ENTRIES.find(e => e.id === 'e3778-xeirscopie');
+assert.ok(xeir2 && xeir2.hasPlate && xeir2.plate === 'plates/e3778-xeirscopie.jpg' && xeir2.nameKo.includes('2부'), 'Xeirscopie part 2 illustrated plate');
+
+const xerxes = ENTRIES.find(e => e.id === 'e3779-xerxes');
+assert.ok(xerxes && xerxes.category === 'superstition' && xerxes.description.includes('아르타바누스'), 'Xerxes historical dream');
+
+const xezbeth = ENTRIES.find(e => e.id === 'e3780-xezbeth');
+assert.ok(xezbeth && xezbeth.category === 'demon' && xezbeth.description.includes('거짓말'), 'Xezbeth demon of lies');
+
+const xitragupten = ENTRIES.find(e => e.id === 'e3781-xitragupten');
+assert.ok(xitragupten && xitragupten.category === 'myth' && xitragupten.nameKo.includes('치트라굽타') && xitragupten.description.includes('야마'), 'Xitragupten Chitragupta myth');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
