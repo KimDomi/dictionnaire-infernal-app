@@ -350,7 +350,6 @@ function renderEntryDetailPage(entry){
           ${escapeHtml(backLabel)}
         </button>
       </div>
-      <div class="detail-swipe-guide-wrap"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
     </div>`;
 
   const animClass=settings.animations&&pendingPageTurnDirection?` page-turn-${pendingPageTurnDirection}`:'';
@@ -476,9 +475,6 @@ function renderDailyTab(){
       <button type="button" class="secondary french-toggle-btn" data-action="toggle-french">
         ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
       </button>
-    </div>
-    <div class="detail-footer">
-      <div class="detail-swipe-guide-wrap"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
     </div>`;
 
   const animClass=settings.animations&&pendingPageTurnDirection?` page-turn-${pendingPageTurnDirection}`:'';

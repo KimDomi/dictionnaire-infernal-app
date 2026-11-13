@@ -92,7 +92,7 @@ async function run(initial,native=false){
 
   click({tab:'daily'});
   assert.ok(main.innerHTML.includes('무작위 지옥사전 표제어'));
-  assert.ok(main.innerHTML.includes('← 좌우로 밀어서 이전 / 다음 항목 넘기기 →'));
+  assert.ok(!main.innerHTML.includes('← 좌우로 밀어서 이전 / 다음 항목 넘기기 →'));
   assert.ok(!main.innerHTML.includes('전체 화면으로 상세 보기'));
   assert.ok(!main.innerHTML.includes('다른 항목 뽑기'));
   assert.equal(header.textContent,'무작위 열람');
