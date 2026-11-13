@@ -165,6 +165,52 @@ assert.ok(xezbeth && xezbeth.category === 'demon' && xezbeth.description.include
 const xitragupten = ENTRIES.find(e => e.id === 'e3781-xitragupten');
 assert.ok(xitragupten && xitragupten.category === 'myth' && xitragupten.nameKo.includes('치트라굽타') && xitragupten.description.includes('야마'), 'Xitragupten Chitragupta myth');
 
+// W section audit assertions (24 entries)
+const wEntries = ENTRIES.filter(e => e.letter === 'W');
+assert.equal(wEntries.length, 24, 'W section must contain exactly 24 entries');
+
+const waeter = ENTRIES.find(e => e.id === 'e3751-waeterelvesfeesdeseaux');
+assert.ok(waeter && waeter.category === 'myth' && waeter.nameKo.includes('워터 엘프'), 'Waeter-Elves myth water fairies');
+
+const wakeman1 = ENTRIES.find(e => e.id === 'e3752-wakemanrhoda');
+assert.ok(wakeman1 && wakeman1.category === 'person' && wakeman1.nameKo.includes('1부'), 'Wakeman part 1');
+
+const wakeman2 = ENTRIES.find(e => e.id === 'e3753-wakeman');
+assert.ok(wakeman2 && wakeman2.category === 'person' && wakeman2.nameKo.includes('2부'), 'Wakeman part 2');
+
+const walhalla = ENTRIES.find(e => e.id === 'e3754-walhalla');
+assert.ok(walhalla && walhalla.category === 'myth' && walhalla.nameKo.includes('발할라'), 'Walhalla Norse myth');
+
+const walkiries = ENTRIES.find(e => e.id === 'e3755-walkiries');
+assert.ok(walkiries && walkiries.category === 'myth' && walkiries.nameKo.includes('발키리'), 'Walkiries Norse myth');
+
+const wall = ENTRIES.find(e => e.id === 'wall');
+assert.ok(wall && wall.category === 'demon' && wall.hasPlate && wall.plate === 'plates/wall.jpg', 'Wall illustrated demon duke');
+
+const walterscott1 = ENTRIES.find(e => e.id === 'e3758-walterscott');
+assert.ok(walterscott1 && walterscott1.nameKo.includes('1부'), 'Walter-Scott part 1');
+
+const walterscott2 = ENTRIES.find(e => e.id === 'e3759-danslapremierelettre');
+assert.ok(walterscott2 && !walterscott2.nameKo.includes('라 프레미에르') && walterscott2.nameKo.includes('2부'), 'Walter-Scott part 2 no bad French snippet headword');
+
+const wechselbalg = ENTRIES.find(e => e.id === 'e3761-wechselbalg');
+assert.ok(wechselbalg && wechselbalg.category === 'myth' && wechselbalg.nameKo.includes('체인질링'), 'Wechselbalg changeling myth');
+
+const wiclef = ENTRIES.find(e => e.id === 'e3765-wiclef');
+assert.ok(wiclef && wiclef.category === 'person' && wiclef.nameKo.includes('위클리프'), 'Wiclef reformer person not demon');
+
+const wierus = ENTRIES.find(e => e.id === 'e3766-wierus');
+assert.ok(wierus && wierus.category === 'person' && wierus.nameKo.includes('요한 바이어') && wierus.description.includes('의사악마왕국'), 'Wierus Johann Weyer');
+
+const wilis = ENTRIES.find(e => e.id === 'e3767-wilis');
+assert.ok(wilis && wilis.category === 'myth' && wilis.hasPlate && wilis.plate === 'plates/e3767-wilis.jpg' && wilis.nameKo.includes('윌리'), 'Wilis illustrated Slavic maidens');
+
+const wivre = ENTRIES.find(e => e.id === 'e3769-wivre');
+assert.ok(wivre && wivre.category === 'myth' && wivre.nameKo.includes('부아브르'), 'Wivre French dragon');
+
+const woden = ENTRIES.find(e => e.id === 'e3770-woden');
+assert.ok(woden && woden.category === 'myth' && woden.nameKo.includes('오딘'), 'Woden Odin myth');
+
 const searchAbaris=filterEntries({query:'Abaris'});
 assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
