@@ -152,6 +152,8 @@ button.help {
 main {
   flex: 1;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Search & Filter Controls */
@@ -742,8 +744,11 @@ dialog#modal::backdrop {
 
 /* Full-Page Entry Detail View */
 .entry-detail-page {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - 164px);
+  min-height: calc(100dvh - 164px);
   gap: 16px;
 }
 
@@ -932,6 +937,19 @@ dialog#modal::backdrop {
 .detail-bottom-controls .french-toggle-btn {
   padding: 8px 16px;
   font-size: 0.88rem;
+}
+
+.detail-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.detail-swipe-guide-wrap {
+  text-align: center;
+  margin-top: 2px;
 }
 
 .detail-bottom-back {

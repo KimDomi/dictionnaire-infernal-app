@@ -318,26 +318,28 @@ function renderEntryDetailPage(entry){
         ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
       </button>
     </div>
-    <nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
-      ${prevEntry
-        ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
-            <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
-            <strong>${escapeHtml(prevEntry.nameKo)}</strong>
-          </button>`
-        :`<div class="prev-next-spacer"></div>`}
-      ${nextEntry
-        ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
-            <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
-            <strong>${escapeHtml(nextEntry.nameKo)}</strong>
-          </button>`
-        :`<div class="prev-next-spacer"></div>`}
-    </nav>
-    <div class="detail-bottom-back">
-      <button type="button" class="detail-back-btn" data-action="close-entry">
-        ${escapeHtml(backLabel)}
-      </button>
-    </div>
-    <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>`;
+    <div class="detail-footer">
+      <nav class="detail-prev-next" aria-label="이전 및 다음 표제어 이동">
+        ${prevEntry
+          ?`<button type="button" class="prev-next-btn prev" data-action="open-entry" data-id="${escapeHtml(prevEntry.id)}">
+              <span class="pn-dir">← 이전 항목 (p.${prevEntry.page1863})</span>
+              <strong>${escapeHtml(prevEntry.nameKo)}</strong>
+            </button>`
+          :`<div class="prev-next-spacer"></div>`}
+        ${nextEntry
+          ?`<button type="button" class="prev-next-btn next" data-action="open-entry" data-id="${escapeHtml(nextEntry.id)}">
+              <span class="pn-dir">다음 항목 (p.${nextEntry.page1863}) →</span>
+              <strong>${escapeHtml(nextEntry.nameKo)}</strong>
+            </button>`
+          :`<div class="prev-next-spacer"></div>`}
+      </nav>
+      <div class="detail-bottom-back">
+        <button type="button" class="detail-back-btn" data-action="close-entry">
+          ${escapeHtml(backLabel)}
+        </button>
+      </div>
+      <div class="detail-swipe-guide-wrap"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
+    </div>`;
 
   return `<section class="entry-detail-page">
     ${renderEntryArticleCard(entry,extraFooterHtml)}
@@ -460,7 +462,9 @@ function renderDailyTab(){
         ${settings.showFrench?'불문 원문 닫기':'불문 원문 함께 보기'}
       </button>
     </div>
-    <div style="text-align:center;margin-top:2px"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>`;
+    <div class="detail-footer">
+      <div class="detail-swipe-guide-wrap"><span class="swipe-guide">← 좌우로 밀어서 이전 / 다음 항목 넘기기 →</span></div>
+    </div>`;
 
   return `<section class="entry-detail-page daily-view" aria-label="무작위 지옥사전 표제어">
     ${renderEntryArticleCard(entry,extraFooterHtml)}
