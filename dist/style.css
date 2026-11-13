@@ -820,6 +820,8 @@ dialog#modal::backdrop {
 .detail-header {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 10px;
   padding: 16px 18px 18px;
   background: var(--detail-header-bg);
@@ -966,10 +968,13 @@ dialog#modal::backdrop {
   font-size: 1.85rem;
   font-weight: 700;
   line-height: 1.25;
+  text-align: center;
+  width: 100%;
 }
 
 .detail-title-ko .title-name-ko {
   word-break: keep-all;
+  text-align: center;
 }
 
 .detail-title-ko .title-name-en {
@@ -978,29 +983,37 @@ dialog#modal::backdrop {
   font-weight: 500;
   color: var(--text-muted);
   word-break: keep-all;
+  text-align: center;
   margin-left: 6px;
 }
 
-@media (max-width: 680px) {
-  .detail-title-ko.is-long-title {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .detail-title-ko.is-long-title .title-name-ko {
-    display: block;
-    word-break: keep-all;
-    line-height: 1.25;
-  }
-  .detail-title-ko.is-long-title .title-name-en {
-    display: block;
-    margin-left: 0;
-    font-size: 1.15rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    line-height: 1.35;
-    word-break: keep-all;
-  }
+.detail-title-ko.is-long-title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.detail-title-ko.is-long-title .title-name-ko {
+  display: block;
+  word-break: keep-all;
+  line-height: 1.25;
+  text-align: center;
+  width: 100%;
+}
+
+.detail-title-ko.is-long-title .title-name-en {
+  display: block;
+  margin-left: 0;
+  font-size: 1.15rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.35;
+  word-break: keep-all;
+  text-align: center;
+  width: 100%;
 }
 
 @media (min-width: 680px) {
@@ -1011,17 +1024,33 @@ dialog#modal::backdrop {
     font-size: 1.35rem;
     margin-left: 8px;
   }
+  .detail-title-ko.is-long-title .title-name-en {
+    font-size: 1.35rem;
+    margin-left: 0;
+  }
 }
 
 .detail-title-fr {
   font-size: 0.94rem;
   color: var(--text-muted);
+  text-align: center;
 }
 
 .detail-rank-line {
   font-size: 0.96rem;
   color: var(--gold);
   font-weight: 600;
+  text-align: center;
+  width: 100%;
+}
+
+.detail-header .domain-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin: 4px 0 0;
+  width: 100%;
 }
 
 .detail-plate-showcase {
