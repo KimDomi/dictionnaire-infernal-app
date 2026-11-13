@@ -1000,10 +1000,161 @@ function fixKoreanParticles(text) {
   return out;
 }
 
+const PLACE_MAP = {
+  'Fiésole': '피에솔레(Fiésole)', 'Fiesole': '피에솔레(Fiesole)', 'Laval': '라발(Laval)', 'Cumae': '쿠마이(Cumae)',
+  'Reims': '랭스(Reims)', 'Saxony': '작센(Saxony)', 'Sorbonne': '소르본(Sorbonne)', 'Cluny': '클뤼니(Cluny)',
+  'Malabar': '말라바르(Malabar)', 'Paphlagonia': '파플라고니아(Paphlagonia)', 'Poitou': '푸아투(Poitou)',
+  'Basses-Pyrénées': '바스피레네(Basses-Pyrénées)', 'Kamtschatka': '캄차카(Kamtschatka)',
+  'Kamtschadales': '캄차카인(Kamtschadales)', 'Tartary': '타타르(Tartary)', 'Pégu': '페구(Pégu)',
+  'Henri IV': '앙리 4세(Henri IV)', 'Tubalcain': '투발카인(Tubalcain)', 'Percival': '파르치팔(Percival)',
+  'Mélusine': '멜뤼진(Mélusine)', 'Monomotapa': '모노모타파(Monomotapa)', 'Satpoura': '사트푸라(Satpura)',
+  'Limoux': '리무(Limoux)', 'Lomonosoff': '로모노소프(Lomonosov)', 'Getae': '게타이족(Getae)',
+  'Angerbode': '앙게르보다(Angrboda)', 'Madeleine de la Palud': '마들렌 드 라 팔뤼(Madeleine de la Palud)',
+  'Michel Verdung': '미셸 베르둥(Michel Verdung)', 'John of Leiden': '레이던의 얀(Jean de Leyde)',
+  'Tyana': '티아나(Tyana)', 'Sommona-Kodom': '솜모나 코돔(Sommona-Kodom)',
+  'Domingina Maletena': '도밍기나 말레테나(Domingina Maletena)', 'Flaque': '플라크(Flaque)',
+  'Saint-Germain en Laye': '생제르맹앙레(Saint-Germain-en-Laye)', 'Cerhenians': '케르헤니아족(Cerhenians)',
+  'Haën': '하엔(Haën)', 'Anarazel': '아나라젤(Anarazel)', 'Iden': '이덴(Iden)', 'Berne': '베른(Berne)',
+  'Krechting': '크레슈틴그(Krechting)', 'Knipperdolinck': '크니페르돌린크(Knipperdolinck)',
+  'Enguerrand': '앙게랑(Enguerrand)', 'Gham': '함(Gham)', 'Radzivill': '라지비우(Radziwiłł)',
+  'Mademoiselle de Guise': '기즈 공녀(Mademoiselle de Guise)', 'Theoclimene - Pylos': '테오클리메노스 - 필로스(Pylos)'
+};
+
+const UNTRANSLATED_CROSSREFS = {
+  'Philter': '사랑의 묘약·미약 [Philtres]',
+  'Kephalonomancy': '당나귀 머리점(케팔로노망시) [Céphalomancie]',
+  'Eleazar': '엘레아자르 [Éléazar]',
+  'Abdeel': '압디엘 [Abdeel]',
+  'Dodona': '도도나의 신목 [Dodone]',
+  'Retz, etc': '레츠 등 [Retz]',
+  'Albert the Great, Bacon, Enchantments, etc': '대 알베르투스, 로저 베이컨, 마법 등',
+  'Aubry': '오브리 [Aubry]',
+  'Xylomancy': '나뭇가지점(크실로망시) [Xylomancie]',
+  'Tailletroux': '타이에트루 [Tailletroux]',
+  'Cartomancy': '카드점(카르토망시) [Cartomancie]',
+  'Palingenesia': '재생술(팔린게네시아) [Palingénésie]',
+  'Veneur': '검은 사냥꾼(베뇌르) [Veneur]',
+  'Basilides': '바실리데스 [Basilide]',
+  'Hecdekin': '헤크데킨 [Hecdekin]',
+  'Gutheyl': '구트하일 [Gutheyl]',
+  'Hatton, Poppiel, Magic Whistle': '하톤, 포피엘, 마법의 호루라기 등',
+  'Conjurations, Sakhar, Belial, Asrael, Asmodeus, Notorious Art': '주문, 사하르, 벨리알, 아즈라엘, 아스모데우스, 솔로몬의 현의술 [Art notoire] 등'
+};
+
+const RAW_ENGLISH_REPLACEMENTS = [
+  // Books and treatises
+  [/Cabbalistic Letters, or Philosophical, Historical and Critical Correspondence Between Two Cabalists/g, '「카발라 서한, 혹은 두 카발리스트 간의 철학적·역사적·비판적 서신」'],
+  [/The Key to the Cabinet of Chevalier Borri/g, '「기사 보리의 내실 열쇠」'],
+  [/The New Heaven and the Reign of the Antichrist/g, '「새 하늘과 적그리스도의 통치」'],
+  [/The Life of Robert the Devil/g, '「악마 로베르의 생애」'],
+  [/The Variety of Things, of the Subtility of Demons/g, '「사물의 다양성, 악마의 정묘함에 관하여」'],
+  [/The Admirable Secrets of Albert the Great/g, '「대 알베르투스의 놀라운 비결들」'],
+  [/The Secrets of Albert the Great/g, '「대 알베르투스의 비결들」'],
+  [/The Literal Sense of Holy Bible/g, '「성경의 문자적 의미」'],
+  [/The Court and Camp of Rundjet-Sing/g, '「란지트 싱의 궁정과 진영」'],
+  [/Incredulity and disbelief of the Spell/g, '「주술에 대한 불신과 회의」'],
+  [/The Grand Enlightenment of the Philosopher\'s Stone for the Transmutation of All Metals/g, '「모든 금속 변성을 위한 현자의 돌의 대계몽」'],
+  [/The Herald of the Great King Jesus, Amsterdam/g, '「위대한 왕 예수의 전령」, 암스테르담'],
+  [/The Art of Judging Men by Physiognomy/g, '「관상으로 사람을 판단하는 기술」'],
+  [/Errors and Prejudices Widespread in Society/g, '「사회에 널리 퍼진 오류와 편견들」'],
+  [/Discourse on Lycanthropy or the Transmutation of Men into Wolves/g, '「늑대인간증, 혹은 인간이 늑대로 변하는 것에 관한 논설」'],
+  [/Discourse on lycanthropy, or the transmutation of men to wolves/g, '「늑대인간증, 혹은 인간이 늑대로 변하는 것에 관한 논설」'],
+  [/The Marvelous History of the Spirit/g, '「영령의 기이한 역사」'],
+  [/On Lycanthropy, Transformation and ecstasies of sorcerers/g, '「늑대인간증, 마법사들의 변신과 탈혼에 관하여」'],
+  [/The Earth is an Animal/g, '「지구는 하나의 동물이다」'],
+  [/Demonstration of the apparitions of today/g, '「오늘날의 유령 발현에 관한 증명」'],
+  [/On the Inspiration of the Camisards/g, '「카미자르의 영감에 관하여」'],
+  [/the Door of the elements, Porta elementorum/g, '「원소의 문(Porta elementorum)」'],
+  [/Admirable Power of Art and Nature/g, '「예술과 자연의 놀라운 힘에 관하여」'],
+  [/Responses to the History of the Oracles of Fontenelle/g, '「퐁트넬의 신탁 역사에 대한 답변」'],
+  [/the Regulator of the Shareholders of the Lottery/g, '「복권 주주들의 규제자」'],
+  [/Cabalistic Letters, by the Marquis d\'Argens/g, '아르장스 후작의 「카발라 서한」'],
+  // Raw prose phrases
+  [/Odilon Barrot, Chambolle, three Aliborons of the Chamber/g, '오딜롱 바로, 샹볼, 의회의 세 얼간이(Trois Aliborons de la Chambre)'],
+  [/three Aliborons of the Chamber/g, '의회의 세 얼간이(Trois Aliborons de la Chambre)'],
+  [/Albert the Great, Bacon, Enchantments, etc/g, '대 알베르투스, 로저 베이컨, 마법 등'],
+  [/Jehovah; but Geneva sings under his gaze of love\. Calvary split at the hearing of the voice of God;/g, '여호와를 찬양하나, 제네바는 그의 사랑 어린 시선 아래 노래한다. 갈보리는 하나님의 음성을 듣고 갈라졌다;'],
+  [/A\. Memphis, Chez Alibeck the Egypt/g, '멤피스, 이집트인 알리베크 출판'],
+  [/Kim-Ker gave seventy hand figures to the public; the learned Mélampus, twelve; the deep Compotus, eight; John of Hagen, thirty-seven; the subtle Romphilius, six; the scholar Corvæus, one hundred and fifty; Jean Cirus, twenty; Patrice Tricassus, eighty; Jean Belot, four; Traisnerus, forty, and Perrucho, six; which makes four hundred and twenty-three hands on which your sagacity can be exercised\./g, '킴케르는 대중에게 70점의 손 도판을 공개했고, 학식 있는 멜람푸스는 12점, 심오한 콤포투스는 8점, 하겐의 요한은 37점, 명민한 롬필리우스는 6점, 학식 있는 코르바이우스는 150점, 장 시루스는 20점, 파트리스 트리카수스는 80점, 장 벨로는 4점, 트라이스네르는 40점, 페루키오는 6점을 제시했으니, 당신의 총명함을 시험해 볼 수 있는 손 도판이 총 423점에 달한다.'],
+  [/this some people have obtained magnetism or the same effects or at least some of them/g, '이를 통해 일부 사람들은 동물자기(동물자기 요법)나 그와 동일한 효과 또는 적어도 그 일부를 얻어냈다'],
+  [/Antiochus misfortunately heard this, ordered that he be bound, and had him given the stirrup leather/g, '안티오코스는 불행히도 이를 듣고 그를 결박하라고 명령한 뒤 가죽 채찍형에 처했다'],
+  [/rue Saint-Jacques, at the Elephant, in front of Mathhuirins/g, '생자크 거리(rue Saint-Jacques), 코끼리상 맞은편, 마튀랭 수도원 앞'],
+  // Catiau
+  [/150 fr\. to Father Delhaye\. He takes several more bottles of water; all are generously given to him at the price of 10 francs\. each\. » As we can see, the usable material was good\. Catiau does not fail to use it; he makes Delhaye believe that his intelligence with/g, '델라예 노인에게는 150프랑이었다. 그는 몇 병의 물을 더 가져갔는데, 모두 한 병당 10프랑의 가격에 기꺼이 그에게 건네졌다. 보시다시피 먹잇감은 아주 훌륭했다. 카티오는 이를 이용하는 데 주저하지 않았고, 자신이'],
+  [/cure hernias; for this you have to drink water which Catiau fortunately has at home and which comes from a fountain in Rome where the angel goes to bathe once a year\. This wonderful consultation costs/g, '탈장을 치료하려면 카티오가 다행히 집에 보관하고 있는, 일 년에 한 번 천사가 내려와 목욕한다는 로마의 기적의 샘물을 마셔야 한다. 이 신비한 진료의 비용은'],
+  [/from a fountain in Rome where the angel goes to bathe once a year\. This wonderful consultation costs/g, '일 년에 한 번 천사가 내려와 목욕한다는 로마의 기적의 샘물을 마셔야 한다. 이 신비한 진료의 비용은'],
+  // Bortisme
+  [/Jehovah will strike the rebellious and cursed city; but a good father smiles in Geneva/g, '여호와께서는 반역하고 저주받은 도시를 치실 것이나, 인자하신 아버지는 제네바에서 미소 짓고 계신다'],
+  [/alem like a flood; but Geneva will be covered with the dew of his paternal breath\. The lightning of/g, '홍수처럼 예루살렘을 덮었으나, 제네바는 아버지의 숨결이 맺힌 이슬로 뒤덮일 것이다. 번개가'],
+  [/but Geneva blossoms like a flower at the call of his sweet voice\. The wrath of Jehovah covered Jerus/g, '하지만 제네바는 그의 감미로운 음성에 꽃처럼 피어난다. 여호와의 진노가 예루살렘을 덮었으나'],
+  [/Yes, Geneva! blessed city which from your childhood was lying on the arms of your God, call your waters and your laughing 시골에서 주님의 날을 축복하라!/g, '그렇다, 제네바여! 어린 시절부터 너의 하나님의 품에 안겨 있던 축복받은 도시여, 너의 강물과 웃음 짓는 들판을 불러 모아 주님의 날을 찬미하라!'],
+  // Songes
+  [/Mr\. Fox falls, and in his fall he breaks an arm and a leg/g, '르나르 군(Baptiste Renard)은 떨어지면서 팔과 다리가 부러졌고'],
+  [/A more extraordinary anecdote is told about the death of the actor Champmeslé\./g, '배우 샹메슬레(Champmeslé)의 죽음에 대해서는 더욱 기이한 일화가 전해진다.'],
+  [/Champmeslé having given the sacristan a thirty sous coin, the monk was at a loss to return the remaining ten sous\. “Keep everything,” said the actor, and have a third mass said immediately; 그녀는 나를 위한 것이다\. » 사실 그는 코드 제작자가 그를 만나러 온 바로 그날 갑자기 사망했다\./g, '샹메슬레가 성구지기 수도사에게 30수짜리 은화를 건넸으나, 수도사는 거스름돈 10수를 돌려주지 못해 난처해했다. “거스름돈은 다 가지시고, 즉시 세 번째 미사를 올려 주십시오. 그 미사는 나를 위한 것입니다.” 배우가 말했다. 그리고 실제로 그는 수도사가 그를 찾아온 바로 그날 갑자기 사망했다.'],
+  [/From that moment on, the musician lost the habit of dreaming, or at least of boasting about his dreams/g, '그 순간 이후 음악가는 꿈을 꾸거나 적어도 자신의 꿈을 자랑하는 습관을 잃었다'],
+  [/s\. From that moment on, the musician lost the habit of dreaming, or at least of boasting about his d/g, '그 순간 이후 음악가는 꿈을 꾸거나 적어도 자신의 꿈을 자랑하는 습관을 잃었다'],
+  [/On the Blindness of Men and the Light Born in Darkness/g, '「인간의 맹목과 어둠 속에서 태어난 빛에 관하여」'],
+  // Residual english syntax words & MT oddities
+  [/약간의 물리학자(?:였습니다|였다|에 불과했다|입니다)?/g, '단지 당대의 자연학자에 불과했다'],
+  [/약간의 물리학자/g, '당대의 자연학자'],
+  [/전화를 걸었(?:지만|으나|다|습니다)?/g, '큰 소리로 불렀$1'],
+  [/전화를 걸/g, '소리쳐 부르'],
+  [/도당적인/g, '카발라적인'],
+  [/John of Leiden and Muncer/g, '레이던의 얀(Jean de Leyde)과 토마스 뮌처(Thomas Müntzer)'],
+  [/John of Leiden/g, '레이던의 얀(Jean de Leyde)'],
+  [/Louis the Great/g, '루이 대왕(루이 14세)'],
+  [/Albert the Great/g, '대 알베르투스'],
+  [/Alexander the Great/g, '알렉산드로스 대왕'],
+  [/나 자신이 싫어요/g, '나 자신이 싫다'],
+  [/그런데 아직도요\?/g, '그런데 아직도인가?'],
+  [/그리고 왜요\?/g, '그리고 어째서인가?']
+];
+
+function hasJongseong(str) {
+  const clean = str.replace(/[^가-힣]/g, '');
+  if (!clean.length) return false;
+  const lastCode = clean.charCodeAt(clean.length - 1);
+  return (lastCode - 0xAC00) % 28 !== 0;
+}
+
+function adjustJosa(word, josa) {
+  const hasJong = hasJongseong(word);
+  if (josa === '은' || josa === '는') return hasJong ? '은' : '는';
+  if (josa === '이' || josa === '가') return hasJong ? '이' : '가';
+  if (josa === '을' || josa === '를') return hasJong ? '을' : '를';
+  if (josa === '과' || josa === '와') return hasJong ? '과' : '와';
+  return josa;
+}
+
+function fixBareForeignOpenings(s, e, koBase, headword) {
+  const bareMatch = s.match(/^([A-ZÀ-Ÿ][a-zà-ÿA-Z\s\-]{2,25})(은|는|이|가|을|를|의|와|과)\s+/);
+  if (!bareMatch) return s;
+
+  const foreignWord = bareMatch[1].trim();
+  const josa = bareMatch[2];
+  const targetKo = headword ? headword.nameKo.replace(/\s*\[.*\]$/, '').trim() : koBase;
+
+  if (josa === '의') {
+    if (PLACE_MAP[foreignWord]) {
+      return PLACE_MAP[foreignWord] + '의 ' + s.slice(bareMatch[0].length);
+    }
+  } else {
+    const adjustedJosa = adjustJosa(targetKo, josa);
+    return targetKo + adjustedJosa + ' ' + s.slice(bareMatch[0].length);
+  }
+  return s;
+}
+
 function polishTranslation(rawKo, e, koBase, headword = null) {
   const cacheKey = `${e.nameFr}@@${e.page1863}`;
   if (CURATED_OVERRIDES[cacheKey]) {
-    return CURATED_OVERRIDES[cacheKey];
+    let cur = CURATED_OVERRIDES[cacheKey];
+    for (const [re, rep] of RAW_ENGLISH_REPLACEMENTS) {
+      cur = cur.replace(re, rep);
+    }
+    cur = fixBareForeignOpenings(cur, e, koBase, headword);
+    return cur;
   }
 
   let s = String(rawKo || '').trim();
@@ -1179,6 +1330,20 @@ function polishTranslation(rawKo, e, koBase, headword = null) {
     return `참조: ${tHead.nameKo}.`;
   });
 
+  // Apply raw English replacements
+  for (const [re, rep] of RAW_ENGLISH_REPLACEMENTS) {
+    s = s.replace(re, rep);
+  }
+
+  // Apply untranslated cross-references
+  for (const [target, rep] of Object.entries(UNTRANSLATED_CROSSREFS)) {
+    const escTarget = target.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    s = s.replace(new RegExp('참조\\s*:\\s*' + escTarget + '\\b\\.?', 'g'), '참조: ' + rep + '.');
+  }
+
+  // Fix bare foreign openings
+  s = fixBareForeignOpenings(s, e, koBase, headword);
+
   return s.replace(/\s+/g, ' ').trim();
 }
 
@@ -1230,57 +1395,69 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
   let rank = '민간 전승·기담 (Tradition & Superstition)';
   const domains = [];
 
-  if (/\b(?:grand-duc|grand président|marquis de l’enfer|prince de l’enfer|prince des démons|chef des démons|démon|diable|succube|incube|lutin|farfadet|gobelin|vampire|loup-garou|sabbat|possédé|possession|exorcis)/i.test(lead)) {
-    category = 'demon';
-    if (/grand-duc/i.test(lead)) rank = '지옥의 대공 (Grand-Duc Infernal)';
-    else if (/grand président/i.test(lead)) rank = '지옥의 대총재 (Grand Président)';
-    else if (/marquis/i.test(lead)) rank = '지옥의 후작 (Marquis de l’Enfer)';
-    else if (/prince|chef|roi de l’enfer/i.test(lead)) rank = '지옥 군주·고위 악마 (Prince des Démons)';
-    else if (/loup-garou|lycanthrop/i.test(lead)) rank = '늑대인간 전승 (Loup-Garou)';
-    else if (/vampire/i.test(lead)) rank = '흡혈귀 전승 (Vampire)';
-    else if (/lutin|farfadet|gobelin|esprit familier/i.test(lead)) rank = '가정 정령·사역마 (Esprit Familier / Lutin)';
-    else if (/possédé|possession|énergumène/i.test(lead)) rank = '악령 빙의 사건 (Possession Démoniaque)';
-    else if (/sabbat/i.test(lead + ' ' + e.nameFr)) rank = '사바트 의식·전승 (Rituel du Sabbat)';
-    else rank = '악마·초자연적 정령 (Démon & Esprit)';
-    domains.push('악마학 (Démonologie)');
-  } else if (/mancie\b|scopie\b|\bdivination\b|\bprésage|\baugure|\boracle|\bsonge|\bastrolog|\bchiroman|\bhoroscope/i.test(e.nameFr + ' ' + lead)) {
+  const PERSON_KEYWORDS = /\b(?:magicien|magicienne|sorcier|sorcière|astrologue|alchimiste|devin|devineresse|cabaliste|inquisiteur|démonographe|démonologue|philosophe|médecin|savant|savante|écrivain|auteur|empereur|roi|reine|pape|évêque|prêtre|moine|abbé|religieuse|saint|sainte|hérétique|imposteur|prédicateur|avocat|jurisconsulte|chanoine|cardinal|patriarche|dominicain|franciscain|jésuite|bénédictin)\b/i;
+  const BIO_PATTERNS = /\b(?:né\s+à|née\s+à|mort\s+en|mourut\s+en|vivait\s+au|homme\s+qui|femme\s+qui|homme\s+de|femme\s+de|homme\s+très|femme\s+très)\b/i;
+  const isPersonName = /\([a-zA-ZÀ-Ÿ]/.test(e.nameFr) && !/divination|possession|mal\s+des|songe/i.test(e.nameFr);
+  const isPersonText = PERSON_KEYWORDS.test(lead.slice(0, 320)) || BIO_PATTERNS.test(lead.slice(0, 320));
+
+  if (isPersonName || isPersonText) {
+    category = 'person';
+    if (/sorcière/i.test(lead)) { rank = '마녀·주술사 (Sorcière)'; domains.push('마녀 재판 전승', '민간 주술'); }
+    else if (/sorcier/i.test(lead)) { rank = '마법사·주술사 (Sorcier)'; domains.push('서양 마법사', '주술 전승'); }
+    else if (/magicien|magicienne|enchanteur/i.test(lead)) { rank = '마법사·비술사 (Magicien)'; domains.push('서양 마법사', '비전 마법'); }
+    else if (/astrologue/i.test(lead)) { rank = '점성술사 (Astrologue)'; domains.push('점성술 (Astrologie)', '천문 예언'); }
+    else if (/alchimiste|adepte/i.test(lead)) { rank = '연금술사 (Alchimiste)'; domains.push('연금술 (Alchimie)', '현자의 돌 전승'); }
+    else if (/démonographe|inquisiteur|démonologue/i.test(lead)) { rank = '악마학자·이단심문관 (Démonographe & Inquisiteur)'; domains.push('이단심문·악마학 연구', '중세 교회재판'); }
+    else if (/empereur|roi|reine|prince/i.test(lead)) { rank = '역사 속 군주·귀족 (Souverain & Personnage)'; domains.push('유럽 군주·귀족', '역사 인물'); }
+    else if (/pape|évêque|prêtre|abbé|moine|religieuse|saint|cardinal/i.test(lead)) { rank = '성직자·종교 인물 (Ecclésiastique & Saint)'; domains.push('교회 인물·성직자', '가톨릭 역사'); }
+    else if (/philosophe|médecin|savant|auteur|écrivain/i.test(lead)) { rank = '학자·의사·저술가 (Savant & Auteur)'; domains.push('학자·저술가', '중세·르네상스 학술'); }
+    else { rank = '오컬트·역사 인물 (Personnage Historique)'; domains.push('오컬트 역사', '역사 인물'); }
+    domains.unshift('인물·역사 (Personnage)');
+  } else if (/mancie\b|scopie\b|\bdivination\b|\bprésage|\baugure|\boracle|\bsonge|\bastrolog|\bchiroman|\bhoroscope/i.test(e.nameFr + ' ' + lead.slice(0, 120))) {
     category = 'divination';
     if (/mancie\b|divination/i.test(e.nameFr + ' ' + lead)) rank = '고대·중세 점술 (Art Divinatoire)';
     else if (/astrolog|horoscope|planète|constellation/i.test(e.nameFr + ' ' + lead)) rank = '점성술·천문 예언 (Astrologie)';
     else if (/songe|oniroman|rêve/i.test(e.nameFr + ' ' + lead)) rank = '해몽·몽점 (Oniromancie)';
     else rank = '징조·신탁·예언술 (Présage & Oracle)';
-    domains.push('점술·예언 (Divination)');
-  } else if (/\b(?:livre|ouvrage|traité|grimoire|clavicule|manuscrit|recueil)\b/i.test(lead) && !/\b(?:sorcier|sorcière|magicien|astrologue|alchimiste|inquisiteur|empereur|roi|pape|évêque|prêtre|philosophe)\b/i.test(lead.slice(0, 75))) {
+    domains.push('점술·예언 (Divination)', '고대·중세 점복술');
+  } else if (/\b(?:livre|ouvrage|traité|grimoire|clavicule|manuscrit|recueil|rituel|encyclopédie|dissertation|bible du diable)\b/i.test(lead.slice(0, 120))) {
     category = 'grimoire';
     rank = '마도서·오컬트 문헌 (Grimoire & Traité)';
-    domains.push('마도서·문헌 (Grimoire)');
-  } else if (/\([A-ZÀ-Ÿ]/.test(e.nameFr) || /\b(?:magicien|magicienne|sorcier|sorcière|astrologue|alchimiste|devin|devineresse|cabaliste|inquisiteur|démonographe|philosophe|médecin|savant|écrivain|auteur|empereur|roi|reine|pape|évêque|prêtre|moine|religieuse|saint|sainte|hérétique|imposteur|prédicateur|né\s+à|née\s+à|mort\s+en|vivait\s+au)\b/i.test(lead)) {
-    category = 'person';
-    if (/sorcière/i.test(lead)) rank = '마녀·주술사 (Sorcière)';
-    else if (/sorcier/i.test(lead)) rank = '마법사·주술사 (Sorcier)';
-    else if (/magicien|magicienne|enchanteur/i.test(lead)) rank = '마법사·비술사 (Magicien)';
-    else if (/astrologue/i.test(lead)) rank = '점성술사 (Astrologue)';
-    else if (/alchimiste|adepte/i.test(lead)) rank = '연금술사 (Alchimiste)';
-    else if (/démonographe|inquisiteur/i.test(lead)) rank = '악마학자·이단심문관 (Démonographe & Inquisiteur)';
-    else if (/empereur|roi|reine|prince/i.test(lead)) rank = '역사 속 군주·귀족 (Souverain & Personnage)';
-    else if (/pape|évêque|prêtre|abbé|moine|religieuse|saint/i.test(lead)) rank = '성직자·종교 인물 (Ecclésiastique & Saint)';
-    else if (/philosophe|médecin|savant|auteur|écrivain/i.test(lead)) rank = '학자·의사·저술가 (Savant & Auteur)';
-    else rank = '오컬트·역사 인물 (Personnage Historique)';
-    domains.push('인물·역사 (Personnage)');
-  } else if (/\b(?:dieu|déesse|idole|mythologie|fée|géant|monstre|enfer des|purgatoire des|ange|prophète|peuple|habitants de|chez les anciens|légende)\b/i.test(lead)) {
+    domains.push('마도서·문헌 (Grimoire)', '오컬트 비전서');
+  } else if (/\b(?:plante|herbe|arbre|racine|fleur|graine|feuille|fruit|pierre|minéral|métal|animal|oiseau|serpent|poisson|insecte|abeille|chat|chien|beurre|bouillon|bâillement|pain|sel|eau|charme|amulette|talisman|remède)\b/i.test(lead.slice(0, 120))) {
+    category = 'superstition';
+    if (/pierre|minéral|métal/i.test(lead)) { rank = '신비 광물·보석 비방 (Pierre Magique)'; domains.push('신비 광물·보석', '민간요법'); }
+    else if (/plante|herbe|arbre|racine/i.test(lead)) { rank = '마법 약초·수목 전승 (Plante Magique)'; domains.push('마법 약초·수목 비방', '민간요법'); }
+    else if (/animal|oiseau|serpent|poisson|chat|chien/i.test(lead)) { rank = '동물 관련 미신·상징 (Superstition Animale)'; domains.push('신비 동물·상징', '민간 전승'); }
+    else if (/talisman|amulette|charme|remède/i.test(lead)) { rank = '부적·치유 주술 (Talisman & Charme)'; domains.push('호신 부적·탈리스만', '액막이 주술'); }
+    else { rank = '민간 미신·기담 (Superstition & Coutume)'; domains.push('민간 미신·주술', '유럽 민간 풍습'); }
+    domains.unshift('미신·민속 (Superstition)');
+  } else if (/\b(?:dieu|déesse|idole|mythologie|fée|nymphe|géant|monstre|enfer des|purgatoire des|ange|prophète|peuple|habitants de|chez les anciens|légende)\b/i.test(lead)) {
     category = 'myth';
     if (/dieu|déesse|idole/i.test(lead)) rank = '고대 신격·우상 (Divinité & Idole)';
     else if (/fée|nymphe|géant|monstre/i.test(lead)) rank = '신화·전설의 존재 (Créature Mythologique)';
     else if (/enfer|purgatoire|paradis/i.test(lead)) rank = '내세관·타계 전승 (Mythologie de l’Au-delà)';
     else rank = '세계 신화·종교 전승 (Mythologie & Légende)';
-    domains.push('신화·종교 (Mythologie)');
+    domains.push('신화·종교 (Mythologie)', '고대 신화·전설');
+  } else if (/\b(?:grand-duc|grand président|marquis de l’enfer|prince de l’enfer|prince des démons|chef des démons|démon|diable|succube|incube|lutin|farfadet|gobelin|vampire|loup-garou|sabbat|possédé|possession|exorcis|esprit infernal)/i.test(lead)) {
+    category = 'demon';
+    if (/grand-duc/i.test(lead)) { rank = '지옥의 대공 (Grand-Duc Infernal)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    else if (/grand président/i.test(lead)) { rank = '지옥의 대총재 (Grand Président)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    else if (/marquis/i.test(lead)) { rank = '지옥의 후작 (Marquis de l’Enfer)'; domains.push('지옥의 계급 체계', '고위 악마'); }
+    else if (/prince|chef|roi de l’enfer/i.test(lead)) { rank = '지옥 군주·고위 악마 (Prince des Démons)'; domains.push('지옥 군주', '솔로몬 72 악마'); }
+    else if (/loup-garou|lycanthrop/i.test(lead)) { rank = '늑대인간 전승 (Loup-Garou)'; domains.push('늑대인간 (Lycanthropie)', '변신 전승'); }
+    else if (/vampire/i.test(lead)) { rank = '흡혈귀 전승 (Vampire)'; domains.push('흡혈귀 전승', '동유럽 민속'); }
+    else if (/lutin|farfadet|gobelin/i.test(lead)) { rank = '가정 요정·소정령 (Lutin & Farfadet)'; domains.push('유럽 요정 전승', '가정 정령'); }
+    else if (/succube|incube/i.test(lead)) { rank = '몽마·음마 (Incube & Succube)'; domains.push('몽마 전승', '악령 유혹'); }
+    else if (/esprit familier/i.test(lead)) { rank = '사역마(패밀리어, Esprit familier)'; domains.push('사역마 전승', '마술 도우미'); }
+    else if (/possédé|possession|énergumène/i.test(lead)) { rank = '악령 빙의 사건 (Possession Démoniaque)'; domains.push('악령 빙의 사건', '엑소시즘 (Exorcisme)'); }
+    else if (/sabbat/i.test(lead + ' ' + e.nameFr)) { rank = '사바트 의식·주술 (Rituel du Sabbat)'; domains.push('사바트 의식', '마녀 집회'); }
+    else { rank = '고위 악마·지옥 정령 (Démon Supérieur)'; domains.push('지옥 정령', '악마 전승'); }
+    domains.unshift('악마학 (Démonologie)');
   } else {
     category = 'superstition';
-    if (/pierre|plante|herbe|arbre|racine/i.test(lead)) rank = '마법 광물·식물 비방 (Pierre & Plante Magique)';
-    else if (/animal|oiseau|serpent|poisson|insecte|chat|chien/i.test(lead)) rank = '동물 관련 미신·상징 (Superstition Animale)';
-    else if (/talisman|amulette|charme|remède/i.test(lead)) rank = '부적·치유 주술 (Talisman & Charme)';
-    else rank = '민간 미신·기담 (Superstition & Coutume)';
-    domains.push('미신·민속 (Superstition)');
+    rank = '민간 미신·기담 (Superstition & Coutume)';
+    domains.push('미신·민속 (Superstition)', '유럽 민간 풍습');
   }
 
   if (centuryKo) domains.push(centuryKo);
@@ -1289,7 +1466,7 @@ function analyzeAndTranslateEntry(e, koBase, headword = null) {
 
   const cacheKey = `${e.nameFr}@@${e.page1863}`;
   const rawKo = TRANSLATION_CACHE[cacheKey] || '';
-  const bodyKo = polishTranslation(rawKo, e, koBase);
+  const bodyKo = polishTranslation(rawKo, e, koBase, headword);
 
   // First 1-2 sentences for card preview summary
   const sentMatch = bodyKo.match(/^(.{20,140}?[\.!\?])\s+/);
