@@ -1,8 +1,8 @@
 import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=6158cd2e25e3';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
-import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
-import {STORAGE_KEY,createBackupPayload,normalizeState,parseBackupPayload} from './backup.js?v=ce6c73ab474c';
+import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=8d4afa2f8c16';
+import {STORAGE_KEY,createBackupPayload,normalizeState,parseBackupPayload} from './backup.js?v=a5d8949b2c98';
 
 const mainEl=document.querySelector('#main');
 const headerTitleEl=document.querySelector('header h1');

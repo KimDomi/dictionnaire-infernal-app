@@ -7,7 +7,7 @@ export const DEFAULT_SETTINGS=Object.freeze({
   fontSize:'normal',
   showFrench:true,
   keepAwake:false,
-  animations:true
+  animations:false
 });
 
 export function normalizeSettings(raw){
@@ -17,7 +17,7 @@ export function normalizeSettings(raw){
     fontSize:['normal','large'].includes(src.fontSize)?src.fontSize:'normal',
     showFrench:typeof src.showFrench==='boolean'?src.showFrench:true,
     keepAwake:typeof src.keepAwake==='boolean'?src.keepAwake:false,
-    animations:typeof src.animations==='boolean'?src.animations:true
+    animations:typeof src.animations==='boolean'?src.animations:false
   };
 }
 

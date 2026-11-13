@@ -1,4 +1,4 @@
-import {normalizeSettings} from './settings.js?v=a25a7982980e';
+import {normalizeSettings} from './settings.js?v=8d4afa2f8c16';
 
 export const STORAGE_KEY='dictionnaire-infernal-v1';
 
