@@ -504,6 +504,51 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// C section audit assertions (475 entries, 40 illustrated)
+const cEntries = ENTRIES.filter(e => e.letter === 'C');
+assert.equal(cEntries.length, 475, 'C section must contain exactly 475 entries (after B/C boundary fix: Caaba to Cyrano de Bergerac)');
+
+const cIllustrated = cEntries.filter(e => e.hasPlate);
+assert.equal(cIllustrated.length, 40, 'C section must contain exactly 40 illustrated entries');
+
+const bylethB = ENTRIES.find(e => e.id === 'e739-byleth');
+assert.ok(bylethB && bylethB.letter === 'B' && bylethB.hasPlate, 'Byleth moved from C to B at B/C boundary with plate intact');
+
+const caabaC = ENTRIES.find(e => e.id === 'e742-caaba');
+assert.ok(caabaC && caabaC.letter === 'C' && caabaC.nameKo.includes('카바'), 'Caaba starts C section');
+
+const caacrinolaasPlate = ENTRIES.find(e => e.id === 'caacrinolaas');
+assert.ok(caacrinolaasPlate && caacrinolaasPlate.hasPlate && caacrinolaasPlate.plate === 'plates/caacrinolaas.jpg' && caacrinolaasPlate.plateNo === 22 && caacrinolaasPlate.legions === 36 && caacrinolaasPlate.category === 'demon', 'Caacrinolaas Plate 22');
+
+const caliPlate = ENTRIES.find(e => e.id === 'cali');
+assert.ok(caliPlate && caliPlate.hasPlate && caliPlate.plate === 'plates/cali.jpg' && caliPlate.plateNo === 23 && caliPlate.subCategory === 'myth', 'Cali Plate 23');
+
+const caymPlate = ENTRIES.find(e => e.id === 'caym');
+assert.ok(caymPlate && caymPlate.hasPlate && caymPlate.plate === 'plates/caym.jpg' && caymPlate.plateNo === 24 && caymPlate.legions === 30, 'Caym Plate 24');
+
+const cerberePlate = ENTRIES.find(e => e.id === 'cerbere');
+assert.ok(cerberePlate && cerberePlate.hasPlate && cerberePlate.plate === 'plates/cerbere.jpg' && cerberePlate.plateNo === 25 && cerberePlate.legions === 19, 'Cerbere Plate 25');
+
+const crapaudPlate = ENTRIES.find(e => e.id === 'crapaud');
+assert.ok(crapaudPlate && crapaudPlate.hasPlate && crapaudPlate.plate === 'plates/crapaud.jpg' && crapaudPlate.plateNo === 26 && crapaudPlate.subCategory === 'myth', 'Crapaud Plate 26');
+
+const charlesLorraine = ENTRIES.find(e => e.id === 'e950-charlesii');
+const charlesEngland = ENTRIES.find(e => e.id === 'e952-charlesii');
+assert.ok(charlesLorraine && charlesEngland && charlesLorraine.nameFr === 'Charles II (Duc de Lorraine)' && charlesEngland.nameFr === 'Charles II (Roi d’Angleterre)', 'Charles II 2 entries disambiguated');
+
+const cimeriesDemon = ENTRIES.find(e => e.id === 'e1029-cimeries');
+assert.ok(cimeriesDemon && cimeriesDemon.category === 'demon' && cimeriesDemon.legions === 20, 'Cimeries 20 legions');
+
+const conjurationGrimoire = ENTRIES.find(e => e.id === 'e1116-conjuration');
+assert.ok(conjurationGrimoire && conjurationGrimoire.hasPlate && conjurationGrimoire.category === 'grimoire', 'Conjuration illustrated grimoire');
+
+for (const ce of cEntries) {
+  assert.ok(!ce.nameKoShort.includes(' / '), `No inner slash in C shortKo: ${ce.id}`);
+  assert.ok(!/[가-힣]/.test(ce.nameEn || ''), `No Korean leaked into C nameEn: ${ce.id}`);
+  assert.ok(!/^[A-Za-z]/.test((ce.description || '').trim()), `No English lead in C description: ${ce.id}`);
+  assert.ok(ce.domains && ce.domains.length >= 2, `At least 2 domains for C entry: ${ce.id}`);
+}
+
 // D section audit assertions (189 entries, 17 illustrated)
 const dEntries = ENTRIES.filter(e => e.letter === 'D');
 assert.equal(dEntries.length, 189, 'D section must contain exactly 189 entries (after C/D boundary fix: Dabaïda to Dzivogeon)');
