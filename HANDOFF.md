@@ -123,15 +123,14 @@ node scripts-build-entries.mjs && node scripts-versions.mjs && npm run check
 ```
 > **중요**: `dist/entries.js`를 직접 수동 편집하지 마세요. 반드시 `resources/curated_ko_overrides.json` 또는 `scripts-build-entries.mjs`를 수정한 뒤 `node scripts-build-entries.mjs && node scripts-versions.mjs`를 실행하여 재생성해야 합니다.
 
-### B. 번역 품질 추가 개선 방법 (윤문 작업 이어하기)
-1. **전수 검수 및 완역 완료 현황 (Z부터 역순 진행, I까지 완료)**:
-   - **완료된 알파벳**: **Z, Y, X, W, V, U, T, S, R, Q, P, O, N, M, L, K, J, I (총 18개 알파벳, 1,721개 표제어 전수 완역 완료, 214점 목판화 100% 매핑, 진척도 45.2%)**
+### B. 번역 품질 및 전수 검수 현황 (Z ➔ A 100% 완료)
+1. **전수 검수 및 완역 완료 현황 (Z부터 A까지 26개 알파벳 100% 완료)**:
+   - **완료된 알파벳**: **Z, Y, X, W, V, U, T, S, R, Q, P, O, N, M, L, K, J, I, H, G, F, E, D, C, B, A (전 26개 알파벳, 3,810 / 3,810개 표제어 전수 완역 완료, 428 / 428점 목판화 100% 매핑, 진척도 100.0%)**
    - 각 알파벳 묶음별 큐레이션 스크립트(`scripts/curate-*-batch*.mjs` 및 `scripts/apply-curated-*.mjs`)를 통해 고증 완역문이 `resources/translations_ko_cache.json`에 저장되고, `scripts-build-entries.mjs`의 `CURATED_HEADWORD_RULES`와 `CURATED_META`에 영구 등록되어 빌드됩니다.
-   - **다음 검수 대상**: **H 섹션** (154개 표제어, 목판화 16점 수록).
 2. **정밀 윤문 오버라이드 (`resources/curated_ko_overrides.json`)**:
    - `"표제어@@페이지번호"`(예: `"Aaron@@1"`, `"Abrahel@@4"`)를 키로 하여 사람이 다듬은 고품질 백과사전 번역문을 넣으면, `scripts-build-entries.mjs` 실행 시 기계번역 캐시보다 **최우선으로 적용**됩니다.
 3. **전체 항목 자동 교정 파이프라인 (`scripts-build-entries.mjs` 내 `polishTranslation`)**:
-   - 아직 검수되지 않은 나머지 알파벳(A~H) 항목들은 `resources/translations_ko_cache.json`의 초벌 번역을 읽어 들여 `polishTranslation()`에서 ① 문체 평서형 변환(`convertEnding`), ② 오컬트 용어 교정, ③ 고유명사 `한글 (Original)` 병기(`BODY_PROPER_REPLACEMENTS`), ④ 받침 유무에 따른 한국어 조사 자동 보정(`fixKoreanParticles`)을 거쳐 생성됩니다.
+   - 전 항목은 `resources/translations_ko_cache.json`의 정밀 완역문을 기반으로 `polishTranslation()`에서 ① 문체 평서형 유지(`convertEnding`), ② 오컬트 용어 규격, ③ 고유명사 `한글(Original)` 무공백 표기, ④ 한국어 조사 자동 보정(`fixKoreanParticles`)을 거쳐 `dist/entries.js`로 빌드됩니다.
 
 ### C. UI / UX 구조 및 개편 가이드
 - **항목 상세 보기 (전체 페이지 뷰 전환 완료)**:
