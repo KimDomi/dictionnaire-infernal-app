@@ -1641,4 +1641,25 @@ for (const e of ENTRIES) {
   assert.ok(ratio >= 0.25, `Truncated translation detected for ${e.id} (${e.nameFr}): fr=${e.quoteFr.length}, ko=${e.description.length} (${(ratio*100).toFixed(1)}%)`);
 }
 
-console.log('PASS: all 3,810 A-Z entries dataset, normalized rank epithets, proper noun English notation, 535 plate assets, full translations, search, filtering, sorting, and daily entry');
+// Cross-reference normalization & ungrounded padding/meta cleanup invariants
+for (const e of ENTRIES) {
+  const ko = e.description || '';
+  assert.ok(!/entry:\/\//.test(ko), `Leaked entry:// markdown link in ${e.id}`);
+  assert.ok(!/[☞➔➜→]/.test(ko), `Leaked arrow symbol in ${e.id}`);
+  assert.ok(!/해당\s+해당/.test(ko), `Duplicate 해당 해당 in ${e.id}`);
+  assert.ok(!/\([^)]*해당 항목 참조/.test(ko), `Malformed (X 해당 항목 참조) in ${e.id}`);
+  assert.ok(!/상호참조 표제어|기계번역/.test(ko), `Meta commentary leaked in ${e.id}`);
+}
+
+const elinas = ENTRIES.find(e => e.id === 'e1451-elinas');
+assert.ok(elinas && !elinas.description.includes('자세한 전설은') && elinas.description.includes('참조. 멜뤼진 [Mélusine]'), 'Elinas faithful translation without padded legend lead-in');
+const pressine = ENTRIES.find(e => e.id === 'e3127-pressine');
+assert.equal(pressine?.description, '참조. 멜뤼진 [Mélusine / Fairy of Lusignan].', 'Pressine pure canonical crossref');
+const nega = ENTRIES.find(e => e.id === 'e2766-nega');
+assert.ok(nega && nega.description.includes('코르시카') && nega.description.includes('성녀 네가'), 'Néga faithful Corsican proverb translation');
+const reid = ENTRIES.find(e => e.id === 'e3197-reidthomas');
+assert.ok(reid && !reid.description.includes('데이비드 흄') && reid.description.includes('요정'), 'Reid Thomas faithful translation not philosopher confusion');
+const khumanogoo = ENTRIES.find(e => e.id === 'e2259-khumanogoo');
+assert.ok(khumanogoo && !khumanogoo.description.includes('끈적끈적') && khumanogoo.description.includes('참조. 고오 [Goo]'), 'Khumano-Goo faithful goo crossref');
+
+console.log('PASS: all 3,810 A-Z entries dataset, normalized rank epithets, proper noun English notation, 535 plate assets, full translations, cross-reference hygiene, search, filtering, sorting, and daily entry');

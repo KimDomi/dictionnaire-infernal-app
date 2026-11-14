@@ -5280,8 +5280,9 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
     .replace(/나타나시므로/g, '나타나므로')
     .replace(/사단이나/g, '사탄(Satan)이나')
     .replace(/희귀한\./g, '희귀본이다.')
-    .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?|이 항목을 참조하세요\.?|이 항목을 보십시오\.?/g, '해당 항목 참조.')
-    .replace(/참조\s*:\s*이 단어\.?|참조\s*:\s*이 이름\.?/g, '해당 항목 참조.')
+    .replace(/(?:^|(?<=[.?!…(\n])|(?<=[.?!…]\s))(?:해당\s+)*항목\s*참조\.?|(?:^|(?<=[.?!…(\n])|(?<=[.?!…]\s))항목보기\.?|이\s*(?:기사|항목)을?\s*(?:참조하세요|보십시오)\.?/g, '해당 항목 참조.')
+    .replace(/해당\s+해당\s+항목\s*참조\.?/g, '해당 항목 참조.')
+    .replace(/참조\s*:\s*이\s*(?:단어|이름)\.?/g, '해당 항목 참조.')
     .replace(/([가-힣A-Za-z0-9\)\]\s,·]+?)(?:을|를)\s*참조(?:하세요|하십시오)\./g, (_, t) => `${t.trim()} 참조.`)
     .replace(/에 대해서는\s+([^.\n]+?)\s*참조(?:하세요|하십시오)\./g, '에 대해서는 $1 참조.')
     .replace(/에 관한 내용은\s+([^.\n]+?)\s*참조(?:하세요|하십시오)\./g, '에 관한 내용은 $1 참조.')
@@ -9288,12 +9289,19 @@ function analyzeAndTranslateEntry(e, koBase, headword = null, id = null) {
 
   // 1. Check if cross-reference ("Voy. X")
   if (/^(?:voy\.|voyez)\s+/i.test(t) && t.length < 110) {
-    const target = t.replace(/^(?:voy\.|voyez)\s+/i, '').replace(/\.$/, '').trim();
+    let target = t.replace(/^(?:voy\.|voyez)\s+/i, '').replace(/\.$/, '').trim()
+      .replace(/^Dictionnaire\s+infernal\/[^/]+\/\s*/i, '').trim();
+    let suffixNote = '';
+    const finM = target.match(/,\s*à la fin(?:\s+de l[’']article)?$/i);
+    if (finM) {
+      target = target.slice(0, finM.index).trim();
+      suffixNote = ' (항목 끝부분)';
+    }
     const targetKo = frHeadwordToKo(target, target);
     const targetHead = buildEntryHeadword({ nameFr: target, baseFr: target }, targetKo);
-    const pureRef = `${targetHead.nameKo} 참조.`;
+    const pureRef = `참조. ${targetHead.nameKo}${suffixNote}.`;
 
-    if (id && TRANSLATION_CACHE[id] && TRANSLATION_CACHE[id].length > 25) {
+    if (id && TRANSLATION_CACHE[id] && TRANSLATION_CACHE[id].length > 10) {
       const curRef = TRANSLATION_CACHE[id];
       const meta = (id && CURATED_META[id]) || null;
       return {

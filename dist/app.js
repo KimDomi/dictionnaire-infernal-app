@@ -1,4 +1,4 @@
-import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries} from './entries.js?v=2d233f8be8bc';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries} from './entries.js?v=079aec4be7d3';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
@@ -355,7 +355,7 @@ function splitCrossRefItems(text){
 
 function cleanCrossRefItemLabel(raw){
   let s=String(raw||'').trim()
-    .replace(/^☞\s*/,'')
+    .replace(/^[☞➔➜→]\s*/,'')
     .replace(/^다음\s*항목들을?\s*참조하라\s*:\s*/i,'')
     .replace(/^딕티오네르\s*인페르날\s*에드\s*/i,'')
     .replace(/Dictionnaire infernal\/[^/\]]+\/\s*/gi,'')
@@ -374,9 +374,9 @@ function cleanCrossRefItemLabel(raw){
 }
 
 function resolveCrossRefTarget(label,entry,hints,tokCount,tokIdx,precedingText){
-  const s=String(label||'').replace(/\s*(?:해당\s*)?(?:항목(?:들|의|을|도)?|끝부분|등)\s*$/g,'').trim();
+  const s=String(label||'').replace(/\s*\(\s*항목\s*끝부분\s*\)\s*/g,'').replace(/\s*(?:(?:해당\s*)+)?(?:항목(?:들|의|을|도)?|끝부분|등)\s*$/g,'').trim();
   const excludeId=entry?.id;
-  if(!s||s==='해당'){
+  if(!s||/^(?:해당\s*)+$/.test(s)){
     if(precedingText){
       const prevHits=[...precedingText.matchAll(/([가-힣A-Za-z0-9·\-\s]{1,30}?)\s*(?:\(([^()]{2,40})\)|\[([^\[\]]{2,40})\])/g)];
       for(let i=prevHits.length-1;i>=0;i--){
@@ -444,29 +444,31 @@ function buildCrossRefSegment(bodyRaw,entry,precedingText){
 function transformCrossRefTokens(line,entry){
   const raw=String(line??'');
   if(!raw.includes('참조'))return raw;
-  let out=raw.replace(/딕티오네르\s*인페르날\s*에드\s*([^.\n]+?)\s*\[Dictionnaire infernal\/[^/\]]+\/([^\]]+)\]/gi,'$1 [$2]');
+  let out=raw
+    .replace(/\[([^\]]+?)\]\(entry:\/\/[^)]+\)/g,'$1')
+    .replace(/딕티오네르\s*인페르날\s*에드\s*([^.\n]+?)\s*\[Dictionnaire infernal\/[^/\]]+\/([^\]]+)\]/gi,'$1 [$2]');
 
   out=out.replace(/\(([^()]*참조[^()]*)\)/g,(full,inner,offset)=>{
     if(/오식|원문\s*말미|참고/.test(inner))return full;
     let body=null;
-    const mColon=inner.match(/^(?:☞\s*)?참조\s*[:.]\s*(.+)$/);
+    const mColon=inner.match(/^(?:[☞➔➜→]\s*)?참조\s*[:.]\s*(.+)$/);
     if(mColon)body=mColon[1];
     else{
-      const mSuffix=inner.match(/^(?:☞\s*)?(.+?)\s*(?:(?:해당\s*)?항목(?:들)?(?:을|도)?\s*)?참조(?:하라|할 것)?\.?$/);
+      const mSuffix=inner.match(/^(?:[☞➔➜→]\s*)?(.+?)\s*(?:(?:해당\s*)*항목(?:들)?(?:을|도)?\s*)?참조(?:하라|할 것)?\.?$/);
       if(mSuffix)body=mSuffix[1];
     }
     if(!body)return full;
     return `(${buildCrossRefSegment(body,entry,out.slice(0,offset))})`;
   });
 
-  out=out.replace(/(^|[.?!…”"’]\s+)(?:☞\s*)?참조\s*[:.]\s*([^.!?\n]+)([.?!]?)/g,(full,lead,body,punct,offset)=>{
+  out=out.replace(/(^|[.?!…”"’]\s+)(?:[☞➔➜→]\s*)?참조\s*[:.]\s*([^.!?\n]+)([.?!]?)/g,(full,lead,body,punct,offset)=>{
     return `${lead}${buildCrossRefSegment(body,entry,out.slice(0,offset))}${punct||'.'}`;
   });
 
-  out=out.replace(/(^|[.?!…”"’]\s+)(?:☞\s*)?((?:(?!\(참조\.)[^.!?\n]){1,180}?)\s*(?:(?:해당\s*)?항목(?:들)?(?:을|도)?(?:\s*함께)?\s*참조(?:하라|할 것)?|(?<=[\]」』’)\s])참조(?:하라|할 것)?)\.?$/gm,(full,lead,body,offset)=>{
+  out=out.replace(/(^|[.?!…”"’]\s+)(?:[☞➔➜→]\s*)?((?:(?!\(참조\.)[^.!?\n]){1,180}?)\s*(?:(?:해당\s*)*항목(?:들)?(?:을|도)?(?:\s*함께)?\s*참조(?:하라|할 것)?|(?<=[\]」』’)\s])참조(?:하라|할 것)?)\.?$/gm,(full,lead,body,offset)=>{
     if(/전설집|소책자|서한집|저서|위서|제\d+부/.test(body))return full;
     if(/^(?:이\s*각각의|그의\s*전설을|그\s*상세한)/.test(body.trim()))return full;
-    if(!/항목|☞/.test(full)&&/(?:을|를)\s*참조(?:하라|할 것)/.test(full))return full;
+    if(!/항목|[☞➔➜→]/.test(full)&&/(?:을|를)\s*참조(?:하라|할 것)/.test(full))return full;
     const topicM=body.match(/^(.*?(?:에\s*(?:대해서는|관해서는)|자세한\s*내용은|상세한\s*내용은|전설은|이야기는|본문은\s*앞선|함께))\s+(?:다음\s*항목들을?\s*참조하라\s*:\s*)?(.+)$/);
     if(topicM){
       const prefix=topicM[1].trim();
