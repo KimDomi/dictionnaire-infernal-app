@@ -1,4 +1,4 @@
-import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries,getDailyEntry} from './entries.js?v=8f70c7d5e503';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries} from './entries.js?v=8f70c7d5e503';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
@@ -458,18 +458,29 @@ function markEntryAsRead(entryId){
   }
 }
 
+function pickRandomEntry(excludeId=null){
+  if(!ENTRIES.length)return null;
+  let pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
+  if(ENTRIES.length>1&&excludeId&&pick.id===excludeId){
+    pick=ENTRIES[(ENTRIES.indexOf(pick)+1)%ENTRIES.length];
+  }
+  return pick;
+}
+
 function getCurrentRandomEntry(){
-  const todayStr=new Date().toISOString().slice(0,10);
-  return randomOverrideId&&ENTRY_MAP.get(randomOverrideId)||getDailyEntry(todayStr);
+  let entry=randomOverrideId&&ENTRY_MAP.get(randomOverrideId);
+  if(!entry){
+    entry=pickRandomEntry();
+    randomOverrideId=entry?.id||null;
+  }
+  return entry;
 }
 
 function advanceRandomEntry(dir='next'){
   const current=getCurrentRandomEntry();
   if(current)markEntryAsRead(current.id);
-  let pick=ENTRIES[Math.floor(Math.random()*ENTRIES.length)];
-  if(ENTRIES.length>1&&current&&pick.id===current.id){
-    pick=ENTRIES[(ENTRIES.indexOf(pick)+1)%ENTRIES.length];
-  }
+  const pick=pickRandomEntry(current?.id);
+  if(!pick)return;
   randomOverrideId=pick.id;
   markEntryAsRead(pick.id);
   if(settings.animations)pendingPageTurnDirection=dir;
