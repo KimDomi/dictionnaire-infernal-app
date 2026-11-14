@@ -1571,11 +1571,11 @@ main:has(.page-flip-stage) > .entry-detail-page * {
   text-align: left;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  transition: background-color 0.2s ease, padding 0.25s ease;
+  transition: background-color 0.2s ease;
 }
 
-.detail-french-card.expanded .french-card-trigger {
-  padding-bottom: 8px;
+.french-card-trigger:active {
+  transform: none;
 }
 
 .french-card-trigger:hover,
@@ -1620,6 +1620,8 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 .french-trigger-action {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  min-width: 58px;
   gap: 3px;
   font-size: 0.78rem;
   font-weight: 600;
@@ -1652,7 +1654,7 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 .french-card-collapse {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: grid-template-rows 0.26s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .detail-french-card.expanded .french-card-collapse {
@@ -1660,19 +1662,18 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 }
 
 .french-card-inner {
+  min-height: 0;
   overflow: hidden;
   opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.28s ease, transform 0.28s ease;
+  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: opacity 0.22s ease;
 }
 
 .detail-french-card.expanded .french-card-inner {
   opacity: 1;
-  transform: translateY(0);
-  padding: 0 18px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .french-quote-text {
@@ -1687,6 +1688,7 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 
 .french-quote-footer {
   margin: 0;
+  padding-bottom: 16px;
   font-size: 0.78rem;
   color: var(--text-muted);
 }
