@@ -124,7 +124,7 @@ async function run(initial,native=false){
   assert.ok(modal.open);
   assert.ok(modal.innerHTML.includes('원전 및 출처 표기 (Attribution & Sources)'));
   assert.ok(modal.innerHTML.includes('루이 르 브르통'));
-  assert.ok(modal.innerHTML.includes('428점'));
+  assert.ok(modal.innerHTML.includes('535점'));
   click({action:'close'});
   assert.ok(!modal.open);
 
@@ -190,6 +190,15 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.includes('class="cross-ref-link" data-action="open-entry" data-id="aguares"'),'Cross-ref link should point to aguares');
   click({action:'open-entry',id:'aguares'});
   assert.ok(main.innerHTML.includes('Aguarès'),'Navigating via cross-ref link should open target entry');
+  click({action:'close-entry'});
+
+  // Verify multi-plate interleaved rendering on Sabbat (4 inline plates among paragraphs)
+  click({action:'open-entry',id:'e3273-sabbat'});
+  const sabbatInlineMatches=main.innerHTML.match(/detail-inline-plate/g)||[];
+  assert.equal(sabbatInlineMatches.length,4,'Sabbat must render 4 inline interleaved plates');
+  assert.ok(main.innerHTML.includes('판화 4점 · '),'Sabbat header must indicate 4 plates');
+  assert.ok(main.innerHTML.indexOf('class="detail-paragraph"')<main.innerHTML.indexOf('detail-inline-plate'),'Sabbat must start with text paragraph before first inline plate');
+  assert.ok(main.innerHTML.lastIndexOf('detail-inline-plate')<main.innerHTML.lastIndexOf('class="detail-paragraph"'),'Sabbat must end with concluding text after fourth plate');
   click({action:'close-entry'});
 }
 

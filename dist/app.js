@@ -1,4 +1,4 @@
-import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries} from './entries.js?v=8f70c7d5e503';
+import {CATEGORIES,GALLERY_CATEGORIES,LETTERS,ENTRIES,ILLUSTRATED_ENTRIES,ENTRY_MAP,VALID_ENTRY_IDS,filterEntries} from './entries.js?v=2d233f8be8bc';
 import {icon} from './icons.js?v=6303f2853951';
 import {exportNativeBackup,installNativeNavigation,requestScreenLock,screenLockAvailable,storageNotice} from './native.js?v=3197cf683a29';
 import {applySettingsToDocument,loadSettings,saveSettings} from './settings.js?v=a25a7982980e';
@@ -555,15 +555,57 @@ function renderDetailTitle(entry){
   </h2>`;
 }
 
+function renderPlateFigure(entry,plateSrc,captionText,idx,total,isInline=false){
+  const plateLabel=`도판 ${idx+1}/${total}`;
+  const pageNum=entry.plates?.[idx]?.bookPage||entry.page1863;
+  const fullCaption=captionText
+    ?`${escapeHtml(captionText)} — 루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (${plateLabel} · 1863년 제6판 p.${pageNum})`
+    :`루이 브르통 (Louis Breton) 원화 · 자로 (Jarrault) 목판 조각 (${plateLabel} · 1863년 제6판 p.${pageNum})`;
+  return `<figure class="detail-plate-showcase${isInline?' detail-inline-plate':''}">
+      <div class="detail-plate-frame">
+        <img src="${escapeHtml(plateSrc)}" alt="${escapeHtml(entry.nameKo)}${captionText?' — '+escapeHtml(captionText):''} 루이 브르통 1863년 목판화" loading="lazy" draggable="false">
+      </div>
+      <figcaption>${fullCaption}</figcaption>
+    </figure>`;
+}
+
+function renderInterleavedBody(entry){
+  const paras=String(entry.description??'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  const plates=Array.isArray(entry.plates)&&entry.plates.length>1?entry.plates:null;
+  if(!plates)return formatParagraphs(entry.description,entry);
+  const chunks=[];
+  const total=plates.length;
+  const byAfter=new Map();
+  plates.forEach((pl,idx)=>{
+    const pos=Math.max(0,Math.min(paras.length,Number(pl.afterPara??paras.length)));
+    if(!byAfter.has(pos))byAfter.set(pos,[]);
+    byAfter.get(pos).push({pl,idx});
+  });
+  const pushPlates=pos=>{
+    const list=byAfter.get(pos);
+    if(!list)return;
+    for(const {pl,idx} of list){
+      chunks.push(renderPlateFigure(entry,pl.src,pl.caption||'',idx,total,true));
+    }
+  };
+  pushPlates(0);
+  paras.forEach((line,pIdx)=>{
+    chunks.push(`<p class="detail-paragraph">${renderCrossRefHtml(line,entry)}</p>`);
+    pushPlates(pIdx+1);
+  });
+  return chunks.join('');
+}
+
 function renderEntryArticleCard(entry,extraFooterHtml=''){
   const isBookmarked=state.bookmarks.includes(entry.id);
   const isRead=state.readIds.includes(entry.id);
+  const hasMultiPlates=Array.isArray(entry.plates)&&entry.plates.length>1;
 
   return `<article class="detail-card">
     <header class="detail-header">
       <div class="detail-header-top">
         <button type="button" class="header-read-btn${isRead?' active':''}" data-action="toggle-read" data-id="${escapeHtml(entry.id)}" aria-label="${isRead?'열람 완료 해제':'열람 완료 표시'}" title="${isRead?'열람 완료됨 (클릭 시 해제)':'열람 완료 표시'}">✓</button>
-        <span class="entry-plate-no">${entry.hasPlate?`판화 No. ${entry.plateNo} · `:''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
+        <span class="entry-plate-no">${entry.hasPlate?(hasMultiPlates?`판화 ${entry.plates.length}점 · `:`판화 No. ${entry.plateNo} · `):''}1863년 제6판 ${escapeHtml(entry.letter)}부 · 원서 p.${entry.page1863}</span>
         <button type="button" class="header-bookmark-btn${isBookmarked?' active':''}" data-action="toggle-bookmark" data-id="${escapeHtml(entry.id)}" aria-label="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}" title="${isBookmarked?'즐겨찾기 해제':'즐겨찾기 추가'}">${isBookmarked?'★':'☆'}</button>
       </div>
       ${renderDetailTitle(entry)}
@@ -573,7 +615,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
       </div>
     </header>
 
-    ${entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
+    ${!hasMultiPlates&&entry.hasPlate&&entry.plate?`<figure class="detail-plate-showcase">
       <div class="detail-plate-frame">
         <img src="${escapeHtml(entry.plate)}" alt="${escapeHtml(entry.nameKo)} 루이 브르통 1863년 목판화" draggable="false">
       </div>
@@ -587,7 +629,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
       </div>`:''}
 
       <div class="detail-translation">
-        ${formatParagraphs(entry.description,entry)}
+        ${hasMultiPlates?renderInterleavedBody(entry):formatParagraphs(entry.description,entry)}
       </div>
 
       ${entry.quoteFr?`<blockquote class="detail-french-card${settings.showFrench?' expanded':''}">
@@ -871,7 +913,7 @@ function renderSettingsTab(){
       <p style="margin:0 0 10px;font-size:0.84rem;color:var(--text-muted);line-height:1.6">
         • 원제: <em>Dictionnaire Infernal</em> (제6판, 1863년 파리 Henri Plon 간행 · 전 3,810개 표제어 완역/수록)<br>
         • 저자: 자크 알뱅 시몽 콜랭 드 플랑시 (J.-A.-S. Collin de Plancy, 1794–1881)<br>
-        • 삽화: 루이 브르통 (Louis Breton) 원화 · 1863년 원본 목판화 총 428점 수록<br>
+        • 삽화: 루이 브르통 (Louis Breton) 원화 · 1863년 원본 목판화 435개 항목 총 535점 수록<br>
         • 아카이브: 프랑스 국립도서관(BnF/Gallica), 위키미디어 공용(Wikimedia Commons), 인터넷 아카이브<br>
         • 라이선스: 퍼블릭 도메인 (Public Domain)
       </p>
@@ -1246,7 +1288,7 @@ function openHelpModal(){
   }else if(activeTab==='gallery'){
     title='삽화 도감 안내';
     bodyHtml=`<p style="margin:0">
-      1863년 제6판 완본에 수록된 화가 루이 브르통 (Louis Breton)의 오리지널 목판화 428점을 감상하는 도감입니다.
+      1863년 제6판 완본 435개 표제어에 수록된 화가 루이 브르통 (Louis Breton)의 오리지널 목판화 총 535점을 감상하는 도감입니다.
     </p>
     <ul style="margin:0;padding-left:18px;font-size:0.88rem;color:var(--text-muted);display:flex;flex-direction:column;gap:6px">
       <li><strong>위계별 세분화</strong>: 상단 태그를 통해 지옥 군주, 대공·후작·총재, 하급 악마·괴이, 고대 신격·사바트로 나누어 감상할 수 있습니다.</li>
@@ -1310,7 +1352,7 @@ function openAttributionModal(){
     </div>
     <div style="font-size:0.86rem;line-height:1.65;color:var(--text-muted);display:flex;flex-direction:column;gap:14px">
       <div style="background:var(--bg-soft);padding:12px 14px;border-radius:10px;border-left:3px solid var(--gold);color:var(--text)">
-        본 웹 애플리케이션은 자크 알뱅 시몽 콜랭 드 플랑시(J.-A.-S. Collin de Plancy)가 1863년 파리에서 간행한 『지옥사전』 제6판 완본(全 3,810개 표제어) 및 화가 루이 브르통(Louis Breton)의 1863년 오리지널 목판화 전수(428점)를 공공 디지털 아카이브로부터 집대성하여 학술·문화 보급을 위해 편찬한 국문 디지털 백과사전입니다.
+        본 웹 애플리케이션은 자크 알뱅 시몽 콜랭 드 플랑시(J.-A.-S. Collin de Plancy)가 1863년 파리에서 간행한 『지옥사전』 제6판 완본(全 3,810개 표제어) 및 화가 루이 브르통(Louis Breton)의 1863년 오리지널 목판화 전수(435개 항목 · 총 535점)를 공공 디지털 아카이브로부터 집대성하여 학술·문화 보급을 위해 편찬한 국문 디지털 백과사전입니다.
       </div>
 
       <div>
@@ -1326,11 +1368,11 @@ function openAttributionModal(){
       </div>
 
       <div>
-        <h3 style="margin:0 0 6px;color:var(--text);font-size:0.95rem;font-family:var(--font-serif)">🖼️ 2. 목판화 삽화 428점 아카이브 (Illustrations & Plates)</h3>
+        <h3 style="margin:0 0 6px;color:var(--text);font-size:0.95rem;font-family:var(--font-serif)">🖼️ 2. 목판화 삽화 535점 아카이브 (Illustrations & Plates)</h3>
         <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px">
           <li><strong>원화 작가</strong>: 루이 르 브르통 (Louis Le Breton, 1818–1866)</li>
           <li><strong>목판 조각가</strong>: 조제프 알프레드 자로 (Joseph-Alfred Jarrault, S.A.J.) 외 19세기 판화 공방</li>
-          <li><strong>수록 규모</strong>: 총 428점 (원서 주요 68대 악마 판화 + 1863년 제6판 본문 목판화 360점 전수 수록)</li>
+          <li><strong>수록 규모</strong>: 총 535점 (435개 수록 표제어 · 원서 주요 68대 악마 판화 + 1863년 제6판 본문 다중 목판화 포함 467점 전수 수록)</li>
           <li><strong>디지털 아카이브 출처</strong>: 위키미디어 공용 (Wikimedia Commons)
             <br>• <code>Category:Illustrations from Dictionnaire Infernal, 6th edition</code>
             <br>• <code>Category:Drawings of demons from Dictionnaire Infernal, 6th edition</code></li>

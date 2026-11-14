@@ -1499,6 +1499,23 @@ main:has(.page-flip-stage) > .entry-detail-page * {
   text-align: center;
 }
 
+.detail-inline-plate {
+  margin: 6px auto;
+}
+
+.detail-inline-plate .detail-plate-frame {
+  aspect-ratio: auto;
+  min-height: 140px;
+  max-height: 540px;
+}
+
+.detail-inline-plate .detail-plate-frame img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 500px;
+}
+
 .detail-body {
   display: flex;
   flex-direction: column;

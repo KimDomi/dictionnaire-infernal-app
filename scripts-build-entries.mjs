@@ -8,6 +8,9 @@ const PLATE_ENTRIES = JSON.parse(fs.readFileSync('resources/entries_68_plates.js
 const entryPlateMap = fs.existsSync('resources/entry_plate_map.json')
   ? JSON.parse(fs.readFileSync('resources/entry_plate_map.json', 'utf8'))
   : {};
+const multiPlateMap = fs.existsSync('resources/multi_plate_map.json')
+  ? JSON.parse(fs.readFileSync('resources/multi_plate_map.json', 'utf8'))
+  : {};
 import path from 'node:path';
 let nextPlateNo = 69;
 
@@ -5096,7 +5099,25 @@ const RAW_ENGLISH_REPLACEMENTS = [
   [/Alexander the Great/g, '알렉산드로스 대왕'],
   [/나 자신이 싫어요/g, '나 자신이 싫다'],
   [/그런데 아직도요\?/g, '그런데 아직도인가?'],
-  [/그리고 왜요\?/g, '그리고 어째서인가?']
+  [/그리고 왜요\?/g, '그리고 어째서인가?'],
+  [/will-o'-the-wisps?/g, '도깨비불(will-o\'-the-wisp)'],
+  [/On the 확실성 of 정령들/g, '「영계의 확실성에 관하여」'],
+  [/The Moneylender's Million/g, '「고리대금업자의 백만 프랑」'],
+  [/Metallic Transformation/g, '「금속 변성론」'],
+  [/The Fountain of Science Lovers/g, '「학문을 사랑하는 이들의 샘」'],
+  [/History of the Devil/g, '「악마의 역사」'],
+  [/Historical and Literary Journal/g, '《역사와 문학 저널》'],
+  [/The Young Englishman 멀린/g, '「젊은 영국인 멀린」'],
+  [/Discourse on 「늑대인간론[^」]*」,\s*or the transmutation of men to wolves\.?/g, '「늑대인간증(De la lycanthropie), 혹은 인간이 늑대로 변하는 것에 관한 논설」'],
+  [/Caprices of the Imagination/g, '「상상력의 변덕」'],
+  [/The Bride of Lamermoor/g, '「래머무어의 신부」'],
+  [/The Enchanted World/g, '「마법에 걸린 세계」'],
+  [/The Loves of Théagene와 Chariclea/g, '「테아게네스와 카리클레아의 사랑」'],
+  [/Naval and Military Magazine/g, '《해군·군사 잡지》'],
+  [/The Parrot of 월터 스콧/g, '월터 스콧의 「수도원(The Monastery)」'],
+  [/Arquin the Superb/g, '오만한 타르퀴니우스(Tarquin le Superbe)'],
+  [/Frederick the Great/g, '프리드리히 대왕'],
+  [/멜리에\(Mélye\) the Bad|멜리에 the Bad/g, '사악한 요정 멜리(Mélye la Mauvaise)']
 ];
 
 function hasJongseong(str) {
@@ -5146,7 +5167,7 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
     cur = removeOriginalInsideParens(cur);
     cur = formatKoreanParen(cur);
     cur = fixKoreanParticles(cur);
-    return cur.replace(/\s+/g, ' ').trim();
+    return cur.replace(/[^\S\n]+/g, ' ').replace(/ *\n+ */g, '\n\n').replace(/\n{3,}/g, '\n\n').trim();
   }
 
   let s = String(rawKo || '').trim();
@@ -5187,7 +5208,8 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
 
   // Fix occult/historical mistranslations and literal French idioms across the 1863 corpus
   s = s
-    .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마녀들의 안식일|안식일/g, '사바트(Sabbat)')
+    .replace(/마술사 안식일의 밤 모임|마녀 안식일의 밤 모임|안식일 밤 마술사들의 모임|마법사의 안식일|마법사들의 안식일|마녀들의 안식일|마녀의 안식일|마술사의 안식일|마술사들의 안식일|안식일/g, '사바트(Sabbat)')
+    .replace(/(?:마녀의|마녀들의|마술사의|마술사들의|마법사의|마법사들의)\s*사바트\(Sabbat\)/g, '사바트(Sabbat)')
     .replace(/솔로몬의 빗장뼈|솔로몬의 쇄골/g, '「솔로몬의 열쇠(Clavicules de Salomon)」')
     .replace(/유대인 도당/g, '유대 카발라(Cabale)')
     .replace(/위대한 도당으로/g, '대카발라 학자(Cabaliste)로')
@@ -5258,8 +5280,11 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
     .replace(/나타나시므로/g, '나타나므로')
     .replace(/사단이나/g, '사탄(Satan)이나')
     .replace(/희귀한\./g, '희귀본이다.')
-    .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?/g, '해당 항목 참조.')
+    .replace(/항목보기\.?|항목 참조\.?|이 기사를 참조하세요\.?|이 기사를 보십시오\.?|이 항목을 참조하세요\.?|이 항목을 보십시오\.?/g, '해당 항목 참조.')
     .replace(/참조\s*:\s*이 단어\.?|참조\s*:\s*이 이름\.?/g, '해당 항목 참조.')
+    .replace(/([가-힣A-Za-z0-9\)\]\s,·]+?)(?:을|를)\s*참조(?:하세요|하십시오)\./g, (_, t) => `${t.trim()} 참조.`)
+    .replace(/에 대해서는\s+([^.\n]+?)\s*참조(?:하세요|하십시오)\./g, '에 대해서는 $1 참조.')
+    .replace(/에 관한 내용은\s+([^.\n]+?)\s*참조(?:하세요|하십시오)\./g, '에 관한 내용은 $1 참조.')
     // Rule 6: Newspapers use 《 》, books use 「 」
     .replace(/『주르날 뒤 론 \(Journal du Rhône\)』/g, '《주르날 뒤 론(Journal du Rhône)》')
     .replace(/『/g, '「')
@@ -5356,7 +5381,7 @@ function polishTranslation(rawKo, e, koBase, headword = null, id = null) {
   // Final particle harmonization
   s = fixKoreanParticles(s);
 
-  return s.replace(/\s+/g, ' ').trim();
+  return s.replace(/[^\S\n]+/g, ' ').replace(/ *\n+ */g, '\n\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
 const CURATED_META = {
@@ -9400,9 +9425,10 @@ function analyzeAndTranslateEntry(e, koBase, headword = null, id = null) {
   const rawKo = (id && TRANSLATION_CACHE[id]) || TRANSLATION_CACHE[cacheKey] || (e.textFr && TRANSLATION_CACHE[e.textFr]) || '';
   const bodyKo = polishTranslation(rawKo, e, koBase, headword, id);
 
-  // First 1-2 sentences for card preview summary
-  const sentMatch = bodyKo.match(/^(.{20,160}?[\.!\?])\s+/);
-  let summaryKo = sentMatch ? sentMatch[1] : (bodyKo.length > 150 ? bodyKo.slice(0, 150) + '…' : bodyKo);
+  // First 1-2 sentences for card preview summary (single-line)
+  const flatBodyKo = bodyKo.replace(/\n+/g, ' ').trim();
+  const sentMatch = flatBodyKo.match(/^(.{20,160}?[\.!\?])\s+/);
+  let summaryKo = sentMatch ? sentMatch[1] : (flatBodyKo.length > 150 ? flatBodyKo.slice(0, 150) + '…' : flatBodyKo);
   const openCount = (summaryKo.match(/\(/g) || []).length;
   const closeCount = (summaryKo.match(/\)/g) || []).length;
   if (openCount > closeCount) {
@@ -9422,6 +9448,13 @@ function analyzeAndTranslateEntry(e, koBase, headword = null, id = null) {
     summary: summaryKo,
     description: bodyKo
   };
+}
+
+function resolveEntryPlates(id) {
+  const rawList = multiPlateMap && multiPlateMap[id];
+  if (!Array.isArray(rawList) || rawList.length <= 1) return null;
+  const valid = rawList.filter(p => p && p.src && fs.existsSync(path.join(process.cwd(), 'dist', p.src)));
+  return valid.length > 1 ? valid : null;
 }
 
 // Match the 68 existing illustrated entries against rawEntries
@@ -9461,11 +9494,22 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
   const id = matchedPlate ? matchedPlate.id : uncuratedId;
   const koBase = matchedPlate ? (matchedPlate.nameKoShort || matchedPlate.nameKo) : frHeadwordToKo(raw.nameFr, raw.baseFr, raw, id);
   const headword = buildEntryHeadword(raw, koBase, matchedPlate, id);
+  const entryPlates = resolveEntryPlates(id);
 
   if (matchedPlate) {
     usedPlateIds.add(matchedPlate.id);
     const meta = (CURATED_META && CURATED_META[matchedPlate.id]) || null;
-    fullEntries.push({
+    const P68_FULL_POLISH_IDS = new Set(['belzebuth','caym','crapaud','nickar','sabbath','ganga-gramma','leonard','lucifer','moloch','scox','tap','torngarsuk']);
+    const rawCachedPlateKo = TRANSLATION_CACHE && TRANSLATION_CACHE[matchedPlate.id];
+    const plateDesc = rawCachedPlateKo
+      ? ((entryPlates || rawCachedPlateKo.includes('\n') || P68_FULL_POLISH_IDS.has(id)) ? polishTranslation(rawCachedPlateKo, raw, koBase, headword, id) : rawCachedPlateKo)
+      : matchedPlate.description;
+    const flatPlateDesc = plateDesc.replace(/\n+/g, ' ').trim();
+    const plateSentMatch = flatPlateDesc.match(/^(.{20,160}?[\.!\?])\s+/);
+    const plateSummary = rawCachedPlateKo
+      ? (plateSentMatch ? plateSentMatch[1] : (flatPlateDesc.length > 150 ? flatPlateDesc.slice(0, 150) + '…' : flatPlateDesc))
+      : matchedPlate.summary;
+    const entryObj = {
       id: matchedPlate.id,
       letter: raw.letter,
       plate: matchedPlate.plate,
@@ -9481,16 +9525,18 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
       subCategory: (meta && meta.subCategory) || matchedPlate.category,
       domains: (meta && meta.domains) || (matchedPlate.domains || []),
       appearance: matchedPlate.appearance || '',
-      summary: (TRANSLATION_CACHE && TRANSLATION_CACHE[matchedPlate.id] ? (TRANSLATION_CACHE[matchedPlate.id].slice(0, 150) + '…') : matchedPlate.summary),
-      description: (TRANSLATION_CACHE && TRANSLATION_CACHE[matchedPlate.id]) || matchedPlate.description,
+      summary: plateSummary,
+      description: plateDesc,
       quoteFr: raw.textFr || matchedPlate.quoteFr,
       page1863: raw.page1863 || matchedPlate.page1863
-    });
+    };
+    if (entryPlates) entryObj.plates = entryPlates;
+    fullEntries.push(entryObj);
   } else {
     const info = analyzeAndTranslateEntry(raw, koBase, headword, id);
     const assignedPlate = entryPlateMap[String(idx)];
     const hasAssignedPlate = Boolean(assignedPlate && fs.existsSync(path.join(process.cwd(), 'dist', assignedPlate)));
-    fullEntries.push({
+    const entryObj = {
       id,
       letter: raw.letter,
       plate: hasAssignedPlate ? assignedPlate : '',
@@ -9510,7 +9556,16 @@ for (let idx = 0; idx < rawEntries.length; idx++) {
       description: info.description,
       quoteFr: raw.textFr,
       page1863: raw.page1863
-    });
+    };
+    if (entryPlates) {
+      entryObj.plates = entryPlates;
+      if (!entryObj.hasPlate) {
+        entryObj.plate = entryPlates[0].src;
+        entryObj.plateNo = nextPlateNo++;
+        entryObj.hasPlate = true;
+      }
+    }
+    fullEntries.push(entryObj);
   }
 }
 

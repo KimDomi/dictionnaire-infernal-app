@@ -447,7 +447,7 @@ const rEntries = ENTRIES.filter(e => e.letter === 'R');
 assert.equal(rEntries.length, 97, 'R section must contain exactly 97 entries');
 
 const rIllustrated = rEntries.filter(e => e.hasPlate);
-assert.equal(rIllustrated.length, 12, 'R section must contain exactly 12 illustrated entries');
+assert.equal(rIllustrated.length, 13, 'R section must contain exactly 13 illustrated entries');
 
 // 68 Plates demons in R
 const rahouart = ENTRIES.find(e => e.id === 'rahouart');
@@ -530,7 +530,7 @@ const aEntries = ENTRIES.filter(e => e.letter === 'A');
 assert.equal(aEntries.length, 398, 'A section must contain exactly 398 entries (Aaron to Azraël)');
 
 const aIllustrated = aEntries.filter(e => e.hasPlate);
-assert.equal(aIllustrated.length, 46, 'A section must contain exactly 46 illustrated entries');
+assert.equal(aIllustrated.length, 49, 'A section must contain exactly 49 illustrated entries');
 
 const aaronStart = ENTRIES.find(e => e.id === 'e1-aaron');
 assert.ok(aaronStart && aaronStart.letter === 'A' && aaronStart.category === 'person' && aaronStart.nameKo.includes('아론'), 'Aaron starts A section');
@@ -594,7 +594,7 @@ const bEntries = ENTRIES.filter(e => e.letter === 'B');
 assert.equal(bEntries.length, 343, 'B section must contain exactly 343 entries (after A/B boundary fix: Baal to Bythies)');
 
 const bIllustrated = bEntries.filter(e => e.hasPlate);
-assert.equal(bIllustrated.length, 43, 'B section must contain exactly 43 illustrated entries');
+assert.equal(bIllustrated.length, 44, 'B section must contain exactly 44 illustrated entries');
 
 const baalStart = ENTRIES.find(e => e.id === 'e399-baal');
 assert.ok(baalStart && baalStart.letter === 'B' && baalStart.category === 'demon' && baalStart.nameKo.includes('바알'), 'Baal starts B section');
@@ -699,7 +699,7 @@ const dEntries = ENTRIES.filter(e => e.letter === 'D');
 assert.equal(dEntries.length, 189, 'D section must contain exactly 189 entries (after C/D boundary fix: Dabaïda to Dzivogeon)');
 
 const dIllustrated = dEntries.filter(e => e.hasPlate);
-assert.equal(dIllustrated.length, 17, 'D section must contain exactly 17 illustrated entries');
+assert.equal(dIllustrated.length, 18, 'D section must contain exactly 18 illustrated entries');
 
 const cyranoC = ENTRIES.find(e => e.id === 'e1216-cyranodebergerac');
 assert.ok(cyranoC && cyranoC.letter === 'C', 'Cyrano de Bergerac moved from D to C at C/D boundary');
@@ -1607,4 +1607,38 @@ assert.equal(ENTRIES.find(e => e.id === 'e2759-naviusaccius').rank, '복술관(C
 assert.equal(ENTRIES.find(e => e.id === 'e2760-naylorjames').rank, '17세기 종교 광신자(Fanatique)');
 assert.equal(ENTRIES.find(e => e.id === 'zaebos').rank, '지옥의 대백작(Grand Comte)');
 
-console.log('PASS: all 3,810 A-Z entries dataset, normalized rank epithets, proper noun English notation, plate assets, search, filtering, sorting, and daily entry');
+// Multi-plate & full-translation completeness audit invariants
+const multiEntries = ENTRIES.filter(e => Array.isArray(e.plates) && e.plates.length > 1);
+assert.equal(multiEntries.length, 51, 'Expected all 51 multi-plate entries');
+let totalPlates = 0;
+for (const e of ENTRIES) {
+  if (Array.isArray(e.plates) && e.plates.length > 1) {
+    totalPlates += e.plates.length;
+    const paras = e.description.split(/\n+/).map(s => s.trim()).filter(Boolean);
+    let prevAfter = -1;
+    for (const pl of e.plates) {
+      assert.ok(fs.existsSync(new URL('./dist/' + pl.src, import.meta.url)), `Missing multi-plate file dist/${pl.src} for ${e.id}`);
+      assert.ok(Number.isInteger(pl.afterPara) && pl.afterPara >= 0 && pl.afterPara <= paras.length, `Invalid afterPara=${pl.afterPara} (paras=${paras.length}) in ${e.id}`);
+      assert.ok(pl.afterPara >= prevAfter, `Plates out of order in ${e.id}`);
+      prevAfter = pl.afterPara;
+    }
+  } else if (e.hasPlate) {
+    totalPlates += 1;
+  }
+}
+assert.equal(ILLUSTRATED_ENTRIES.length, 435, 'Expected 435 illustrated entries including 7 newly recovered plates');
+assert.equal(totalPlates, 535, 'Expected 535 total woodcut plates across all illustrated entries');
+
+const sabbatEntry = ENTRIES.find(e => e.id === 'e3273-sabbat');
+assert.ok(sabbatEntry && sabbatEntry.plates?.length === 4 && sabbatEntry.description.length > 5000, 'Sabbat must have 4 interleaved plates and full translation');
+assert.ok(vampires && vampires.plates?.length === 3 && vampires.description.length > 10000, 'Vampires must have 3 ordered plates and full translation');
+const physiogEntry = ENTRIES.find(e => e.id === 'e3024-physiognomonie');
+assert.ok(physiogEntry && physiogEntry.plates?.length === 14 && physiogEntry.description.length > 12000, 'Physiognomonie must have 14 plates and full translation');
+
+for (const e of ENTRIES) {
+  if (e.category === 'crossref' || !e.quoteFr || e.quoteFr.length < 500) continue;
+  const ratio = e.description.length / e.quoteFr.length;
+  assert.ok(ratio >= 0.25, `Truncated translation detected for ${e.id} (${e.nameFr}): fr=${e.quoteFr.length}, ko=${e.description.length} (${(ratio*100).toFixed(1)}%)`);
+}
+
+console.log('PASS: all 3,810 A-Z entries dataset, normalized rank epithets, proper noun English notation, 535 plate assets, full translations, search, filtering, sorting, and daily entry');
