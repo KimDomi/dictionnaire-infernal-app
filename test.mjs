@@ -504,6 +504,44 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// E section audit assertions (164 entries, 17 illustrated)
+const eEntries = ENTRIES.filter(e => e.letter === 'E');
+assert.equal(eEntries.length, 164, 'E section must contain exactly 164 entries (after D/E boundary fix: Eatuas to Ézéchiel)');
+
+const eIllustrated = eEntries.filter(e => e.hasPlate);
+assert.equal(eIllustrated.length, 17, 'E section must contain exactly 17 illustrated entries');
+
+const dzivogeonD = ENTRIES.find(e => e.id === 'e1405-dzivogeon');
+assert.ok(dzivogeonD && dzivogeonD.letter === 'D', 'Dzivogeon moved to D boundary cleanly');
+
+const eurynomePlate = ENTRIES.find(e => e.id === 'eurynome');
+assert.ok(eurynomePlate && eurynomePlate.hasPlate && eurynomePlate.plate === 'plates/eurynome.jpg' && eurynomePlate.plateNo === 29 && eurynomePlate.category === 'demon' && eurynomePlate.subCategory === 'spirit' && eurynomePlate.nameKo.includes('에우리노모스'), 'Eurynome Plate 29 prince of death demon');
+
+const vascoGamaE = ENTRIES.find(e => e.id === 'e1467-vascodegama');
+assert.ok(vascoGamaE && vascoGamaE.letter === 'E' && vascoGamaE.category === 'person' && vascoGamaE.nameKo.includes('바스코 다 가마'), 'Vasco de Gama inside E Calicut Empusa note');
+
+const erlikPlate = ENTRIES.find(e => e.id === 'e1519-erlik');
+assert.ok(erlikPlate && erlikPlate.hasPlate && erlikPlate.category === 'demon' && erlikPlate.nameKo.includes('에를리크'), 'Erlik illustrated Kalmyk demon');
+
+const escamotagePlate = ENTRIES.find(e => e.id === 'e1529-escamotage');
+assert.ok(escamotagePlate && escamotagePlate.hasPlate && escamotagePlate.description.includes('카를리') && escamotagePlate.nameKo.includes('요술과 손장난'), 'Escamotage illustrated Indian juggler');
+
+const escargotsPlate = ENTRIES.find(e => e.id === 'e1530-escargots');
+assert.ok(escargotsPlate && escargotsPlate.hasPlate && escargotsPlate.description.includes('파실랄리니크'), 'Escargots illustrated telegraphic snails');
+
+const espritsFrappeurs = ENTRIES.find(e => e.id === 'e1540-espritsfrappeurs');
+assert.ok(espritsFrappeurs && espritsFrappeurs.description.includes('미르빌') && espritsFrappeurs.description.includes('보든타운'), 'Esprits frappeurs table-turning spiritism');
+
+const ezechielE = ENTRIES.find(e => e.id === 'e1569-ezechiel');
+assert.ok(ezechielE && ezechielE.letter === 'E' && ezechielE.category === 'myth' && ezechielE.nameKo.includes('에제키엘') && ezechielE.description.includes('다바르단'), 'Ézéchiel in E section after E/F boundary fix');
+
+for (const ee of eEntries) {
+  assert.ok(!ee.nameKoShort.includes(' / '), `No inner slash in E shortKo: ${ee.id}`);
+  assert.ok(!/[가-힣]/.test(ee.nameEn || ''), `No Korean leaked into E nameEn: ${ee.id}`);
+  assert.ok(!/^[A-Za-z]/.test((ee.description || '').trim()), `No English lead in E description: ${ee.id}`);
+  assert.ok(ee.domains && ee.domains.length >= 2, `At least 2 domains for E entry: ${ee.id}`);
+}
+
 // F section audit assertions (147 entries, 18 illustrated)
 const fEntries = ENTRIES.filter(e => e.letter === 'F');
 assert.equal(fEntries.length, 147, 'F section must contain exactly 147 entries (after E/F and F/G boundary fixes: Faal to Fusely)');
