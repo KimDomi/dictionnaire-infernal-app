@@ -18,7 +18,7 @@ export const curatedHBatch3 = [
   },
   {
     id: "e2041-holda",
-    nameKo: "[홀다 (홀레 여사 / 마녀들의 밤 여왕) / Holda (Frau Holle)]",
+    nameKo: "[홀다 (홀레 여사, 마녀들의 밤 여왕) / Holda (Frau Holle)]",
     category: "myth",
     domain: ["게르만 신화", "마녀 비행", "프라우 홀레", "야생 사냥"],
     summary: "독일과 고대 골족 전승에서 밤마다 마녀들을 이끌고 하늘을 날며 눈을 내리게 하고 부지런한 처녀들에게 상을 내린다는 여신이자 마녀 여왕.",
@@ -186,7 +186,7 @@ export const curatedHBatch3 = [
   },
   {
     id: "e2062-hrachich",
-    nameKo: "[흐라시슈 (하쉬쉬 / 환각 대마 수지) / Hashish (Hrachich)]",
+    nameKo: "[흐라시슈 (하쉬쉬, 환각 대마 수지) / Hashish (Hrachich)]",
     category: "superstition",
     domain: ["환각 약물", "대마초", "아사신 암살단", "도취"],
     summary: "강력한 황홀경과 기괴한 환각을 일으키는 아라비아의 대마(카나비스) 추출물. 이 약에 취해 낙원을 보았다고 믿던 아사신 암살단의 광기 어린 기원과 제조법.",

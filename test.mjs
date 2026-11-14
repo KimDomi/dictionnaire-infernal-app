@@ -504,6 +504,52 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// G section audit assertions (219 entries, 14 illustrated)
+const gEntries = ENTRIES.filter(e => e.letter === 'G');
+assert.equal(gEntries.length, 219, 'G section must contain exactly 219 entries (after F/G and G/H boundary fixes: Gaap to Gyromancie)');
+
+const gIllustrated = gEntries.filter(e => e.hasPlate);
+assert.equal(gIllustrated.length, 14, 'G section must contain exactly 14 illustrated entries');
+
+const gangaGramma = ENTRIES.find(e => e.id === 'ganga-gramma');
+assert.ok(gangaGramma && gangaGramma.hasPlate && gangaGramma.plate === 'plates/ganga-gramma.jpg' && gangaGramma.plateNo === 34 && gangaGramma.category === 'myth' && gangaGramma.nameKo.includes('강가 그람마'), 'Ganga-Gramma Plate 34 Indian epidemic goddess');
+
+const garudaPlate = ENTRIES.find(e => e.id === 'garuda');
+assert.ok(garudaPlate && garudaPlate.hasPlate && garudaPlate.plate === 'plates/garuda.jpg' && garudaPlate.plateNo === 35 && garudaPlate.category === 'myth' && garudaPlate.nameKo.includes('가루다'), 'Garuda Plate 35 Vishnu mount');
+
+const gomoryDemon = ENTRIES.find(e => e.id === 'gomory');
+assert.ok(gomoryDemon && gomoryDemon.hasPlate && gomoryDemon.plate === 'plates/gomory.jpg' && gomoryDemon.plateNo === 36 && gomoryDemon.legions === 26 && gomoryDemon.category === 'demon' && gomoryDemon.nameKo.includes('고모리'), 'Gomory Plate 36 infernal duke with 26 legions');
+
+const gamygynDemon = ENTRIES.find(e => e.id === 'e1739-gamygyn');
+assert.ok(gamygynDemon && gamygynDemon.category === 'demon' && gamygynDemon.legions === 30 && gamygynDemon.nameKo.includes('가미긴'), 'Gamygyn Great Marquis with 30 legions');
+
+const gusoynDemon = ENTRIES.find(e => e.id === 'e1930-gusoyn');
+assert.ok(gusoynDemon && gusoynDemon.category === 'demon' && gusoynDemon.legions === 45 && gusoynDemon.nameKo.includes('구소인'), 'Gusoyn Grand Duke with 45 legions');
+
+const gallPlate = ENTRIES.find(e => e.id === 'e1736-galljeanjoseph');
+assert.ok(gallPlate && gallPlate.hasPlate && gallPlate.plate === 'plates/e1736-gall-jean-joseph.jpg' && gallPlate.nameKo.includes('프란츠 요제프 갈'), 'Gall phrenology founder illustrated');
+
+const grandierPlate = ENTRIES.find(e => e.id === 'e1875-grandierurbain');
+assert.ok(grandierPlate && grandierPlate.hasPlate && grandierPlate.plate === 'plates/e1875-grandier-urbain.jpg' && grandierPlate.nameKo.includes('위르뱅 그랑디에'), 'Urbain Grandier illustrated');
+
+const grimalkinPlate = ENTRIES.find(e => e.id === 'e1899-grimalkin');
+assert.ok(grimalkinPlate && grimalkinPlate.hasPlate && grimalkinPlate.plate === 'plates/e1899-grimalkin.jpg' && grimalkinPlate.category === 'demon' && grimalkinPlate.nameKo.includes('그리말킨'), 'Grimalkin witch cat demon illustrated');
+
+const guacharoPlate = ENTRIES.find(e => e.id === 'e1909-guacharo');
+assert.ok(guacharoPlate && guacharoPlate.hasPlate && guacharoPlate.plate === 'plates/e1909-guacharo.jpg' && guacharoPlate.nameKo.includes('구아차로'), 'Guacharo cave illustrated');
+
+const godwinKent = ENTRIES.find(e => e.id === 'e1846-godwin');
+assert.ok(godwinKent && godwinKent.category === 'crossref' && godwinKent.nameFr === 'Godwin (Comte de Kent)', 'Disambiguated Earl Godwin crossref');
+
+const godwinWilliam = ENTRIES.find(e => e.id === 'e1847-godwin');
+assert.ok(godwinWilliam && godwinWilliam.category === 'person' && godwinWilliam.nameFr === 'Godwin (William)', 'Disambiguated William Godwin');
+
+const furfurMoved = ENTRIES.find(e => e.id === 'furfur');
+assert.ok(furfurMoved && furfurMoved.letter === 'F', 'Furfur moved from G to F at F/G boundary');
+
+const fumigationsMoved = ENTRIES.find(e => e.id === 'e1711-fumigations');
+assert.ok(fumigationsMoved && fumigationsMoved.letter === 'F', 'Fumigations moved from G to F at F/G boundary');
+
 // H section audit assertions (154 entries, 16 illustrated)
 const hEntries = ENTRIES.filter(e => e.letter === 'H');
 assert.equal(hEntries.length, 154, 'H section must contain exactly 154 entries (after G/H boundary fix: Haagenti to Hypnotisme)');
