@@ -504,6 +504,66 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// B section audit assertions (343 entries, 43 illustrated)
+const bEntries = ENTRIES.filter(e => e.letter === 'B');
+assert.equal(bEntries.length, 343, 'B section must contain exactly 343 entries (after A/B boundary fix: Baal to Bythies)');
+
+const bIllustrated = bEntries.filter(e => e.hasPlate);
+assert.equal(bIllustrated.length, 43, 'B section must contain exactly 43 illustrated entries');
+
+const baalStart = ENTRIES.find(e => e.id === 'e399-baal');
+assert.ok(baalStart && baalStart.letter === 'B' && baalStart.category === 'demon' && baalStart.nameKo.includes('바알'), 'Baal starts B section');
+
+const baalzephonPlate = ENTRIES.find(e => e.id === 'e402-baalzephon');
+assert.ok(baalzephonPlate && baalzephonPlate.hasPlate && baalzephonPlate.plate === 'plates/e402-baalzephon.jpg' && baalzephonPlate.category === 'demon', 'Baalzephon illustrated');
+
+const baianText = ENTRIES.find(e => e.id === 'e426-baian');
+const baianPlate = ENTRIES.find(e => e.id === 'e428-baian');
+assert.ok(baianText && baianPlate && baianText.nameFr === 'Baïan (Texte)' && baianPlate.nameFr === 'Baïan (Gravure)' && baianPlate.hasPlate, 'Baïan 2 entries disambiguated');
+
+const baelPlate = ENTRIES.find(e => e.id === 'bael');
+assert.ok(baelPlate && baelPlate.hasPlate && baelPlate.plate === 'plates/bael.jpg' && baelPlate.plateNo === 13 && baelPlate.legions === 66 && baelPlate.category === 'demon', 'Baël Plate 13');
+
+const balanPlate = ENTRIES.find(e => e.id === 'balan');
+assert.ok(balanPlate && balanPlate.hasPlate && balanPlate.plate === 'plates/balan.jpg' && balanPlate.plateNo === 14 && balanPlate.legions === 40 && balanPlate.category === 'demon', 'Balan Plate 14');
+
+const barbatosPlate = ENTRIES.find(e => e.id === 'barbatos');
+assert.ok(barbatosPlate && barbatosPlate.hasPlate && barbatosPlate.plate === 'plates/barbatos.jpg' && barbatosPlate.plateNo === 15 && barbatosPlate.legions === 30 && barbatosPlate.category === 'demon', 'Barbatos Plate 15');
+
+const behemothPlate = ENTRIES.find(e => e.id === 'behemoth');
+assert.ok(behemothPlate && behemothPlate.hasPlate && behemothPlate.plate === 'plates/behemoth.jpg' && behemothPlate.plateNo === 16 && behemothPlate.category === 'demon', 'Béhémoth Plate 16');
+
+const belphegorPlate = ENTRIES.find(e => e.id === 'belphegor');
+assert.ok(belphegorPlate && belphegorPlate.hasPlate && belphegorPlate.plate === 'plates/belphegor.jpg' && belphegorPlate.plateNo === 17 && belphegorPlate.category === 'demon', 'Belphégor Plate 17');
+
+const belzebuthPlate = ENTRIES.find(e => e.id === 'belzebuth');
+assert.ok(belzebuthPlate && belzebuthPlate.hasPlate && belzebuthPlate.plate === 'plates/belzebuth.jpg' && belzebuthPlate.plateNo === 18 && belzebuthPlate.legions === 66 && belzebuthPlate.category === 'demon', 'Belzébuth Plate 18');
+
+const berithPlate = ENTRIES.find(e => e.id === 'berith');
+assert.ok(berithPlate && berithPlate.hasPlate && berithPlate.plate === 'plates/berith.jpg' && berithPlate.plateNo === 19 && berithPlate.legions === 26 && berithPlate.category === 'demon', 'Bérith Plate 19');
+
+const buerPlate = ENTRIES.find(e => e.id === 'buer');
+assert.ok(buerPlate && buerPlate.hasPlate && buerPlate.plate === 'plates/buer.jpg' && buerPlate.plateNo === 20 && buerPlate.legions === 50 && buerPlate.category === 'demon', 'Buer Plate 20');
+
+const belialDemon = ENTRIES.find(e => e.id === 'e516-belial');
+assert.ok(belialDemon && belialDemon.category === 'demon' && belialDemon.legions === 80, 'Bélial 80 legions');
+
+const bifronsDemon = ENTRIES.find(e => e.id === 'e577-bifrons');
+assert.ok(bifronsDemon && bifronsDemon.hasPlate && bifronsDemon.category === 'demon' && bifronsDemon.legions === 26, 'Bifrons 26 legions illustrated');
+
+const buneDemon = ENTRIES.find(e => e.id === 'e728-bune');
+assert.ok(buneDemon && buneDemon.category === 'demon' && buneDemon.legions === 30, 'Bune 30 legions');
+
+const bythiesEnd = ENTRIES.find(e => e.id === 'e741-bythies');
+assert.ok(bythiesEnd && bythiesEnd.letter === 'B' && bythiesEnd.category === 'crossref', 'Bythies ends B section');
+
+for (const be of bEntries) {
+  assert.ok(!be.nameKoShort.includes(' / '), `No inner slash in B shortKo: ${be.id}`);
+  assert.ok(!/[가-힣]/.test(be.nameEn || ''), `No Korean leaked into B nameEn: ${be.id}`);
+  assert.ok(!/^[A-Za-z]/.test((be.description || '').trim()), `No English lead in B description: ${be.id}`);
+  assert.ok(be.domains && be.domains.length >= 2, `At least 2 domains for B entry: ${be.id}`);
+}
+
 // C section audit assertions (475 entries, 40 illustrated)
 const cEntries = ENTRIES.filter(e => e.letter === 'C');
 assert.equal(cEntries.length, 475, 'C section must contain exactly 475 entries (after B/C boundary fix: Caaba to Cyrano de Bergerac)');

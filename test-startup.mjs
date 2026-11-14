@@ -71,7 +71,7 @@ async function run(initial,native=false){
   for(const fn of handlers.input||[]){
     fn({target:{id:'search-input',value:'Buer'}});
   }
-  assert.ok(main.innerHTML.includes('부에르 [Buer]'));
+  assert.ok(main.innerHTML.includes('부에르') && main.innerHTML.includes('Buer / Buer]'));
   for(const fn of handlers.input||[]){
     fn({target:{id:'search-input',value:''}});
   }
