@@ -1524,8 +1524,8 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 .detail-appearance-box p {
   margin: 0;
   font-size: 0.95rem;
-  text-align: justify;
-  word-break: normal;
+  text-align: left;
+  word-break: keep-all;
   overflow-wrap: break-word;
 }
 
@@ -1540,8 +1540,8 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 
 .detail-paragraph {
   margin: 0;
-  text-align: justify;
-  word-break: normal;
+  text-align: left;
+  word-break: keep-all;
   overflow-wrap: break-word;
 }
 
