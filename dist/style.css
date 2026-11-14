@@ -1524,6 +1524,9 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 .detail-appearance-box p {
   margin: 0;
   font-size: 0.95rem;
+  text-align: justify;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .detail-translation {
@@ -1537,7 +1540,9 @@ main:has(.page-flip-stage) > .entry-detail-page * {
 
 .detail-paragraph {
   margin: 0;
+  text-align: justify;
   word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 /* Collapsible French Quote Box (Classical 1863 Box) */
