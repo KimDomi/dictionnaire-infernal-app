@@ -45,6 +45,12 @@ const tabEntryIds={
   bookmarks:null
 };
 
+const tabOpenedEntryIds={
+  dictionary:null,
+  gallery:null,
+  bookmarks:null
+};
+
 const tabScrollY={
   dictionary:0,
   gallery:0,
@@ -786,12 +792,14 @@ function render(){
 function openEntryPage(entryId,pushHistory=true,dir=null){
   const entry=ENTRY_MAP.get(entryId);
   if(!entry)return;
-  if(!activeEntryId&&typeof window!=='undefined'){
+  const wasInList=!activeEntryId;
+  if(wasInList&&typeof window!=='undefined'){
     tabScrollY[activeTab]=window.scrollY||0;
   }
   activeEntryId=entry.id;
   if(activeTab in tabEntryIds){
     tabEntryIds[activeTab]=entry.id;
+    if(wasInList)tabOpenedEntryIds[activeTab]=entry.id;
   }
   if(!state.readIds.includes(entry.id)){
     state.readIds.push(entry.id);
@@ -809,11 +817,46 @@ function openEntryPage(entryId,pushHistory=true,dir=null){
   }
 }
 
+function scrollToListEntry(entryId){
+  if(!mainEl||typeof mainEl.querySelectorAll!=='function')return false;
+  const cards=mainEl.querySelectorAll('[data-action="open-entry"]');
+  let targetCard=null;
+  for(const el of cards||[]){
+    if(el?.dataset?.id===entryId){
+      targetCard=el;
+      break;
+    }
+  }
+  if(!targetCard||typeof targetCard.getBoundingClientRect!=='function')return false;
+  if(typeof window==='undefined')return false;
+  const rect=targetCard.getBoundingClientRect();
+  const navEl=typeof document!=='undefined'?document.querySelector?.('nav[aria-label="주 메뉴"]'):null;
+  const navHeight=navEl?.getBoundingClientRect?.()?.height||76;
+  const viewportH=window.innerHeight||800;
+  const usableH=Math.max(200,viewportH-navHeight);
+  const currentScroll=window.scrollY??window.pageYOffset??0;
+  const targetTop=Math.max(0,currentScroll+rect.top-Math.max(16,(usableH-rect.height)/2));
+  window.scrollTo?.({top:targetTop,behavior:'instant'});
+  tabScrollY[activeTab]=window.scrollY??targetTop;
+  return true;
+}
+
 function closeEntryPage(fromPopState=false){
   if(!activeEntryId)return;
+  const lastEntryId=activeEntryId;
+  const openedEntryId=activeTab in tabOpenedEntryIds?tabOpenedEntryIds[activeTab]:null;
+  const movedEntry=Boolean(lastEntryId&&(!openedEntryId||lastEntryId!==openedEntryId));
   activeEntryId=null;
   if(activeTab in tabEntryIds){
     tabEntryIds[activeTab]=null;
+    tabOpenedEntryIds[activeTab]=null;
+  }
+  if(movedEntry&&activeTab==='dictionary'){
+    const list=filterEntries({query:searchQuery,category:activeCategory,letter:activeLetter,sort:activeSort});
+    const idx=list.findIndex(item=>item.id===lastEntryId);
+    if(idx>=visibleLimit){
+      visibleLimit=Math.ceil((idx+1)/PAGE_STEP)*PAGE_STEP;
+    }
   }
   if(!fromPopState&&typeof window!=='undefined'&&window.location?.hash?.startsWith('#entry=')){
     try{
@@ -821,6 +864,7 @@ function closeEntryPage(fromPopState=false){
     }catch{}
   }
   render();
+  if(movedEntry&&scrollToListEntry(lastEntryId))return;
   if(typeof window!=='undefined'){
     window.scrollTo?.({top:tabScrollY[activeTab]||0,behavior:'instant'});
   }
@@ -1077,7 +1121,7 @@ document.addEventListener('click',event=>{
       }
       return;
     }
-    if(typeof window!=='undefined'){
+    if(!activeEntryId&&typeof window!=='undefined'){
       tabScrollY[activeTab]=window.scrollY||0;
     }
     activeTab=tab;

@@ -174,10 +174,13 @@ async function run(initial,native=false){
   // Clicking active tab on detail page acts like close-entry (back to list)
   click({tab:'dictionary'});
   assert.ok(main.innerHTML.includes('class="entry-list"'));
-  click({action:'open-entry',id:'buer'});
+  click({action:'open-entry',id:'e1-aaron'});
   assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
+  // Move to an entry well past the initial 80-item visibleLimit, then return to list
+  click({action:'open-entry',id:'buer'});
   click({tab:'dictionary'});
   assert.ok(main.innerHTML.includes('class="entry-list"'),'Clicking dictionary tab in detail page should return to dictionary list');
+  assert.ok(main.innerHTML.includes('data-id="buer"'),'Dictionary list should expand to show navigated entry');
   assert.equal(header.textContent,'지옥사전');
 }
 
