@@ -582,9 +582,10 @@ function renderSettingsTab(){
 }
 
 /* ---------- Realistic paper page-flip ----------
- * The outgoing card is snapshotted before re-render. A 3D paper leaf inside mainEl
- * flips around the book spine with curvature arching, dynamic traveling sheen,
- * an authentic 1863 antique parchment reverse, and underlying cast shadow.
+ * The outgoing .entry-detail-page (including .detail-footer buttons) is snapshotted
+ * before re-render along with its viewport scroll position. A fixed viewport-bound 3D
+ * paper leaf flips around the book spine without jumping the outgoing page to top:0
+ * or omitting bottom controls, revealing the top of the incoming page underneath.
  *  next: outgoing page lifts from right edge, arches, and turns over to left.
  *  prev: previous page swings back from left stack onto the right.
  */
@@ -596,18 +597,67 @@ function capturePageForFlip(node){
   try{
     const rect=node.getBoundingClientRect();
     if(!rect||!rect.width||!rect.height)return null;
-    return {clone:node.cloneNode(true),rect};
+    const scrollY=typeof window!=='undefined'?(window.scrollY??window.pageYOffset??0):0;
+    const appEl=typeof document!=='undefined'?document.querySelector?.('.app'):null;
+    const headerEl=typeof document!=='undefined'?document.querySelector?.('header'):null;
+    const navEl=typeof document!=='undefined'?document.querySelector?.('nav[aria-label="주 메뉴"]'):null;
+    const appRect=appEl?.getBoundingClientRect?.()||mainEl?.getBoundingClientRect?.()||rect;
+    const headerRect=headerEl?.getBoundingClientRect?.()||null;
+    const mainRect=mainEl?.getBoundingClientRect?.()||rect;
+    const navRect=navEl?.getBoundingClientRect?.()||null;
+    let headerClone=null;
+    if(headerEl&&typeof headerEl.cloneNode==='function'){
+      headerClone=headerEl.cloneNode(true);
+      headerClone.removeAttribute?.('id');
+      headerClone.querySelectorAll?.('[id]')?.forEach?.(el=>el.removeAttribute('id'));
+      headerClone.setAttribute?.('aria-hidden','true');
+    }
+    return {
+      clone:node.cloneNode(true),
+      rect,
+      scrollY,
+      appRect,
+      headerRect,
+      headerClone,
+      mainRect,
+      navRect
+    };
   }catch{return null;}
 }
 
-function buildFlipFace(clone,extraClass){
+function buildFlipFace(page,extraClass,{includeHeader=false,scrollOffset=0}={}){
   const face=document.createElement('div');
   face.className=`page-flip-face ${extraClass}`;
+
+  const wrap=document.createElement('div');
+  wrap.className='page-flip-scroll-wrap';
+  if(scrollOffset){
+    wrap.style.transform=`translateY(${scrollOffset}px)`;
+  }
+
+  if(includeHeader&&page.headerClone){
+    const hdr=page.headerClone.cloneNode(true);
+    if(page.headerRect?.height){
+      hdr.style.height=`${page.headerRect.height}px`;
+    }
+    wrap.appendChild(hdr);
+  }
+
+  const mirror=document.createElement('div');
+  mirror.className='page-flip-main-mirror';
+
+  const clone=page.clone.cloneNode(true);
   clone.classList?.remove?.('page-turn-next','page-turn-prev');
   clone.setAttribute?.('aria-hidden','true');
   clone.style.margin='0';
   clone.style.width='100%';
-  face.appendChild(clone);
+  if(page.rect?.height){
+    clone.style.minHeight=`${page.rect.height}px`;
+  }
+  mirror.appendChild(clone);
+  wrap.appendChild(mirror);
+  face.appendChild(wrap);
+
   const sheen=document.createElement('div');
   sheen.className='page-flip-sheen';
   face.appendChild(sheen);
@@ -623,34 +673,42 @@ function cancelPageFlip(){
 
 function schedulePageFlip(dir,oldPage){
   if(typeof document==='undefined'||typeof document.createElement!=='function'||!mainEl)return;
-  const raf=typeof requestAnimationFrame==='function'?requestAnimationFrame:(fn=>setTimeout(fn,0));
-  raf(()=>{
-    try{runPageFlip(dir,oldPage);}catch{cancelPageFlip();}
-  });
+  try{runPageFlip(dir,oldPage);}catch{cancelPageFlip();}
 }
 
 function runPageFlip(dir,oldPage){
   cancelPageFlip();
   if(!mainEl)return;
-  const newTarget=mainEl.querySelector?.('.detail-card')||mainEl.querySelector?.('.entry-detail-page');
+  const newTarget=mainEl.querySelector?.('.entry-detail-page')||mainEl.querySelector?.('.detail-card');
   if(!newTarget)return;
   const newPage=capturePageForFlip(newTarget);
   if(!newPage)return;
 
-  const mainRect=mainEl.getBoundingClientRect();
-  const height=Math.round(Math.max(oldPage.rect.height,newPage.rect.height,mainRect.height));
+  const isScrolled=oldPage.scrollY>1||Boolean(oldPage.headerRect&&oldPage.headerRect.top<-1);
+  const includeHeader=isScrolled&&Boolean(oldPage.headerClone);
+  const stageTop=isScrolled?0:Math.max(0,oldPage.mainRect.top);
+  const navTop=(newPage.navRect&&newPage.navRect.top>stageTop)
+    ?newPage.navRect.top
+    :((oldPage.navRect&&oldPage.navRect.top>stageTop)?oldPage.navRect.top:null);
+  const fallbackBottom=(typeof window!=='undefined'&&window.innerHeight)?window.innerHeight:oldPage.mainRect.bottom;
+  const stageHeight=Math.max(100,(navTop??fallbackBottom)-stageTop);
+  const targetAppRect=newPage.appRect||oldPage.appRect;
+  const mainPadTop=typeof getComputedStyle==='function'?(parseFloat(getComputedStyle(mainEl).paddingTop)||16):16;
+  const headerHeight=includeHeader&&oldPage.headerRect?oldPage.headerRect.height:0;
+  const oldOffset=oldPage.rect.top-(stageTop+headerHeight+mainPadTop);
 
   const stage=document.createElement('div');
-  stage.className=`page-flip-stage page-flip-${dir}`;
+  stage.className=`page-flip-stage page-flip-${dir}${isScrolled?' is-scrolled':''}`;
   stage.setAttribute('aria-hidden','true');
-  stage.style.left='0';
-  stage.style.top='0';
-  stage.style.width='100%';
-  stage.style.height=`${height}px`;
+  stage.style.left=`${targetAppRect.left}px`;
+  stage.style.top=`${stageTop}px`;
+  stage.style.width=`${targetAppRect.width}px`;
+  stage.style.height=`${stageHeight}px`;
   stage.style.setProperty('--flip-ms',`${PAGE_FLIP_MS}ms`);
 
   const underPage=dir==='prev'?oldPage:newPage;
-  const under=buildFlipFace(underPage.clone,'page-flip-under');
+  const underOffset=dir==='prev'?oldOffset:0;
+  const under=buildFlipFace(underPage,'page-flip-under',{includeHeader,scrollOffset:underOffset});
   const underShadow=document.createElement('div');
   underShadow.className='page-flip-under-shadow';
   under.appendChild(underShadow);
@@ -659,7 +717,8 @@ function runPageFlip(dir,oldPage){
   const leaf=document.createElement('div');
   leaf.className='page-flip-leaf';
   const frontSrc=dir==='prev'?newPage:oldPage;
-  leaf.appendChild(buildFlipFace(frontSrc.clone,'page-flip-front'));
+  const frontOffset=dir==='prev'?0:oldOffset;
+  leaf.appendChild(buildFlipFace(frontSrc,'page-flip-front',{includeHeader,scrollOffset:frontOffset}));
 
   const back=document.createElement('div');
   back.className='page-flip-face page-flip-back';
@@ -680,7 +739,9 @@ function runPageFlip(dir,oldPage){
 function render(){
   if(!mainEl)return;
   const flipDir=settings.animations?pendingPageTurnDirection:null;
-  const flipOldPage=flipDir?capturePageForFlip(mainEl.querySelector?.('.detail-card')||mainEl.querySelector?.('.entry-detail-page')):null;
+  cancelPageFlip();
+  const flipTarget=mainEl.querySelector?.('.entry-detail-page')||mainEl.querySelector?.('.detail-card');
+  const flipOldPage=flipDir?capturePageForFlip(flipTarget):null;
   const curCat=mainEl.querySelector?.('.category-pills');
   if(curCat){
     if(activeTab==='gallery')savedPillScrolls.galleryCategory=curCat.scrollLeft;
