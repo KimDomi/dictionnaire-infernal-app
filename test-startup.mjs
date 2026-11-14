@@ -64,14 +64,14 @@ async function run(initial,native=false){
   await mod.evaluate();
 
   assert.ok(main.innerHTML.includes('class="entry-list"'));
-  assert.ok(main.innerHTML.includes('아론') && main.innerHTML.includes('Aaron / Aaron'));
-  assert.ok(main.innerHTML.includes('아바리스') && main.innerHTML.includes('Abaris / Abaris'));
+  assert.ok(main.innerHTML.includes('아론 [Aaron]'));
+  assert.ok(main.innerHTML.includes('아바리스 [Abaris]'));
 
   // Test search input without destroying active input
   for(const fn of handlers.input||[]){
     fn({target:{id:'search-input',value:'Buer'}});
   }
-  assert.ok(main.innerHTML.includes('부에르') && main.innerHTML.includes('Buer / Buer]'));
+  assert.ok(main.innerHTML.includes('부에르 [Buer]'));
   for(const fn of handlers.input||[]){
     fn({target:{id:'search-input',value:''}});
   }

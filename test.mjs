@@ -14,21 +14,42 @@ for(const entry of ENTRIES){
   }
 }
 
+// Verify global headword invariants across all 3,810 entries (no leaked body parentheticals or redundant [Fr / Fr])
+const foldLatin = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/œ/gi, 'oe').replace(/æ/gi, 'ae').replace(/[’']/g, "'").toLowerCase().trim();
+for (const entry of ENTRIES) {
+  assert.ok(entry.nameKoShort && !/[\[\]]/.test(entry.nameKoShort), `Bracket leaked into nameKoShort: ${entry.id} -> ${entry.nameKoShort}`);
+  const bOpen = entry.nameKo.indexOf('[');
+  assert.ok(bOpen > 0 && bOpen === entry.nameKo.lastIndexOf('[') && entry.nameKo.endsWith(']'), `Malformed bracket block in nameKo: ${entry.id} -> ${entry.nameKo}`);
+  const koPrefix = entry.nameKo.slice(0, bOpen).trim();
+  assert.ok(!/참조/.test(entry.nameKoShort) && !/참조/.test(koPrefix), `Cross-reference instruction leaked into headword: ${entry.id} -> ${entry.nameKo}`);
+  assert.ok(!/\s\([^)]{12,}\)/.test(entry.nameKoShort) && !/\s\([^)]{12,}\)/.test(koPrefix), `Long explanatory parenthetical leaked into headword: ${entry.id} -> ${entry.nameKo}`);
+  const bracketBody = entry.nameKo.slice(bOpen + 1, -1).trim();
+  if (bracketBody.includes(' / ')) {
+    const parts = bracketBody.split(' / ');
+    if (parts.length === 2) {
+      const f0 = foldLatin(parts[0]);
+      const f1 = foldLatin(parts[1]);
+      assert.notEqual(f0, f1, `Identical [Fr / Fr] duplication in headword: ${entry.id} -> ${entry.nameKo}`);
+      assert.ok(!f1.startsWith(f0 + ' ('), `Redundant [Fr / Fr (...)] prefix duplication in headword: ${entry.id} -> ${entry.nameKo}`);
+    }
+  }
+}
+
 // Verify curated headword bracket notation and parenthetical rules in A
 const aigle = ENTRIES.find(e => e.nameFr === 'Aigle');
-assert.ok(aigle && aigle.nameKoShort.startsWith('독수리 (') && aigle.nameKo.includes('[Aigle / Aigle (Eagle)]'), 'Rule 1: 독수리 [Aigle / Aigle (Eagle)]');
+assert.ok(aigle && aigle.nameKo === '독수리 [Aigle / Eagle]' && aigle.nameKoShort === '독수리', 'Rule 1: 독수리 [Aigle / Eagle]');
 
 const accouchements = ENTRIES.find(e => e.nameFr === 'Accouchements prodigieux');
-assert.ok(accouchements && accouchements.nameKoShort.startsWith('불가사의한 다태 출산 (') && accouchements.nameKo.includes('Prodigious Births'), 'Rule 1: 불가사의한 다태 출산');
+assert.ok(accouchements && accouchements.nameKo === '불가사의한 출산 [Accouchements prodigieux / Prodigious Births]' && accouchements.nameKoShort === '불가사의한 출산', 'Rule 1: 불가사의한 출산');
 
 const adamAbbe = ENTRIES.find(e => e.nameFr === 'Adam (l’abbé)');
-assert.ok(adamAbbe && adamAbbe.nameKoShort.startsWith('수도원장 아담 (') && adamAbbe.nameKo.includes('[Adam (l’abbé) / Adam (l’abbé)]'), 'Rule 2: 수도원장 아담');
+assert.ok(adamAbbe && adamAbbe.nameKo === '수도원장 아담 [Adam (l’abbé)]' && adamAbbe.nameKoShort === '수도원장 아담', 'Rule 2: 수도원장 아담');
 
 const abadie = ENTRIES.find(e => e.nameFr === 'Abadie (Jeannette d’)');
-assert.ok(abadie && abadie.nameKoShort.startsWith('자네뜨 다바디 (') && abadie.nameKo.includes('[Abadie (Jeannette d’) / Jeannette d’Abadie]'), 'Rule 2: 자네뜨 다바디');
+assert.ok(abadie && abadie.nameKo === '자네뜨 다바디 [Abadie (Jeannette d’)]' && abadie.nameKoShort === '자네뜨 다바디', 'Rule 2: 자네뜨 다바디');
 
 const abraxas = ENTRIES.find(e => e.id === 'abraxas');
-assert.ok(abraxas && abraxas.nameKoShort.startsWith('아브라카스·아브락사스 (') && abraxas.nameKo.includes('[Abracax / Abracax (Abraxas)]'), 'Rule 3: 아브라카스·아브락사스');
+assert.ok(abraxas && abraxas.nameKo === '아브라카스 또는 아브락사스 [Abracax, Abraxas]' && abraxas.nameKoShort === '아브라카스 또는 아브락사스', 'Rule 3: 아브라카스 또는 아브락사스');
 
 // Verify the 4 Jean entries disambiguation on page 373
 const jeanMagician = ENTRIES.find(e => e.id === 'e2167-jean');
@@ -907,7 +928,7 @@ const helene1 = ENTRIES.find(e => e.id === 'e1976-helene');
 assert.ok(helene1 && helene1.nameKo.includes('아디아베네의 헬레나') && helene1.nameFr === 'Hélène, Oléine', 'Disambiguated Helena of Adiabene');
 
 const helene2 = ENTRIES.find(e => e.id === 'e1977-helene');
-assert.ok(helene2 && helene2.nameKo.includes('시몬 마구스의 연인 셀레네') && helene2.nameFr === 'Hélène, Sélène', 'Disambiguated Helena companion of Simon Magus');
+assert.ok(helene2 && helene2.nameKo.includes('헬레나 또는 셀레네') && helene2.nameFr === 'Hélène, Sélène', 'Disambiguated Helena companion of Simon Magus');
 
 const hypnotisme = ENTRIES.find(e => e.id === 'e2089-hypnotisme');
 assert.ok(hypnotisme && hypnotisme.letter === 'H' && hypnotisme.nameKo.includes('최면술'), 'Hypnotisme ends H section');
@@ -1549,7 +1570,7 @@ const quivogne = ENTRIES.find(e => e.id === 'e3171-quivognefemme');
 assert.ok(quivogne && quivogne.hasPlate && quivogne.plate === 'plates/e3171-quivogne-femme.jpg' && quivogne.category === 'person' && quivogne.nameKo.includes('키보뉴 부인') && !quivogne.nameKo.includes('펨 키보느'), 'Quivogne femme translated as Madame Quivogne, not femme MT');
 
 const searchAbaris=filterEntries({query:'Abaris'});
-assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스')&&e.nameKo.includes('[Abaris / Abaris]')));
+assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
 
 const searchBuer=filterEntries({query:'Buer'});
 assert.ok(searchBuer.some(e=>e.id==='buer'));
