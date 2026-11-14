@@ -504,6 +504,70 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// H section audit assertions (154 entries, 16 illustrated)
+const hEntries = ENTRIES.filter(e => e.letter === 'H');
+assert.equal(hEntries.length, 154, 'H section must contain exactly 154 entries (after G/H boundary fix: Haagenti to Hypnotisme)');
+
+const hIllustrated = hEntries.filter(e => e.hasPlate);
+assert.equal(hIllustrated.length, 16, 'H section must contain exactly 16 illustrated entries');
+
+const haborymDemon = ENTRIES.find(e => e.id === 'haborym');
+assert.ok(haborymDemon && haborymDemon.hasPlate && haborymDemon.plate === 'plates/haborym.jpg' && haborymDemon.plateNo === 37 && haborymDemon.legions === 26 && haborymDemon.category === 'demon' && haborymDemon.nameKo.includes('하보림'), 'Haborym Plate 37 infernal duke with 26 legions');
+
+const haagentiDemon = ENTRIES.find(e => e.id === 'e1936-haagenti');
+assert.ok(haagentiDemon && haagentiDemon.category === 'demon' && haagentiDemon.legions === 33 && haagentiDemon.nameKo.includes('하겐티'), 'Haagenti Grand President with 33 legions');
+
+const halphasDemon = ENTRIES.find(e => e.id === 'e1946-halphas');
+assert.ok(halphasDemon && halphasDemon.category === 'demon' && halphasDemon.legions === 26 && halphasDemon.nameKo.includes('할파스'), 'Halphas infernal count with 26 legions');
+
+const hallucinationPlate = ENTRIES.find(e => e.id === 'e1945-hallucination');
+assert.ok(hallucinationPlate && hallucinationPlate.hasPlate && hallucinationPlate.plate === 'plates/e1945-hallucination.jpg' && hallucinationPlate.nameKo.includes('환각'), 'Hallucination illustrated');
+
+const haroldGermsonPlate = ENTRIES.find(e => e.id === 'e1959-haroldgermson');
+assert.ok(haroldGermsonPlate && haroldGermsonPlate.hasPlate && haroldGermsonPlate.plate === 'plates/e1959-harold-germson.jpg' && haroldGermsonPlate.nameKo.includes('하랄드'), 'Harold-Germson illustrated');
+
+const henriLeLionPlate = ENTRIES.find(e => e.id === 'e1995-henrilelion');
+assert.ok(henriLeLionPlate && henriLeLionPlate.hasPlate && henriLeLionPlate.plate === 'plates/e1995-henri-le-lion.jpg' && henriLeLionPlate.nameKo.includes('사자공 하인리히'), 'Henry the Lion illustrated');
+
+const hocquePlate = ENTRIES.find(e => e.id === 'e2038-hocque');
+assert.ok(hocquePlate && hocquePlate.hasPlate && hocquePlate.plate === 'plates/e2038-hocque.jpg' && hocquePlate.nameKo.includes('에티엔 오크'), 'Etienne Hocque illustrated');
+
+const hommeNoirPlate = ENTRIES.find(e => e.id === 'e2046-hommenoir');
+assert.ok(hommeNoirPlate && hommeNoirPlate.hasPlate && hommeNoirPlate.plate === 'plates/e2046-homme-noir.jpg' && hommeNoirPlate.category === 'demon' && hommeNoirPlate.nameKo.includes('검은 남자'), 'Black Man illustrated demon');
+
+const horoscopesToutFaits = ENTRIES.find(e => e.id === 'e2055-horoscopestoutfaits');
+assert.ok(horoscopesToutFaits && horoscopesToutFaits.hasPlate && horoscopesToutFaits.plate === 'plates/e2055-horoscopes-tout-faits.jpg' && horoscopesToutFaits.category === 'divination' && horoscopesToutFaits.nameKo.includes('기성 천궁도 운세표'), 'Ready-Made Horoscopes illustrated');
+
+const hyenePlate = ENTRIES.find(e => e.id === 'e2086-hyene');
+assert.ok(hyenePlate && hyenePlate.hasPlate && hyenePlate.plate === 'plates/e2086-hy-ne.jpg' && hyenePlate.nameKo.includes('하이에나'), 'Hyena and Hyaenia Stone illustrated');
+
+const henri3Fr = ENTRIES.find(e => e.id === 'e1989-henriiii');
+assert.ok(henri3Fr && henri3Fr.nameKo.includes('앙리 3세') && henri3Fr.nameFr === 'Henri III (Roi de France)', 'Disambiguated Henri III of France');
+
+const henri3De = ENTRIES.find(e => e.id === 'e1990-henriiii');
+assert.ok(henri3De && henri3De.nameKo.includes('하인리히 3세') && henri3De.nameFr === 'Henri III (Empereur d’Allemagne)', 'Disambiguated Henry III HRE');
+
+const henri4De = ENTRIES.find(e => e.id === 'e1991-henriiv');
+assert.ok(henri4De && henri4De.nameKo.includes('하인리히 4세') && henri4De.nameFr === 'Henri IV (Empereur d’Allemagne)', 'Disambiguated Henry IV HRE');
+
+const henri4En = ENTRIES.find(e => e.id === 'e1992-henriiv');
+assert.ok(henri4En && henri4En.nameKo.includes('헨리 4세') && henri4En.nameFr === 'Henri IV (Roi d’Angleterre)', 'Disambiguated Henry IV of England');
+
+const henri4Fr = ENTRIES.find(e => e.id === 'e1994-henriiv');
+assert.ok(henri4Fr && henri4Fr.nameKo.includes('앙리 4세') && henri4Fr.nameFr === 'Henri IV (Roi de France)', 'Disambiguated Henri IV of France');
+
+const helene1 = ENTRIES.find(e => e.id === 'e1976-helene');
+assert.ok(helene1 && helene1.nameKo.includes('아디아베네의 헬레나') && helene1.nameFr === 'Hélène, Oléine', 'Disambiguated Helena of Adiabene');
+
+const helene2 = ENTRIES.find(e => e.id === 'e1977-helene');
+assert.ok(helene2 && helene2.nameKo.includes('시몬 마구스의 연인 셀레네') && helene2.nameFr === 'Hélène, Sélène', 'Disambiguated Helena companion of Simon Magus');
+
+const hypnotisme = ENTRIES.find(e => e.id === 'e2089-hypnotisme');
+assert.ok(hypnotisme && hypnotisme.letter === 'H' && hypnotisme.nameKo.includes('최면술'), 'Hypnotisme ends H section');
+
+const gyromancie = ENTRIES.find(e => e.id === 'e1935-gyromancie');
+assert.ok(gyromancie && gyromancie.letter === 'G', 'Gyromancie moved from H to G at boundary');
+
 // I section audit assertions (59 entries, 11 illustrated)
 const iEntries = ENTRIES.filter(e => e.letter === 'I');
 assert.equal(iEntries.length, 59, 'I section must contain exactly 59 entries (after I/J boundary fix: Ialysiens to Iwangis)');
