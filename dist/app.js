@@ -534,7 +534,7 @@ function renderSettingsTab(){
         <div class="setting-label">
           <strong>1863년 프랑스어 원문 전문 병기</strong>
         </div>
-        <button type="button" class="${settings.showFrench?'primary':''}" data-action="toggle-french">
+        <button type="button" class="setting-toggle${settings.showFrench?' primary':''}" data-action="toggle-french" aria-pressed="${settings.showFrench?'true':'false'}">
           ${settings.showFrench?'표시 중':'숨김'}
         </button>
       </div>
@@ -543,7 +543,7 @@ function renderSettingsTab(){
         <div class="setting-label">
           <strong>열람 중 화면 켜짐 유지</strong>
         </div>
-        <button type="button" class="${settings.keepAwake?'primary':''}" data-action="toggle-awake">
+        <button type="button" class="setting-toggle${settings.keepAwake?' primary':''}" data-action="toggle-awake" aria-pressed="${settings.keepAwake?'true':'false'}">
           ${settings.keepAwake?'켜짐':'꺼짐'}
         </button>
       </div>
@@ -552,7 +552,7 @@ function renderSettingsTab(){
         <div class="setting-label">
           <strong>페이지 넘김 및 화면 애니메이션</strong>
         </div>
-        <button type="button" class="${settings.animations?'primary':''}" data-action="toggle-animations">
+        <button type="button" class="setting-toggle${settings.animations?' primary':''}" data-action="toggle-animations" aria-pressed="${settings.animations?'true':'false'}">
           ${settings.animations?'켜짐':'꺼짐'}
         </button>
       </div>
