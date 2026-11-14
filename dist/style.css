@@ -788,10 +788,13 @@ dialog#modal::backdrop {
 .page-flip-stage * {
   pointer-events: none !important;
   user-select: none !important;
+  transition: none !important;
 }
 
-main:has(.page-flip-stage) > .entry-detail-page {
+main:has(.page-flip-stage) > .entry-detail-page,
+main:has(.page-flip-stage) > .entry-detail-page * {
   visibility: hidden !important;
+  transition: none !important;
 }
 
 .page-flip-stage .detail-header {
@@ -1583,7 +1586,7 @@ main:has(.page-flip-stage) > .entry-detail-page {
   border-radius: 4px;
   background: rgba(197, 160, 89, 0.12);
   border: 1px solid rgba(197, 160, 89, 0.25);
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
 
 .french-card-trigger:hover .french-trigger-action {
