@@ -504,6 +504,121 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// I section audit assertions (59 entries, 11 illustrated)
+const iEntries = ENTRIES.filter(e => e.letter === 'I');
+assert.equal(iEntries.length, 59, 'I section must contain exactly 59 entries (after I/J boundary fix: Ialysiens to Iwangis)');
+
+const iIllustrated = iEntries.filter(e => e.hasPlate);
+assert.equal(iIllustrated.length, 11, 'I section must contain exactly 11 illustrated entries');
+
+const ipesDemon = ENTRIES.find(e => e.id === 'ipes');
+assert.ok(ipesDemon && ipesDemon.hasPlate && ipesDemon.plate === 'plates/ipes.jpg' && ipesDemon.plateNo === 38 && ipesDemon.legions === 36 && ipesDemon.category === 'demon' && ipesDemon.nameKo.includes('이페스'), 'Ipos Plate 38 infernal prince and count with 36 legions');
+
+const ibis = ENTRIES.find(e => e.id === 'e2092-ibis');
+assert.ok(ibis && ibis.hasPlate && ibis.plate === 'plates/e2092-ibis.jpg' && ibis.category === 'superstition' && ibis.nameKo.includes('이비스'), 'Ibis Egyptian sacred bird illustrated');
+
+const illuminesPlate = ENTRIES.find(e => e.id === 'e2100-illumines');
+assert.ok(illuminesPlate && illuminesPlate.hasPlate && illuminesPlate.plate === 'plates/e2100-illumin-s.jpg' && illuminesPlate.nameKo.includes('독일의 일루미나티'), 'Illuminati of Germany secret society illustrated');
+
+const imaginationPlate = ENTRIES.find(e => e.id === 'e2107-imagination');
+assert.ok(imaginationPlate && imaginationPlate.hasPlate && imaginationPlate.plate === 'plates/e2107-imagination.jpg' && imaginationPlate.nameKo.includes('상상력'), 'Imagination magical power illustrated');
+
+const immortalitePlate = ENTRIES.find(e => e.id === 'e2110-immortalite');
+assert.ok(immortalitePlate && immortalitePlate.hasPlate && immortalitePlate.plate === 'plates/e2110-immortalit.jpg' && immortalitePlate.nameKo.includes('불멸성'), 'Physical immortality delusion illustrated');
+
+const imprimeriePlate = ENTRIES.find(e => e.id === 'e2114-imprimeriel');
+assert.ok(imprimeriePlate && imprimeriePlate.hasPlate && imprimeriePlate.plate === 'plates/e2114-imprimerie-l.jpg' && imprimeriePlate.nameKo.includes('인쇄술'), 'Invention of printing and devil accusations illustrated');
+
+const infidelitePlate = ENTRIES.find(e => e.id === 'e2121-infidelite');
+assert.ok(infidelitePlate && infidelitePlate.hasPlate && infidelitePlate.plate === 'plates/e2121-infid-lit.jpg' && infidelitePlate.nameKo.includes('불륜 시험의 성배'), 'Cup of Suspicion ordeal of infidelity illustrated');
+
+const inquisitionPlate = ENTRIES.find(e => e.id === 'e2125-inquisition');
+assert.ok(inquisitionPlate && inquisitionPlate.hasPlate && inquisitionPlate.plate === 'plates/e2125-inquisition.jpg' && inquisitionPlate.category === 'person' && inquisitionPlate.nameKo.includes('이단심문소'), 'Holy Inquisition tribunal and torture illustrated');
+
+const interditPlate = ENTRIES.find(e => e.id === 'e2128-interdit');
+assert.ok(interditPlate && interditPlate.hasPlate && interditPlate.plate === 'plates/e2128-interdit.jpg' && interditPlate.nameKo.includes('성무정지령'), 'Papal interdict censure illustrated');
+
+const invisibilitePlate = ENTRIES.find(e => e.id === 'e2130-invisibilite');
+assert.ok(invisibilitePlate && invisibilitePlate.hasPlate && invisibilitePlate.plate === 'plates/e2130-invisibilit.jpg' && invisibilitePlate.category === 'grimoire' && invisibilitePlate.nameKo.includes('투명술'), 'Magic of invisibility illustrated');
+
+const isPlate = ENTRIES.find(e => e.id === 'e2137-is');
+assert.ok(isPlate && isPlate.hasPlate && isPlate.plate === 'plates/e2137-is.jpg' && isPlate.category === 'myth' && isPlate.nameKo.includes('이스'), 'Sunken city of Ys illustrated');
+
+const ialysiens = ENTRIES.find(e => e.id === 'e2090-ialysiens');
+assert.ok(ialysiens && ialysiens.category === 'myth' && ialysiens.nameKo.includes('이알리소스인'), 'Ialysians of Rhodes with evil eye');
+
+const iamen = ENTRIES.find(e => e.id === 'e2091-iamen');
+assert.ok(iamen && iamen.category === 'myth' && iamen.nameKo.includes('야마'), 'Yama Hindu god of death');
+
+const ichneumon = ENTRIES.find(e => e.id === 'e2094-ichneumon');
+assert.ok(ichneumon && ichneumon.category === 'superstition' && ichneumon.nameKo.includes('이크뉴몬'), 'Ichneumon Egyptian sacred mongoose');
+
+const ichthyomancie = ENTRIES.find(e => e.id === 'e2095-ichthyomancie');
+assert.ok(ichthyomancie && ichthyomancie.category === 'divination' && ichthyomancie.nameKo.includes('어점'), 'Ichthyomancy fish divination');
+
+const ida = ENTRIES.find(e => e.id === 'e2096-ida');
+assert.ok(ida && ida.category === 'person' && ida.nameKo.includes('이다'), 'Blessed Ida of Louvain');
+
+const idiot = ENTRIES.find(e => e.id === 'e2098-idiot');
+assert.ok(idiot && idiot.category === 'superstition' && idiot.nameKo.includes('백치'), 'Scottish folklore on innocent idiots');
+
+const ifurinn = ENTRIES.find(e => e.id === 'e2101-ifurinn');
+assert.ok(ifurinn && ifurinn.category === 'myth' && ifurinn.nameKo.includes('이푸린'), 'Ifurinn Gaulish underworld');
+
+const ileFantome = ENTRIES.find(e => e.id === 'e2103-ilefantome');
+assert.ok(ileFantome && ileFantome.category === 'myth' && ileFantome.nameKo.includes('유령섬'), 'Phantom Island of Saint Brendan');
+
+const illuminesText = ENTRIES.find(e => e.id === 'e2105-illumines');
+assert.ok(illuminesText && illuminesText.category === 'person' && illuminesText.nameKo.includes('일루미나티'), 'Illuminati sect text');
+
+const imagesDeCire = ENTRIES.find(e => e.id === 'e2106-imagesdecire');
+assert.ok(imagesDeCire && imagesDeCire.category === 'grimoire' && imagesDeCire.nameKo.includes('밀랍 인형'), 'Wax images in envoûtement');
+
+const impair = ENTRIES.find(e => e.id === 'e2111-impair');
+assert.ok(impair && impair.category === 'superstition' && impair.nameKo.includes('홀수'), 'Superstition of odd numbers');
+
+const incombustibles = ENTRIES.find(e => e.id === 'e2116-incombustibles');
+assert.ok(incombustibles && incombustibles.category === 'person' && incombustibles.nameKo.includes('불에 타지 않는 자들'), 'Incombustible Saludadores');
+
+const incubes = ENTRIES.find(e => e.id === 'e2118-incubes');
+assert.ok(incubes && incubes.category === 'demon' && incubes.nameKo.includes('인쿠부스'), 'Incubi male night demons');
+
+const incubo = ENTRIES.find(e => e.id === 'e2119-incubo');
+assert.ok(incubo && incubo.category === 'myth' && incubo.nameKo.includes('인쿠보'), 'Incubo Roman guardian of earth treasures');
+
+const infernaux = ENTRIES.find(e => e.id === 'e2120-infernaux');
+assert.ok(infernaux && infernaux.category === 'person' && infernaux.nameKo.includes('지옥파'), 'Infernaux Lutheran theological controversy');
+
+const inisFail = ENTRIES.find(e => e.id === 'e2123-inisfail');
+assert.ok(inisFail && inisFail.category === 'myth' && inisFail.nameKo.includes('운명의 돌'), 'Stone of Destiny Lia Fail');
+
+const insensibilite = ENTRIES.find(e => e.id === 'e2126-insensibilite');
+assert.ok(insensibilite && insensibilite.category === 'superstition' && insensibilite.nameKo.includes('무통각'), 'Witch insensibility stigma diabolicum');
+
+const institor = ENTRIES.find(e => e.id === 'e2127-institorhenri');
+assert.ok(institor && institor.category === 'person' && institor.nameKo.includes('하인리히 크레머'), 'Heinrich Kramer author of Malleus Maleficarum');
+
+const intersignes = ENTRIES.find(e => e.id === 'e2129-intersignes');
+assert.ok(intersignes && intersignes.category === 'superstition' && intersignes.nameKo.includes('인터신'), 'Intersignes Breton death omens');
+
+const irmentrude = ENTRIES.find(e => e.id === 'e2136-irmentrude');
+assert.ok(irmentrude && irmentrude.category === 'myth' && irmentrude.nameKo.includes('이르멘트루트'), 'Irmentrude legend of the Welf dynasty');
+
+const islandais = ENTRIES.find(e => e.id === 'e2141-islandais');
+assert.ok(islandais && islandais.category === 'superstition' && islandais.nameKo.includes('아이슬란드인'), 'Icelandic clairvoyance magic');
+
+const mainfroy = ENTRIES.find(e => e.id === 'e2142-isleenjourdainmainfroydel');
+assert.ok(mainfroy && mainfroy.category === 'person' && mainfroy.nameKo.includes('맹프로이'), 'Mainfroy de l Isle en Jourdain Tour de Nesle');
+
+const ithyphalle = ENTRIES.find(e => e.id === 'e2145-ithyphalle');
+assert.ok(ithyphalle && ithyphalle.category === 'superstition' && ithyphalle.nameKo.includes('이티팔로스'), 'Ithyphallus fascinum amulet');
+
+const ivoLeNoir = ENTRIES.find(e => e.id === 'e2146-ivolenoir');
+assert.ok(ivoLeNoir && ivoLeNoir.category === 'myth' && ivoLeNoir.nameKo.includes('검은 이보'), 'Ivo the Black sleeping king of Montenegro');
+
+const iwangis = ENTRIES.find(e => e.id === 'e2148-iwangis');
+assert.ok(iwangis && iwangis.category === 'person' && iwangis.nameKo.includes('이완기스'), 'Iwangis of Moluccas cannibal sorcerers');
+
 // J section audit assertions (74 entries, 8 illustrated)
 const jEntries = ENTRIES.filter(e => e.letter === 'J');
 assert.equal(jEntries.length, 74, 'J section must contain exactly 74 entries (after I/J boundary fix and Jurieu transfer)');
