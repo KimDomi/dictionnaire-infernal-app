@@ -504,6 +504,54 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// D section audit assertions (189 entries, 17 illustrated)
+const dEntries = ENTRIES.filter(e => e.letter === 'D');
+assert.equal(dEntries.length, 189, 'D section must contain exactly 189 entries (after C/D boundary fix: Dabaïda to Dzivogeon)');
+
+const dIllustrated = dEntries.filter(e => e.hasPlate);
+assert.equal(dIllustrated.length, 17, 'D section must contain exactly 17 illustrated entries');
+
+const cyranoC = ENTRIES.find(e => e.id === 'e1216-cyranodebergerac');
+assert.ok(cyranoC && cyranoC.letter === 'C', 'Cyrano de Bergerac moved from D to C at C/D boundary');
+
+const dabaidaD = ENTRIES.find(e => e.id === 'e1217-dabaida');
+assert.ok(dabaidaD && dabaidaD.letter === 'D' && dabaidaD.category === 'myth' && dabaidaD.nameKo.includes('다바이다'), 'Dabaïda starts D section');
+
+const sabbathPlate = ENTRIES.find(e => e.id === 'sabbath');
+assert.ok(sabbathPlate && sabbathPlate.hasPlate && sabbathPlate.plate === 'plates/sabbath.jpg' && sabbathPlate.plateNo === 27 && sabbathPlate.category === 'superstition' && sabbathPlate.nameKo.includes('사바트의 춤'), 'Danse du sabbat Plate 27');
+
+const deumusPlate = ENTRIES.find(e => e.id === 'deumus');
+assert.ok(deumusPlate && deumusPlate.hasPlate && deumusPlate.plate === 'plates/deumus.jpg' && deumusPlate.plateNo === 28 && deumusPlate.category === 'demon' && deumusPlate.subCategory === 'idol' && deumusPlate.nameKo.includes('데우무스'), 'Deumus Plate 28 Calicut idol demon');
+
+const danseFeesPlate = ENTRIES.find(e => e.id === 'e1234-dansedesfees');
+assert.ok(danseFeesPlate && danseFeesPlate.hasPlate && danseFeesPlate.plate === 'plates/e1234-danse-des-f-es.jpg' && danseFeesPlate.nameFr === 'Danse des fées (Gravure)', 'Danse des fées plate entry preserved & disambiguated');
+
+const desbordesPlate = ENTRIES.find(e => e.id === 'e1295-desbordes');
+assert.ok(desbordesPlate && desbordesPlate.hasPlate && desbordesPlate.plate === 'plates/e1295-desbordes.jpg' && desbordesPlate.nameFr === 'Desbordes (Gravure)', 'Desbordes plate entry preserved & disambiguated');
+
+const duergarsPlate = ENTRIES.find(e => e.id === 'e1389-duergars');
+assert.ok(duergarsPlate && duergarsPlate.hasPlate && duergarsPlate.plate === 'plates/e1389-duergars.jpg' && duergarsPlate.nameFr === 'Duergars (Gravure)', 'Duergars plate entry preserved & disambiguated');
+
+const desfontaines1 = ENTRIES.find(e => e.id === 'e1294-desfontaines');
+const desfontaines2 = ENTRIES.find(e => e.id === 'e1296-desfontaines');
+assert.ok(desfontaines1 && desfontaines2 && desfontaines1.nameFr === 'Desfontaines (Pacte I)' && desfontaines2.nameFr === 'Desfontaines (Apparition II)', 'Desfontaines 2 parts disambiguated');
+
+const diablePlate = ENTRIES.find(e => e.id === 'e1312-diable');
+assert.ok(diablePlate && diablePlate.hasPlate && diablePlate.category === 'demon' && diablePlate.nameKo.includes('악마'), 'Diable major entry with illustration');
+
+const dragonPlate = ENTRIES.find(e => e.id === 'e1370-dragon');
+assert.ok(dragonPlate && dragonPlate.hasPlate && dragonPlate.category === 'myth' && dragonPlate.nameKo.includes('용과 드래곤'), 'Dragon illustrated entry');
+
+const dualismeSuite = ENTRIES.find(e => e.id === 'e1390-leslaponsdisentquedieu');
+assert.ok(dualismeSuite && dualismeSuite.nameFr === 'Dualisme (Suite : Les Lapons)' && dualismeSuite.nameKo.includes('이원론 2부'), 'Dualisme OCR split part 2 preserved cleanly');
+
+for (const de of dEntries) {
+  assert.ok(!de.nameKoShort.includes(' / '), `No inner slash in D shortKo: ${de.id}`);
+  assert.ok(!/[가-힣]/.test(de.nameEn || ''), `No Korean leaked into D nameEn: ${de.id}`);
+  assert.ok(!/^[A-Za-z]/.test((de.description || '').trim()), `No English lead in D description: ${de.id}`);
+  assert.ok(de.domains && de.domains.length >= 2, `At least 2 domains for D entry: ${de.id}`);
+}
+
 // E section audit assertions (164 entries, 17 illustrated)
 const eEntries = ENTRIES.filter(e => e.letter === 'E');
 assert.equal(eEntries.length, 164, 'E section must contain exactly 164 entries (after D/E boundary fix: Eatuas to Ézéchiel)');
