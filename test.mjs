@@ -14,21 +14,21 @@ for(const entry of ENTRIES){
   }
 }
 
-// Verify the user's 9 rules examples in entries
+// Verify curated headword bracket notation and parenthetical rules in A
 const aigle = ENTRIES.find(e => e.nameFr === 'Aigle');
-assert.ok(aigle && aigle.nameKo === '독수리 [Aigle / Eagle]', 'Rule 1: 독수리 [Aigle / Eagle]');
+assert.ok(aigle && aigle.nameKoShort.startsWith('독수리 (') && aigle.nameKo.includes('[Aigle / Aigle (Eagle)]'), 'Rule 1: 독수리 [Aigle / Aigle (Eagle)]');
 
 const accouchements = ENTRIES.find(e => e.nameFr === 'Accouchements prodigieux');
-assert.ok(accouchements && accouchements.nameKo === '불가사의한 출산 [Accouchements Prodigieux / Prodigious Births]', 'Rule 1: 불가사의한 출산 [Accouchements Prodigieux / Prodigious Births]');
+assert.ok(accouchements && accouchements.nameKoShort.startsWith('불가사의한 다태 출산 (') && accouchements.nameKo.includes('Prodigious Births'), 'Rule 1: 불가사의한 다태 출산');
 
 const adamAbbe = ENTRIES.find(e => e.nameFr === 'Adam (l’abbé)');
-assert.ok(adamAbbe && adamAbbe.nameKo === '수도원장 아담 [Adam (L’Abbé)]', 'Rule 2: 수도원장 아담 [Adam (L’Abbé)]');
+assert.ok(adamAbbe && adamAbbe.nameKoShort.startsWith('수도원장 아담 (') && adamAbbe.nameKo.includes('[Adam (l’abbé) / Adam (l’abbé)]'), 'Rule 2: 수도원장 아담');
 
 const abadie = ENTRIES.find(e => e.nameFr === 'Abadie (Jeannette d’)');
-assert.ok(abadie && abadie.nameKo === '자네뜨 다바디 [Abadie (Jeannette d’)]', 'Rule 2: 자네뜨 다바디 [Abadie (Jeannette d’)]');
+assert.ok(abadie && abadie.nameKoShort.startsWith('자네뜨 다바디 (') && abadie.nameKo.includes('[Abadie (Jeannette d’) / Jeannette d’Abadie]'), 'Rule 2: 자네뜨 다바디');
 
 const abraxas = ENTRIES.find(e => e.id === 'abraxas');
-assert.ok(abraxas && abraxas.nameKo === '아브라카스 또는 아브락사스 [Abracax, Abraxas]', 'Rule 3: 아브라카스 또는 아브락사스 [Abracax, Abraxas]');
+assert.ok(abraxas && abraxas.nameKoShort.startsWith('아브라카스·아브락사스 (') && abraxas.nameKo.includes('[Abracax / Abracax (Abraxas)]'), 'Rule 3: 아브라카스·아브락사스');
 
 // Verify the 4 Jean entries disambiguation on page 373
 const jeanMagician = ENTRIES.find(e => e.id === 'e2167-jean');
@@ -503,6 +503,70 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
+
+// A section audit assertions (398 entries, 46 illustrated)
+const aEntries = ENTRIES.filter(e => e.letter === 'A');
+assert.equal(aEntries.length, 398, 'A section must contain exactly 398 entries (Aaron to Azraël)');
+
+const aIllustrated = aEntries.filter(e => e.hasPlate);
+assert.equal(aIllustrated.length, 46, 'A section must contain exactly 46 illustrated entries');
+
+const aaronStart = ENTRIES.find(e => e.id === 'e1-aaron');
+assert.ok(aaronStart && aaronStart.letter === 'A' && aaronStart.category === 'person' && aaronStart.nameKo.includes('아론'), 'Aaron starts A section');
+
+const abigorPlate = ENTRIES.find(e => e.id === 'abigor');
+assert.ok(abigorPlate && abigorPlate.hasPlate && abigorPlate.plate === 'plates/abigor.jpg' && abigorPlate.plateNo === 1 && abigorPlate.legions === 60 && abigorPlate.category === 'demon', 'Abigor Plate 1');
+
+const abraxasPlate = ENTRIES.find(e => e.id === 'abraxas');
+assert.ok(abraxasPlate && abraxasPlate.hasPlate && abraxasPlate.plate === 'plates/abraxas.jpg' && abraxasPlate.plateNo === 2 && abraxasPlate.legions === 365 && abraxasPlate.category === 'demon', 'Abraxas Plate 2');
+
+const adramelechPlate = ENTRIES.find(e => e.id === 'adramelech');
+assert.ok(adramelechPlate && adramelechPlate.hasPlate && adramelechPlate.plate === 'plates/adramelech.jpg' && adramelechPlate.plateNo === 3 && adramelechPlate.category === 'demon', 'Adramelech Plate 3');
+
+const aguaresPlate = ENTRIES.find(e => e.id === 'aguares');
+assert.ok(aguaresPlate && aguaresPlate.hasPlate && aguaresPlate.plate === 'plates/aguares.jpg' && aguaresPlate.plateNo === 4 && aguaresPlate.legions === 31 && aguaresPlate.category === 'demon', 'Aguarès Plate 4');
+
+const alastorPlate = ENTRIES.find(e => e.id === 'alastor');
+assert.ok(alastorPlate && alastorPlate.hasPlate && alastorPlate.plate === 'plates/alastor.jpg' && alastorPlate.plateNo === 5 && alastorPlate.category === 'demon', 'Alastor Plate 5');
+
+const alocerPlate = ENTRIES.find(e => e.id === 'alocer');
+assert.ok(alocerPlate && alocerPlate.hasPlate && alocerPlate.plate === 'plates/alocer.jpg' && alocerPlate.plateNo === 6 && alocerPlate.legions === 36 && alocerPlate.category === 'demon', 'Alocer Plate 6');
+
+const amdusciasPlate = ENTRIES.find(e => e.id === 'amduscias');
+assert.ok(amdusciasPlate && amdusciasPlate.hasPlate && amdusciasPlate.plate === 'plates/amduscias.jpg' && amdusciasPlate.plateNo === 7 && amdusciasPlate.legions === 29 && amdusciasPlate.category === 'demon', 'Amduscias Plate 7');
+
+const amonPlate = ENTRIES.find(e => e.id === 'amon');
+assert.ok(amonPlate && amonPlate.hasPlate && amonPlate.plate === 'plates/amon.jpg' && amonPlate.plateNo === 8 && amonPlate.legions === 40 && amonPlate.category === 'demon', 'Amon Plate 8');
+
+const andrasPlate = ENTRIES.find(e => e.id === 'andras');
+assert.ok(andrasPlate && andrasPlate.hasPlate && andrasPlate.plate === 'plates/andras.jpg' && andrasPlate.plateNo === 9 && andrasPlate.legions === 30 && andrasPlate.category === 'demon', 'Andras Plate 9');
+
+const asmodeePlate = ENTRIES.find(e => e.id === 'asmodee');
+assert.ok(asmodeePlate && asmodeePlate.hasPlate && asmodeePlate.plate === 'plates/asmodee.jpg' && asmodeePlate.plateNo === 10 && asmodeePlate.legions === 72 && asmodeePlate.category === 'demon', 'Asmodée Plate 10');
+
+const astarothPlate = ENTRIES.find(e => e.id === 'astaroth');
+assert.ok(astarothPlate && astarothPlate.hasPlate && astarothPlate.plate === 'plates/astaroth.jpg' && astarothPlate.plateNo === 11 && astarothPlate.legions === 40 && astarothPlate.category === 'demon', 'Astaroth Plate 11');
+
+const azazelPlate = ENTRIES.find(e => e.id === 'azazel');
+assert.ok(azazelPlate && azazelPlate.hasPlate && azazelPlate.plate === 'plates/azazel.jpg' && azazelPlate.plateNo === 12 && azazelPlate.category === 'demon', 'Azazel Plate 12');
+
+const anneePlatText = ENTRIES.find(e => e.id === 'e224-anneeplatonique');
+const anneePlatPlate = ENTRIES.find(e => e.id === 'e226-anneeplatonique');
+assert.ok(anneePlatText && anneePlatPlate && anneePlatText.nameFr === 'Année platonique (Texte)' && anneePlatPlate.nameFr === 'Année platonique (Gravure)' && anneePlatPlate.hasPlate, 'Année platonique 2 entries disambiguated');
+
+const anneeClim1 = ENTRIES.find(e => e.id === 'e225-anneeclimaterique');
+const anneeClim2 = ENTRIES.find(e => e.id === 'e227-anneeclimaterique');
+assert.ok(anneeClim1 && anneeClim2 && anneeClim1.nameFr !== anneeClim2.nameFr, 'Année climatérique 2 entries disambiguated');
+
+const azraelEnd = ENTRIES.find(e => e.id === 'e398-azrael');
+assert.ok(azraelEnd && azraelEnd.letter === 'A' && azraelEnd.category === 'myth' && azraelEnd.nameKo.includes('아즈라엘'), 'Azraël ends A section');
+
+for (const ae of aEntries) {
+  assert.ok(!ae.nameKoShort.includes(' / '), `No inner slash in A shortKo: ${ae.id}`);
+  assert.ok(!/[가-힣]/.test(ae.nameEn || ''), `No Korean leaked into A nameEn: ${ae.id}`);
+  assert.ok(!/^[A-Za-z]/.test((ae.description || '').trim()), `No English lead in A description: ${ae.id}`);
+  assert.ok(ae.domains && ae.domains.length >= 2, `At least 2 domains for A entry: ${ae.id}`);
+}
 
 // B section audit assertions (343 entries, 43 illustrated)
 const bEntries = ENTRIES.filter(e => e.letter === 'B');
@@ -1485,7 +1549,7 @@ const quivogne = ENTRIES.find(e => e.id === 'e3171-quivognefemme');
 assert.ok(quivogne && quivogne.hasPlate && quivogne.plate === 'plates/e3171-quivogne-femme.jpg' && quivogne.category === 'person' && quivogne.nameKo.includes('키보뉴 부인') && !quivogne.nameKo.includes('펨 키보느'), 'Quivogne femme translated as Madame Quivogne, not femme MT');
 
 const searchAbaris=filterEntries({query:'Abaris'});
-assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스 [Abaris]')));
+assert.ok(searchAbaris.some(e=>e.nameKo.includes('아바리스')&&e.nameKo.includes('[Abaris / Abaris]')));
 
 const searchBuer=filterEntries({query:'Buer'});
 assert.ok(searchBuer.some(e=>e.id==='buer'));

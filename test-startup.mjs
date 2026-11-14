@@ -64,8 +64,8 @@ async function run(initial,native=false){
   await mod.evaluate();
 
   assert.ok(main.innerHTML.includes('class="entry-list"'));
-  assert.ok(main.innerHTML.includes('아론 [Aaron]'));
-  assert.ok(main.innerHTML.includes('아바리스 [Abaris]'));
+  assert.ok(main.innerHTML.includes('아론') && main.innerHTML.includes('Aaron / Aaron'));
+  assert.ok(main.innerHTML.includes('아바리스') && main.innerHTML.includes('Abaris / Abaris'));
 
   // Test search input without destroying active input
   for(const fn of handlers.input||[]){
