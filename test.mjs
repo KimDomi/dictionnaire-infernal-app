@@ -1583,4 +1583,28 @@ const dailyA=getDailyEntry('2026-11-12');
 const dailyB=getDailyEntry('2026-11-12');
 assert.equal(dailyA.id,dailyB.id,'Daily entry must be deterministic for a given date');
 
-console.log('PASS: all 3,810 A-Z entries dataset, proper noun English notation, plate assets, search, filtering, sorting, and daily entry');
+// Global rank epithet / subtitle normalization invariants across all 3,810 entries
+for (const e of ENTRIES) {
+  assert.ok(typeof e.rank === 'string' && e.rank.trim().length > 0, `${e.id} must have non-empty rank`);
+  const koPart = e.rank.replace(/\s*\([^)]+\)\s*$/, '').trim();
+  assert.ok(koPart.length >= 3 && koPart.length <= 26, `${e.id} rank Korean part must be 3..26 chars, got ${koPart.length}: ${e.rank}`);
+  assert.ok(!/[.!?]\s*$/.test(e.rank), `${e.id} rank must not end with sentence punctuation: ${e.rank}`);
+  assert.ok(!/\((?:p\.\d+[^)]*|Plate \d+|본문 목판화[^)]*)\)/i.test(e.rank), `${e.id} rank must not contain page/plate tags: ${e.rank}`);
+  if (/항목|표제어/.test(e.rank)) {
+    assert.equal(e.rank, '상호참조 표제어 (Renvoi)', `${e.id} unexpected meta prose in rank: ${e.rank}`);
+  }
+  const lastTok = koPart.split(/\s+/).pop();
+  assert.ok(!/^(?:및|겸|또는|혹은|즉|곧)\s/.test(koPart), `${e.id} rank must not start with conjunction: ${e.rank}`);
+  assert.ok(!/(?:을|를|에게|에서|으로)$/.test(lastTok), `${e.id} rank must not end with dangling particle: ${e.rank}`);
+  if (e.category === 'crossref') {
+    assert.ok(e.rank === '상호참조 표제어 (Renvoi)' || e.rank === '상호참조(Renvoi)', `${e.id} crossref rank must be canonical Renvoi label, got: ${e.rank}`);
+  }
+}
+
+assert.equal(ENTRIES.find(e => e.id === 'e516-belial').rank, '지옥 군주·역천사 80군단 지배자(80군단)');
+assert.equal(ENTRIES.find(e => e.id === 'e2755-natonaberthe').rank, '이탈리아 악령 빙의자(Génoise Possédée)');
+assert.equal(ENTRIES.find(e => e.id === 'e2759-naviusaccius').rank, '복술관(Célèbre Augure)');
+assert.equal(ENTRIES.find(e => e.id === 'e2760-naylorjames').rank, '17세기 종교 광신자(Fanatique)');
+assert.equal(ENTRIES.find(e => e.id === 'zaebos').rank, '지옥의 대백작(Grand Comte)');
+
+console.log('PASS: all 3,810 A-Z entries dataset, normalized rank epithets, proper noun English notation, plate assets, search, filtering, sorting, and daily entry');
