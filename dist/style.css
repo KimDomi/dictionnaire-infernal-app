@@ -1547,6 +1547,35 @@ main:has(.page-flip-stage) > .entry-detail-page * {
   text-wrap: pretty;
 }
 
+a.cross-ref-link {
+  display: inline;
+  padding: 0 1px;
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid rgba(200, 157, 84, 0.55);
+  border-radius: 0;
+  background: transparent;
+  color: var(--gold);
+  font: inherit;
+  font-weight: 600;
+  line-height: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
+}
+
+a.cross-ref-link:hover,
+a.cross-ref-link:focus-visible {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: var(--gold-soft);
+  border-radius: 3px;
+}
+
+a.cross-ref-link:active {
+  opacity: 0.78;
+}
+
 /* Collapsible French Quote Box (Classical 1863 Box) */
 .detail-french-card {
   margin: 8px 0 0;

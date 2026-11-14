@@ -183,6 +183,14 @@ async function run(initial,native=false){
   assert.ok(main.innerHTML.includes('class="entry-list"'),'Clicking dictionary tab in detail page should return to dictionary list');
   assert.ok(main.innerHTML.includes('data-id="buer"'),'Dictionary list should expand to show navigated entry');
   assert.equal(header.textContent,'지옥사전');
+
+  // Verify unified '참조. ~' format and clickable cross-reference links
+  click({action:'open-entry',id:'e63-agares'});
+  assert.ok(main.innerHTML.includes('참조. <a '),'Cross-ref notation should unify to 참조. ~');
+  assert.ok(main.innerHTML.includes('class="cross-ref-link" data-action="open-entry" data-id="aguares"'),'Cross-ref link should point to aguares');
+  click({action:'open-entry',id:'aguares'});
+  assert.ok(main.innerHTML.includes('Aguarès'),'Navigating via cross-ref link should open target entry');
+  click({action:'close-entry'});
 }
 
 await run(null,false);

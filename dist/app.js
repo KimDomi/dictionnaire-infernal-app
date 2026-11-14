@@ -189,7 +189,7 @@ function renderEntryCard(entry){
       <div class="domain-tags">
         <span class="domain-tag">${escapeHtml(tag)}</span>
       </div>
-      <p class="entry-summary">${escapeHtml(entry.summary)}</p>
+      <p class="entry-summary">${escapeHtml(formatCrossRefText(entry.summary,entry))}</p>
     </div>
   </article>`;
 }
@@ -228,10 +228,294 @@ function rankIsTitle(entry){
   return Boolean(entry.hasPlate)||(entry.category==='demon'&&TITLE_RANK_PATTERN.test(entry.rank||''));
 }
 
-function formatParagraphs(text){
+function normCrossRefKey(str){
+  return String(str||'')
+    .toLowerCase()
+    .replace(/œ/g,'oe')
+    .replace(/æ/g,'ae')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[’'`"「」『』\[\]().,:;!?·]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+const CROSS_REF_INDEX=(()=>{
+  const map=new Map();
+  const add=(key,entry)=>{
+    const nk=normCrossRefKey(key);
+    if(!nk||nk.length<2)return;
+    if(!map.has(nk))map.set(nk,[]);
+    const list=map.get(nk);
+    if(!list.includes(entry))list.push(entry);
+  };
+  for(const e of ENTRIES){
+    add(e.nameFr,e);
+    for(const part of String(e.nameFr||'').split(/[\/,;]/)){
+      add(part.replace(/\([^)]*\)/g,''),e);
+      const inPar=part.match(/\(([^)]+)\)/);
+      if(inPar)add(inPar[1],e);
+    }
+    const br=String(e.nameKo||'').match(/\[([^\]]+)\]/);
+    if(br){
+      for(const part of br[1].split(/[\/,;]/)){
+        add(part.replace(/\([^)]*\)/g,''),e);
+      }
+    }
+    add(e.nameKoShort,e);
+    for(const part of String(e.nameKoShort||'').split(/(?:\s+또는\s+|[·\/,])/)){
+      add(part,e);
+    }
+    const koNoParen=String(e.nameKoShort||'').replace(/\([^)]*\)/g,'').trim();
+    if(koNoParen&&koNoParen!==e.nameKoShort)add(koNoParen,e);
+  }
+  return map;
+})();
+
+const CROSS_REF_ALIASES={
+  etteila:'etteilla',
+  borack:'borak',
+  bobin:'bodin',
+  cercle:'cercles magiques'
+};
+
+function lookupCrossRefKey(key,excludeId){
+  const nk=normCrossRefKey(key);
+  if(!nk||nk.length<2)return null;
+  const tries=[nk];
+  if(nk.endsWith('s'))tries.push(nk.slice(0,-1));
+  else tries.push(`${nk}s`);
+  if(nk.endsWith('es'))tries.push(nk.slice(0,-2));
+  if(CROSS_REF_ALIASES[nk])tries.push(CROSS_REF_ALIASES[nk]);
+  for(const t of tries){
+    const hits=(CROSS_REF_INDEX.get(t)||[]).filter(e=>e.id!==excludeId);
+    if(hits.length===1)return hits[0];
+    if(hits.length>1){
+      const exact=hits.find(h=>normCrossRefKey(h.nameFr)===t||normCrossRefKey(h.nameKoShort)===t);
+      return exact||hits[0];
+    }
+  }
+  return null;
+}
+
+function getFrVoyHints(entry){
+  const q=String(entry?.quoteFr||'');
+  const hints=[];
+  if(!q)return hints;
+  const re=/\bVoy(?:ez)?\.\s*([^.]+)/gi;
+  let match;
+  while((match=re.exec(q))){
+    const parts=match[1]
+      .split(/,|(?:\s+et\s+)/i)
+      .map(x=>x.replace(/\b(?:etc|à la fin|au mot|article)\b.*$/i,'').trim())
+      .filter(Boolean);
+    hints.push(parts.map(p=>lookupCrossRefKey(p,entry?.id)));
+  }
+  return hints;
+}
+
+function splitCrossRefItems(text){
+  const items=[];
+  let buf='';
+  let depth=0;
+  const opens='([「『‘“';
+  const closes=')]」』’”';
+  for(let i=0;i<text.length;i++){
+    const ch=text[i];
+    if(opens.includes(ch)){depth++;buf+=ch;continue;}
+    if(closes.includes(ch)){if(depth>0)depth--;buf+=ch;continue;}
+    if(depth===0){
+      if(ch===','){
+        items.push({text:buf,sep:', '});
+        buf='';
+        while(text[i+1]===' ')i++;
+        continue;
+      }
+      if(ch==='·'&&/[」』’)\]]\s*$/.test(buf)){
+        items.push({text:buf,sep:', '});
+        buf='';
+        while(text[i+1]===' ')i++;
+        continue;
+      }
+      const rest=text.slice(i);
+      const prevCh=i>0?text[i-1]:'';
+      const conj=rest.match(/^(?:\s+(?:및|또는)\s+|\s*(?:과|와)\s+)/);
+      if(conj&&(!/^\s*(?:과|와)\s+/.test(conj[0])||/[」』’)\]]/.test(prevCh))){
+        items.push({text:buf,sep:', '});
+        buf='';
+        i+=conj[0].length-1;
+        continue;
+      }
+    }
+    buf+=ch;
+  }
+  if(buf.trim())items.push({text:buf,sep:''});
+  return items;
+}
+
+function cleanCrossRefItemLabel(raw){
+  let s=String(raw||'').trim()
+    .replace(/^☞\s*/,'')
+    .replace(/^다음\s*항목들을?\s*참조하라\s*:\s*/i,'')
+    .replace(/^딕티오네르\s*인페르날\s*에드\s*/i,'')
+    .replace(/Dictionnaire infernal\/[^/\]]+\/\s*/gi,'')
+    .trim();
+  let changed=true;
+  while(changed){
+    changed=false;
+    for(const [l,r] of [['「','」'],['『','』'],['‘','’'],['"','"'],['“','”']]){
+      if(s.startsWith(l)&&s.endsWith(r)){
+        s=s.slice(1,-1).trim();
+        changed=true;
+      }
+    }
+  }
+  return s;
+}
+
+function resolveCrossRefTarget(label,entry,hints,tokCount,tokIdx,precedingText){
+  const s=String(label||'').replace(/\s*(?:해당\s*)?(?:항목(?:들|의|을|도)?|끝부분|등)\s*$/g,'').trim();
+  const excludeId=entry?.id;
+  if(!s||s==='해당'){
+    if(precedingText){
+      const prevHits=[...precedingText.matchAll(/([가-힣A-Za-z0-9·\-\s]{1,30}?)\s*(?:\(([^()]{2,40})\)|\[([^\[\]]{2,40})\])/g)];
+      for(let i=prevHits.length-1;i>=0;i--){
+        const orig=prevHits[i][2]||prevHits[i][3];
+        const hit=lookupCrossRefKey(orig,excludeId);
+        if(hit)return {target:hit,overrideLabel:hit.nameKo};
+      }
+    }
+    return null;
+  }
+  const candidates=[];
+  const br=s.match(/\[([^\]]+)\]/);
+  if(br)candidates.push(...br[1].split(/[\/,;]/));
+  const par=s.match(/\(([^)]+)\)/);
+  if(par)candidates.push(...par[1].split(/[\/,;]/));
+  const asciiTail=s.match(/([A-Za-zÀ-ÿ][A-Za-zÀ-ÿ’'\- ]{1,})$/);
+  if(asciiTail)candidates.push(asciiTail[1]);
+  const koOnly=s.replace(/\[[^\]]*\]|\([^)]*\)/g,'').trim();
+  if(koOnly)candidates.push(koOnly);
+  candidates.push(s);
+
+  for(const c of candidates){
+    const cleaned=c.replace(/\b(?:à la fin|au mot|article)\b/gi,'').trim();
+    const hit=lookupCrossRefKey(cleaned,excludeId);
+    if(hit)return {target:hit,overrideLabel:null};
+  }
+  const resolvedHints=hints.flat().filter(Boolean);
+  if(tokCount===1&&resolvedHints.length===1){
+    return {target:resolvedHints[0],overrideLabel:null};
+  }
+  for(const clause of hints){
+    if(clause.length===tokCount&&clause[tokIdx]){
+      return {target:clause[tokIdx],overrideLabel:null};
+    }
+  }
+  if(koOnly&&koOnly.length>=2){
+    const byKoHint=resolvedHints.find(h=>h.nameKoShort.includes(koOnly)||(koOnly.length>=3&&h.nameKoShort.includes(koOnly.slice(0,-1))));
+    if(byKoHint)return {target:byKoHint,overrideLabel:null};
+  }
+  return null;
+}
+
+const REF_LINK_RE=/\u0001([A-Za-z0-9_-]+)\u0002([^\u0003]+)\u0003/g;
+
+function buildCrossRefSegment(bodyRaw,entry,precedingText){
+  let body=String(bodyRaw||'').trim();
+  let suffixEtc='';
+  const etcMatch=body.match(/\s+등\.?$/);
+  if(etcMatch){
+    suffixEtc=' 등';
+    body=body.slice(0,-etcMatch[0].length).trim();
+  }
+  const parts=splitCrossRefItems(body);
+  const hints=getFrVoyHints(entry);
+  const out=parts.map((p,idx)=>{
+    const label=cleanCrossRefItemLabel(p.text);
+    const res=resolveCrossRefTarget(label,entry,hints,parts.length,idx,precedingText);
+    const display=res?.overrideLabel||label;
+    const token=res?.target?`\u0001${res.target.id}\u0002${display}\u0003`:display;
+    return token+(idx<parts.length-1?p.sep:'');
+  }).join('');
+  return `참조. ${out}${suffixEtc}`;
+}
+
+function transformCrossRefTokens(line,entry){
+  const raw=String(line??'');
+  if(!raw.includes('참조'))return raw;
+  let out=raw.replace(/딕티오네르\s*인페르날\s*에드\s*([^.\n]+?)\s*\[Dictionnaire infernal\/[^/\]]+\/([^\]]+)\]/gi,'$1 [$2]');
+
+  out=out.replace(/\(([^()]*참조[^()]*)\)/g,(full,inner,offset)=>{
+    if(/오식|원문\s*말미|참고/.test(inner))return full;
+    let body=null;
+    const mColon=inner.match(/^(?:☞\s*)?참조\s*[:.]\s*(.+)$/);
+    if(mColon)body=mColon[1];
+    else{
+      const mSuffix=inner.match(/^(?:☞\s*)?(.+?)\s*(?:(?:해당\s*)?항목(?:들)?(?:을|도)?\s*)?참조(?:하라|할 것)?\.?$/);
+      if(mSuffix)body=mSuffix[1];
+    }
+    if(!body)return full;
+    return `(${buildCrossRefSegment(body,entry,out.slice(0,offset))})`;
+  });
+
+  out=out.replace(/(^|[.?!…”"’]\s+)(?:☞\s*)?참조\s*[:.]\s*([^.!?\n]+)([.?!]?)/g,(full,lead,body,punct,offset)=>{
+    return `${lead}${buildCrossRefSegment(body,entry,out.slice(0,offset))}${punct||'.'}`;
+  });
+
+  out=out.replace(/(^|[.?!…”"’]\s+)(?:☞\s*)?((?:(?!\(참조\.)[^.!?\n]){1,180}?)\s*(?:(?:해당\s*)?항목(?:들)?(?:을|도)?(?:\s*함께)?\s*참조(?:하라|할 것)?|(?<=[\]」』’)\s])참조(?:하라|할 것)?)\.?$/gm,(full,lead,body,offset)=>{
+    if(/전설집|소책자|서한집|저서|위서|제\d+부/.test(body))return full;
+    if(/^(?:이\s*각각의|그의\s*전설을|그\s*상세한)/.test(body.trim()))return full;
+    if(!/항목|☞/.test(full)&&/(?:을|를)\s*참조(?:하라|할 것)/.test(full))return full;
+    const topicM=body.match(/^(.*?(?:에\s*(?:대해서는|관해서는)|자세한\s*내용은|상세한\s*내용은|전설은|이야기는|본문은\s*앞선|함께))\s+(?:다음\s*항목들을?\s*참조하라\s*:\s*)?(.+)$/);
+    if(topicM){
+      const prefix=topicM[1].trim();
+      const seg=buildCrossRefSegment(topicM[2],entry,out.slice(0,offset));
+      return `${lead}${prefix?`${prefix} `:''}${seg}.`;
+    }
+    const nextM=body.match(/^다음\s*항목들을?\s*참조하라\s*:\s*(.+)$/);
+    if(nextM){
+      return `${lead}${buildCrossRefSegment(nextM[1],entry,out.slice(0,offset))}.`;
+    }
+    return `${lead}${buildCrossRefSegment(body,entry,out.slice(0,offset))}.`;
+  });
+
+  return out;
+}
+
+function formatCrossRefText(text,entry=null){
+  return transformCrossRefTokens(text,entry).replace(REF_LINK_RE,'$2');
+}
+
+function renderCrossRefHtml(line,entry=null){
+  const tokenized=transformCrossRefTokens(line,entry);
+  let html='';
+  let lastIdx=0;
+  REF_LINK_RE.lastIndex=0;
+  let match;
+  while((match=REF_LINK_RE.exec(tokenized))){
+    if(match.index>lastIdx){
+      html+=escapeHtml(tokenized.slice(lastIdx,match.index));
+    }
+    const target=ENTRY_MAP.get(match[1]);
+    const label=match[2];
+    if(target){
+      html+=`<a href="#entry/${encodeURIComponent(target.id)}" class="cross-ref-link" data-action="open-entry" data-id="${escapeHtml(target.id)}" title="${escapeHtml(target.nameKo)} 항목으로 이동">${escapeHtml(label)}</a>`;
+    }else{
+      html+=escapeHtml(label);
+    }
+    lastIdx=match.index+match[0].length;
+  }
+  if(lastIdx<tokenized.length){
+    html+=escapeHtml(tokenized.slice(lastIdx));
+  }
+  return html;
+}
+
+function formatParagraphs(text,entry=null){
   const lines=String(text??'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
   if(!lines.length)return '';
-  return lines.map(line=>`<p class="detail-paragraph">${escapeHtml(line)}</p>`).join('');
+  return lines.map(line=>`<p class="detail-paragraph">${renderCrossRefHtml(line,entry)}</p>`).join('');
 }
 
 function splitEntryName(nameKo){
@@ -303,7 +587,7 @@ function renderEntryArticleCard(entry,extraFooterHtml=''){
       </div>`:''}
 
       <div class="detail-translation">
-        ${formatParagraphs(entry.description)}
+        ${formatParagraphs(entry.description,entry)}
       </div>
 
       ${entry.quoteFr?`<blockquote class="detail-french-card${settings.showFrench?' expanded':''}">
@@ -1140,6 +1424,7 @@ document.addEventListener('click',event=>{
   }
 
   if(action==='open-entry'&&id){
+    event?.preventDefault?.();
     const btn=target?.closest?.('.prev-next-btn');
     const dir=btn?.classList?.contains('next')?'next':btn?.classList?.contains('prev')?'prev':null;
     openEntryPage(id,true,dir);
@@ -1301,7 +1586,7 @@ let swipeStartY=null;
 
 function isInteractiveInput(target){
   const tag=String(target?.tagName||'').toUpperCase();
-  return tag==='TEXTAREA'||tag==='INPUT'||tag==='SELECT'||tag==='BUTTON';
+  return tag==='TEXTAREA'||tag==='INPUT'||tag==='SELECT'||tag==='BUTTON'||tag==='A';
 }
 
 document.addEventListener('touchstart',event=>{
