@@ -504,6 +504,52 @@ assert.ok(robertArtois && robertArtois.nameKo.includes('아르투아의 로베�
 const robertKing = ENTRIES.find(e => e.id === 'e3234-robert');
 assert.ok(robertKing && robertKing.nameKo.includes('로베르 2세 국왕') && robertKing.category === 'person', 'King Robert II');
 
+// F section audit assertions (147 entries, 18 illustrated)
+const fEntries = ENTRIES.filter(e => e.letter === 'F');
+assert.equal(fEntries.length, 147, 'F section must contain exactly 147 entries (after E/F and F/G boundary fixes: Faal to Fusely)');
+
+const fIllustrated = fEntries.filter(e => e.hasPlate);
+assert.equal(fIllustrated.length, 18, 'F section must contain exactly 18 illustrated entries');
+
+const flagaPlate = ENTRIES.find(e => e.id === 'flaga');
+assert.ok(flagaPlate && flagaPlate.hasPlate && flagaPlate.plate === 'plates/flaga.jpg' && flagaPlate.plateNo === 30 && flagaPlate.category === 'myth' && flagaPlate.nameKo.includes('플라가'), 'Flaga Plate 30 Scandinavian storm fairy');
+
+const flaurosDemon = ENTRIES.find(e => e.id === 'flauros');
+assert.ok(flaurosDemon && flaurosDemon.hasPlate && flaurosDemon.plate === 'plates/flauros.jpg' && flaurosDemon.plateNo === 31 && flaurosDemon.legions === 20 && flaurosDemon.category === 'demon' && flaurosDemon.nameKo.includes('플라우로스'), 'Flauros Plate 31 infernal duke with 20 legions');
+
+const forcasDemon = ENTRIES.find(e => e.id === 'forcas');
+assert.ok(forcasDemon && forcasDemon.hasPlate && forcasDemon.plate === 'plates/forcas.jpg' && forcasDemon.plateNo === 32 && forcasDemon.legions === 29 && forcasDemon.category === 'demon' && forcasDemon.nameKo.includes('포르카스'), 'Forcas Plate 32 infernal knight/president with 29 legions');
+
+const furfurDemon = ENTRIES.find(e => e.id === 'furfur');
+assert.ok(furfurDemon && furfurDemon.hasPlate && furfurDemon.plate === 'plates/furfur.jpg' && furfurDemon.plateNo === 33 && furfurDemon.legions === 26 && furfurDemon.category === 'demon' && furfurDemon.nameKo.includes('푸르푸르'), 'Furfur Plate 33 infernal count with 26 legions');
+
+const focalorDemon = ENTRIES.find(e => e.id === 'e1664-focalor');
+assert.ok(focalorDemon && focalorDemon.category === 'demon' && focalorDemon.legions === 30 && focalorDemon.nameKo.includes('포칼로르'), 'Focalor infernal general with 30 legions');
+
+const forneusDemon = ENTRIES.find(e => e.id === 'e1680-forneus');
+assert.ok(forneusDemon && forneusDemon.category === 'demon' && forneusDemon.legions === 29 && forneusDemon.nameKo.includes('포르네우스'), 'Forneus infernal marquis with 29 legions');
+
+const faustPlate = ENTRIES.find(e => e.id === 'e1598-faustjean');
+assert.ok(faustPlate && faustPlate.hasPlate && faustPlate.plate === 'plates/e1598-faust-jean.jpg' && faustPlate.category === 'person' && faustPlate.nameKo.includes('요한 파우스트'), 'Johann Faust illustrated magician');
+
+const feesPlate = ENTRIES.find(e => e.id === 'e1602-fees');
+assert.ok(feesPlate && feesPlate.hasPlate && feesPlate.plate === 'plates/e1602-f-es.jpg' && feesPlate.category === 'myth' && feesPlate.nameKo.includes('요정'), 'Fairies illustrated');
+
+const fantomesPlate = ENTRIES.find(e => e.id === 'e1588-fantomes');
+assert.ok(fantomesPlate && fantomesPlate.hasPlate && fantomesPlate.plate === 'plates/e1588-fant-mes.jpg' && fantomesPlate.nameKo.includes('유령'), 'Fantomes illustrated');
+
+const formesPlate = ENTRIES.find(e => e.id === 'e1679-formesdudiable');
+assert.ok(formesPlate && formesPlate.hasPlate && formesPlate.plate === 'plates/e1679-formes-du-diable.jpg' && formesPlate.category === 'demon' && formesPlate.nameKo.includes('악마의 형상'), 'Forms of the Devil illustrated');
+
+const frontPlate = ENTRIES.find(e => e.id === 'e1704-front');
+assert.ok(frontPlate && frontPlate.hasPlate && frontPlate.plate === 'plates/e1704-front.jpg' && frontPlate.category === 'divination' && frontPlate.nameKo.includes('이마 주름점'), 'Metoposcopy Front illustrated');
+
+const fuselyEnd = ENTRIES.find(e => e.id === 'e1716-fuselyhenri');
+assert.ok(fuselyEnd && fuselyEnd.letter === 'F' && fuselyEnd.nameKo.includes('헨리 푸셀리'), 'Fusely ends F section');
+
+const ezechielMoved = ENTRIES.find(e => e.id === 'e1569-ezechiel');
+assert.ok(ezechielMoved && ezechielMoved.letter === 'E', 'Ezechiel moved from F to E at E/F boundary');
+
 // G section audit assertions (219 entries, 14 illustrated)
 const gEntries = ENTRIES.filter(e => e.letter === 'G');
 assert.equal(gEntries.length, 219, 'G section must contain exactly 219 entries (after F/G and G/H boundary fixes: Gaap to Gyromancie)');
