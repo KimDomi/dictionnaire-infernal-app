@@ -117,6 +117,7 @@ async function run(initial,native=false){
 
   click({action:'help'});
   assert.ok(modal.innerHTML.includes('설정 안내'));
+  assert.ok(!modal.innerHTML.includes('open-attribution-modal'),'Help modal should not include attribution button');
   click({action:'close'});
 
   click({action:'open-attribution-modal'});

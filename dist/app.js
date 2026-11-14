@@ -993,12 +993,6 @@ function openHelpModal(){
     </ul>`;
   }
 
-  bodyHtml+=`<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
-    <button type="button" class="secondary" data-action="open-attribution-modal" style="width:100%;font-size:0.86rem;padding:8px 10px;display:flex;align-items:center;justify-content:center;gap:6px">
-      📜 원전 및 출처 표기 (Attribution & Sources)
-    </button>
-  </div>`;
-
   modalEl.innerHTML=`<div class="modal-inner">
     <div class="modal-top">
       <h2>${escapeHtml(title)}</h2>
