@@ -170,6 +170,15 @@ async function run(initial,native=false){
 
   click({action:'close-entry'});
   assert.equal(header.textContent,'삽화 도감');
+
+  // Clicking active tab on detail page acts like close-entry (back to list)
+  click({tab:'dictionary'});
+  assert.ok(main.innerHTML.includes('class="entry-list"'));
+  click({action:'open-entry',id:'buer'});
+  assert.ok(main.innerHTML.includes('class="entry-detail-page"'));
+  click({tab:'dictionary'});
+  assert.ok(main.innerHTML.includes('class="entry-list"'),'Clicking dictionary tab in detail page should return to dictionary list');
+  assert.equal(header.textContent,'지옥사전');
 }
 
 await run(null,false);

@@ -1070,7 +1070,9 @@ document.addEventListener('click',event=>{
 
   if(tab){
     if(tab===activeTab){
-      if(tab==='daily'){
+      if(activeEntryId){
+        closeEntryPage();
+      }else if(tab==='daily'){
         advanceRandomEntry();
       }
       return;
